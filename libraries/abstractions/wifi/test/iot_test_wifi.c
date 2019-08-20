@@ -613,68 +613,68 @@ TEST_TEAR_DOWN( Full_WiFi )
 TEST_GROUP_RUNNER( Full_WiFi )
 {
     /* Happy path tests. */
-    RUN_TEST_CASE( Full_WiFi, AFQP_WiFiOnOff );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WiFiMode );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WiFiConnectionLoop );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WiFiNetworkAddGetDelete );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WiFiPowerManagementMode )
-    RUN_TEST_CASE( Full_WiFi, AFQP_WiFiGetIP );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WiFiGetMAC );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WiFiGetHostIP );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WiFiScan );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WiFiReset );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WiFiPing );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WiFiIsConnected );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WiFiOnOff );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WiFiMode );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WiFiConnectionLoop );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WiFiNetworkAddGetDelete );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WiFiPowerManagementMode )
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WiFiGetIP );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WiFiGetMAC );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WiFiGetHostIP );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WiFiScan );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WiFiReset );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WiFiPing );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WiFiIsConnected );
     RUN_TEST_CASE( Full_WiFi, AFQP_WiFiConnectMultipleAP );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WiFiOnOffLoop );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WiFiOnOffLoop );
 
     /* Null parameter tests. */
-    RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_GetMode_NullParameters );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_GetIP_NullParameters );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_GetMAC_NullParameters );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_GetHostIP_NullParameters );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_Scan_NullParameters );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_NetworkAdd_NullParameters );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_NetworkGet_NullParameters );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_SetPMMode_NullParameters );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_GetPMMode_NullParameters );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_Ping_NullParameters );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_ConnectAP_NullParameters );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_GetMode_NullParameters );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_GetIP_NullParameters );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_GetMAC_NullParameters );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_GetHostIP_NullParameters );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_Scan_NullParameters );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_NetworkAdd_NullParameters );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_NetworkGet_NullParameters );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_SetPMMode_NullParameters );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_GetPMMode_NullParameters );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_Ping_NullParameters );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_ConnectAP_NullParameters );
 
     /* Invalid parameters tests. */
-    RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_SetMode_InvalidMode );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_GetHostIP_InvalidDomainName );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_GetHostIP_DomainNameLengthExceeded );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_NetworkDelete_DeleteNonExistingNetwork );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_NetworkGetNonExistingNetwork );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_SetPMMode_InvalidPMMode );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_Ping_ZeroParameters );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_ConnectAP_InvalidSSID );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_ConnectAP_InvalidPassword );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_ConnectAP_InvalidSecurityTypes );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_ConnectAP_MaxSSIDLengthExceeded );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_ConnectAP_MaxPasswordLengthExceeded );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_ConnectAP_ZeroLengthSSID );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_ConnectAP_ZeroLengthPassword );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_SetMode_InvalidMode );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_GetHostIP_InvalidDomainName );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_GetHostIP_DomainNameLengthExceeded );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_NetworkDelete_DeleteNonExistingNetwork );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_NetworkGetNonExistingNetwork );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_SetPMMode_InvalidPMMode );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_Ping_ZeroParameters );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_ConnectAP_InvalidSSID );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_ConnectAP_InvalidPassword );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_ConnectAP_InvalidSecurityTypes );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_ConnectAP_MaxSSIDLengthExceeded );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_ConnectAP_MaxPasswordLengthExceeded );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_ConnectAP_ZeroLengthSSID );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_ConnectAP_ZeroLengthPassword );
 
     /* Stability tests. */
-    RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_ConnectAP_PasswordLengthLess );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_Scan_ZeroScanNumber );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_NetworkGet_GetManyNetworks );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_NetworkAdd_AddManyNetworks );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_NetworkDelete_DeleteManyNetworks );
-    RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_ConnectAP_ConnectAllChannels );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_ConnectAP_PasswordLengthLess );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_Scan_ZeroScanNumber );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_NetworkGet_GetManyNetworks );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_NetworkAdd_AddManyNetworks );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_NetworkDelete_DeleteManyNetworks );
+    //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_ConnectAP_ConnectAllChannels );
 
     #if ( testwifiENABLE_CONFIGURE_AP_TESTS == 1 )
-        RUN_TEST_CASE( Full_WiFi, AFQP_WiFiConfigureAP );
-        RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_ConfigureAP_NullParameters );
-        RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_ConfigureAP_InvalidSecurityType );
-        RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_ConfigureAP_NullParameters );
-        RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_ConfigureAP_MaxSSIDLengthExceeded );
-        RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_ConfigureAP_MaxPasswordLengthExceeded );
-        RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_ConfigureAP_ZeroLengthSSID );
-        RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_ConfigureAP_ZeroLengthPassword );
-        RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_ConfigureAP_ConfigureAllChannels );
+        //RUN_TEST_CASE( Full_WiFi, AFQP_WiFiConfigureAP );
+        //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_ConfigureAP_NullParameters );
+        //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_ConfigureAP_InvalidSecurityType );
+        //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_ConfigureAP_NullParameters );
+        //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_ConfigureAP_MaxSSIDLengthExceeded );
+        //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_ConfigureAP_MaxPasswordLengthExceeded );
+        //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_ConfigureAP_ZeroLengthSSID );
+        //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_ConfigureAP_ZeroLengthPassword );
+        //RUN_TEST_CASE( Full_WiFi, AFQP_WIFI_ConfigureAP_ConfigureAllChannels );
     #endif
 
     prvFinishWiFiTesting();
