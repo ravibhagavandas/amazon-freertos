@@ -33,6 +33,7 @@
  */
 
 #include "FreeRTOS.h"
+#include "event_groups.h"
 
 #include <string.h>
 
@@ -67,6 +68,7 @@
 
 #include "dhcpd.h"
 
+#include "aws_wifi_ext.h"
 /*-----------------------------------------------------------
  *
  * Constants and Macros
@@ -1775,4 +1777,559 @@ WIFIReturnCode_t WIFI_RegisterNetworkStateChangeEventCallback( IotNetworkStateCh
 {
     /** Needs to implement dispatching network state change events **/
     return eWiFiNotSupported;
+}
+
+//
+// Internal data structures
+//
+static WIFIScanResultExt_t* wifiScanResults_;
+static uint16_t wifiNumScanResults_;
+static WIFINetworkParamsExt_t wifiAPConfig_;
+
+//
+// Internal semaphore for higher-layer synchronous calls
+//
+static SemaphoreHandle_t wifiSemaphore_;
+static StaticSemaphore_t wifiSemaphoreBuffer_;
+static const TickType_t wifiSemaphoreWaitTicks_ = pdMS_TO_TICKS(wificonfigMAX_SEMAPHORE_WAIT_TIME_MS);
+
+//
+// Internal event handlers
+//
+static WIFIEventHandler_t wifiEventHandlers_[ eWiFiEventMax ];
+static bool wifiInitDone_ = false;
+
+//
+// Event group for synchronization with lower-layer events
+//
+#define WIFI_EVENT_INIT_DONE         (1 << 0)
+#define WIFI_EVENT_SCAN_DONE         (1 << 1)
+#define WIFI_EVENT_CONNECTED         (1 << 2)
+#define WIFI_EVENT_DISCONNECTED      (1 << 3)
+#define WIFI_EVENT_AP_STATE_CHANGED  (1 << 4)
+#define WIFI_EVENT_IP_READY          (1 << 5)
+#define WIFI_EVENT_CONNECTION_FAILED (1 << 6)
+
+static uint32_t gSsidNotFound;
+static EventGroupHandle_t wifiEvent_;
+static StaticEventGroup_t wifiEventBuffer_;
+static const TickType_t wifiEventWaitTicks_ = pdMS_TO_TICKS(wificonfigMAX_EVENT_WAIT_TIME_MS);
+
+static void WIFI_ShowScanResults( void )
+{
+    WIFIScanResultExt_t* result = wifiScanResults_;
+    char ssid[33];
+    uint16_t i;
+
+    for (i = 0; i < wifiNumScanResults_; i++, result++)
+    {
+        if (result->ucSSIDLength > 32)
+        {
+            LOG_I(wifi, "WIFI ShowScanResults invalid SSID length %u\n", result->ucSSIDLength);
+        }
+        else
+        {
+            memset(ssid, 0, sizeof(ssid));
+            memcpy(ssid, result->ucSSID, result->ucSSIDLength);
+            LOG_I(wifi, "[%2d]: Channel=%2u, BSSID=%02X:%02X:%02X:%02X:%02X:%02X, "
+                  "RSSI=%d, Security=%u, Len=%2u, SSID=%s\n",
+                  i,
+                  result->ucChannel,
+                  result->ucBSSID[0],
+                  result->ucBSSID[1],
+                  result->ucBSSID[2],
+                  result->ucBSSID[3],
+                  result->ucBSSID[4],
+                  result->ucBSSID[5],
+                  result->cRSSI,
+                  result->xSecurity,
+                  result->ucSSIDLength,
+                  ssid);
+        }
+    }
+}
+
+static void WIFI_InitEvent( void )
+{
+    wifiEvent_ = xEventGroupCreateStatic(&wifiEventBuffer_);
+    configASSERT(wifiEvent_);
+}
+
+static void WIFI_ClearEvent( const EventBits_t bits )
+{
+    xEventGroupClearBits(wifiEvent_, bits);
+}
+
+static void WIFI_PostEvent( const EventBits_t bits )
+{
+    // Signal that event bits have occured
+    xEventGroupSetBits(wifiEvent_, bits);
+}
+
+static bool WIFI_WaitEvent( const EventBits_t bits )
+{
+    EventBits_t waitBits;
+
+    // Wait for any bit in bits. No auto-clear---user must call WIFI_ClearEvent() first!
+    waitBits = xEventGroupWaitBits(wifiEvent_, bits, pdFALSE, pdFALSE, wifiEventWaitTicks_);
+    return (waitBits & bits) != 0;
+}
+
+static inline void WIFI_InitSemaphore( void )
+{
+    wifiSemaphore_ = xSemaphoreCreateBinaryStatic(&wifiSemaphoreBuffer_);
+    configASSERT(wifiSemaphore_);
+
+    // Make semaphore available by default
+    xSemaphoreGive(wifiSemaphore_);
+}
+
+static inline bool WIFI_TakeSemaphore( void )
+{
+    return xSemaphoreTake(wifiSemaphore_, wifiSemaphoreWaitTicks_) == pdTRUE;
+}
+
+static inline WIFIReturnCode_t WIFI_GiveSemaphore( WIFIReturnCode_t retCode )
+{
+    if ( xSemaphoreGive( wifiSemaphore_ ) != pdTRUE )
+    {
+        retCode = eWiFiFailure;
+    }
+
+    return retCode;
+}
+
+//
+// Internal helper functions
+//
+static WIFIReturnCode_t WIFI_ValidateNetworkParams( const WIFINetworkParamsExt_t * pxNetworkParams )
+{
+    LOG_I(wifi, "%s\n", __FUNCTION__);
+    uint8_t length;
+    uint8_t i;
+
+    if( NULL == pxNetworkParams )
+    {
+        return eWiFiFailure;
+    }
+
+    if (pxNetworkParams->ucSSIDLength > wificonfigMAX_SSID_LEN)
+    {
+        LOG_E(wifi, "WIFI ssid length %u invalid\n", pxNetworkParams->ucSSIDLength);
+        return eWiFiFailure;
+    }
+
+    switch (pxNetworkParams->xSecurity)
+    {
+        case eWiFiSecurityOpen:
+            break;
+        case eWiFiSecurityWPA:
+        case eWiFiSecurityWPA2:
+            length = pxNetworkParams->xPassword.xWPA.ucLength;
+            if (length < wificonfigMIN_PASSPHRASE_LEN || length > wificonfigMAX_PASSPHRASE_LEN)
+            {
+                LOG_E(wifi, "WIFI psk length %u invalid\n", length);
+                return eWiFiFailure;
+            }
+            break;
+        case eWiFiSecurityWEP:
+            for (i = 0; i < wificonfigMAX_WEPKEYS; i++)
+            {
+                // Check that WEP keys have one of the valid lengths. Not all WEP keys are required,
+                // so check length only if the key is used (i.e. has the index set)
+                length = pxNetworkParams->xPassword.xWEP[i].ucLength;
+                if (!(length == 5 || length == 10 || length == 13 || length == 26))
+                {
+                    LOG_E(wifi, "WIFI wep key %u length %u invalid\n", i, length);
+                    if (i == pxNetworkParams->ucDefaultWEPKeyIndex)
+                    {
+                        return eWiFiFailure;
+                    }
+                }
+            }
+            break;
+        default:
+            return eWiFiNotSupported;
+    }
+    return eWiFiSuccess;
+}
+
+WIFIReturnCode_t WIFI_ConfigureAPExt( WIFINetworkParamsExt_t * pxNetworkParams )
+{
+    LOG_I(wifi, "%s\n", __FUNCTION__);
+    WIFIReturnCode_t retCode;
+
+    if (WIFI_TakeSemaphore())
+    {
+        retCode = WIFI_ValidateNetworkParams(pxNetworkParams);
+        if (retCode != eWiFiSuccess)
+        {
+            LOG_E(wifi, "WIFI ConfigureAPExt validation failed\n");
+        }
+        else
+        {
+            // Set default channel if not specified
+            if (pxNetworkParams->ucChannel == 0)
+            {
+                pxNetworkParams->ucChannel = wificonfigACCESS_POINT_CHANNEL;
+            }
+            memcpy(&wifiAPConfig_, pxNetworkParams, sizeof(wifiAPConfig_));
+        }
+        return WIFI_GiveSemaphore(retCode);
+    }
+    LOG_I(wifi, "WIFI ConfigureAPExt timeout\n");
+    return eWiFiTimeout;
+}
+
+WIFIReturnCode_t WIFI_GetCapability( WIFICapabilityInfo_t * pxCapabilities)
+{
+	
+    LOG_I(wifi, "%s\n", __FUNCTION__);
+    WIFIReturnCode_t retCode;
+	
+    if (WIFI_TakeSemaphore())
+    {
+        retCode = WIFI_HAL_GetCapability(pxCapabilities);
+
+        if (retCode != eWiFiSuccess)
+        {
+            LOG_E(wifi, "WIFI GetCapability failed\n");
+        }
+        return WIFI_GiveSemaphore(retCode);
+
+    }
+
+    LOG_E(wifi, "WIFI GetCapability timeout\n");
+
+    return eWiFiTimeout;
+}
+
+WIFIReturnCode_t WIFI_GetCountryCode( char * pcCountryCode )
+{
+    LOG_I(wifi, "%s\n", __FUNCTION__);
+    WIFIReturnCode_t retCode;
+
+    if (WIFI_TakeSemaphore())
+    {
+        retCode = WIFI_HAL_GetCountryCode(pcCountryCode);
+        if (retCode != eWiFiSuccess)
+        {
+            LOG_I(wifi, "WIFI GetCountryCode failed\n");
+        }
+        return WIFI_GiveSemaphore(retCode);
+    }
+    LOG_I(wifi, "WIFI GetCountryCode timeout\n");
+    return eWiFiTimeout;
+}
+
+WIFIReturnCode_t WIFI_GetIPInfo( WIFIIPConfiguration_t * pxIPInfo )
+{
+    LOG_I(wifi, "%s\n", __FUNCTION__);
+    WIFIReturnCode_t retCode;
+
+    if (WIFI_TakeSemaphore())
+    {
+        retCode = WIFI_HAL_GetIPInfo(pxIPInfo);
+        if (retCode != eWiFiSuccess)
+        {
+            LOG_I(wifi, "WIFI Get IP info failed\n");
+        }
+        return WIFI_GiveSemaphore(retCode);
+    }
+    LOG_I(wifi, "WIFI Get IP info timeout\n");
+    return eWiFiTimeout;
+}
+
+WIFIReturnCode_t WIFI_GetModeExt( WIFIDeviceModeExt_t * pxDeviceMode )
+{
+    LOG_I(wifi, "%s\n", __FUNCTION__);
+    WIFIReturnCode_t retCode;
+
+    if (pxDeviceMode == NULL) {
+        LOG_I(wifi, "WIFI GetModeExt failed because of NULL pointer\n");
+        return eWiFiFailure;
+    }
+
+    if (WIFI_TakeSemaphore())
+    {
+        retCode = WIFI_HAL_GetMode(pxDeviceMode);
+        if (retCode != eWiFiSuccess)
+        {
+            LOG_I(wifi, "WIFI GetModeExt failed\n");
+        }
+        return WIFI_GiveSemaphore(retCode);
+    }
+    LOG_I(wifi, "WIFI GetModeExt timeout\n");
+    return eWiFiTimeout;
+}
+
+WIFIReturnCode_t WIFI_GetRSSI( int8_t * pcRSSI )
+{
+    LOG_I(wifi, "%s\n", __FUNCTION__);
+    WIFIReturnCode_t retCode;
+
+    if (WIFI_TakeSemaphore())
+    {
+        if (WIFI_HAL_IsConnected(NULL))
+        {
+            retCode = WIFI_HAL_GetRSSI(pcRSSI);
+            if (retCode != eWiFiSuccess)
+            {
+                LOG_I(wifi, "WIFI GetRSSI failed\n");
+            }
+        }
+        else
+        {
+            LOG_I(wifi, "WIFI GetRSSI not connected\n");
+            retCode = eWiFiFailure;
+        }
+        return WIFI_GiveSemaphore(retCode);
+    }
+    LOG_I(wifi, "WIFI GetRSSI timeout\n");
+    return eWiFiTimeout;
+}
+
+WIFIReturnCode_t WIFI_GetScanResults( const WIFIScanResultExt_t ** pxBuffer,
+                                      uint16_t * ucNumNetworks )
+{
+    LOG_I(wifi, "%s, numScanResults %u\n", __FUNCTION__, wifiNumScanResults_);
+
+    if (WIFI_TakeSemaphore())
+    {
+        *pxBuffer = wifiScanResults_;
+        *ucNumNetworks = wifiNumScanResults_;
+
+        WIFI_ShowScanResults();
+        return WIFI_GiveSemaphore(eWiFiSuccess);
+    }
+    LOG_I(wifi, "WIFI GetScanResults timeout\n");
+    return eWiFiTimeout;
+}
+
+WIFIReturnCode_t WIFI_GetStationList( WIFIStationInfo_t * pxStationList,
+                                      uint8_t * puStationListSize )
+{
+    LOG_I(wifi, "%s\n", __FUNCTION__);
+    WIFIReturnCode_t retCode;
+
+    if(pxStationList == NULL || puStationListSize == NULL || *puStationListSize == 0) {
+        return eWiFiFailure;
+    }
+
+    if (WIFI_TakeSemaphore())
+    {
+        retCode = WIFI_HAL_GetStationList(pxStationList, puStationListSize);
+        if (retCode != eWiFiSuccess)
+        {
+            LOG_I(wifi, "WIFI GetStationList failed\n");
+            return eWiFiFailure;
+        }
+        return WIFI_GiveSemaphore(retCode);
+    }
+    LOG_I(wifi, "WIFI GetStationList timeout\n");
+    return eWiFiTimeout;
+}
+
+WIFIReturnCode_t WIFI_GetStatistic( WIFIStatisticInfo_t * pxStatistics )
+{
+    LOG_I(wifi, "%s\n", __FUNCTION__);
+    WIFIReturnCode_t retCode;
+
+    if (WIFI_TakeSemaphore())
+    {
+        retCode = WIFI_HAL_GetStatistic(pxStatistics);
+        if (retCode != eWiFiSuccess)
+        {
+            LOG_I(wifi, "WIFI GetStatistic failed\n");
+        }
+        return WIFI_GiveSemaphore(retCode);
+    }
+    LOG_I(wifi, "WIFI GetStatistic timeout\n");
+    return eWiFiTimeout;
+}
+
+WIFIReturnCode_t WIFI_RegisterEvent( WIFIEventType_t xEventType,
+                                     WIFIEventHandler_t xHandler )
+{
+    LOG_I(wifi, "%s %u\n", __FUNCTION__, xEventType);
+    WIFIEvent_t event;
+    WIFIReturnCode_t retCode;
+
+    if (xEventType >= eWiFiEventMax)
+    {
+        LOG_I(wifi, "WIFI RegisterEvent %u invalid\n", xEventType);
+        return eWiFiFailure;
+    }
+    wifiEventHandlers_[xEventType] = xHandler;
+
+    switch (xEventType)
+    {
+        // These events are used by the sync API so will be registered automatically
+        case eWiFiEventReady:
+            if (wifiInitDone_)
+            {
+                // WIFI init has already happened
+                event.xEventType = eWiFiEventReady;
+                xHandler(&event);
+            }
+            break;
+        case eWiFiEventScanDone:
+        case eWiFiEventConnected:
+        case eWiFiEventDisconnected:
+        case eWiFiEventAPStateChanged:
+        case eWiFiEventIPReady:
+            break;
+        default:
+            // All other events are passed to WIFI_HAL layer
+            retCode = WIFI_HAL_RegisterEvent(xEventType, xHandler);
+            if (retCode != eWiFiSuccess)
+            {
+                LOG_I(wifi, "WIFI RegisterEvent %u failed\n", xEventType);
+                return eWiFiFailure;
+            }
+    }
+    return eWiFiSuccess;
+}
+
+WIFIReturnCode_t WIFI_SetCountryCode( const char * pcCountryCode )
+{
+    LOG_I(wifi, "%s\n", __FUNCTION__);
+    WIFIReturnCode_t retCode;
+
+    if (WIFI_TakeSemaphore())
+    {
+        retCode = WIFI_HAL_SetCountryCode(pcCountryCode);
+        if (retCode != eWiFiSuccess)
+        {
+            LOG_I(wifi, "WIFI SetCountryCode failed\n");
+        }
+        return WIFI_GiveSemaphore(retCode);
+    }
+    LOG_I(wifi, "WIFI SetCountryCode timeout\n");
+    return eWiFiTimeout;
+}
+
+WIFIReturnCode_t WIFI_SetModeExt( WIFIDeviceModeExt_t xDeviceMode )
+{
+    LOG_I(wifi, "%s\n", __FUNCTION__);
+    WIFIReturnCode_t retCode;
+
+    if (WIFI_TakeSemaphore())
+    {
+        retCode = WIFI_HAL_SetMode(xDeviceMode);
+        if (retCode != eWiFiSuccess)
+        {
+            LOG_I(wifi, "WIFI SetModeExt failed\n");
+        }
+        return WIFI_GiveSemaphore(retCode);
+    }
+    LOG_I(wifi, "WIFI SetModeExt timeout\n");
+    return eWiFiTimeout;
+}
+
+WIFIReturnCode_t WIFI_StartAP( void )
+{
+    LOG_I(wifi, "%s\n", __FUNCTION__);
+    WIFIReturnCode_t retCode;
+
+    if (WIFI_TakeSemaphore())
+    {
+        // Clear event before the async procedure to avoid race condition!
+        WIFI_ClearEvent(WIFI_EVENT_AP_STATE_CHANGED);
+
+        // We don't maintain AP state machine here. Upper layer has that responsibility
+        retCode = WIFI_HAL_StartAP(&wifiAPConfig_);
+        if (retCode != eWiFiSuccess)
+        {
+            LOG_I(wifi, "WIFI StartAP failed\n");
+        }
+        else
+        {
+            if (WIFI_WaitEvent(WIFI_EVENT_AP_STATE_CHANGED))
+            {
+                LOG_I(wifi, "WIFI StartAP succeess\n");
+            }
+            else
+            {
+                LOG_I(wifi, "WIFI StartAP event timeout\n");
+                retCode = eWiFiTimeout;
+            }
+        }
+        return WIFI_GiveSemaphore(retCode);
+    }
+    LOG_I(wifi, "WIFI StartAP timeout\n");
+    return eWiFiTimeout;
+}
+
+WIFIReturnCode_t WIFI_StartConnectAP( const WIFINetworkParamsExt_t * pxNetworkParams )
+{
+    LOG_I(wifi, "%s\n", __FUNCTION__);
+    WIFIReturnCode_t retCode;
+
+    retCode = WIFI_ValidateNetworkParams(pxNetworkParams);
+    if (retCode != eWiFiSuccess)
+    {
+        LOG_I(wifi, "WIFI StartConnectAP validation failed\n");
+        return eWiFiFailure;
+    }
+
+    if (WIFI_TakeSemaphore())
+    {
+        // If already connected to the same AP, do nothing
+        if (WIFI_HAL_IsConnected(pxNetworkParams))
+        {
+            LOG_I(wifi, "WIFI StartConnectAP already connected\n");
+            retCode = eWiFiSuccess;
+        }
+        else
+        {
+            retCode = WIFI_HAL_StartConnectAP(pxNetworkParams);
+            if (retCode != eWiFiSuccess)
+            {
+                LOG_I(wifi, "WIFI StartConnectAP failed\n");
+            }
+        }
+        return WIFI_GiveSemaphore(retCode);
+    }
+    LOG_I(wifi, "WIFI StartConnectAP timeout\n");
+    return eWiFiTimeout;
+}
+
+WIFIReturnCode_t WIFI_StartDisconnect( void )
+{
+    LOG_I(wifi, "%s\n", __FUNCTION__);
+    WIFIReturnCode_t retCode;
+
+    if (WIFI_TakeSemaphore())
+    {
+        retCode = WIFI_HAL_StartDisconnectAP();
+        if (retCode != eWiFiSuccess)
+        {
+            LOG_I(wifi, "WIFI StartDisconnect failed\n");
+        }
+        return WIFI_GiveSemaphore(retCode);
+    }
+    LOG_I(wifi, "WIFI StartDisconnect timeout\n");
+    return eWiFiTimeout;
+}
+
+WIFIReturnCode_t WIFI_StartScan( WIFIScanConfig_t * pxScanConfig )
+{
+    LOG_I(wifi, "%s\n", __FUNCTION__);
+    WIFIReturnCode_t retCode;
+
+    if (WIFI_TakeSemaphore())
+    {
+        // Invalidate cached scan results
+        wifiNumScanResults_ = 0;
+
+        retCode = WIFI_HAL_StartScan(pxScanConfig);
+        if (retCode != eWiFiSuccess)
+        {
+            LOG_I(wifi, "WIFI StartScan failed\n");
+        }
+        return WIFI_GiveSemaphore(retCode);
+    }
+    LOG_I(wifi, "WIFI StartScan timeout\n");
+    return eWiFiTimeout;
 }
