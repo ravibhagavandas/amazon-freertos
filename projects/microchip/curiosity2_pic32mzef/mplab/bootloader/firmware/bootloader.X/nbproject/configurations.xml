@@ -212,7 +212,7 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>pkob4hybrid</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.20</languageToolchainVersion>
+        <languageToolchainVersion>2.30</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
@@ -294,7 +294,7 @@
         <property key="warning-level" value=""/>
       </C32-AS>
       <C32-CO>
-        <property key="coverage-enable" value="false"/>
+        <property key="coverage-enable" value=""/>
       </C32-CO>
       <C32-LD>
         <property key="additional-options-use-response-files" value="false"/>

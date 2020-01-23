@@ -65,7 +65,6 @@
 #include "system/console/sys_console.h"
 #include "system/console/src/sys_console_uart_definitions.h"
 #include "system/int/sys_int.h"
-#include "system/cache/sys_cache.h"
 #include "osal/osal.h"
 #include "app.h"
 

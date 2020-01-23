@@ -204,12 +204,12 @@
 /* PIC32 note: PIC32 processors have a factory programmed MAC address.
  * This address setting will override the factory programmed address.
  * Use all 0's to use the factory programmed address */
-#define configMAC_ADDR0           0x54
-#define configMAC_ADDR1           0x10
-#define configMAC_ADDR2           0xEC
-#define configMAC_ADDR3           0x8A
-#define configMAC_ADDR4           0x22
-#define configMAC_ADDR5           0x58
+#define configMAC_ADDR0           0x00
+#define configMAC_ADDR1           0x11
+#define configMAC_ADDR2           0x22
+#define configMAC_ADDR3           0x33
+#define configMAC_ADDR4           0x44
+#define configMAC_ADDR5           0x21
     
  //54:10:ec:8a:22:58
 
@@ -254,6 +254,6 @@
 #endif /* defined(__LANGUAGE_C__) */
 
 /* The platform FreeRTOS is running on. */
-#define configPLATFORM_NAME    "MicrochipPIC32MZEF"
+#define configPLATFORM_NAME    "MicrochipPIC32MZEF2"
 
 #endif /* FREERTOS_CONFIG_H */

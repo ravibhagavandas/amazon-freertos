@@ -28,10 +28,7 @@
               <itemPath>../src/config/same70_xult_nvm/driver/gmac/drv_gmac.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="miim" projectFiles="true">
-              <logicalFolder name="f1" displayName="config" projectFiles="true">
-                <itemPath>../src/config/same70_xult_nvm/driver/miim/config/drv_miim_config.h</itemPath>
-              </logicalFolder>
-              <logicalFolder name="f2" displayName="src" projectFiles="true">
+              <logicalFolder name="f1" displayName="src" projectFiles="true">
                 <logicalFolder name="f1" displayName="dynamic" projectFiles="true">
                   <itemPath>../src/config/same70_xult_nvm/driver/miim/src/dynamic/drv_miim_mapping.h</itemPath>
                 </logicalFolder>
@@ -46,8 +43,12 @@
             <logicalFolder name="f1" displayName="clk" projectFiles="true">
               <itemPath>../src/config/same70_xult_nvm/peripheral/clk/plib_clk.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f4" displayName="efc" projectFiles="true">
+            <logicalFolder name="f5" displayName="efc" projectFiles="true">
               <itemPath>../src/config/same70_xult_nvm/peripheral/efc/plib_efc.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f4" displayName="mpu" projectFiles="true">
+              <itemPath>../src/config/same70_xult_nvm/peripheral/mpu/plib_mpu.h</itemPath>
+              <itemPath>../src/config/same70_xult_nvm/peripheral/mpu/plib_mpu_local.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="nvic" projectFiles="true">
               <itemPath>../src/config/same70_xult_nvm/peripheral/nvic/plib_nvic.h</itemPath>
@@ -55,18 +56,18 @@
             <logicalFolder name="f2" displayName="pio" projectFiles="true">
               <itemPath>../src/config/same70_xult_nvm/peripheral/pio/plib_pio.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f5" displayName="tc" projectFiles="true">
+            <logicalFolder name="f6" displayName="tc" projectFiles="true">
               <itemPath>../src/config/same70_xult_nvm/peripheral/tc/plib_tc0.h</itemPath>
               <itemPath>../src/config/same70_xult_nvm/peripheral/tc/plib_tc_common.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f7" displayName="trng" projectFiles="true">
+            <logicalFolder name="f8" displayName="trng" projectFiles="true">
               <itemPath>../src/config/same70_xult_nvm/peripheral/trng/plib_trng.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f6" displayName="uart" projectFiles="true">
+            <logicalFolder name="f7" displayName="uart" projectFiles="true">
               <itemPath>../src/config/same70_xult_nvm/peripheral/uart/plib_uart_common.h</itemPath>
               <itemPath>../src/config/same70_xult_nvm/peripheral/uart/plib_uart4.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f8" displayName="usart" projectFiles="true">
+            <logicalFolder name="f9" displayName="usart" projectFiles="true">
               <itemPath>../src/config/same70_xult_nvm/peripheral/usart/plib_usart_common.h</itemPath>
               <itemPath>../src/config/same70_xult_nvm/peripheral/usart/plib_usart1.h</itemPath>
             </logicalFolder>
@@ -991,7 +992,6 @@
                 <logicalFolder name="f2" displayName="ports" projectFiles="true">
                   <logicalFolder name="f1" displayName="ota" projectFiles="true">
                     <itemPath>../../../../../../../vendors/microchip/boards/same70_xult/ports/ota/aws_ota_pal.c</itemPath>
-                    <itemPath>../../../../../../../vendors/microchip/boards/same70_xult/ports/ota/aws_flash_config.h</itemPath>
                   </logicalFolder>
                   <logicalFolder name="f2" displayName="pkcs11" projectFiles="true">
                     <itemPath>../../../../../../../vendors/microchip/boards/same70_xult/ports/pkcs11/iot_pkcs11_pal.c</itemPath>
@@ -1088,8 +1088,11 @@
             <logicalFolder name="f1" displayName="clk" projectFiles="true">
               <itemPath>../src/config/same70_xult_nvm/peripheral/clk/plib_clk.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f4" displayName="efc" projectFiles="true">
+            <logicalFolder name="f5" displayName="efc" projectFiles="true">
               <itemPath>../src/config/same70_xult_nvm/peripheral/efc/plib_efc.c</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f4" displayName="mpu" projectFiles="true">
+              <itemPath>../src/config/same70_xult_nvm/peripheral/mpu/plib_mpu.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="nvic" projectFiles="true">
               <itemPath>../src/config/same70_xult_nvm/peripheral/nvic/plib_nvic.c</itemPath>
@@ -1097,16 +1100,16 @@
             <logicalFolder name="f2" displayName="pio" projectFiles="true">
               <itemPath>../src/config/same70_xult_nvm/peripheral/pio/plib_pio.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f5" displayName="tc" projectFiles="true">
+            <logicalFolder name="f6" displayName="tc" projectFiles="true">
               <itemPath>../src/config/same70_xult_nvm/peripheral/tc/plib_tc0.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f7" displayName="trng" projectFiles="true">
+            <logicalFolder name="f8" displayName="trng" projectFiles="true">
               <itemPath>../src/config/same70_xult_nvm/peripheral/trng/plib_trng.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f6" displayName="uart" projectFiles="true">
+            <logicalFolder name="f7" displayName="uart" projectFiles="true">
               <itemPath>../src/config/same70_xult_nvm/peripheral/uart/plib_uart4.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f8" displayName="usart" projectFiles="true">
+            <logicalFolder name="f9" displayName="usart" projectFiles="true">
               <itemPath>../src/config/same70_xult_nvm/peripheral/usart/plib_usart1.c</itemPath>
             </logicalFolder>
           </logicalFolder>
@@ -1248,7 +1251,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../../../../../../../libraries/abstractions/wifi/include;../../../../../../../vendors/microchip/boards/curiosity_pic32mzef/ports/posix;../../../../../../../freertos_kernel/portable/GCC/ARM_CM7;../../../../../../../vendors/microchip/boards/same70_xult/ports/pkcs11;../../../../../../../libraries/abstractions/wifi/include;../../../../../../../vendors/microchip/boards/curiosity_pic32mzef/ports/posix;../../../../../../../freertos_kernel/portable/GCC/ARM_CM7;../../../../../../../vendors/microchip/boards/same70_xult/ports/pkcs11;../../../../../../../vendors/microchip/boards/same70_xult/ports/pkcs11;../../../../../../../vendors/microchip/boards/same70_xult/ports/pkcs11;../../../../../../../vendors/microchip/boards/same70_xult/ports/pkcs11;../../../../../../../vendors/microchip/boards/same70_xult/ports/pkcs11;../../../../../../../vendors/microchip/boards/same70_xult/aws_tests/config_files;../../../../../../../freertos_kernel/portable/GCC/ARM_CM7/r0p1;../../../../../../../vendors/microchip/harmony3/afr;../../../../../../../vendors/microchip/boards/same70_xult\ports/pkcs11;../../../../../../../vendors/microchip/boards/same70_xult/ports/posix;../../../../../../../vendors/microchip/harmony3/afr/tcpip/src/common;../../../../../../../freertos_kernel/include;../../../../../../../libraries/c_sdk/standard/common/include;../../../../../../../libraries/freertos_plus/standard/crypto/include;../../../../../../../libraries/freertos_plus/standard/tls/include;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/portable/Compiler/GCC;../../../../../../../libraries/abstractions/pkcs11/include;../../../../../../../tests/include;../../../../../../../libraries/c_sdk/standard/common/include/private;../../../../../../../libraries/abstractions/platform/include;../../../../../../../libraries/abstractions/platform/freertos/include;../../../../../../../libraries/abstractions/secure_sockets/include;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/test;../../../../../../../libraries/freertos_plus/standard/pkcs11/include;../../../../../../../libraries/freertos_plus/aws/ota/test;../../../../../../../libraries/freertos_plus/standard/utils/include;../../../../../../../demos/dev_mode_key_provisioning/include;../../../../../../../libraries/c_sdk/aws/defender/include;../../../../../../../libraries/c_sdk/standard/mqtt/test/access;../../../../../../../libraries/c_sdk/standard/mqtt/include;../../../../../../../libraries/c_sdk/standard/mqtt/src;../../../../../../../libraries/c_sdk/standard/serializer/include;../../../../../../../libraries/c_sdk/aws/shadow/include;../../../../../../../libraries/c_sdk/aws/shadow/src;../../../../../../../libraries/c_sdk/standard/https/test/access;../../../../../../../libraries/c_sdk/standard/https/include;../../../../../../../libraries/c_sdk/standard/https/src;../../../../../../../libraries/freertos_plus/aws/greengrass/test;../../../../../../../libraries/freertos_plus/aws/greengrass/include;../../../../../../../libraries/freertos_plus/aws/greengrass/src;../../../../../../../libraries/freertos_plus/aws/ota/src;../../../../../../../libraries/freertos_plus/aws/ota/include;../../../../../../../libraries/3rdparty/mbedtls/include;../../../../../../../libraries/abstractions/posix/include;../../../../../../../libraries/freertos_plus/standard/freertos_plus_posix/include;../../../../../../../libraries/c_sdk/aws/defender/src/private;../../../../../../../libraries/3rdparty/jsmn;../../../../../../../libraries/3rdparty/pkcs11;../../../../../../../libraries/3rdparty/tinycbor;../../../../../../../libraries/3rdparty/tinycrypt/asn1;../../../../../../../libraries/3rdparty/tinycrypt/lib/include;../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls;../../../../../../../libraries/abstractions/pkcs11/mbedtls;../../../../../../../libraries/3rdparty/unity/src;../../../../../../../libraries/3rdparty/unity/extras/fixture/src;../../../../../../../libraries/3rdparty/http-parser;../src;../src/config/same70_xult_nvm;../src/packs/ATSAME70Q21B_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/arm"/>
+                  value="../../../../../../../libraries/abstractions/wifi/include;../../../../../../../vendors/microchip/boards/curiosity_pic32mzef/ports/posix;../../../../../../../freertos_kernel/portable/GCC/ARM_CM7;../../../../../../../vendors/microchip/boards/same70_xult/ports/pkcs11;../../../../../../../libraries/abstractions/wifi/include;../../../../../../../vendors/microchip/boards/curiosity_pic32mzef/ports/posix;../../../../../../../freertos_kernel/portable/GCC/ARM_CM7;../../../../../../../vendors/microchip/boards/same70_xult/ports/pkcs11;../../../../../../../vendors/microchip/boards/same70_xult/ports/pkcs11;../../../../../../../vendors/microchip/boards/same70_xult/ports/pkcs11;../../../../../../../vendors/microchip/boards/same70_xult/ports/pkcs11;../../../../../../../vendors/microchip/boards/same70_xult/ports/pkcs11;../../../../../../../vendors/microchip/boards/same70_xult/ports/pkcs11;../../../../../../../vendors/microchip/boards/same70_xult/ports/pkcs11;../../../../../../../vendors/microchip/boards/same70_xult/ports/pkcs11;../../../../../../../vendors/microchip/boards/same70_xult/ports/pkcs11;../../../../../../../vendors/microchip/boards/same70_xult/ports/pkcs11;../../../../../../../vendors/microchip/boards/same70_xult/ports/pkcs11;../../../../../../../vendors/microchip/boards/same70_xult/ports/pkcs11;../../../../../../../vendors/microchip/boards/same70_xult/ports/pkcs11;../../../../../../../vendors/microchip/boards/same70_xult/ports/pkcs11;../../../../../../../vendors/microchip/boards/same70_xult/ports/pkcs11;../../../../../../../vendors/microchip/boards/same70_xult/ports/pkcs11;../../../../../../../vendors/microchip/boards/same70_xult/ports/pkcs11;../../../../../../../vendors/microchip/boards/same70_xult/aws_tests/config_files;../../../../../../../freertos_kernel/portable/GCC/ARM_CM7/r0p1;../../../../../../../vendors/microchip/harmony3/afr;../../../../../../../vendors/microchip/boards/same70_xult\ports/pkcs11;../../../../../../../vendors/microchip/boards/same70_xult/ports/posix;../../../../../../../vendors/microchip/harmony3/afr/tcpip/src/common;../../../../../../../freertos_kernel/include;../../../../../../../libraries/c_sdk/standard/common/include;../../../../../../../libraries/freertos_plus/standard/crypto/include;../../../../../../../libraries/freertos_plus/standard/tls/include;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/portable/Compiler/GCC;../../../../../../../libraries/abstractions/pkcs11/include;../../../../../../../tests/include;../../../../../../../libraries/c_sdk/standard/common/include/private;../../../../../../../libraries/abstractions/platform/include;../../../../../../../libraries/abstractions/platform/freertos/include;../../../../../../../libraries/abstractions/secure_sockets/include;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/test;../../../../../../../libraries/freertos_plus/standard/pkcs11/include;../../../../../../../libraries/freertos_plus/aws/ota/test;../../../../../../../libraries/freertos_plus/standard/utils/include;../../../../../../../demos/dev_mode_key_provisioning/include;../../../../../../../libraries/c_sdk/aws/defender/include;../../../../../../../libraries/c_sdk/standard/mqtt/test/access;../../../../../../../libraries/c_sdk/standard/mqtt/include;../../../../../../../libraries/c_sdk/standard/mqtt/src;../../../../../../../libraries/c_sdk/standard/serializer/include;../../../../../../../libraries/c_sdk/aws/shadow/include;../../../../../../../libraries/c_sdk/aws/shadow/src;../../../../../../../libraries/c_sdk/standard/https/test/access;../../../../../../../libraries/c_sdk/standard/https/include;../../../../../../../libraries/c_sdk/standard/https/src;../../../../../../../libraries/freertos_plus/aws/greengrass/test;../../../../../../../libraries/freertos_plus/aws/greengrass/include;../../../../../../../libraries/freertos_plus/aws/greengrass/src;../../../../../../../libraries/freertos_plus/aws/ota/src;../../../../../../../libraries/freertos_plus/aws/ota/include;../../../../../../../libraries/3rdparty/mbedtls/include;../../../../../../../libraries/abstractions/posix/include;../../../../../../../libraries/freertos_plus/standard/freertos_plus_posix/include;../../../../../../../libraries/c_sdk/aws/defender/src/private;../../../../../../../libraries/3rdparty/jsmn;../../../../../../../libraries/3rdparty/pkcs11;../../../../../../../libraries/3rdparty/tinycbor;../../../../../../../libraries/3rdparty/tinycrypt/asn1;../../../../../../../libraries/3rdparty/tinycrypt/lib/include;../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls;../../../../../../../libraries/abstractions/pkcs11/mbedtls;../../../../../../../libraries/3rdparty/unity/src;../../../../../../../libraries/3rdparty/unity/extras/fixture/src;../../../../../../../libraries/3rdparty/http-parser;../src;../src/config/same70_xult_nvm;../src/packs/ATSAME70Q21B_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/arm"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>

@@ -16,7 +16,24 @@
       </Attachments>
     </UniqueComponent>
     <UniqueComponent dnOrder="1" id="AmazonHWInterface">
-      <Attachments dnOrder="0">
+      <Symbols dnOrder="0">
+        <Combo dnOrder="0" id="AWS_CLOUD_LOG_PLATFORM">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="IOT_LOG_NONE"/>
+          </Values>
+        </Combo>
+        <Combo dnOrder="1" id="AWS_CLOUD_LOG_TASKPOOL">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="IOT_LOG_NONE"/>
+          </Values>
+        </Combo>
+        <Combo dnOrder="2" id="AWS_DEMO_RUN">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="MQTT"/>
+          </Values>
+        </Combo>
+      </Symbols>
+      <Attachments dnOrder="1">
         <DirectCapability dnOrder="0" id="AmazonHWInterface">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="targetComponentID">
@@ -840,7 +857,7 @@
         </Boolean>
         <Boolean dnOrder="156" id="PendSV_INTERRUPT_ENABLE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="AmazonFreeRTOS" value="true"/>
+            <Dynamic dnOrder="0" id="AmazonHWInterface" value="true"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="157" id="PendSV_INTERRUPT_ENABLE_UPDATE">
@@ -850,12 +867,12 @@
         </Boolean>
         <String dnOrder="158" id="PendSV_INTERRUPT_HANDLER">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="AmazonFreeRTOS" value="xPortPendSVHandler"/>
+            <Dynamic dnOrder="0" id="AmazonHWInterface" value="xPortPendSVHandler"/>
           </Values>
         </String>
         <Boolean dnOrder="159" id="PendSV_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="AmazonFreeRTOS" value="true"/>
+            <Dynamic dnOrder="0" id="AmazonHWInterface" value="true"/>
           </Values>
         </Boolean>
         <Integer dnOrder="160" id="QSPI_CLOCK_FREQUENCY">
@@ -1045,7 +1062,7 @@
         </Boolean>
         <Boolean dnOrder="197" id="SVCall_INTERRUPT_ENABLE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="AmazonFreeRTOS" value="true"/>
+            <Dynamic dnOrder="0" id="AmazonHWInterface" value="true"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="198" id="SVCall_INTERRUPT_ENABLE_UPDATE">
@@ -1055,12 +1072,12 @@
         </Boolean>
         <String dnOrder="199" id="SVCall_INTERRUPT_HANDLER">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="AmazonFreeRTOS" value="vPortSVCHandler"/>
+            <Dynamic dnOrder="0" id="AmazonHWInterface" value="vPortSVCHandler"/>
           </Values>
         </String>
         <Boolean dnOrder="200" id="SVCall_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="AmazonFreeRTOS" value="true"/>
+            <Dynamic dnOrder="0" id="AmazonHWInterface" value="true"/>
           </Values>
         </Boolean>
         <Comment dnOrder="201" id="SYSTICK_COMMENT">
@@ -1082,7 +1099,7 @@
         </Integer>
         <Boolean dnOrder="204" id="SysTick_INTERRUPT_ENABLE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="AmazonFreeRTOS" value="true"/>
+            <Dynamic dnOrder="0" id="AmazonHWInterface" value="true"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="205" id="SysTick_INTERRUPT_ENABLE_UPDATE">
@@ -1092,12 +1109,12 @@
         </Boolean>
         <String dnOrder="206" id="SysTick_INTERRUPT_HANDLER">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="AmazonFreeRTOS" value="xPortSysTickHandler"/>
+            <Dynamic dnOrder="0" id="AmazonHWInterface" value="xPortSysTickHandler"/>
           </Values>
         </String>
         <Boolean dnOrder="207" id="SysTick_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="AmazonFreeRTOS" value="true"/>
+            <Dynamic dnOrder="0" id="AmazonHWInterface" value="true"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="208" id="TC0_CLOCK_ENABLE">
@@ -1372,37 +1389,58 @@
             </Boolean>
           </Attributes>
         </File>
-        <Boolean dnOrder="2" id="ENABLE_APP_FILE">
+        <File dnOrder="2" id="CONFIGURATION_H">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="3" id="DRIVER_COMMON">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="4" id="DRIVER_ROOT">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <Boolean dnOrder="5" id="ENABLE_APP_FILE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="HarmonyCore" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="3" id="ENABLE_DRV_COMMON">
+        <Boolean dnOrder="6" id="ENABLE_DRV_COMMON">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sys_debug" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="4" id="ENABLE_OSAL">
+        <Boolean dnOrder="7" id="ENABLE_OSAL">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="HarmonyCore" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="5" id="ENABLE_SYS_CACHE">
+        <Boolean dnOrder="8" id="ENABLE_SYS_CACHE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="HarmonyCore" value="false"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="6" id="ENABLE_SYS_COMMON">
+        <Boolean dnOrder="9" id="ENABLE_SYS_COMMON">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sys_debug" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="7" id="ENABLE_SYS_INT">
+        <Boolean dnOrder="10" id="ENABLE_SYS_INT">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="HarmonyCore" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="8" id="GEN_APP_RTOS_TASK_0_DELAY">
+        <Integer dnOrder="11" id="GEN_APP_RTOS_TASK_0_DELAY">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -1412,83 +1450,174 @@
             <User dnOrder="0" value="1000"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="9" id="GEN_APP_RTOS_TASK_0_USE_DELAY">
+        <Boolean dnOrder="12" id="GEN_APP_RTOS_TASK_0_USE_DELAY">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Menu dnOrder="10" id="GEN_APP_RTOS_TASK_CONF_MENU0">
+        <Menu dnOrder="13" id="GEN_APP_RTOS_TASK_CONF_MENU0">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Menu>
-        <File dnOrder="11" id="GEN_APP_TASKS">
+        <File dnOrder="14" id="GEN_APP_TASKS">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="12" id="GEN_RTOS_APP_TASKS">
+        <Menu dnOrder="15" id="GEN_APP_TASK_MENU">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Menu>
+        <File dnOrder="16" id="GEN_RTOS_APP_TASKS">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="13" id="GEN_RTOS_APP_TASKS_DEF">
+        <File dnOrder="17" id="GEN_RTOS_APP_TASKS_DEF">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="14" id="OSAL_FREERTOS_C">
+        <File dnOrder="18" id="INT_DEF">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="15" id="OSAL_FREERTOS_H">
+        <File dnOrder="19" id="INT_HEADER">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="16" id="OSAL_IMPL_BASIC_H">
+        <File dnOrder="20" id="INT_MAPPING">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="21" id="INT_SOURCE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="22" id="OSAL_DEFINITIONS_H">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="23" id="OSAL_FREERTOS_C">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="24" id="OSAL_FREERTOS_H">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="25" id="OSAL_H">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="26" id="OSAL_IMPL_BASIC_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <Combo dnOrder="17" id="SELECT_RTOS">
+        <File dnOrder="27" id="OSAL_SYSDEF_H">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <Combo dnOrder="28" id="SELECT_RTOS">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="AmazonFreeRTOS" value="FreeRTOS"/>
+            <Dynamic dnOrder="0" id="AmazonHWInterface" value="FreeRTOS"/>
           </Values>
         </Combo>
-        <File dnOrder="18" id="SYS_CACHE_DEF">
+        <File dnOrder="29" id="SYSTEM_COMMON">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="30" id="SYSTEM_MODULE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="31" id="SYSTEM_ROOT">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="32" id="SYS_CACHE_DEF">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="19" id="SYS_CACHE_HEADER">
+        <File dnOrder="33" id="SYS_CACHE_HEADER">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="20" id="SYS_CACHE_SOURCE">
+        <File dnOrder="34" id="SYS_CACHE_SOURCE">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="35" id="TASKS_C">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="36" id="USER_H">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
@@ -1516,7 +1645,12 @@
           </Values>
         </String>
         <KeyValueSet dnOrder="2" id="SERCOM_MODE">
-          <Values dnOrder="0">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="readOnly">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
             <Dynamic dnOrder="0" id="sercom2" value="0"/>
           </Values>
         </KeyValueSet>
@@ -1618,7 +1752,12 @@
           </Values>
         </String>
         <KeyValueSet dnOrder="2" id="SERCOM_MODE">
-          <Values dnOrder="0">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="readOnly">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
             <Dynamic dnOrder="0" id="sercom7" value="0"/>
           </Values>
         </KeyValueSet>
@@ -1832,6 +1971,11 @@
             <Dynamic dnOrder="0" id="sys_time" value="TC0"/>
           </Values>
         </String>
+        <String dnOrder="1" id="SYS_TIME_REMOTE_COMPONENT_ID">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="sys_time" value="tc0"/>
+          </Values>
+        </String>
       </Symbols>
       <Attachments dnOrder="1">
         <DirectDependency dnOrder="0" id="sys_time_TMR_dependency">
@@ -1859,7 +2003,12 @@
           </Values>
         </Boolean>
         <Boolean dnOrder="2" id="TC_TIMER_INTENSET_MC1">
-          <Values dnOrder="0">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
             <Dynamic dnOrder="0" id="tc0" value="true"/>
           </Values>
         </Boolean>
@@ -1873,6 +2022,13 @@
             <Dynamic dnOrder="0" id="tc0" value="60000"/>
           </Values>
         </Long>
+        <Float dnOrder="5" id="TC_TIMER_TIME_MS">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </Float>
       </Symbols>
       <Attachments dnOrder="1">
         <DirectCapability dnOrder="0" id="TC0_TMR">
@@ -1893,8 +2049,8 @@
     <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
     <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
-        <ElementPosition dnOrder="0" id="AmazonFreeRTOS" x="410" y="359"/>
-        <ElementPosition dnOrder="1" id="AmazonHWInterface" x="154" y="369"/>
+        <ElementPosition dnOrder="0" id="AmazonFreeRTOS" x="321" y="298"/>
+        <ElementPosition dnOrder="1" id="AmazonHWInterface" x="103" y="294"/>
         <ElementPosition dnOrder="2" id="HarmonyCore" x="830" y="0"/>
         <ElementPosition dnOrder="3" id="cmsis" x="660" y="20"/>
         <ElementPosition dnOrder="4" id="core" x="74" y="42"/>
@@ -1905,14 +2061,14 @@
         <ElementPosition dnOrder="9" id="evsys" x="180" y="20"/>
         <ElementPosition dnOrder="10" id="nvmctrl" x="529" y="17"/>
         <ElementPosition dnOrder="11" id="sercom2" x="25" y="218"/>
-        <ElementPosition dnOrder="12" id="sercom7" x="474" y="181"/>
+        <ElementPosition dnOrder="12" id="sercom7" x="347" y="137"/>
         <ElementPosition dnOrder="13" id="stdio" x="209" y="235"/>
         <ElementPosition dnOrder="14" id="sys_command" x="833" y="157"/>
         <ElementPosition dnOrder="15" id="sys_console" x="652" y="151"/>
         <ElementPosition dnOrder="16" id="sys_debug" x="834" y="288"/>
         <ElementPosition dnOrder="17" id="sys_time" x="205" y="81"/>
         <ElementPosition dnOrder="18" id="tc0" x="23" y="117"/>
-        <ElementPosition dnOrder="19" id="trng" x="16" y="373"/>
+        <ElementPosition dnOrder="19" id="trng" x="373" y="84"/>
       </ElementPositions>
     </ComponentGraph>
   </UserData>

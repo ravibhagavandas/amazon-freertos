@@ -51,7 +51,6 @@
 #include "system/debug/sys_debug.h"
 #include "system/command/sys_command.h"
 
-#include "tcpip/tcpip_mac.h"
 #include "driver/ethmac/drv_ethmac.h"
 #include "driver/miim/drv_miim.h"
 

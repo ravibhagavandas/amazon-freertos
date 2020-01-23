@@ -50,7 +50,6 @@
 #include "system/debug/sys_debug.h"
 #include "system/command/sys_command.h"
 
-#include "tcpip/tcpip_mac.h"
 #include "driver/gmac/drv_gmac.h"
 #include "driver/miim/drv_miim.h"
 

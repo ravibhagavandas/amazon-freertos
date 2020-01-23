@@ -102,7 +102,7 @@ extern "C" {
 #define SYS_TIME_MAX_TIMERS                  5
 #define SYS_TIME_HW_COUNTER_WIDTH            32
 #define SYS_TIME_HW_COUNTER_PERIOD           4294967295U
-#define SYS_TIME_HW_COUNTER_HALF_PERIOD		 (SYS_TIME_HW_COUNTER_PERIOD>>1)
+#define SYS_TIME_HW_COUNTER_HALF_PERIOD	     (SYS_TIME_HW_COUNTER_PERIOD>>1)
 #define SYS_TIME_CPU_CLOCK_FREQUENCY         200000000
 #define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (620)
 
@@ -137,9 +137,8 @@ extern "C" {
 #define DRV_MIIM_DRIVER_OBJECT              DRV_MIIM_OBJECT_BASE_Default
 #define DRV_MIIM_DRIVER_INDEX               DRV_MIIM_INDEX_0              
 
-
 /* MIIM RTOS Configurations*/
-#define DRV_MIIM_RTOS_STACK_SIZE           1024
+#define DRV_MIIM_RTOS_STACK_SIZE                1024
 #define DRV_MIIM_RTOS_TASK_PRIORITY             1
 
 

@@ -34,10 +34,7 @@
               <itemPath>../src/config/curiosity2_pic32mzef_nvm/driver/ethphy/drv_ethphy.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="miim" projectFiles="true">
-              <logicalFolder name="f1" displayName="config" projectFiles="true">
-                <itemPath>../src/config/curiosity2_pic32mzef_nvm/driver/miim/config/drv_miim_config.h</itemPath>
-              </logicalFolder>
-              <logicalFolder name="f2" displayName="src" projectFiles="true">
+              <logicalFolder name="f1" displayName="src" projectFiles="true">
                 <logicalFolder name="f1" displayName="dynamic" projectFiles="true">
                   <itemPath>../src/config/curiosity2_pic32mzef_nvm/driver/miim/src/dynamic/drv_miim_mapping.h</itemPath>
                 </logicalFolder>
@@ -125,7 +122,7 @@
                    displayName="Source Files"
                    projectFiles="true">
       <logicalFolder name="f2" displayName="amazon-freertos" projectFiles="true">
-        <logicalFolder name="f1" displayName="demos" projectFiles="true">
+        <logicalFolder name="f4" displayName="demos" projectFiles="true">
           <logicalFolder name="f1" displayName="defender" projectFiles="true">
             <itemPath>../../../../../../../demos/defender/aws_iot_demo_defender.c</itemPath>
           </logicalFolder>
@@ -182,20 +179,17 @@
             <itemPath>../../../../../../../demos/network_manager/aws_iot_network_manager.c</itemPath>
             <itemPath>../../../../../../../demos/network_manager/iot_network_manager_private.h</itemPath>
           </logicalFolder>
-          <logicalFolder name="f9" displayName="ota" projectFiles="true">
-            <itemPath>../../../../../../../demos/ota/aws_iot_ota_update_demo.c</itemPath>
-          </logicalFolder>
-          <logicalFolder name="f10" displayName="shadow" projectFiles="true">
+          <logicalFolder name="f9" displayName="shadow" projectFiles="true">
             <itemPath>../../../../../../../demos/shadow/aws_iot_demo_shadow.c</itemPath>
           </logicalFolder>
-          <logicalFolder name="f11" displayName="tcp" projectFiles="true">
+          <logicalFolder name="f10" displayName="tcp" projectFiles="true">
             <itemPath>../../../../../../../demos/tcp/aws_tcp_echo_client_single_task.c</itemPath>
             <itemPath>../../../../../../../demos/tcp/aws_tcp_echo_client_single_tasks.h</itemPath>
           </logicalFolder>
           <itemPath>../../../../../../../demos/README.md</itemPath>
         </logicalFolder>
-        <logicalFolder name="f2" displayName="freertos_kernel" projectFiles="true">
-          <logicalFolder name="f1" displayName="include" projectFiles="true">
+        <logicalFolder name="f1" displayName="freertos_kernel" projectFiles="true">
+          <logicalFolder name="f2" displayName="include" projectFiles="true">
             <itemPath>../../../../../../../freertos_kernel/include/atomic.h</itemPath>
             <itemPath>../../../../../../../freertos_kernel/include/deprecated_definitions.h</itemPath>
             <itemPath>../../../../../../../freertos_kernel/include/event_groups.h</itemPath>
@@ -213,11 +207,11 @@
             <itemPath>../../../../../../../freertos_kernel/include/task.h</itemPath>
             <itemPath>../../../../../../../freertos_kernel/include/timers.h</itemPath>
           </logicalFolder>
-          <logicalFolder name="f2" displayName="portable" projectFiles="true">
-            <logicalFolder name="f1" displayName="MemMang" projectFiles="true">
+          <logicalFolder name="f1" displayName="portable" projectFiles="true">
+            <logicalFolder name="f2" displayName="MemMang" projectFiles="true">
               <itemPath>../../../../../../../freertos_kernel/portable/MemMang/heap_4.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="MPLAB" projectFiles="true">
+            <logicalFolder name="f1" displayName="MPLAB" projectFiles="true">
               <logicalFolder name="f1" displayName="PIC32MZ" projectFiles="true">
                 <itemPath>../../../../../../../freertos_kernel/portable/MPLAB/PIC32MZ/ISR_Support.h</itemPath>
                 <itemPath>../../../../../../../freertos_kernel/portable/MPLAB/PIC32MZ/port.c</itemPath>
@@ -233,8 +227,8 @@
           <itemPath>../../../../../../../freertos_kernel/tasks.c</itemPath>
           <itemPath>../../../../../../../freertos_kernel/timers.c</itemPath>
         </logicalFolder>
-        <logicalFolder name="f3" displayName="libraries" projectFiles="true">
-          <logicalFolder name="f1" displayName="3rdparty" projectFiles="true">
+        <logicalFolder name="f2" displayName="libraries" projectFiles="true">
+          <logicalFolder name="f2" displayName="3rdparty" projectFiles="true">
             <logicalFolder name="f1" displayName="http-parser" projectFiles="true">
               <itemPath>../../../../../../../libraries/3rdparty/http-parser/http_parser.c</itemPath>
               <itemPath>../../../../../../../libraries/3rdparty/http-parser/http_parser.h</itemPath>
@@ -465,7 +459,7 @@
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f2" displayName="abstractions" projectFiles="true">
+          <logicalFolder name="f3" displayName="abstractions" projectFiles="true">
             <logicalFolder name="f1" displayName="pkcs11" projectFiles="true">
               <logicalFolder name="f1" displayName="include" projectFiles="true">
                 <itemPath>../../../../../../../libraries/abstractions/pkcs11/include/iot_pkcs11_pal.h</itemPath>
@@ -512,7 +506,7 @@
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f3" displayName="c_sdk" projectFiles="true">
+          <logicalFolder name="f4" displayName="c_sdk" projectFiles="true">
             <logicalFolder name="f1" displayName="aws" projectFiles="true">
               <logicalFolder name="f1" displayName="defender" projectFiles="true">
                 <logicalFolder name="f1" displayName="include" projectFiles="true">
@@ -648,8 +642,8 @@
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f4" displayName="freertos_plus" projectFiles="true">
-            <logicalFolder name="f1" displayName="aws" projectFiles="true">
+          <logicalFolder name="f1" displayName="freertos_plus" projectFiles="true">
+            <logicalFolder name="f2" displayName="aws" projectFiles="true">
               <logicalFolder name="f1" displayName="greengrass" projectFiles="true">
                 <logicalFolder name="f1" displayName="include" projectFiles="true">
                   <itemPath>../../../../../../../libraries/freertos_plus/aws/greengrass/include/aws_ggd_config_defaults.h</itemPath>
@@ -661,24 +655,9 @@
                   <itemPath>../../../../../../../libraries/freertos_plus/aws/greengrass/src/aws_helper_secure_connect.h</itemPath>
                 </logicalFolder>
               </logicalFolder>
-              <logicalFolder name="f2" displayName="ota" projectFiles="true">
-                <logicalFolder name="f1" displayName="include" projectFiles="true">
-                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/include/aws_iot_ota_agent.h</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/include/aws_ota_agent.h</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/include/aws_ota_types.h</itemPath>
-                </logicalFolder>
-                <logicalFolder name="f2" displayName="src" projectFiles="true">
-                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/aws_iot_ota_agent.c</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/aws_ota_agent_internal.h</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/aws_ota_cbor.c</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/aws_ota_cbor.h</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/aws_ota_cbor_internal.h</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/aws_ota_pal.h</itemPath>
-                </logicalFolder>
-              </logicalFolder>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="standard" projectFiles="true">
-              <logicalFolder name="f1" displayName="crypto" projectFiles="true">
+            <logicalFolder name="f1" displayName="standard" projectFiles="true">
+              <logicalFolder name="f2" displayName="crypto" projectFiles="true">
                 <logicalFolder name="f1" displayName="include" projectFiles="true">
                   <itemPath>../../../../../../../libraries/freertos_plus/standard/crypto/include/iot_crypto.h</itemPath>
                 </logicalFolder>
@@ -686,8 +665,8 @@
                   <itemPath>../../../../../../../libraries/freertos_plus/standard/crypto/src/iot_crypto.c</itemPath>
                 </logicalFolder>
               </logicalFolder>
-              <logicalFolder name="f2" displayName="freertos_plus_tcp" projectFiles="true">
-                <logicalFolder name="f1" displayName="include" projectFiles="true">
+              <logicalFolder name="f1" displayName="freertos_plus_tcp" projectFiles="true">
+                <logicalFolder name="f2" displayName="include" projectFiles="true">
                   <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include/FreeRTOSIPConfigDefaults.h</itemPath>
                   <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include/FreeRTOS_ARP.h</itemPath>
                   <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include/FreeRTOS_DHCP.h</itemPath>
@@ -704,7 +683,7 @@
                   <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include/NetworkBufferManagement.h</itemPath>
                   <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include/NetworkInterface.h</itemPath>
                 </logicalFolder>
-                <logicalFolder name="f2" displayName="source" projectFiles="true">
+                <logicalFolder name="f1" displayName="source" projectFiles="true">
                   <logicalFolder name="f1" displayName="portable" projectFiles="true">
                     <logicalFolder name="f1" displayName="Compiler" projectFiles="true">
                       <logicalFolder name="f1" displayName="GCC" projectFiles="true">
@@ -759,7 +738,7 @@
             </logicalFolder>
           </logicalFolder>
         </logicalFolder>
-        <logicalFolder name="f4" displayName="vendors" projectFiles="true">
+        <logicalFolder name="f3" displayName="vendors" projectFiles="true">
           <logicalFolder name="f1" displayName="microchip" projectFiles="true">
             <logicalFolder name="f1" displayName="boards" projectFiles="true">
               <logicalFolder name="f1" displayName="curiosity2_pic32mzef" projectFiles="true">
@@ -768,17 +747,17 @@
                     <itemPath>../../../../../../../vendors/microchip/boards/curiosity2_pic32mzef/aws_demos/config_files/aws_bufferpool_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/curiosity2_pic32mzef/aws_demos/config_files/aws_demo_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/curiosity2_pic32mzef/aws_demos/config_files/aws_ggd_config.h</itemPath>
-                    <itemPath>../../../../../../../vendors/microchip/boards/curiosity2_pic32mzef/aws_demos/config_files/aws_iot_network_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/curiosity2_pic32mzef/aws_demos/config_files/aws_mqtt_config.h</itemPath>
-                    <itemPath>../../../../../../../vendors/microchip/boards/curiosity2_pic32mzef/aws_demos/config_files/aws_ota_agent_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/curiosity2_pic32mzef/aws_demos/config_files/aws_secure_sockets_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/curiosity2_pic32mzef/aws_demos/config_files/aws_shadow_config.h</itemPath>
-                    <itemPath>../../../../../../../vendors/microchip/boards/curiosity2_pic32mzef/aws_demos/config_files/aws_wifi_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/curiosity2_pic32mzef/aws_demos/config_files/FreeRTOSConfig.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/curiosity2_pic32mzef/aws_demos/config_files/FreeRTOSIPConfig.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/curiosity2_pic32mzef/aws_demos/config_files/iot_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/curiosity2_pic32mzef/aws_demos/config_files/iot_mqtt_agent_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/curiosity2_pic32mzef/aws_demos/config_files/iot_pkcs11_config.h</itemPath>
+                    <itemPath>../../../../../../../vendors/microchip/boards/curiosity2_pic32mzef/aws_demos/config_files/aws_iot_network_config.h</itemPath>
+                    <itemPath>../../../../../../../vendors/microchip/boards/curiosity2_pic32mzef/aws_demos/config_files/aws_ota_agent_config.h</itemPath>
+                    <itemPath>../../../../../../../vendors/microchip/boards/curiosity2_pic32mzef/aws_demos/config_files/aws_wifi_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/curiosity2_pic32mzef/aws_demos/config_files/NetworkConfig.h</itemPath>
                   </logicalFolder>
                 </logicalFolder>
@@ -850,8 +829,6 @@
             </logicalFolder>
           </logicalFolder>
         </logicalFolder>
-        <itemPath>../../../../../../../LICENSE</itemPath>
-        <itemPath>../../../../../../../README.md</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1"
@@ -1023,7 +1000,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/curiosity2_pic32mzef_nvm;../src/packs/PIC32MZ2048EFM144_DFP;../src/mips;../../../../../../../demos/include;../../../../../../../freertos_kernel/include;../../../../../../../libraries/abstractions/platform/freertos/include;../../../../../../../libraries/abstractions/secure_sockets/include;../../../../../../../libraries/abstractions/pkcs11/include;../../../../../../../libraries/c_sdk/aws/defender/include;../../../../../../../libraries/c_sdk/aws/shadow/include;../../../../../../../libraries/c_sdk/standard/common/include;../../../../../../../libraries/c_sdk/standard/https/include;../../../../../../../libraries/c_sdk/standard/mqtt/include;../../../../../../../libraries/c_sdk/standard/serializer/include;../../../../../../../libraries/freertos_plus/aws/greengrass/include;../../../../../../../libraries/freertos_plus/aws/ota/include;../../../../../../../libraries/freertos_plus/standard/crypto/include;../../../../../../../libraries/freertos_plus/standard/utils/include;../../../../../../../libraries/freertos_plus/standard/tls/include;../../../../../../../libraries/freertos_plus/standard/pkcs11/include;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include;../../../../../../../libraries/abstractions/platform/include;../../../../../../../libraries/c_sdk/standard/common/include/private;../../../../../../../libraries/c_sdk/standard/common/include/types;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/portable/Compiler/GCC;../../../../../../../demos/network_manager;../../../../../../../demos/https;../../../../../../../demos/tcp;../../../../../../../libraries/3rdparty/jsmn;../../../../../../../libraries/3rdparty/mbedtls/include;../../../../../../../libraries/3rdparty/tinycbor;../../../../../../../libraries/3rdparty/pkcs11;../../../../../../../libraries/3rdparty/tinycrypt/asn1;../../../../../../../libraries/3rdparty/tinycrypt/lib/include;../../../../../../../demos/dev_mode_key_provisioning/include;../../../../../../../libraries/abstractions/pkcs11/mbedtls;../../../../../../../libraries/3rdparty/http-parser;../../../../../../../libraries/freertos_plus/aws/ota/src;../../../../../../../vendors/microchip/boards/curiosity2_pic32mzef/ports/pkcs11;../../../../../../../vendors/microchip/harmony3/afr;../../../../../../../vendors/microchip/boards/curiosity2_pic32mzef/aws_demos/config_files;../../../../../../../freertos_kernel/portable/MPLAB/PIC32MZ;../../../../../../../vendors/microchip/harmony3/afr/tcpip/src/common;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/portable/NetworkInterface/pic32mzef_h3"/>
+                  value="../src;../src/config/curiosity2_pic32mzef_nvm;../src/packs/PIC32MZ2048EFM144_DFP;;../src/mips;../../../../../../../demos/include;../../../../../../../freertos_kernel/include;../../../../../../../libraries/abstractions/platform/freertos/include;../../../../../../../libraries/abstractions/secure_sockets/include;../../../../../../../libraries/abstractions/pkcs11/include;../../../../../../../libraries/c_sdk/aws/defender/include;../../../../../../../libraries/c_sdk/aws/shadow/include;../../../../../../../libraries/c_sdk/standard/common/include;../../../../../../../libraries/c_sdk/standard/https/include;../../../../../../../libraries/c_sdk/standard/mqtt/include;../../../../../../../libraries/c_sdk/standard/serializer/include;../../../../../../../libraries/freertos_plus/aws/greengrass/include;../../../../../../../libraries/freertos_plus/aws/ota/include;../../../../../../../libraries/freertos_plus/standard/crypto/include;../../../../../../../libraries/freertos_plus/standard/utils/include;../../../../../../../libraries/freertos_plus/standard/tls/include;../../../../../../../libraries/freertos_plus/standard/pkcs11/include;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include;../../../../../../../libraries/abstractions/platform/include;../../../../../../../libraries/c_sdk/standard/common/include/private;../../../../../../../libraries/c_sdk/standard/common/include/types;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/portable/Compiler/GCC;../../../../../../../demos/network_manager;../../../../../../../demos/https;../../../../../../../demos/tcp;../../../../../../../libraries/3rdparty/jsmn;../../../../../../../libraries/3rdparty/mbedtls/include;../../../../../../../libraries/3rdparty/tinycbor;../../../../../../../libraries/3rdparty/pkcs11;../../../../../../../libraries/3rdparty/tinycrypt/asn1;../../../../../../../libraries/3rdparty/tinycrypt/lib/include;../../../../../../../demos/dev_mode_key_provisioning/include;../../../../../../../libraries/abstractions/pkcs11/mbedtls;../../../../../../../libraries/3rdparty/http-parser;../../../../../../../libraries/freertos_plus/aws/ota/src;../../../../../../../vendors/microchip/boards/curiosity2_pic32mzef/ports/pkcs11;../../../../../../../vendors/microchip/harmony3/afr;../../../../../../../vendors/microchip/boards/curiosity2_pic32mzef/aws_demos/config_files;../../../../../../../freertos_kernel/portable/MPLAB/PIC32MZ;../../../../../../../vendors/microchip/harmony3/afr/tcpip/src/common;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/portable/NetworkInterface/pic32mzef_h3"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -1032,7 +1009,7 @@
         <property key="place-data-into-section" value="false"/>
         <property key="post-instruction-scheduling" value="default"/>
         <property key="pre-instruction-scheduling" value="default"/>
-        <property key="preprocessor-macros" value="PIC32_USE_ETHERNET;__free_rtos__"/>
+        <property key="preprocessor-macros" value="PIC32_USE_ETHERNET;__free_rtos__;"/>
         <property key="strict-ansi" value="false"/>
         <property key="support-ansi" value="false"/>
         <property key="toplevel-reordering" value=""/>
@@ -1067,7 +1044,7 @@
         <property key="warning-level" value=""/>
       </C32-AS>
       <C32-CO>
-        <property key="coverage-enable" value="false"/>
+        <property key="coverage-enable" value=""/>
       </C32-CO>
       <C32-LD>
         <property key="additional-options-use-response-files" value="false"/>
@@ -1334,6 +1311,7 @@
         <property key="UART5" value="true"/>
         <property key="UART6" value="true"/>
         <property key="communication.interface" value=""/>
+        <property key="communication.interface.jtag" value="2wire"/>
         <property key="communication.speed" value="${communication.speed.default}"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
         <property key="memories.aux" value="false"/>
@@ -1350,12 +1328,14 @@
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="1d000000-1d1fffff"/>
         <property key="programmerToGoFilePath"
-                  value="E:/MH3_LAST_FIX/aws_cloud/amazon-freertos/projects/microchip/curiosity2_pic32mzef/mplab/aws_demos/firmware/aws_demos.X/debug/curiosity2_pic32mzef_nvm/MH3_LAST_F_ptg"/>
+                  value="D:/AFR/amazon-freertos/projects/microchip/curiosity2_pic32mzef/mplab/aws_demos/firmware/aws_demos.X/debug/curiosity2_pic32mzef_nvm/aws_demos_ptg"/>
         <property key="programoptions.donoteraseauxmem" value="false"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.pgmentry.voltage" value="low"/>
         <property key="programoptions.pgmspeed" value="Med"/>
         <property key="programoptions.preservedataflash" value="false"/>
+        <property key="programoptions.preservedataflash.ranges"
+                  value="${memories.dataflash.default}"/>
         <property key="programoptions.preserveeeprom" value="false"/>
         <property key="programoptions.preserveeeprom.ranges" value=""/>
         <property key="programoptions.preserveprogram.ranges" value="1d000000-1d1fffff"/>

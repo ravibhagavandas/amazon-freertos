@@ -1,23 +1,22 @@
 /*******************************************************************************
-  Cache System Service Library Implementation Source File
+  MPU PLIB Header
 
-  Company
+  Company:
     Microchip Technology Inc.
 
-  File Name
-    sys_cache.c
+  File Name:
+    plib_mpu.h
 
-  Summary
-    Cache System Service Library interface implementation.
+  Summary:
+    MPU PLIB Header File
 
-  Description
-    This file implements the interface to the Cache System Service Library.
+  Description:
+    None
 
 *******************************************************************************/
 
-// DOM-IGNORE-BEGIN
 /*******************************************************************************
-* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -38,69 +37,37 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
+
+#ifndef PLIB_MPU_H
+#define PLIB_MPU_H
+
+// DOM-IGNORE-BEGIN
+#ifdef __cplusplus  // Provide C++ Compatibility
+
+    extern "C" {
+
+#endif
 // DOM-IGNORE-END
 
 // *****************************************************************************
 // *****************************************************************************
-// Section: Included Files
+// Section: Interface
 // *****************************************************************************
 // *****************************************************************************
-#include "device.h"
-#include "device_cache.h"
-#include "system/cache/sys_cache.h"
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: System Cache Interface Functions
-// *****************************************************************************
-// *****************************************************************************
-void SYS_CACHE_EnableCaches (void)
-{
-}
+/****************************** MPU API *********************************/
 
-void SYS_CACHE_DisableCaches (void)
-{
-}
-void SYS_CACHE_EnableICache (void)
-{
-}
+void MPU_Initialize( void );
 
-void SYS_CACHE_DisableICache (void)
-{
-}
 
-void SYS_CACHE_InvalidateICache (void)
-{
-}
 
-void SYS_CACHE_EnableDCache (void)
-{
-}
+// DOM-IGNORE-BEGIN
+#ifdef __cplusplus  // Provide C++ Compatibility
 
-void SYS_CACHE_DisableDCache (void)
-{
-}
+    }
 
-void SYS_CACHE_InvalidateDCache (void)
-{
-}
+#endif
+// DOM-IGNORE-END
+#endif // PLIB_MPU_H
 
-void SYS_CACHE_CleanDCache (void)
-{
-}
 
-void SYS_CACHE_CleanInvalidateDCache (void)
-{
-}
-
-void SYS_CACHE_InvalidateDCache_by_Addr (uint32_t *addr, int32_t size)
-{
-}
-
-void SYS_CACHE_CleanDCache_by_Addr (uint32_t *addr, int32_t size)
-{
-}
-
-void SYS_CACHE_CleanInvalidateDCache_by_Addr (uint32_t *addr, int32_t size)
-{
-}

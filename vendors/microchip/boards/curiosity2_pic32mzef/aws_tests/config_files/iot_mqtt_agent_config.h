@@ -87,7 +87,7 @@
  */
 /** @{ */
 #define mqttconfigMQTT_TASK_STACK_DEPTH    ( 2048 )
-#define mqttconfigMQTT_TASK_PRIORITY       ( tskIDLE_PRIORITY )
+#define mqttconfigMQTT_TASK_PRIORITY       ( tskIDLE_PRIORITY + 0 )
 /** @} */
 
 /**

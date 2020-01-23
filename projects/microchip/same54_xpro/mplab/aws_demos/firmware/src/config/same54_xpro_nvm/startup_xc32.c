@@ -102,7 +102,6 @@ __STATIC_INLINE void  __attribute__((optimize("-O1"))) TCM_Disable(void)
 
 __STATIC_INLINE void ICache_Enable(void)
 {
-    CMCC_REGS->CMCC_CTRL = (CMCC_CTRL_CEN_Msk);
 }
 
 __STATIC_INLINE void DCache_Enable(void)
@@ -156,11 +155,7 @@ void __attribute__((optimize("-O1"), section(".text.Reset_Handler"), long_call))
     __libc_init_array();
 
 
-    /* Enable Instruction Cache */
-    ICache_Enable();
 
-    /* Enable Data Cache    */
-    DCache_Enable();
 
     /* Call the optional application-provided _on_bootstrap() function. */
     if (_on_bootstrap)

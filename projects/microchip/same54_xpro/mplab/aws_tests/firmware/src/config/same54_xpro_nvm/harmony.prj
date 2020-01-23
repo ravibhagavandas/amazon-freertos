@@ -3,7 +3,7 @@
   <Configurator>
     <Name dnOrder="0" value="same54_xpro_nvm"/>
     <Processor dnOrder="1" value="ATSAME54P20A"/>
-    <Harmony dnOrder="2" path="../../../../../../.."/>
+    <Harmony dnOrder="2" path="../../../../../.."/>
     <Manifest dnOrder="3">
       <Files dnOrder="0">
         <File dnOrder="0">
@@ -411,8 +411,8 @@
           <Name dnOrder="1">NetworkInterface_eth.c</Name>
           <LogicalPath dnOrder="2">/amazon-freertos/libraries/freertos_plus/standard/freertos_plus_tcp/source/portable/NetworkInterface/same54</LogicalPath>
           <PhysicalPath dnOrder="3">/../../../../../../../../../../amazon-freertos/libraries/freertos_plus/standard/freertos_plus_tcp/source/portable/NetworkInterface/same54/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">7A4367521869FCCB98D12D4E7DA8CB42</GeneratedChecksum>
-          <UserChecksum dnOrder="5">7A4367521869FCCB98D12D4E7DA8CB42</UserChecksum>
+          <GeneratedChecksum dnOrder="4">A6773FE2446EA32495F949BFA2E3E25E</GeneratedChecksum>
+          <UserChecksum dnOrder="5">A6773FE2446EA32495F949BFA2E3E25E</UserChecksum>
         </File>
         <File dnOrder="51">
           <Type dnOrder="0">SOURCE</Type>
@@ -603,8 +603,8 @@
           <Name dnOrder="1">aws_bufferpool_config.h</Name>
           <LogicalPath dnOrder="2">/amazon-freertos/vendors/microchip/boards/same54_xpro/aws_tests/config_files</LogicalPath>
           <PhysicalPath dnOrder="3">/../../../../../../../../../../amazon-freertos/vendors/microchip/boards/same54_xpro/aws_tests/config_files/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">C141E96A79DCF5EBD3A201EDEBE38CF7</GeneratedChecksum>
-          <UserChecksum dnOrder="5">C141E96A79DCF5EBD3A201EDEBE38CF7</UserChecksum>
+          <GeneratedChecksum dnOrder="4">65E91D9FBCCD21188EEEF73C2BFC9C55</GeneratedChecksum>
+          <UserChecksum dnOrder="5">65E91D9FBCCD21188EEEF73C2BFC9C55</UserChecksum>
         </File>
         <File dnOrder="75">
           <Type dnOrder="0">SOURCE</Type>
@@ -627,8 +627,8 @@
           <Name dnOrder="1">aws_clientcredential_keys.h</Name>
           <LogicalPath dnOrder="2">/amazon-freertos/demos/include</LogicalPath>
           <PhysicalPath dnOrder="3">/../../../../../../../../../../amazon-freertos/demos/include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">E78A2E4C165C0B0A771F9E389485C2F0</GeneratedChecksum>
-          <UserChecksum dnOrder="5">E78A2E4C165C0B0A771F9E389485C2F0</UserChecksum>
+          <GeneratedChecksum dnOrder="4">5FFDD97BC2B0BD01057CFA8D9C0AF67C</GeneratedChecksum>
+          <UserChecksum dnOrder="5">5FFDD97BC2B0BD01057CFA8D9C0AF67C</UserChecksum>
         </File>
         <File dnOrder="78">
           <Type dnOrder="0">SOURCE</Type>
@@ -659,8 +659,8 @@
           <Name dnOrder="1">aws_demo_config.h</Name>
           <LogicalPath dnOrder="2">/amazon-freertos/vendors/microchip/boards/same54_xpro/aws_tests/config_files</LogicalPath>
           <PhysicalPath dnOrder="3">/../../../../../../../../../../amazon-freertos/vendors/microchip/boards/same54_xpro/aws_tests/config_files/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">0F203978DE247D6757DFDC17A2089886</GeneratedChecksum>
-          <UserChecksum dnOrder="5">0F203978DE247D6757DFDC17A2089886</UserChecksum>
+          <GeneratedChecksum dnOrder="4">65C046D9D2519F561F7B56613793A8E7</GeneratedChecksum>
+          <UserChecksum dnOrder="5">65C046D9D2519F561F7B56613793A8E7</UserChecksum>
         </File>
         <File dnOrder="82">
           <Type dnOrder="0">SOURCE</Type>
@@ -683,8 +683,8 @@
           <Name dnOrder="1">aws_ggd_config.h</Name>
           <LogicalPath dnOrder="2">/amazon-freertos/vendors/microchip/boards/same54_xpro/aws_tests/config_files</LogicalPath>
           <PhysicalPath dnOrder="3">/../../../../../../../../../../amazon-freertos/vendors/microchip/boards/same54_xpro/aws_tests/config_files/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">122B3E4CD947795AAF18DBBE10218B6C</GeneratedChecksum>
-          <UserChecksum dnOrder="5">122B3E4CD947795AAF18DBBE10218B6C</UserChecksum>
+          <GeneratedChecksum dnOrder="4">C2C518CF9795570BF4F116B12064040B</GeneratedChecksum>
+          <UserChecksum dnOrder="5">C2C518CF9795570BF4F116B12064040B</UserChecksum>
         </File>
         <File dnOrder="85">
           <Type dnOrder="0">SOURCE</Type>
@@ -1003,8 +1003,8 @@
           <Name dnOrder="1">aws_secure_sockets_config.h</Name>
           <LogicalPath dnOrder="2">/amazon-freertos/vendors/microchip/boards/same54_xpro/aws_tests/config_files</LogicalPath>
           <PhysicalPath dnOrder="3">/../../../../../../../../../../amazon-freertos/vendors/microchip/boards/same54_xpro/aws_tests/config_files/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">7FA5E53C4FC6993F46E90C2A7FB4B74F</GeneratedChecksum>
-          <UserChecksum dnOrder="5">7FA5E53C4FC6993F46E90C2A7FB4B74F</UserChecksum>
+          <GeneratedChecksum dnOrder="4">3F11FAE36DB96ED623E7D5FFC7FD8368</GeneratedChecksum>
+          <UserChecksum dnOrder="5">3F11FAE36DB96ED623E7D5FFC7FD8368</UserChecksum>
         </File>
         <File dnOrder="125">
           <Type dnOrder="0">SOURCE</Type>
@@ -1027,8 +1027,8 @@
           <Name dnOrder="1">aws_shadow_config.h</Name>
           <LogicalPath dnOrder="2">/amazon-freertos/vendors/microchip/boards/same54_xpro/aws_tests/config_files</LogicalPath>
           <PhysicalPath dnOrder="3">/../../../../../../../../../../amazon-freertos/vendors/microchip/boards/same54_xpro/aws_tests/config_files/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">E8F9197BF116A9184A40DB5CAB3F5C43</GeneratedChecksum>
-          <UserChecksum dnOrder="5">E8F9197BF116A9184A40DB5CAB3F5C43</UserChecksum>
+          <GeneratedChecksum dnOrder="4">FAF9EF4F0D6701EB4D0C730F95F6D402</GeneratedChecksum>
+          <UserChecksum dnOrder="5">FAF9EF4F0D6701EB4D0C730F95F6D402</UserChecksum>
         </File>
         <File dnOrder="128">
           <Type dnOrder="0">SOURCE</Type>
@@ -1619,8 +1619,8 @@
           <Name dnOrder="1">drv_ethphy.c</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/driver/ethphy/src/dynamic/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/ethphy/src/dynamic/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">DEA64EE69B5E56ABCE617E6F49679EDA</GeneratedChecksum>
-          <UserChecksum dnOrder="5">DEA64EE69B5E56ABCE617E6F49679EDA</UserChecksum>
+          <GeneratedChecksum dnOrder="4">0EE1B710F501985FCE7702BA19B6A124</GeneratedChecksum>
+          <UserChecksum dnOrder="5">0EE1B710F501985FCE7702BA19B6A124</UserChecksum>
         </File>
         <File dnOrder="202">
           <Type dnOrder="0">SOURCE</Type>
@@ -1635,24 +1635,24 @@
           <Name dnOrder="1">drv_gmac.c</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/driver/gmac/src/dynamic/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/gmac/src/dynamic/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">7A9233A37BE3C7374C1C95FBDB9484C1</GeneratedChecksum>
-          <UserChecksum dnOrder="5">7A9233A37BE3C7374C1C95FBDB9484C1</UserChecksum>
+          <GeneratedChecksum dnOrder="4">E6151F32CA9A9234CE4713ED777F92DA</GeneratedChecksum>
+          <UserChecksum dnOrder="5">E6151F32CA9A9234CE4713ED777F92DA</UserChecksum>
         </File>
         <File dnOrder="204">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">drv_gmac_lib_samE5x.c</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/driver/gmac/src/dynamic/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/gmac/src/dynamic/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">5478FE1F5B3D26769C4AE2B13CBCCA01</GeneratedChecksum>
-          <UserChecksum dnOrder="5">5478FE1F5B3D26769C4AE2B13CBCCA01</UserChecksum>
+          <GeneratedChecksum dnOrder="4">F7AD19AFCC786B0959868985D5A246BE</GeneratedChecksum>
+          <UserChecksum dnOrder="5">F7AD19AFCC786B0959868985D5A246BE</UserChecksum>
         </File>
         <File dnOrder="205">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">drv_miim.c</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/driver/miim/src/dynamic/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/miim/src/dynamic/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">A4A93DF292ED0C565A47AA6AB84E5210</GeneratedChecksum>
-          <UserChecksum dnOrder="5">A4A93DF292ED0C565A47AA6AB84E5210</UserChecksum>
+          <GeneratedChecksum dnOrder="4">C15C861FB76A8ACBC2713A251E0EF9A0</GeneratedChecksum>
+          <UserChecksum dnOrder="5">C15C861FB76A8ACBC2713A251E0EF9A0</UserChecksum>
         </File>
         <File dnOrder="206">
           <Type dnOrder="0">SOURCE</Type>
@@ -2035,8 +2035,8 @@
           <Name dnOrder="1">initialization.c</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">CCD5F5688A035AC6D936C486ABD4CA78</GeneratedChecksum>
-          <UserChecksum dnOrder="5">CCD5F5688A035AC6D936C486ABD4CA78</UserChecksum>
+          <GeneratedChecksum dnOrder="4">1DD3132778EC7DF058E0A163895FEE06</GeneratedChecksum>
+          <UserChecksum dnOrder="5">1DD3132778EC7DF058E0A163895FEE06</UserChecksum>
         </File>
         <File dnOrder="254">
           <Type dnOrder="0">SOURCE</Type>
@@ -2091,8 +2091,8 @@
           <Name dnOrder="1">iot_config.h</Name>
           <LogicalPath dnOrder="2">/amazon-freertos/vendors/microchip/boards/same54_xpro/aws_tests/config_files</LogicalPath>
           <PhysicalPath dnOrder="3">/../../../../../../../../../../amazon-freertos/vendors/microchip/boards/same54_xpro/aws_tests/config_files/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">521F425D51992C691513DFA9D74E41F0</GeneratedChecksum>
-          <UserChecksum dnOrder="5">521F425D51992C691513DFA9D74E41F0</UserChecksum>
+          <GeneratedChecksum dnOrder="4">4A1F009081B0D6B374D218713C562946</GeneratedChecksum>
+          <UserChecksum dnOrder="5">4A1F009081B0D6B374D218713C562946</UserChecksum>
         </File>
         <File dnOrder="261">
           <Type dnOrder="0">SOURCE</Type>
@@ -2387,8 +2387,8 @@
           <Name dnOrder="1">iot_mqtt_agent_config.h</Name>
           <LogicalPath dnOrder="2">/amazon-freertos/vendors/microchip/boards/same54_xpro/aws_tests/config_files</LogicalPath>
           <PhysicalPath dnOrder="3">/../../../../../../../../../../amazon-freertos/vendors/microchip/boards/same54_xpro/aws_tests/config_files/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">8B3E9A42E84BEA26B613B20AF2CEE537</GeneratedChecksum>
-          <UserChecksum dnOrder="5">8B3E9A42E84BEA26B613B20AF2CEE537</UserChecksum>
+          <GeneratedChecksum dnOrder="4">B6B79F13ECB2E2380D49159BCC169837</GeneratedChecksum>
+          <UserChecksum dnOrder="5">B6B79F13ECB2E2380D49159BCC169837</UserChecksum>
         </File>
         <File dnOrder="298">
           <Type dnOrder="0">SOURCE</Type>
@@ -2547,8 +2547,8 @@
           <Name dnOrder="1">iot_pkcs11_config.h</Name>
           <LogicalPath dnOrder="2">/amazon-freertos/vendors/microchip/boards/same54_xpro/aws_tests/config_files</LogicalPath>
           <PhysicalPath dnOrder="3">/../../../../../../../../../../amazon-freertos/vendors/microchip/boards/same54_xpro/aws_tests/config_files/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">1E4EB9A2131C613BBE69A09A17D7EBC1</GeneratedChecksum>
-          <UserChecksum dnOrder="5">1E4EB9A2131C613BBE69A09A17D7EBC1</UserChecksum>
+          <GeneratedChecksum dnOrder="4">AC28E883B22D699E6D3C6C54BC630372</GeneratedChecksum>
+          <UserChecksum dnOrder="5">AC28E883B22D699E6D3C6C54BC630372</UserChecksum>
         </File>
         <File dnOrder="318">
           <Type dnOrder="0">SOURCE</Type>
@@ -4099,8 +4099,8 @@
           <Name dnOrder="1">sys_time.c</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/system/time/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/time/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">70DAE413C209782D51F61D7C896593FB</GeneratedChecksum>
-          <UserChecksum dnOrder="5">70DAE413C209782D51F61D7C896593FB</UserChecksum>
+          <GeneratedChecksum dnOrder="4">28C868D3255F7D85CF4B31AA2A050AF6</GeneratedChecksum>
+          <UserChecksum dnOrder="5">28C868D3255F7D85CF4B31AA2A050AF6</UserChecksum>
         </File>
         <File dnOrder="512">
           <Type dnOrder="0">SOURCE</Type>
@@ -4243,8 +4243,8 @@
           <Name dnOrder="1">tcpip_mac.h</Name>
           <LogicalPath dnOrder="2">/amazon-freertos/vendors/microchip/harmony3/afr/tcpip</LogicalPath>
           <PhysicalPath dnOrder="3">/../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr/tcpip/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">CC6BFE131F4E2F311D54E892DF1520F8</GeneratedChecksum>
-          <UserChecksum dnOrder="5">CC6BFE131F4E2F311D54E892DF1520F8</UserChecksum>
+          <GeneratedChecksum dnOrder="4">50F24929142EB1F48173008E0B1FFAE5</GeneratedChecksum>
+          <UserChecksum dnOrder="5">50F24929142EB1F48173008E0B1FFAE5</UserChecksum>
         </File>
         <File dnOrder="530">
           <Type dnOrder="0">SOURCE</Type>
@@ -4811,8 +4811,8 @@
           <Name dnOrder="1">configuration.h</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">7C889F60A1490ADC0A9CB5FD80412247</GeneratedChecksum>
-          <UserChecksum dnOrder="5">7C889F60A1490ADC0A9CB5FD80412247</UserChecksum>
+          <GeneratedChecksum dnOrder="4">43729B621D979B0628CF9C7CB3ECDCB6</GeneratedChecksum>
+          <UserChecksum dnOrder="5">43729B621D979B0628CF9C7CB3ECDCB6</UserChecksum>
         </File>
         <File dnOrder="601">
           <Type dnOrder="0">HEADER</Type>
@@ -4883,16 +4883,16 @@
           <Name dnOrder="1">drv_ethphy.h</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/driver/ethphy/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/ethphy/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">62CAE053C6EE76845D49EF96E5AEC375</GeneratedChecksum>
-          <UserChecksum dnOrder="5">62CAE053C6EE76845D49EF96E5AEC375</UserChecksum>
+          <GeneratedChecksum dnOrder="4">23553F32930FE81E131D17012FFCC39F</GeneratedChecksum>
+          <UserChecksum dnOrder="5">23553F32930FE81E131D17012FFCC39F</UserChecksum>
         </File>
         <File dnOrder="610">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">drv_ethphy_local.h</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/driver/ethphy/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/ethphy/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">4470DD3CEF6A09BC3DBD139DDA67168D</GeneratedChecksum>
-          <UserChecksum dnOrder="5">4470DD3CEF6A09BC3DBD139DDA67168D</UserChecksum>
+          <GeneratedChecksum dnOrder="4">0C44C7ABE3EAAA00A06187C725F40595</GeneratedChecksum>
+          <UserChecksum dnOrder="5">0C44C7ABE3EAAA00A06187C725F40595</UserChecksum>
         </File>
         <File dnOrder="611">
           <Type dnOrder="0">HEADER</Type>
@@ -4915,24 +4915,24 @@
           <Name dnOrder="1">drv_gmac.h</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/driver/gmac/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/gmac/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">393F4A311E594E107C270FAAFA4DFC14</GeneratedChecksum>
-          <UserChecksum dnOrder="5">393F4A311E594E107C270FAAFA4DFC14</UserChecksum>
+          <GeneratedChecksum dnOrder="4">C0DEB92F20867CA782E859EBB4EADAE9</GeneratedChecksum>
+          <UserChecksum dnOrder="5">C0DEB92F20867CA782E859EBB4EADAE9</UserChecksum>
         </File>
         <File dnOrder="614">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">drv_gmac_lib.h</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/driver/gmac/src/dynamic/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/gmac/src/dynamic/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">E200F1ADAA565572BC70AAC48DA270A1</GeneratedChecksum>
-          <UserChecksum dnOrder="5">E200F1ADAA565572BC70AAC48DA270A1</UserChecksum>
+          <GeneratedChecksum dnOrder="4">C343F10169CBA91AFC89D2A2018EBF8B</GeneratedChecksum>
+          <UserChecksum dnOrder="5">C343F10169CBA91AFC89D2A2018EBF8B</UserChecksum>
         </File>
         <File dnOrder="615">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">drv_gmac_local.h</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/driver/gmac/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/gmac/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">6FD07421CA5D53FA4FEDDA5D22EF347B</GeneratedChecksum>
-          <UserChecksum dnOrder="5">6FD07421CA5D53FA4FEDDA5D22EF347B</UserChecksum>
+          <GeneratedChecksum dnOrder="4">6C1CC6546A02EDF7D147040EC1E2746D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">6C1CC6546A02EDF7D147040EC1E2746D</UserChecksum>
         </File>
         <File dnOrder="616">
           <Type dnOrder="0">HEADER</Type>
@@ -4944,29 +4944,21 @@
         </File>
         <File dnOrder="617">
           <Type dnOrder="0">HEADER</Type>
-          <Name dnOrder="1">drv_miim_config.h</Name>
-          <LogicalPath dnOrder="2">config/same54_xpro_nvm/driver/miim/config/</LogicalPath>
-          <PhysicalPath dnOrder="3">/driver/miim/config/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">CA63D319BC05B394CFF2D8F4F1AA407F</GeneratedChecksum>
-          <UserChecksum dnOrder="5">CA63D319BC05B394CFF2D8F4F1AA407F</UserChecksum>
-        </File>
-        <File dnOrder="618">
-          <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">drv_miim_local.h</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/driver/miim/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/miim/src/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">1EF1EE715C49735F516572B5E4CF614E</GeneratedChecksum>
           <UserChecksum dnOrder="5">1EF1EE715C49735F516572B5E4CF614E</UserChecksum>
         </File>
-        <File dnOrder="619">
+        <File dnOrder="618">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">drv_miim_mapping.h</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/driver/miim/src/dynamic/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/miim/src/dynamic/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">BFC3A3373F7D318D8FF046C7402DB7A6</GeneratedChecksum>
-          <UserChecksum dnOrder="5">BFC3A3373F7D318D8FF046C7402DB7A6</UserChecksum>
+          <GeneratedChecksum dnOrder="4">AABE44C6E9E28052F9F13C4A87713FD1</GeneratedChecksum>
+          <UserChecksum dnOrder="5">AABE44C6E9E28052F9F13C4A87713FD1</UserChecksum>
         </File>
-        <File dnOrder="620">
+        <File dnOrder="619">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">dsu.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAME54P20A_DFP/component/</LogicalPath>
@@ -4974,7 +4966,7 @@
           <GeneratedChecksum dnOrder="4">66E7E4F4FDF889D5162B9764B29303D9</GeneratedChecksum>
           <UserChecksum dnOrder="5">66E7E4F4FDF889D5162B9764B29303D9</UserChecksum>
         </File>
-        <File dnOrder="621">
+        <File dnOrder="620">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">eic.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAME54P20A_DFP/component/</LogicalPath>
@@ -4982,7 +4974,7 @@
           <GeneratedChecksum dnOrder="4">3FA7E3B2AB8E4A78F389EE4EFAC9C7E2</GeneratedChecksum>
           <UserChecksum dnOrder="5">3FA7E3B2AB8E4A78F389EE4EFAC9C7E2</UserChecksum>
         </File>
-        <File dnOrder="622">
+        <File dnOrder="621">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">evsys.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAME54P20A_DFP/component/</LogicalPath>
@@ -4990,7 +4982,7 @@
           <GeneratedChecksum dnOrder="4">E06952629CBE2B25ED7AA378190814E2</GeneratedChecksum>
           <UserChecksum dnOrder="5">E06952629CBE2B25ED7AA378190814E2</UserChecksum>
         </File>
-        <File dnOrder="623">
+        <File dnOrder="622">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">freqm.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAME54P20A_DFP/component/</LogicalPath>
@@ -4998,7 +4990,7 @@
           <GeneratedChecksum dnOrder="4">6F3251BF992EA6FBCB4EF3AF81A45799</GeneratedChecksum>
           <UserChecksum dnOrder="5">6F3251BF992EA6FBCB4EF3AF81A45799</UserChecksum>
         </File>
-        <File dnOrder="624">
+        <File dnOrder="623">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">gclk.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAME54P20A_DFP/component/</LogicalPath>
@@ -5006,7 +4998,7 @@
           <GeneratedChecksum dnOrder="4">AAD0AA44832371A864BB97A110CB6FFE</GeneratedChecksum>
           <UserChecksum dnOrder="5">AAD0AA44832371A864BB97A110CB6FFE</UserChecksum>
         </File>
-        <File dnOrder="625">
+        <File dnOrder="624">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">gmac.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAME54P20A_DFP/component/</LogicalPath>
@@ -5014,7 +5006,7 @@
           <GeneratedChecksum dnOrder="4">1E3716F634BB2D457AEFE063D7004E27</GeneratedChecksum>
           <UserChecksum dnOrder="5">1E3716F634BB2D457AEFE063D7004E27</UserChecksum>
         </File>
-        <File dnOrder="626">
+        <File dnOrder="625">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">hmatrixb.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAME54P20A_DFP/component/</LogicalPath>
@@ -5022,7 +5014,7 @@
           <GeneratedChecksum dnOrder="4">C9AB4A7E765B1B03F222F8D01F3F9962</GeneratedChecksum>
           <UserChecksum dnOrder="5">C9AB4A7E765B1B03F222F8D01F3F9962</UserChecksum>
         </File>
-        <File dnOrder="627">
+        <File dnOrder="626">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">i2s.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAME54P20A_DFP/component/</LogicalPath>
@@ -5030,7 +5022,7 @@
           <GeneratedChecksum dnOrder="4">8A34690E46B582DFC4F956E562CCCEC8</GeneratedChecksum>
           <UserChecksum dnOrder="5">8A34690E46B582DFC4F956E562CCCEC8</UserChecksum>
         </File>
-        <File dnOrder="628">
+        <File dnOrder="627">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">icm.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAME54P20A_DFP/component/</LogicalPath>
@@ -5038,7 +5030,7 @@
           <GeneratedChecksum dnOrder="4">74EDF2C0D9D474AD3995EED3CC4E91D8</GeneratedChecksum>
           <UserChecksum dnOrder="5">74EDF2C0D9D474AD3995EED3CC4E91D8</UserChecksum>
         </File>
-        <File dnOrder="629">
+        <File dnOrder="628">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">mclk.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAME54P20A_DFP/component/</LogicalPath>
@@ -5046,7 +5038,7 @@
           <GeneratedChecksum dnOrder="4">DAC719699D3307E8270819CD048970DF</GeneratedChecksum>
           <UserChecksum dnOrder="5">DAC719699D3307E8270819CD048970DF</UserChecksum>
         </File>
-        <File dnOrder="630">
+        <File dnOrder="629">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">mpu_armv7.h</Name>
           <LogicalPath dnOrder="2">packs/CMSIS/CMSIS/Core/Include/</LogicalPath>
@@ -5054,7 +5046,7 @@
           <GeneratedChecksum dnOrder="4">A0246C3B848A6A45D54CE5DA8DF3B9C8</GeneratedChecksum>
           <UserChecksum dnOrder="5">A0246C3B848A6A45D54CE5DA8DF3B9C8</UserChecksum>
         </File>
-        <File dnOrder="631">
+        <File dnOrder="630">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">nvmctrl.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAME54P20A_DFP/component/</LogicalPath>
@@ -5062,7 +5054,7 @@
           <GeneratedChecksum dnOrder="4">1BD36F632CBAF634FE7715B6088A3188</GeneratedChecksum>
           <UserChecksum dnOrder="5">1BD36F632CBAF634FE7715B6088A3188</UserChecksum>
         </File>
-        <File dnOrder="632">
+        <File dnOrder="631">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">osal.h</Name>
           <LogicalPath dnOrder="2">/osal/</LogicalPath>
@@ -5070,7 +5062,7 @@
           <GeneratedChecksum dnOrder="4">F0AD88762263B7CB89B02AB4F5876059</GeneratedChecksum>
           <UserChecksum dnOrder="5">F0AD88762263B7CB89B02AB4F5876059</UserChecksum>
         </File>
-        <File dnOrder="633">
+        <File dnOrder="632">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">osal_definitions.h</Name>
           <LogicalPath dnOrder="2">/osal/</LogicalPath>
@@ -5078,7 +5070,7 @@
           <GeneratedChecksum dnOrder="4">167A43EFF8A31441EBF85AC77958A30B</GeneratedChecksum>
           <UserChecksum dnOrder="5">167A43EFF8A31441EBF85AC77958A30B</UserChecksum>
         </File>
-        <File dnOrder="634">
+        <File dnOrder="633">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">osal_freertos.h</Name>
           <LogicalPath dnOrder="2">/osal/</LogicalPath>
@@ -5086,7 +5078,7 @@
           <GeneratedChecksum dnOrder="4">0E6C60DFF74D4A0EC993971475F2CEAC</GeneratedChecksum>
           <UserChecksum dnOrder="5">0E6C60DFF74D4A0EC993971475F2CEAC</UserChecksum>
         </File>
-        <File dnOrder="635">
+        <File dnOrder="634">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">osc32kctrl.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAME54P20A_DFP/component/</LogicalPath>
@@ -5094,7 +5086,7 @@
           <GeneratedChecksum dnOrder="4">79901F54ABB61415DF5CF4B1E581DDCD</GeneratedChecksum>
           <UserChecksum dnOrder="5">79901F54ABB61415DF5CF4B1E581DDCD</UserChecksum>
         </File>
-        <File dnOrder="636">
+        <File dnOrder="635">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">oscctrl.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAME54P20A_DFP/component/</LogicalPath>
@@ -5102,7 +5094,7 @@
           <GeneratedChecksum dnOrder="4">F807DAEE6D6C04BEE226361C202EEC53</GeneratedChecksum>
           <UserChecksum dnOrder="5">F807DAEE6D6C04BEE226361C202EEC53</UserChecksum>
         </File>
-        <File dnOrder="637">
+        <File dnOrder="636">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">pac.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAME54P20A_DFP/component/</LogicalPath>
@@ -5110,7 +5102,7 @@
           <GeneratedChecksum dnOrder="4">1A8D70DA2CEFF7449459E99A961CF4C1</GeneratedChecksum>
           <UserChecksum dnOrder="5">1A8D70DA2CEFF7449459E99A961CF4C1</UserChecksum>
         </File>
-        <File dnOrder="638">
+        <File dnOrder="637">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">pcc.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAME54P20A_DFP/component/</LogicalPath>
@@ -5118,7 +5110,7 @@
           <GeneratedChecksum dnOrder="4">1D1BD98D291BB6CEB98AD9E630999787</GeneratedChecksum>
           <UserChecksum dnOrder="5">1D1BD98D291BB6CEB98AD9E630999787</UserChecksum>
         </File>
-        <File dnOrder="639">
+        <File dnOrder="638">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">pdec.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAME54P20A_DFP/component/</LogicalPath>
@@ -5126,7 +5118,7 @@
           <GeneratedChecksum dnOrder="4">B1B750C9BB5AA71C3B54F1B295D00A46</GeneratedChecksum>
           <UserChecksum dnOrder="5">B1B750C9BB5AA71C3B54F1B295D00A46</UserChecksum>
         </File>
-        <File dnOrder="640">
+        <File dnOrder="639">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_clock.h</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/peripheral/clock/</LogicalPath>
@@ -5134,7 +5126,7 @@
           <GeneratedChecksum dnOrder="4">0416F129713FDF989ACC1FC57065125C</GeneratedChecksum>
           <UserChecksum dnOrder="5">0416F129713FDF989ACC1FC57065125C</UserChecksum>
         </File>
-        <File dnOrder="641">
+        <File dnOrder="640">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_cmcc.h</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/peripheral/cmcc/</LogicalPath>
@@ -5142,7 +5134,7 @@
           <GeneratedChecksum dnOrder="4">4209AA8D29CCA5F4F705D4A6C8722DDB</GeneratedChecksum>
           <UserChecksum dnOrder="5">4209AA8D29CCA5F4F705D4A6C8722DDB</UserChecksum>
         </File>
-        <File dnOrder="642">
+        <File dnOrder="641">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_evsys.h</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/peripheral/evsys</LogicalPath>
@@ -5150,7 +5142,7 @@
           <GeneratedChecksum dnOrder="4">CCAEF942C66AF995876DFD85CEFF611F</GeneratedChecksum>
           <UserChecksum dnOrder="5">CCAEF942C66AF995876DFD85CEFF611F</UserChecksum>
         </File>
-        <File dnOrder="643">
+        <File dnOrder="642">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_nvic.h</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/peripheral/nvic/</LogicalPath>
@@ -5158,7 +5150,7 @@
           <GeneratedChecksum dnOrder="4">E95AB23B866AA0CE6F0ABF637E9E2C83</GeneratedChecksum>
           <UserChecksum dnOrder="5">E95AB23B866AA0CE6F0ABF637E9E2C83</UserChecksum>
         </File>
-        <File dnOrder="644">
+        <File dnOrder="643">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_nvmctrl.h</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/peripheral/nvmctrl/</LogicalPath>
@@ -5166,7 +5158,7 @@
           <GeneratedChecksum dnOrder="4">979C4115BB3514CB386D0B6C8F6E1525</GeneratedChecksum>
           <UserChecksum dnOrder="5">979C4115BB3514CB386D0B6C8F6E1525</UserChecksum>
         </File>
-        <File dnOrder="645">
+        <File dnOrder="644">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_port.h</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/peripheral/port/</LogicalPath>
@@ -5174,7 +5166,7 @@
           <GeneratedChecksum dnOrder="4">59BFDF1889531DF16E34A0BB01F3736F</GeneratedChecksum>
           <UserChecksum dnOrder="5">59BFDF1889531DF16E34A0BB01F3736F</UserChecksum>
         </File>
-        <File dnOrder="646">
+        <File dnOrder="645">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_sercom2_usart.h</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/peripheral/sercom/usart/</LogicalPath>
@@ -5182,7 +5174,7 @@
           <GeneratedChecksum dnOrder="4">00C3980E8783050E40894918F1788F2B</GeneratedChecksum>
           <UserChecksum dnOrder="5">00C3980E8783050E40894918F1788F2B</UserChecksum>
         </File>
-        <File dnOrder="647">
+        <File dnOrder="646">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_sercom5_usart.h</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/peripheral/sercom/usart/</LogicalPath>
@@ -5190,7 +5182,7 @@
           <GeneratedChecksum dnOrder="4">B9CC5C3EB925A7D460666DA2A1CC14FE</GeneratedChecksum>
           <UserChecksum dnOrder="5">B9CC5C3EB925A7D460666DA2A1CC14FE</UserChecksum>
         </File>
-        <File dnOrder="648">
+        <File dnOrder="647">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_sercom_usart_common.h</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/peripheral/sercom/usart/</LogicalPath>
@@ -5198,7 +5190,7 @@
           <GeneratedChecksum dnOrder="4">ECBB2330CAAAF4DDF9F34EEC552438D5</GeneratedChecksum>
           <UserChecksum dnOrder="5">ECBB2330CAAAF4DDF9F34EEC552438D5</UserChecksum>
         </File>
-        <File dnOrder="649">
+        <File dnOrder="648">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_tc0.h</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/peripheral/tc/</LogicalPath>
@@ -5206,7 +5198,7 @@
           <GeneratedChecksum dnOrder="4">C85A8376FD41753F5CDFDA9B336C47C7</GeneratedChecksum>
           <UserChecksum dnOrder="5">C85A8376FD41753F5CDFDA9B336C47C7</UserChecksum>
         </File>
-        <File dnOrder="650">
+        <File dnOrder="649">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_tc_common.h</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/peripheral/tc/</LogicalPath>
@@ -5214,7 +5206,7 @@
           <GeneratedChecksum dnOrder="4">8FFED42979E9560DBD315A966A8D551E</GeneratedChecksum>
           <UserChecksum dnOrder="5">8FFED42979E9560DBD315A966A8D551E</UserChecksum>
         </File>
-        <File dnOrder="651">
+        <File dnOrder="650">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_trng.h</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/peripheral/trng/</LogicalPath>
@@ -5222,7 +5214,7 @@
           <GeneratedChecksum dnOrder="4">0AD0E48DDE24B71101919ED5CF39238C</GeneratedChecksum>
           <UserChecksum dnOrder="5">0AD0E48DDE24B71101919ED5CF39238C</UserChecksum>
         </File>
-        <File dnOrder="652">
+        <File dnOrder="651">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">pm.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAME54P20A_DFP/component/</LogicalPath>
@@ -5230,7 +5222,7 @@
           <GeneratedChecksum dnOrder="4">FE3C975562B9E187338B51CC4AC8EBCA</GeneratedChecksum>
           <UserChecksum dnOrder="5">FE3C975562B9E187338B51CC4AC8EBCA</UserChecksum>
         </File>
-        <File dnOrder="653">
+        <File dnOrder="652">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">port.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAME54P20A_DFP/component/</LogicalPath>
@@ -5238,7 +5230,7 @@
           <GeneratedChecksum dnOrder="4">D198FF03054369C3CD91BD7021EDCDE9</GeneratedChecksum>
           <UserChecksum dnOrder="5">D198FF03054369C3CD91BD7021EDCDE9</UserChecksum>
         </File>
-        <File dnOrder="654">
+        <File dnOrder="653">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">pukcc.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAME54P20A_DFP/component/</LogicalPath>
@@ -5246,7 +5238,7 @@
           <GeneratedChecksum dnOrder="4">11AACB99F58636BA9E212973306893FB</GeneratedChecksum>
           <UserChecksum dnOrder="5">11AACB99F58636BA9E212973306893FB</UserChecksum>
         </File>
-        <File dnOrder="655">
+        <File dnOrder="654">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">qspi.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAME54P20A_DFP/component/</LogicalPath>
@@ -5254,7 +5246,7 @@
           <GeneratedChecksum dnOrder="4">5FB3FB2B4FE9B33665770598F46E3393</GeneratedChecksum>
           <UserChecksum dnOrder="5">5FB3FB2B4FE9B33665770598F46E3393</UserChecksum>
         </File>
-        <File dnOrder="656">
+        <File dnOrder="655">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">ramecc.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAME54P20A_DFP/component/</LogicalPath>
@@ -5262,7 +5254,7 @@
           <GeneratedChecksum dnOrder="4">34CE9E52A9747B379936B793096F868A</GeneratedChecksum>
           <UserChecksum dnOrder="5">34CE9E52A9747B379936B793096F868A</UserChecksum>
         </File>
-        <File dnOrder="657">
+        <File dnOrder="656">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">rstc.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAME54P20A_DFP/component/</LogicalPath>
@@ -5270,7 +5262,7 @@
           <GeneratedChecksum dnOrder="4">68EACDBA8F1C4031CB592E20AB497D78</GeneratedChecksum>
           <UserChecksum dnOrder="5">68EACDBA8F1C4031CB592E20AB497D78</UserChecksum>
         </File>
-        <File dnOrder="658">
+        <File dnOrder="657">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">rtc.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAME54P20A_DFP/component/</LogicalPath>
@@ -5278,7 +5270,7 @@
           <GeneratedChecksum dnOrder="4">2B6714425D86A0A67BCAEBB7225370AE</GeneratedChecksum>
           <UserChecksum dnOrder="5">2B6714425D86A0A67BCAEBB7225370AE</UserChecksum>
         </File>
-        <File dnOrder="659">
+        <File dnOrder="658">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">same54p20a.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAME54P20A_DFP/pio/</LogicalPath>
@@ -5286,7 +5278,7 @@
           <GeneratedChecksum dnOrder="4">BC3C35F731598BBE000BCEBD88CC4B56</GeneratedChecksum>
           <UserChecksum dnOrder="5">BC3C35F731598BBE000BCEBD88CC4B56</UserChecksum>
         </File>
-        <File dnOrder="660">
+        <File dnOrder="659">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sdhc.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAME54P20A_DFP/component/</LogicalPath>
@@ -5294,7 +5286,7 @@
           <GeneratedChecksum dnOrder="4">9D1F13681A11BB1A3DB7842BC1FF9C2B</GeneratedChecksum>
           <UserChecksum dnOrder="5">9D1F13681A11BB1A3DB7842BC1FF9C2B</UserChecksum>
         </File>
-        <File dnOrder="661">
+        <File dnOrder="660">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sercom.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAME54P20A_DFP/component/</LogicalPath>
@@ -5302,7 +5294,7 @@
           <GeneratedChecksum dnOrder="4">DD8004BEF7C9C0D4B968824990EA61FC</GeneratedChecksum>
           <UserChecksum dnOrder="5">DD8004BEF7C9C0D4B968824990EA61FC</UserChecksum>
         </File>
-        <File dnOrder="662">
+        <File dnOrder="661">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">supc.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAME54P20A_DFP/component/</LogicalPath>
@@ -5310,7 +5302,7 @@
           <GeneratedChecksum dnOrder="4">20178FD158BF5C2D8AE55BE69EA16E3D</GeneratedChecksum>
           <UserChecksum dnOrder="5">20178FD158BF5C2D8AE55BE69EA16E3D</UserChecksum>
         </File>
-        <File dnOrder="663">
+        <File dnOrder="662">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_cache.h</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/system/cache/</LogicalPath>
@@ -5318,7 +5310,7 @@
           <GeneratedChecksum dnOrder="4">AFAAF7D896D57569CA4CF73BB3339481</GeneratedChecksum>
           <UserChecksum dnOrder="5">AFAAF7D896D57569CA4CF73BB3339481</UserChecksum>
         </File>
-        <File dnOrder="664">
+        <File dnOrder="663">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_command.h</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/system/command/</LogicalPath>
@@ -5326,7 +5318,7 @@
           <GeneratedChecksum dnOrder="4">EC8319EE2EDCC51C2A9A1774BB898E46</GeneratedChecksum>
           <UserChecksum dnOrder="5">EC8319EE2EDCC51C2A9A1774BB898E46</UserChecksum>
         </File>
-        <File dnOrder="665">
+        <File dnOrder="664">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_console.h</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/system/console/</LogicalPath>
@@ -5334,15 +5326,15 @@
           <GeneratedChecksum dnOrder="4">133B4854322EF5DEAFDAD339FD7B1F40</GeneratedChecksum>
           <UserChecksum dnOrder="5">133B4854322EF5DEAFDAD339FD7B1F40</UserChecksum>
         </File>
-        <File dnOrder="666">
+        <File dnOrder="665">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_debug.h</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/system/debug/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/debug/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">8E56B89573C6F7A85F411BC931C64B3F</GeneratedChecksum>
-          <UserChecksum dnOrder="5">8E56B89573C6F7A85F411BC931C64B3F</UserChecksum>
+          <GeneratedChecksum dnOrder="4">BB77A0743128A9A75D6C599CB2BD5F57</GeneratedChecksum>
+          <UserChecksum dnOrder="5">BB77A0743128A9A75D6C599CB2BD5F57</UserChecksum>
         </File>
-        <File dnOrder="667">
+        <File dnOrder="666">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_int.h</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/system/int/</LogicalPath>
@@ -5350,7 +5342,7 @@
           <GeneratedChecksum dnOrder="4">1329D2DEB6E5AC9515AD4D165C60DC74</GeneratedChecksum>
           <UserChecksum dnOrder="5">1329D2DEB6E5AC9515AD4D165C60DC74</UserChecksum>
         </File>
-        <File dnOrder="668">
+        <File dnOrder="667">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_int_mapping.h</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/system/int/</LogicalPath>
@@ -5358,23 +5350,23 @@
           <GeneratedChecksum dnOrder="4">00278F169FFB0CBBAB3A68B5D647F093</GeneratedChecksum>
           <UserChecksum dnOrder="5">00278F169FFB0CBBAB3A68B5D647F093</UserChecksum>
         </File>
-        <File dnOrder="669">
+        <File dnOrder="668">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_time.h</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/system/time/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/time/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">5B1C0201624F17531B457421E59F38CD</GeneratedChecksum>
-          <UserChecksum dnOrder="5">5B1C0201624F17531B457421E59F38CD</UserChecksum>
+          <GeneratedChecksum dnOrder="4">466D676839280C0E7FC2CC6F78BA6EE9</GeneratedChecksum>
+          <UserChecksum dnOrder="5">466D676839280C0E7FC2CC6F78BA6EE9</UserChecksum>
         </File>
-        <File dnOrder="670">
+        <File dnOrder="669">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_time_definitions.h</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/system/time/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/time/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">F8165EAB8A02643100386E92CD7EB3C6</GeneratedChecksum>
-          <UserChecksum dnOrder="5">F8165EAB8A02643100386E92CD7EB3C6</UserChecksum>
+          <GeneratedChecksum dnOrder="4">82C87C4CF49EE4D859363C15E9073333</GeneratedChecksum>
+          <UserChecksum dnOrder="5">82C87C4CF49EE4D859363C15E9073333</UserChecksum>
         </File>
-        <File dnOrder="671">
+        <File dnOrder="670">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_time_local.h</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/system/time/</LogicalPath>
@@ -5382,7 +5374,7 @@
           <GeneratedChecksum dnOrder="4">62F39464265EC34979649F761FB4FE57</GeneratedChecksum>
           <UserChecksum dnOrder="5">62F39464265EC34979649F761FB4FE57</UserChecksum>
         </File>
-        <File dnOrder="672">
+        <File dnOrder="671">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">system.h</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/system/</LogicalPath>
@@ -5390,7 +5382,7 @@
           <GeneratedChecksum dnOrder="4">BE95B4F134C5C929787B9DA6FDBF3501</GeneratedChecksum>
           <UserChecksum dnOrder="5">BE95B4F134C5C929787B9DA6FDBF3501</UserChecksum>
         </File>
-        <File dnOrder="673">
+        <File dnOrder="672">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">system_common.h</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/system/</LogicalPath>
@@ -5398,7 +5390,7 @@
           <GeneratedChecksum dnOrder="4">C3F5136D520DAC4416512EBFCCA023C3</GeneratedChecksum>
           <UserChecksum dnOrder="5">C3F5136D520DAC4416512EBFCCA023C3</UserChecksum>
         </File>
-        <File dnOrder="674">
+        <File dnOrder="673">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">system_module.h</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/system/</LogicalPath>
@@ -5406,7 +5398,7 @@
           <GeneratedChecksum dnOrder="4">1C75A8A6B60598A2FD0D533F57839B72</GeneratedChecksum>
           <UserChecksum dnOrder="5">1C75A8A6B60598A2FD0D533F57839B72</UserChecksum>
         </File>
-        <File dnOrder="675">
+        <File dnOrder="674">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">tc.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAME54P20A_DFP/component/</LogicalPath>
@@ -5414,7 +5406,7 @@
           <GeneratedChecksum dnOrder="4">6E0FE3A779D066853F2C08339D676BC7</GeneratedChecksum>
           <UserChecksum dnOrder="5">6E0FE3A779D066853F2C08339D676BC7</UserChecksum>
         </File>
-        <File dnOrder="676">
+        <File dnOrder="675">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">tcc.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAME54P20A_DFP/component/</LogicalPath>
@@ -5422,7 +5414,7 @@
           <GeneratedChecksum dnOrder="4">0A93BC8AEC98819955E47915AAFABF8C</GeneratedChecksum>
           <UserChecksum dnOrder="5">0A93BC8AEC98819955E47915AAFABF8C</UserChecksum>
         </File>
-        <File dnOrder="677">
+        <File dnOrder="676">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">toolchain_specifics.h</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/</LogicalPath>
@@ -5430,7 +5422,7 @@
           <GeneratedChecksum dnOrder="4">6AFF17EB43477034115ED7E02FBB7E69</GeneratedChecksum>
           <UserChecksum dnOrder="5">6AFF17EB43477034115ED7E02FBB7E69</UserChecksum>
         </File>
-        <File dnOrder="678">
+        <File dnOrder="677">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">trng.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAME54P20A_DFP/component/</LogicalPath>
@@ -5438,7 +5430,7 @@
           <GeneratedChecksum dnOrder="4">EC06FF393FA18138030D66D79B74AEE6</GeneratedChecksum>
           <UserChecksum dnOrder="5">EC06FF393FA18138030D66D79B74AEE6</UserChecksum>
         </File>
-        <File dnOrder="679">
+        <File dnOrder="678">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">tz_context.h</Name>
           <LogicalPath dnOrder="2">packs/CMSIS/CMSIS/Core/Include/</LogicalPath>
@@ -5446,7 +5438,7 @@
           <GeneratedChecksum dnOrder="4">8710F2682DA1C97558850902DABA38BA</GeneratedChecksum>
           <UserChecksum dnOrder="5">8710F2682DA1C97558850902DABA38BA</UserChecksum>
         </File>
-        <File dnOrder="680">
+        <File dnOrder="679">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usb.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAME54P20A_DFP/component/</LogicalPath>
@@ -5454,7 +5446,7 @@
           <GeneratedChecksum dnOrder="4">75BF22028535B3755C572AC71F077D00</GeneratedChecksum>
           <UserChecksum dnOrder="5">75BF22028535B3755C572AC71F077D00</UserChecksum>
         </File>
-        <File dnOrder="681">
+        <File dnOrder="680">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">user.h</Name>
           <LogicalPath dnOrder="2">config/same54_xpro_nvm/</LogicalPath>
@@ -5462,7 +5454,7 @@
           <GeneratedChecksum dnOrder="4"/>
           <UserChecksum dnOrder="5"/>
         </File>
-        <File dnOrder="682">
+        <File dnOrder="681">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">wdt.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAME54P20A_DFP/component/</LogicalPath>

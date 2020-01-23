@@ -16,7 +16,19 @@
       </Attachments>
     </UniqueComponent>
     <UniqueComponent dnOrder="1" id="AmazonHWInterface">
-      <Attachments dnOrder="0">
+      <Symbols dnOrder="0">
+        <Combo dnOrder="0" id="AWS_CLOUD_LOG_PLATFORM">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="IOT_LOG_NONE"/>
+          </Values>
+        </Combo>
+        <Combo dnOrder="1" id="AWS_CLOUD_LOG_TASKPOOL">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="IOT_LOG_NONE"/>
+          </Values>
+        </Combo>
+      </Symbols>
+      <Attachments dnOrder="1">
         <DirectCapability dnOrder="0" id="AmazonHWInterface">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="targetComponentID">
@@ -1254,16 +1266,31 @@
             </Boolean>
           </Attributes>
         </Float>
-        <Boolean dnOrder="1" id="CORE_TIMER_INTERRUPT_MODE">
+        <Integer dnOrder="1" id="CORE_TIMER_FREQUENCY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core_timer" value="100000000"/>
+          </Values>
+        </Integer>
+        <Boolean dnOrder="2" id="CORE_TIMER_INTERRUPT_MODE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core_timer" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="2" id="CORE_TIMER_PERIODIC_INTERRUPT">
+        <Boolean dnOrder="3" id="CORE_TIMER_PERIODIC_INTERRUPT">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core_timer" value="false"/>
           </Values>
         </Boolean>
+        <Integer dnOrder="4" id="CORE_TIMER_PERIOD_US">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core_timer" value="1000"/>
+          </Values>
+        </Integer>
+        <String dnOrder="5" id="CORE_TIMER_PERIOD_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core_timer" value="0x186a0"/>
+          </Values>
+        </String>
       </Symbols>
       <Attachments dnOrder="1">
         <DirectCapability dnOrder="0" id="CORE_TIMER_TMR">
@@ -1282,14 +1309,19 @@
     <UniqueComponent dnOrder="6" id="drvExtPhyLan8740"/>
     <UniqueComponent dnOrder="7" id="drvMiim">
       <Symbols dnOrder="0">
-        <Menu dnOrder="0" id="DRV_MIIM_RTOS_MENU">
+        <String dnOrder="0" id="DRV_MIIM_ETH_MODULE_ID">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="drvMiim" value="_ETH_BASE_ADDRESS"/>
+          </Values>
+        </String>
+        <Menu dnOrder="1" id="DRV_MIIM_RTOS_MENU">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Menu>
-        <File dnOrder="1" id="DRV_SDHC_SYS_RTOS_TASK">
+        <File dnOrder="2" id="DRV_SDHC_SYS_RTOS_TASK">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
@@ -1305,6 +1337,16 @@
             <Dynamic dnOrder="0" id="drvPic32mEthmac" value="LAN8740"/>
           </Values>
         </String>
+        <Boolean dnOrder="1" id="TCPIP_EMAC_ETH_FILTER_RUNT_ACCEPT">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="true"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="2" id="TCPIP_EMAC_ETH_FILTER_RUNT_REJECT">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="false"/>
+          </Values>
+        </Boolean>
       </Symbols>
       <Attachments dnOrder="1">
         <DirectCapability dnOrder="0" id="libdrvPic32mEthmac">
@@ -1574,6 +1616,11 @@
             <Dynamic dnOrder="0" id="sys_time" value="CORE_TIMER"/>
           </Values>
         </String>
+        <String dnOrder="1" id="SYS_TIME_REMOTE_COMPONENT_ID">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="sys_time" value="core_timer"/>
+          </Values>
+        </String>
       </Symbols>
       <Attachments dnOrder="1">
         <DirectDependency dnOrder="0" id="sys_time_TMR_dependency">
@@ -1669,25 +1716,25 @@
   <UserData>
     <ComponentGraph dnOrder="0" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
-        <ElementPosition dnOrder="0" id="AmazonFreeRTOS" x="397" y="475"/>
-        <ElementPosition dnOrder="1" id="AmazonHWInterface" x="139" y="385"/>
+        <ElementPosition dnOrder="0" id="AmazonFreeRTOS" x="219" y="248"/>
+        <ElementPosition dnOrder="1" id="AmazonHWInterface" x="22" y="225"/>
         <ElementPosition dnOrder="2" id="BSP_PIC32MZ_EF_Curiosity_2.0" x="5" y="84"/>
-        <ElementPosition dnOrder="3" id="HarmonyCore" x="439" y="20"/>
+        <ElementPosition dnOrder="3" id="HarmonyCore" x="501" y="24"/>
         <ElementPosition dnOrder="4" id="core" x="0" y="0"/>
-        <ElementPosition dnOrder="5" id="core_timer" x="483" y="178"/>
+        <ElementPosition dnOrder="5" id="core_timer" x="426" y="178"/>
         <ElementPosition dnOrder="6" id="dfp" x="73" y="4"/>
         <ElementPosition dnOrder="7" id="drvExtPhyLan8740" x="146" y="527"/>
         <ElementPosition dnOrder="8" id="drvMiim" x="253" y="543"/>
-        <ElementPosition dnOrder="9" id="drvPic32mEthmac" x="30" y="476"/>
+        <ElementPosition dnOrder="9" id="drvPic32mEthmac" x="187" y="353"/>
         <ElementPosition dnOrder="10" id="nvm" x="24" y="141"/>
-        <ElementPosition dnOrder="11" id="rng" x="25" y="258"/>
-        <ElementPosition dnOrder="12" id="stdio" x="354" y="165"/>
+        <ElementPosition dnOrder="11" id="rng" x="750" y="27"/>
+        <ElementPosition dnOrder="12" id="stdio" x="352" y="165"/>
         <ElementPosition dnOrder="13" id="sys_command" x="836" y="236"/>
         <ElementPosition dnOrder="14" id="sys_console" x="665" y="317"/>
         <ElementPosition dnOrder="15" id="sys_debug" x="841" y="369"/>
         <ElementPosition dnOrder="16" id="sys_time" x="656" y="132"/>
-        <ElementPosition dnOrder="17" id="uart1" x="198" y="117"/>
-        <ElementPosition dnOrder="18" id="uart4" x="478" y="313"/>
+        <ElementPosition dnOrder="17" id="uart1" x="255" y="44"/>
+        <ElementPosition dnOrder="18" id="uart4" x="411" y="279"/>
       </ElementPositions>
     </ComponentGraph>
     <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>

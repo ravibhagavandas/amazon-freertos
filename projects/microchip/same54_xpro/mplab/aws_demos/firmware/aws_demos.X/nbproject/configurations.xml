@@ -28,10 +28,7 @@
               <itemPath>../src/config/same54_xpro_nvm/driver/gmac/drv_gmac.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="miim" projectFiles="true">
-              <logicalFolder name="f1" displayName="config" projectFiles="true">
-                <itemPath>../src/config/same54_xpro_nvm/driver/miim/config/drv_miim_config.h</itemPath>
-              </logicalFolder>
-              <logicalFolder name="f2" displayName="src" projectFiles="true">
+              <logicalFolder name="f1" displayName="src" projectFiles="true">
                 <logicalFolder name="f1" displayName="dynamic" projectFiles="true">
                   <itemPath>../src/config/same54_xpro_nvm/driver/miim/src/dynamic/drv_miim_mapping.h</itemPath>
                 </logicalFolder>
@@ -45,9 +42,6 @@
           <logicalFolder name="f2" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f5" displayName="clock" projectFiles="true">
               <itemPath>../src/config/same54_xpro_nvm/peripheral/clock/plib_clock.h</itemPath>
-            </logicalFolder>
-            <logicalFolder name="f7" displayName="cmcc" projectFiles="true">
-              <itemPath>../src/config/same54_xpro_nvm/peripheral/cmcc/plib_cmcc.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="evsys" projectFiles="true">
               <itemPath>../src/config/same54_xpro_nvm/peripheral/evsys/plib_evsys.h</itemPath>
@@ -68,18 +62,15 @@
                 <itemPath>../src/config/same54_xpro_nvm/peripheral/sercom/usart/plib_sercom7_usart.h</itemPath>
               </logicalFolder>
             </logicalFolder>
-            <logicalFolder name="f8" displayName="tc" projectFiles="true">
+            <logicalFolder name="f7" displayName="tc" projectFiles="true">
               <itemPath>../src/config/same54_xpro_nvm/peripheral/tc/plib_tc_common.h</itemPath>
               <itemPath>../src/config/same54_xpro_nvm/peripheral/tc/plib_tc0.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f9" displayName="trng" projectFiles="true">
+            <logicalFolder name="f8" displayName="trng" projectFiles="true">
               <itemPath>../src/config/same54_xpro_nvm/peripheral/trng/plib_trng.h</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f3" displayName="system" projectFiles="true">
-            <logicalFolder name="f6" displayName="cache" projectFiles="true">
-              <itemPath>../src/config/same54_xpro_nvm/system/cache/sys_cache.h</itemPath>
-            </logicalFolder>
             <logicalFolder name="f1" displayName="command" projectFiles="true">
               <itemPath>../src/config/same54_xpro_nvm/system/command/sys_command.h</itemPath>
             </logicalFolder>
@@ -199,7 +190,7 @@
                    displayName="Source Files"
                    projectFiles="true">
       <logicalFolder name="f2" displayName="amazon-freertos" projectFiles="true">
-        <logicalFolder name="f1" displayName="demos" projectFiles="true">
+        <logicalFolder name="f4" displayName="demos" projectFiles="true">
           <logicalFolder name="f1" displayName="defender" projectFiles="true">
             <itemPath>../../../../../../../demos/defender/aws_iot_demo_defender.c</itemPath>
           </logicalFolder>
@@ -265,8 +256,8 @@
           </logicalFolder>
           <itemPath>../../../../../../../demos/README.md</itemPath>
         </logicalFolder>
-        <logicalFolder name="f2" displayName="freertos_kernel" projectFiles="true">
-          <logicalFolder name="f1" displayName="include" projectFiles="true">
+        <logicalFolder name="f1" displayName="freertos_kernel" projectFiles="true">
+          <logicalFolder name="f2" displayName="include" projectFiles="true">
             <itemPath>../../../../../../../freertos_kernel/include/atomic.h</itemPath>
             <itemPath>../../../../../../../freertos_kernel/include/deprecated_definitions.h</itemPath>
             <itemPath>../../../../../../../freertos_kernel/include/event_groups.h</itemPath>
@@ -284,7 +275,7 @@
             <itemPath>../../../../../../../freertos_kernel/include/task.h</itemPath>
             <itemPath>../../../../../../../freertos_kernel/include/timers.h</itemPath>
           </logicalFolder>
-          <logicalFolder name="f2" displayName="portable" projectFiles="true">
+          <logicalFolder name="f1" displayName="portable" projectFiles="true">
             <logicalFolder name="f1" displayName="GCC" projectFiles="true">
               <logicalFolder name="f1" displayName="ARM_CM4F" projectFiles="true">
                 <itemPath>../../../../../../../freertos_kernel/portable/GCC/ARM_CM4F/port.c</itemPath>
@@ -302,8 +293,8 @@
           <itemPath>../../../../../../../freertos_kernel/tasks.c</itemPath>
           <itemPath>../../../../../../../freertos_kernel/timers.c</itemPath>
         </logicalFolder>
-        <logicalFolder name="f3" displayName="libraries" projectFiles="true">
-          <logicalFolder name="f1" displayName="3rdparty" projectFiles="true">
+        <logicalFolder name="f2" displayName="libraries" projectFiles="true">
+          <logicalFolder name="f2" displayName="3rdparty" projectFiles="true">
             <logicalFolder name="f1" displayName="http-parser" projectFiles="true">
               <itemPath>../../../../../../../libraries/3rdparty/http-parser/http_parser.c</itemPath>
               <itemPath>../../../../../../../libraries/3rdparty/http-parser/http_parser.h</itemPath>
@@ -534,7 +525,7 @@
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f2" displayName="abstractions" projectFiles="true">
+          <logicalFolder name="f3" displayName="abstractions" projectFiles="true">
             <logicalFolder name="f1" displayName="pkcs11" projectFiles="true">
               <logicalFolder name="f1" displayName="include" projectFiles="true">
                 <itemPath>../../../../../../../libraries/abstractions/pkcs11/include/iot_pkcs11_pal.h</itemPath>
@@ -581,7 +572,7 @@
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f3" displayName="c_sdk" projectFiles="true">
+          <logicalFolder name="f4" displayName="c_sdk" projectFiles="true">
             <logicalFolder name="f1" displayName="aws" projectFiles="true">
               <logicalFolder name="f1" displayName="defender" projectFiles="true">
                 <logicalFolder name="f1" displayName="include" projectFiles="true">
@@ -717,8 +708,8 @@
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f4" displayName="freertos_plus" projectFiles="true">
-            <logicalFolder name="f1" displayName="aws" projectFiles="true">
+          <logicalFolder name="f1" displayName="freertos_plus" projectFiles="true">
+            <logicalFolder name="f2" displayName="aws" projectFiles="true">
               <logicalFolder name="f1" displayName="greengrass" projectFiles="true">
                 <logicalFolder name="f1" displayName="include" projectFiles="true">
                   <itemPath>../../../../../../../libraries/freertos_plus/aws/greengrass/include/aws_ggd_config_defaults.h</itemPath>
@@ -731,8 +722,8 @@
                 </logicalFolder>
               </logicalFolder>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="standard" projectFiles="true">
-              <logicalFolder name="f1" displayName="crypto" projectFiles="true">
+            <logicalFolder name="f1" displayName="standard" projectFiles="true">
+              <logicalFolder name="f2" displayName="crypto" projectFiles="true">
                 <logicalFolder name="f1" displayName="include" projectFiles="true">
                   <itemPath>../../../../../../../libraries/freertos_plus/standard/crypto/include/iot_crypto.h</itemPath>
                 </logicalFolder>
@@ -740,8 +731,8 @@
                   <itemPath>../../../../../../../libraries/freertos_plus/standard/crypto/src/iot_crypto.c</itemPath>
                 </logicalFolder>
               </logicalFolder>
-              <logicalFolder name="f2" displayName="freertos_plus_tcp" projectFiles="true">
-                <logicalFolder name="f1" displayName="include" projectFiles="true">
+              <logicalFolder name="f1" displayName="freertos_plus_tcp" projectFiles="true">
+                <logicalFolder name="f2" displayName="include" projectFiles="true">
                   <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include/FreeRTOSIPConfigDefaults.h</itemPath>
                   <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include/FreeRTOS_ARP.h</itemPath>
                   <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include/FreeRTOS_DHCP.h</itemPath>
@@ -758,7 +749,7 @@
                   <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include/NetworkBufferManagement.h</itemPath>
                   <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include/NetworkInterface.h</itemPath>
                 </logicalFolder>
-                <logicalFolder name="f2" displayName="source" projectFiles="true">
+                <logicalFolder name="f1" displayName="source" projectFiles="true">
                   <logicalFolder name="f1" displayName="portable" projectFiles="true">
                     <logicalFolder name="f1" displayName="Compiler" projectFiles="true">
                       <logicalFolder name="f1" displayName="GCC" projectFiles="true">
@@ -813,7 +804,7 @@
             </logicalFolder>
           </logicalFolder>
         </logicalFolder>
-        <logicalFolder name="f4" displayName="vendors" projectFiles="true">
+        <logicalFolder name="f3" displayName="vendors" projectFiles="true">
           <logicalFolder name="f1" displayName="microchip" projectFiles="true">
             <logicalFolder name="f1" displayName="boards" projectFiles="true">
               <logicalFolder name="f1" displayName="same54_xpro" projectFiles="true">
@@ -822,17 +813,17 @@
                     <itemPath>../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/config_files/aws_bufferpool_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/config_files/aws_demo_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/config_files/aws_ggd_config.h</itemPath>
-                    <itemPath>../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/config_files/aws_iot_network_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/config_files/aws_mqtt_config.h</itemPath>
-                    <itemPath>../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/config_files/aws_ota_agent_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/config_files/aws_secure_sockets_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/config_files/aws_shadow_config.h</itemPath>
-                    <itemPath>../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/config_files/aws_wifi_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/config_files/FreeRTOSConfig.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/config_files/FreeRTOSIPConfig.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/config_files/iot_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/config_files/iot_mqtt_agent_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/config_files/iot_pkcs11_config.h</itemPath>
+                    <itemPath>../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/config_files/aws_iot_network_config.h</itemPath>
+                    <itemPath>../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/config_files/aws_ota_agent_config.h</itemPath>
+                    <itemPath>../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/config_files/aws_wifi_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/config_files/NetworkConfig.h</itemPath>
                   </logicalFolder>
                 </logicalFolder>
@@ -900,8 +891,6 @@
             </logicalFolder>
           </logicalFolder>
         </logicalFolder>
-        <itemPath>../../../../../../../LICENSE</itemPath>
-        <itemPath>../../../../../../../README.md</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="same54_xpro_nvm" projectFiles="true">
@@ -934,9 +923,6 @@
             <logicalFolder name="f5" displayName="clock" projectFiles="true">
               <itemPath>../src/config/same54_xpro_nvm/peripheral/clock/plib_clock.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f7" displayName="cmcc" projectFiles="true">
-              <itemPath>../src/config/same54_xpro_nvm/peripheral/cmcc/plib_cmcc.c</itemPath>
-            </logicalFolder>
             <logicalFolder name="f3" displayName="evsys" projectFiles="true">
               <itemPath>../src/config/same54_xpro_nvm/peripheral/evsys/plib_evsys.c</itemPath>
             </logicalFolder>
@@ -955,10 +941,10 @@
                 <itemPath>../src/config/same54_xpro_nvm/peripheral/sercom/usart/plib_sercom7_usart.c</itemPath>
               </logicalFolder>
             </logicalFolder>
-            <logicalFolder name="f8" displayName="tc" projectFiles="true">
+            <logicalFolder name="f7" displayName="tc" projectFiles="true">
               <itemPath>../src/config/same54_xpro_nvm/peripheral/tc/plib_tc0.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f9" displayName="trng" projectFiles="true">
+            <logicalFolder name="f8" displayName="trng" projectFiles="true">
               <itemPath>../src/config/same54_xpro_nvm/peripheral/trng/plib_trng.c</itemPath>
             </logicalFolder>
           </logicalFolder>
@@ -966,9 +952,6 @@
             <itemPath>../src/config/same54_xpro_nvm/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f3" displayName="system" projectFiles="true">
-            <logicalFolder name="f6" displayName="cache" projectFiles="true">
-              <itemPath>../src/config/same54_xpro_nvm/system/cache/sys_cache.c</itemPath>
-            </logicalFolder>
             <logicalFolder name="f1" displayName="command" projectFiles="true">
               <itemPath>../src/config/same54_xpro_nvm/system/command/src/sys_command.c</itemPath>
             </logicalFolder>
@@ -1238,7 +1221,7 @@
         <property key="memories.programmemory.ranges" value="0-fffff"/>
         <property key="poweroptions.powerenable" value="false"/>
         <property key="programmerToGoFilePath"
-                  value="F:/AFQP/amazon-freertos/projects/microchip/same54_xpro/mplab/aws_demos/firmware/aws_demos.X/debug/same54_xpro_nvm/aws_demos_ptg"/>
+                  value="D:/AFR/amazon-freertos/projects/microchip/same54_xpro/mplab/aws_demos/firmware/aws_demos.X/debug/same54_xpro_nvm/aws_demos_ptg"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges"
