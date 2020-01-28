@@ -71,7 +71,7 @@ SOFTWARE
 
 
 // debug console commands
-#define PIC32_MAC_DEBUG_COMMANDS    0
+#define PIC32_MAC_DEBUG_COMMANDS    0  
 
 // debug start up messages
 #define PIC32_MAC_DEBUG_MESSAGES    0

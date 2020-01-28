@@ -59,12 +59,12 @@ extern void vLoggingPrintf( const char * pcFormatString,
 
 /* Define the byte order of the target MCU (the MCU FreeRTOS+TCP is executing
  * on).  Valid options are pdFREERTOS_BIG_ENDIAN and pdFREERTOS_LITTLE_ENDIAN. */
-#define ipconfigBYTE_ORDER                         pdFREERTOS_LITTLE_ENDIAN
+#define ipconfigBYTE_ORDER              pdFREERTOS_LITTLE_ENDIAN           
 
 /* If the network card/driver includes checksum offloading (IP/TCP/UDP checksums)
  * then set ipconfigDRIVER_INCLUDED_RX_IP_CHECKSUM to 1 to prevent the software
  * stack repeating the checksum calculations. */
-#define ipconfigDRIVER_INCLUDED_RX_IP_CHECKSUM     0
+#define ipconfigDRIVER_INCLUDED_RX_IP_CHECKSUM       0
 
 /* Several API's will block until the result is known, or the action has been
  * performed, for example FreeRTOS_send() and FreeRTOS_recv().  The timeouts can be
@@ -138,7 +138,7 @@ extern uint32_t ulRand();
  * FreeRTOS_IPInit() function call. */
 #define ipconfigUSE_DHCP                               1
 #define ipconfigDHCP_REGISTER_HOSTNAME                 1
-#define ipconfigDHCP_USES_UNICAST                      1
+#define ipconfigDHCP_USES_UNICAST                      1 
 
 /* If ipconfigDHCP_USES_USER_HOOK is set to 1 then the application writer must
  * provide an implementation of the DHCP callback function,
@@ -163,7 +163,7 @@ extern uint32_t ulRand();
  * cache then the UDP message is replaced by a ARP message that solicits the
  * required MAC address information.  ipconfigARP_CACHE_ENTRIES defines the maximum
  * number of entries that can exist in the ARP table at any one time. */
-#define ipconfigARP_CACHE_ENTRIES                      6
+#define ipconfigARP_CACHE_ENTRIES                     6
 
 /* ARP requests that do not result in an ARP response will be re-transmitted a
  * maximum of ipconfigMAX_ARP_RETRANSMISSIONS times before the ARP request is
@@ -220,10 +220,9 @@ extern uint32_t ulRand();
 #define ipconfigTCP_TIME_TO_LIVE                       128 /* also defined in FreeRTOSIPConfigDefaults.h */
 
 /* USE_TCP: Use TCP and all its features */
-#define ipconfigUSE_TCP                                ( 1 )
-
+#define ipconfigUSE_TCP                                ( 1 ) 
 /* USE_WIN: Let TCP use windowing mechanism. */
-#define ipconfigUSE_TCP_WIN                            ( 0 )
+#define ipconfigUSE_TCP_WIN                            ( 0 ) 
 
 /* The MTU is the maximum number of bytes the payload of a network frame can
  * contain.  For normal Ethernet V2 frames the maximum MTU is 1500.  Setting a
@@ -234,11 +233,11 @@ extern uint32_t ulRand();
 
 /* Set ipconfigUSE_DNS to 1 to include a basic DNS client/resolver.  DNS is used
  * through the FreeRTOS_gethostbyname() API function. */
-#define ipconfigUSE_DNS                                1
+#define ipconfigUSE_DNS                                 1
 
 /* If ipconfigREPLY_TO_INCOMING_PINGS is set to 1 then the IP stack will
  * generate replies to incoming ICMP echo (ping) requests. */
-#define ipconfigREPLY_TO_INCOMING_PINGS                1
+#define ipconfigREPLY_TO_INCOMING_PINGS                1  
 
 /* If ipconfigSUPPORT_OUTGOING_PINGS is set to 1 then the
  * FreeRTOS_SendPingRequest() API function is available. */
@@ -246,7 +245,7 @@ extern uint32_t ulRand();
 
 /* If ipconfigSUPPORT_SELECT_FUNCTION is set to 1 then the FreeRTOS_select()
  * (and associated) API function is available. */
-#define ipconfigSUPPORT_SELECT_FUNCTION                0
+#define ipconfigSUPPORT_SELECT_FUNCTION                0 
 
 /* If ipconfigFILTER_OUT_NON_ETHERNET_II_FRAMES is set to 1 then Ethernet frames
  * that are not in Ethernet II format will be dropped.  This option is included for
@@ -265,7 +264,7 @@ extern uint32_t ulRand();
 
 /* The windows simulator cannot really simulate MAC interrupts, and needs to
  * block occasionally to allow other tasks to run. */
-#define configWINDOWS_MAC_INTERRUPT_SIMULATOR_DELAY    ( 20 / portTICK_PERIOD_MS )
+#define configWINDOWS_MAC_INTERRUPT_SIMULATOR_DELAY    ( 20/ portTICK_PERIOD_MS )
 
 /* Advanced only: in order to access 32-bit fields in the IP packets with
  * 32-bit memory instructions, all packets will be stored 32-bit-aligned, plus 16-bits.
@@ -297,7 +296,6 @@ extern uint32_t ulRand();
 
 /* The socket semaphore is used to unblock the MQTT task. */
 #define ipconfigSOCKET_HAS_USER_SEMAPHORE        ( 0 )
-
 #define ipconfigSOCKET_HAS_USER_WAKE_CALLBACK    ( 1 )
 #define ipconfigUSE_CALLBACKS                    ( 0 )
 

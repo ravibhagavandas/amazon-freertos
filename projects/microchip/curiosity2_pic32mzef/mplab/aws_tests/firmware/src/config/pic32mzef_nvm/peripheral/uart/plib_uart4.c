@@ -94,13 +94,13 @@ void UART4_Initialize( void )
     /* STSEL  = 0 */
     /* PDSEL = 0 */
 
-    U4MODE = 0x8;
+    U4MODE = 0x0;
 
     /* Enable UART4 Receiver and Transmitter */
     U4STASET = (_U4STA_UTXEN_MASK | _U4STA_URXEN_MASK);
 
     /* BAUD Rate register Setup */
-    U4BRG = 216;
+    U4BRG = 53;
 
     /* Disable Interrupts */
     IEC5CLR = _IEC5_U4EIE_MASK;

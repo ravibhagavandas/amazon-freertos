@@ -635,8 +635,8 @@
           <Name dnOrder="1">aws_clientcredential_keys.h</Name>
           <LogicalPath dnOrder="2">/amazon-freertos/demos/include</LogicalPath>
           <PhysicalPath dnOrder="3">/../../../../../../../../../../amazon-freertos/demos/include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">5FFDD97BC2B0BD01057CFA8D9C0AF67C</GeneratedChecksum>
-          <UserChecksum dnOrder="5">5FFDD97BC2B0BD01057CFA8D9C0AF67C</UserChecksum>
+          <GeneratedChecksum dnOrder="4">E78A2E4C165C0B0A771F9E389485C2F0</GeneratedChecksum>
+          <UserChecksum dnOrder="5">E78A2E4C165C0B0A771F9E389485C2F0</UserChecksum>
         </File>
         <File dnOrder="79">
           <Type dnOrder="0">SOURCE</Type>
@@ -667,8 +667,8 @@
           <Name dnOrder="1">aws_demo_config.h</Name>
           <LogicalPath dnOrder="2">/amazon-freertos/vendors/microchip/boards/curiosity2_pic32mzef/aws_tests/config_files</LogicalPath>
           <PhysicalPath dnOrder="3">/../../../../../../../../../../amazon-freertos/vendors/microchip/boards/curiosity2_pic32mzef/aws_tests/config_files/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">65C046D9D2519F561F7B56613793A8E7</GeneratedChecksum>
-          <UserChecksum dnOrder="5">65C046D9D2519F561F7B56613793A8E7</UserChecksum>
+          <GeneratedChecksum dnOrder="4">0F203978DE247D6757DFDC17A2089886</GeneratedChecksum>
+          <UserChecksum dnOrder="5">0F203978DE247D6757DFDC17A2089886</UserChecksum>
         </File>
         <File dnOrder="83">
           <Type dnOrder="0">SOURCE</Type>
@@ -2059,8 +2059,8 @@
           <Name dnOrder="1">initialization.c</Name>
           <LogicalPath dnOrder="2">config/pic32mzef_nvm/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">0F5D27A0F71D58B511B79B71A9870A0C</GeneratedChecksum>
-          <UserChecksum dnOrder="5">0F5D27A0F71D58B511B79B71A9870A0C</UserChecksum>
+          <GeneratedChecksum dnOrder="4">5FCC932B87B9E355F0DC0A765CFC3411</GeneratedChecksum>
+          <UserChecksum dnOrder="5">5FCC932B87B9E355F0DC0A765CFC3411</UserChecksum>
         </File>
         <File dnOrder="257">
           <Type dnOrder="0">SOURCE</Type>
@@ -2123,8 +2123,8 @@
           <Name dnOrder="1">iot_config.h</Name>
           <LogicalPath dnOrder="2">/amazon-freertos/vendors/microchip/boards/curiosity2_pic32mzef/aws_tests/config_files</LogicalPath>
           <PhysicalPath dnOrder="3">/../../../../../../../../../../amazon-freertos/vendors/microchip/boards/curiosity2_pic32mzef/aws_tests/config_files/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">4A1F009081B0D6B374D218713C562946</GeneratedChecksum>
-          <UserChecksum dnOrder="5">4A1F009081B0D6B374D218713C562946</UserChecksum>
+          <GeneratedChecksum dnOrder="4">521F425D51992C691513DFA9D74E41F0</GeneratedChecksum>
+          <UserChecksum dnOrder="5">521F425D51992C691513DFA9D74E41F0</UserChecksum>
         </File>
         <File dnOrder="265">
           <Type dnOrder="0">SOURCE</Type>
@@ -3643,16 +3643,16 @@
           <Name dnOrder="1">plib_gpio.c</Name>
           <LogicalPath dnOrder="2">config/pic32mzef_nvm/peripheral/gpio/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/gpio/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">351AECC009873CECE1EA58EEAC520616</GeneratedChecksum>
-          <UserChecksum dnOrder="5">351AECC009873CECE1EA58EEAC520616</UserChecksum>
+          <GeneratedChecksum dnOrder="4">4DDC4C8D934B71091960B8E21A8C4AC0</GeneratedChecksum>
+          <UserChecksum dnOrder="5">4DDC4C8D934B71091960B8E21A8C4AC0</UserChecksum>
         </File>
         <File dnOrder="455">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">plib_nvm.c</Name>
           <LogicalPath dnOrder="2">config/pic32mzef_nvm/peripheral/nvm/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/nvm/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">3353BF9FF553C01289CF39BC649527C9</GeneratedChecksum>
-          <UserChecksum dnOrder="5">3353BF9FF553C01289CF39BC649527C9</UserChecksum>
+          <GeneratedChecksum dnOrder="4">4AD5943113E2EAC4CF2BD80393AA1021</GeneratedChecksum>
+          <UserChecksum dnOrder="5">4AD5943113E2EAC4CF2BD80393AA1021</UserChecksum>
         </File>
         <File dnOrder="456">
           <Type dnOrder="0">SOURCE</Type>
@@ -3667,16 +3667,16 @@
           <Name dnOrder="1">plib_uart1.c</Name>
           <LogicalPath dnOrder="2">config/pic32mzef_nvm/peripheral/uart/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/uart/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">04C0B2D9648E3D56BDC6224C78EEFE8C</GeneratedChecksum>
-          <UserChecksum dnOrder="5">04C0B2D9648E3D56BDC6224C78EEFE8C</UserChecksum>
+          <GeneratedChecksum dnOrder="4">6FD77476E8473D146C870893B073E0BC</GeneratedChecksum>
+          <UserChecksum dnOrder="5">6FD77476E8473D146C870893B073E0BC</UserChecksum>
         </File>
         <File dnOrder="458">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">plib_uart4.c</Name>
           <LogicalPath dnOrder="2">config/pic32mzef_nvm/peripheral/uart/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/uart/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">362EF850D2D2F6872EAA9AC84C1F8F31</GeneratedChecksum>
-          <UserChecksum dnOrder="5">362EF850D2D2F6872EAA9AC84C1F8F31</UserChecksum>
+          <GeneratedChecksum dnOrder="4">01BDD16348A8A01206E0F2318E69494B</GeneratedChecksum>
+          <UserChecksum dnOrder="5">01BDD16348A8A01206E0F2318E69494B</UserChecksum>
         </File>
         <File dnOrder="459">
           <Type dnOrder="0">SOURCE</Type>
@@ -4684,7 +4684,7 @@
           <LogicalPath dnOrder="2">config/pic32mzef_nvm/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">746E258D21A98A8C6638135E1861D509</GeneratedChecksum>
-          <UserChecksum dnOrder="5">B2DB97C654F212100F12AAF85B8FA549</UserChecksum>
+          <UserChecksum dnOrder="5">F3633B9B78D3FF2C116DEDF63B4690BB</UserChecksum>
         </File>
         <File dnOrder="585">
           <Type dnOrder="0">HEADER</Type>
@@ -4867,8 +4867,8 @@
           <Name dnOrder="1">plib_nvm.h</Name>
           <LogicalPath dnOrder="2">config/pic32mzef_nvm/peripheral/nvm/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/nvm/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">F5A2CA7E1906A4035B9D55DA6EAD421D</GeneratedChecksum>
-          <UserChecksum dnOrder="5">F5A2CA7E1906A4035B9D55DA6EAD421D</UserChecksum>
+          <GeneratedChecksum dnOrder="4">7C954B20EDAB3F13455008470691E59C</GeneratedChecksum>
+          <UserChecksum dnOrder="5">7C954B20EDAB3F13455008470691E59C</UserChecksum>
         </File>
         <File dnOrder="608">
           <Type dnOrder="0">HEADER</Type>
@@ -4995,8 +4995,8 @@
           <Name dnOrder="1">toolchain_specifics.h</Name>
           <LogicalPath dnOrder="2">config/pic32mzef_nvm/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">F7924D60AC5CC08996AB2DAEC62D3C54</GeneratedChecksum>
-          <UserChecksum dnOrder="5">F7924D60AC5CC08996AB2DAEC62D3C54</UserChecksum>
+          <GeneratedChecksum dnOrder="4">9D344CAF1743381AA0EA1641ABCDE373</GeneratedChecksum>
+          <UserChecksum dnOrder="5">9D344CAF1743381AA0EA1641ABCDE373</UserChecksum>
         </File>
         <File dnOrder="624">
           <Type dnOrder="0">HEADER</Type>
@@ -5015,12 +5015,12 @@
         <Setting append="true" category="C32-AS" delimiter=";" dnOrder="4" key="extra-include-directories-for-preprocessor" value="../../../../../../../vendors/microchip/boards/curiosity2_pic32mzef/aws_tests/config_files;../../../../../../../freertos_kernel/portable/MPLAB/PIC32MZ;../../../../../../../vendors/microchip/boards/curiosity2_pic32mzef/ports/pkcs11;../../../../../../../vendors/microchip/boards/curiosity2_pic32mzef/ports/posix;../../../../../../../vendors/microchip/harmony3/afr/tcpip/src/common;../../../../../../../vendors/microchip/harmony3/afr;../../../../../../../freertos_kernel/include;../../../../../../../libraries/c_sdk/standard/common/include;../../../../../../../libraries/freertos_plus/standard/crypto/include;../../../../../../../libraries/freertos_plus/standard/tls/include;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/portable/Compiler/GCC;../../../../../../../libraries/abstractions/pkcs11/include;../../../../../../../tests/include;../../../../../../../libraries/c_sdk/standard/common/include/private;../../../../../../../libraries/abstractions/platform/include;../../../../../../../libraries/abstractions/platform/freertos/include;../../../../../../../libraries/abstractions/secure_sockets/include;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/test;../../../../../../../libraries/freertos_plus/standard/pkcs11/include;../../../../../../../libraries/freertos_plus/aws/ota/test;../../../../../../../libraries/freertos_plus/standard/utils/include;../../../../../../../demos/dev_mode_key_provisioning/include;../../../../../../../libraries/c_sdk/aws/defender/include;../../../../../../../libraries/c_sdk/standard/mqtt/test/access;../../../../../../../libraries/c_sdk/standard/mqtt/include;../../../../../../../libraries/c_sdk/standard/mqtt/src;../../../../../../../libraries/c_sdk/standard/serializer/include;../../../../../../../libraries/c_sdk/aws/shadow/include;../../../../../../../libraries/c_sdk/aws/shadow/src;../../../../../../../libraries/c_sdk/standard/https/test/access;../../../../../../../libraries/c_sdk/standard/https/include;../../../../../../../libraries/c_sdk/standard/https/src;../../../../../../../libraries/freertos_plus/aws/greengrass/test;../../../../../../../libraries/freertos_plus/aws/greengrass/include;../../../../../../../libraries/freertos_plus/aws/greengrass/src;../../../../../../../libraries/freertos_plus/aws/ota/src;../../../../../../../libraries/freertos_plus/aws/ota/include;../../../../../../../libraries/3rdparty/mbedtls/include;../../../../../../../libraries/abstractions/posix/include;../../../../../../../libraries/freertos_plus/standard/freertos_plus_posix/include;../../../../../../../libraries/c_sdk/aws/defender/src/private;../../../../../../../libraries/3rdparty/jsmn;../../../../../../../libraries/3rdparty/pkcs11;../../../../../../../libraries/3rdparty/tinycbor;../../../../../../../libraries/3rdparty/tinycrypt/asn1;../../../../../../../libraries/3rdparty/tinycrypt/lib/include;../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls;../../../../../../../libraries/abstractions/pkcs11/mbedtls;../../../../../../../libraries/3rdparty/unity/src;../../../../../../../libraries/3rdparty/unity/extras/fixture/src;../../../../../../../libraries/3rdparty/http-parser;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/portable/Compiler/GCC;"/>
         <Setting category="C32-LD" dnOrder="5" key="heap-size" value="512"/>
         <Setting category="C32-LD" dnOrder="6" key="no-device-startup-code" value="true"/>
-        <Setting category="C32-LD" dnOrder="7" key="preprocessor-macros" value=""/>
+        <Setting append="true" category="C32-LD" delimiter=";" dnOrder="7" key="preprocessor-macros" value=""/>
       </Settings>
     </Manifest>
     <Settings dnOrder="4">
-      <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.5.1"/>
-      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MZ_EF_DFP\1.0.39\atdf\PIC32MZ2048EFM144.atdf"/>
+      <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.6.0"/>
+      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MZ_EF_DFP\1.1.45\atdf\PIC32MZ2048EFM144.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>

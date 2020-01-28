@@ -1,5 +1,5 @@
 /*
- * FreeRTOS Kernel V10.0.1
+ * FreeRTOS Kernel V10.2.0
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -44,16 +44,16 @@
 #define configUSE_PREEMPTION                       1
 #define configUSE_PORT_OPTIMISED_TASK_SELECTION    1
 #define configUSE_TICKLESS_IDLE                    0
-#define configCPU_CLOCK_HZ                         ( 200000000UL )
+#define configCPU_CLOCK_HZ                      ( 200000000UL )
 #define configPERIPHERAL_CLOCK_HZ                  ( 100000000UL )
 #define configTICK_RATE_HZ                         ( ( TickType_t ) 1000 )
-#define configMAX_PRIORITIES                       ( 10UL )
-#define configMINIMAL_STACK_SIZE                   ( 512 )
-#define configISR_STACK_SIZE                       ( 512 )
+#define configMAX_PRIORITIES                       (10UL)
+#define configMINIMAL_STACK_SIZE                   (512)
+#define configISR_STACK_SIZE                       (512)
 #define configSUPPORT_DYNAMIC_ALLOCATION           1
 #define configSUPPORT_STATIC_ALLOCATION            1
-#define configTOTAL_HEAP_SIZE                      ( ( size_t ) 170000 )
-#define configMAX_TASK_NAME_LEN                    ( 16 )
+#define configTOTAL_HEAP_SIZE                      ( ( size_t ) 170000)
+#define configMAX_TASK_NAME_LEN                    (16 )
 #define configUSE_16_BIT_TICKS                     0
 #define configIDLE_SHOULD_YIELD                    1
 #define configUSE_MUTEXES                          1
@@ -211,8 +211,6 @@
 #define configMAC_ADDR4           0x44
 #define configMAC_ADDR5           0x21
     
- //54:10:ec:8a:22:58
-
 /* Default IP address configuration.  Used in ipconfigUSE_DHCP is set to 0, or
  * ipconfigUSE_DHCP is set to 1 but a DNS server cannot be contacted. */
 #define configIP_ADDR0            192

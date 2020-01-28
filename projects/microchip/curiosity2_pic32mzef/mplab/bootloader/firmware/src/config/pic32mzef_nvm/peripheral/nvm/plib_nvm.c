@@ -90,8 +90,8 @@ typedef enum
 // Section: Local Functions                                                   */
 /* ************************************************************************** */
 /* ************************************************************************** */
-// *****************************************************************************
 
+// *****************************************************************************
 // *****************************************************************************
 // Section: NVM Implementation
 // *****************************************************************************
@@ -108,7 +108,7 @@ void NVM_CallbackRegister( NVM_CALLBACK callback, uintptr_t context )
     nvmContext         = context;
 }
 
-void NVM_InterruptHandler(void)
+void NVM_InterruptHandler( void )
 {
     IFS5CLR = NVM_INTERRUPT_FLAG_MASK;
 
@@ -118,7 +118,15 @@ void NVM_InterruptHandler(void)
     }
 }
 
-static void NVM_StartOperationAtAddress( uint32_t address,  NVM_OPERATION_MODE operation)
+static void NVM_WriteUnlockSequence( void )
+{
+    // Write the unlock key sequence
+    NVMKEY = 0x0;
+    NVMKEY = NVM_UNLOCK_KEY1;
+    NVMKEY = NVM_UNLOCK_KEY2;
+}
+
+static void NVM_StartOperationAtAddress( uint32_t address,  NVM_OPERATION_MODE operation )
 {
     volatile uint32_t processorStatus;
 
@@ -152,10 +160,7 @@ static void NVM_StartOperationAtAddress( uint32_t address,  NVM_OPERATION_MODE o
     // Set WREN to enable writes to the WR bit and to prevent NVMOP modification
     NVMCONSET = _NVMCON_WREN_MASK;
 
-    // Write the unlock key sequence
-    NVMKEY = 0x0;
-    NVMKEY = NVM_UNLOCK_KEY1;
-    NVMKEY = NVM_UNLOCK_KEY2;
+    NVM_WriteUnlockSequence();
 
     // Start the operation
     NVMCONSET = _NVMCON_WR_MASK;
@@ -170,13 +175,20 @@ static void NVM_StartOperationAtAddress( uint32_t address,  NVM_OPERATION_MODE o
 // Section: Interface Functions                                               */
 /* ************************************************************************** */
 /* ************************************************************************** */
+
+void NVM_Initialize( void )
+{
+    NVM_StartOperationAtAddress( NVMADDR,  NO_OPERATION );
+}
+
 bool NVM_Read( uint32_t *data, uint32_t length, const uint32_t address )
 {
     memcpy((void *)data, (void *)KVA0_TO_KVA1(address), length);
 
     return true;
 }
-bool NVM_WordWrite(uint32_t data, uint32_t address)
+
+bool NVM_WordWrite( uint32_t data, uint32_t address )
 {
     NVMDATA0 = (uint32_t )data;
 
@@ -185,7 +197,7 @@ bool NVM_WordWrite(uint32_t data, uint32_t address)
     return true;
 }
 
-bool NVM_QuadWordWrite(uint32_t *data, uint32_t address)
+bool NVM_QuadWordWrite( uint32_t *data, uint32_t address )
 {
    NVMDATA0 = *(data++);
    NVMDATA1 = *(data++);
@@ -197,7 +209,7 @@ bool NVM_QuadWordWrite(uint32_t *data, uint32_t address)
    return true;
 }
 
-bool NVM_RowWrite(uint32_t *data, uint32_t address)
+bool NVM_RowWrite( uint32_t *data, uint32_t address )
 {
    NVMSRCADDR = (uint32_t )KVA_TO_PA(data);
 
@@ -206,7 +218,7 @@ bool NVM_RowWrite(uint32_t *data, uint32_t address)
    return true;
 }
 
-bool NVM_PageErase(uint32_t address)
+bool NVM_PageErase( uint32_t address )
 {
    NVM_StartOperationAtAddress(address,  PAGE_ERASE_OPERATION);
 
@@ -222,4 +234,59 @@ NVM_ERROR NVM_ErrorGet( void )
 bool NVM_IsBusy( void )
 {
     return (bool)NVMCONbits.WR;
+}
+
+void NVM_ProgramFlashSwapBank( void )
+{
+    // NVMOP can be written only when WREN is zero. So, clear WREN.
+    NVMCONCLR = _NVMCON_WREN_MASK;
+
+    NVM_WriteUnlockSequence();
+
+    // Map Program Flash Memory Bank 2 to lower region
+    NVMCONSET = _NVMCON_PFSWAP_MASK;
+}
+
+void NVM_ProgramFlashWriteProtect( uint32_t address )
+{
+    NVM_WriteUnlockSequence();
+
+    /* Program the 24-Bit address till where the memory has to be protected
+     * from start of flash memory.
+     * The Page in which the address falls and all the lower pages below it will
+     * be protected from writes
+     */
+    NVMPWPSET = (address & _NVMPWP_PWP_MASK);
+}
+
+void NVM_ProgramFlashWriteProtectLock( void )
+{
+    NVM_WriteUnlockSequence();
+
+    // Lock the Program flash Write protect register
+    NVMPWPCLR = _NVMPWP_PWPULOCK_MASK;
+}
+
+void NVM_BootFlashWriteProtectEnable( NVM_BOOT_FLASH_WRITE_PROTECT writeProtectPage )
+{
+    NVM_WriteUnlockSequence();
+
+    // Protect the appropriate boot page to disable writes
+    NVMBWPSET = writeProtectPage;
+}
+
+void NVM_BootFlashWriteProtectDisable( NVM_BOOT_FLASH_WRITE_PROTECT writeProtectPage )
+{
+    NVM_WriteUnlockSequence();
+
+    // Un-Protect the appropriate boot page to enable writes
+    NVMBWPCLR = writeProtectPage;
+}
+
+void NVM_BootFlashWriteProtectLock( NVM_BOOT_FLASH_WRITE_PROTECT_LOCK writeProtectLock )
+{
+    NVM_WriteUnlockSequence();
+
+    // Lock the Boot flash Write protect register
+    NVMBWPCLR = writeProtectLock;
 }

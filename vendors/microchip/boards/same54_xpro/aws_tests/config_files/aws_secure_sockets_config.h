@@ -1,5 +1,5 @@
 /*
- * Amazon FreeRTOS V1.1.4
+ * Amazon FreeRTOS V1.4.7
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -36,6 +36,7 @@
  *
  * Valid values are pdLITTLE_ENDIAN and pdBIG_ENDIAN.
  */
+
 #define socketsconfigBYTE_ORDER              pdLITTLE_ENDIAN
 
 /**

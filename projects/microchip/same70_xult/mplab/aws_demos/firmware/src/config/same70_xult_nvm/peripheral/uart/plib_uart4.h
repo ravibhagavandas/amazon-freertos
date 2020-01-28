@@ -56,6 +56,7 @@
 // Section: Interface
 // *****************************************************************************
 // *****************************************************************************
+
 #define UART4_FrequencyGet()    (uint32_t)(150000000UL)
 
 /****************************** UART4 API *********************************/
@@ -89,5 +90,6 @@ void UART4_ReadCallbackRegister( UART_CALLBACK callback, uintptr_t context );
     }
 
 #endif
+
 // DOM-IGNORE-END
 #endif // PLIB_UART4_H

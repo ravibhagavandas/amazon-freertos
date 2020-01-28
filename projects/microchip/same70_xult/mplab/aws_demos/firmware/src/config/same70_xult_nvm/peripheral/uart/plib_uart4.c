@@ -49,7 +49,7 @@
 
 UART_OBJECT uart4Obj;
 
-void static UART4_ISR_RX_Handler( void )
+static void UART4_ISR_RX_Handler( void )
 {
     if(uart4Obj.rxBusyStatus == true)
     {
@@ -79,7 +79,7 @@ void static UART4_ISR_RX_Handler( void )
     }
 }
 
-void static UART4_ISR_TX_Handler( void )
+static void UART4_ISR_TX_Handler( void )
 {
     if(uart4Obj.txBusyStatus == true)
     {
@@ -130,7 +130,7 @@ void UART4_InterruptHandler( void )
     }
 
     /* Receiver status */
-    if(UART_SR_RXRDY_Msk == (UART4_REGS->UART_SR& UART_SR_RXRDY_Msk))
+    if(UART_SR_RXRDY_Msk == (UART4_REGS->UART_SR & UART_SR_RXRDY_Msk))
     {
         UART4_ISR_RX_Handler();
     }
@@ -142,17 +142,16 @@ void UART4_InterruptHandler( void )
     }
 }
 
-
-void static UART4_ErrorClear( void )
+static void UART4_ErrorClear( void )
 {
     uint8_t dummyData = 0u;
 
     UART4_REGS->UART_CR = UART_CR_RSTSTA_Msk;
 
     /* Flush existing error bytes from the RX FIFO */
-    while( UART_SR_RXRDY_Msk == (UART4_REGS->UART_SR& UART_SR_RXRDY_Msk) )
+    while( UART_SR_RXRDY_Msk == (UART4_REGS->UART_SR & UART_SR_RXRDY_Msk) )
     {
-        dummyData = (UART4_REGS->UART_RHR& UART_RHR_RXCHR_Msk);
+        dummyData = (UART4_REGS->UART_RHR & UART_RHR_RXCHR_Msk);
     }
 
     /* Ignore the warning */

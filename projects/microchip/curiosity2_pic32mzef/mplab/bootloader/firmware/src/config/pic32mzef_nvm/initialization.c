@@ -158,16 +158,21 @@ void SYS_Initialize ( void* data )
 
   
     CLK_Initialize();
-	GPIO_Initialize();
+    
     /* Configure Prefetch, Wait States and ECC */
     PRECONbits.PREFEN = 0;
     PRECONbits.PFMWS = 3;
     CFGCONbits.ECCCON = 3;
 
 
+
+	GPIO_Initialize();
+
 	UART1_Initialize();
 
 	BSP_Initialize();
+    NVM_Initialize();
+
 
 
 

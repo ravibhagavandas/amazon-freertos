@@ -98,7 +98,7 @@
 /**
  * @brief Maximum number of parallel operations per client.
  */
-#define mqttconfigMAX_PARALLEL_OPS       ( 5 )
+#define mqttconfigMAX_PARALLEL_OPS       (5)
 
 /**
  * @brief Time in milliseconds after which the TCP send operation should timeout.
