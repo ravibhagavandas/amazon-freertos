@@ -2,10 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/D:/AFR/amazon-freertos/libraries/freertos_plus/standard/freertos_plus_tcp/source/portable/NetworkInterface/same70/NetworkInterface_eth.c</file>
-            <file>file:/D:/AFR/amazon-freertos/projects/microchip/same70_xult/mplab/aws_demos/firmware/src/config/same70_xult_nvm/driver/gmac/src/dynamic/drv_gmac_lib_samE7x_V7x.c</file>
-            <file>file:/D:/AFR/amazon-freertos/projects/microchip/same70_xult/mplab/aws_demos/firmware/src/config/same70_xult_nvm/configuration.h</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

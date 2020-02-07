@@ -122,18 +122,18 @@
                    displayName="Source Files"
                    projectFiles="true">
       <logicalFolder name="f2" displayName="amazon-freertos" projectFiles="true">
-        <logicalFolder name="f4" displayName="demos" projectFiles="true">
-          <logicalFolder name="f1" displayName="defender" projectFiles="true">
+        <logicalFolder name="f1" displayName="demos" projectFiles="true">
+          <logicalFolder name="f2" displayName="defender" projectFiles="true">
             <itemPath>../../../../../../../demos/defender/aws_iot_demo_defender.c</itemPath>
           </logicalFolder>
-          <logicalFolder name="f2" displayName="demo_runner" projectFiles="true">
+          <logicalFolder name="f3" displayName="demo_runner" projectFiles="true">
             <itemPath>../../../../../../../demos/demo_runner/aws_demo.c</itemPath>
             <itemPath>../../../../../../../demos/demo_runner/aws_demo_network_addr.c</itemPath>
             <itemPath>../../../../../../../demos/demo_runner/aws_demo_version.c</itemPath>
             <itemPath>../../../../../../../demos/demo_runner/iot_demo_freertos.c</itemPath>
             <itemPath>../../../../../../../demos/demo_runner/iot_demo_runner.c</itemPath>
           </logicalFolder>
-          <logicalFolder name="f3"
+          <logicalFolder name="f4"
                          displayName="dev_mode_key_provisioning"
                          projectFiles="true">
             <logicalFolder name="f1" displayName="include" projectFiles="true">
@@ -143,13 +143,13 @@
               <itemPath>../../../../../../../demos/dev_mode_key_provisioning/src/aws_dev_mode_key_provisioning.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f4"
+          <logicalFolder name="f5"
                          displayName="greengrass_connectivity"
                          projectFiles="true">
             <itemPath>../../../../../../../demos/greengrass_connectivity/aws_greengrass_discovery_demo.c</itemPath>
             <itemPath>../../../../../../../demos/greengrass_connectivity/README.md</itemPath>
           </logicalFolder>
-          <logicalFolder name="f5" displayName="https" projectFiles="true">
+          <logicalFolder name="f6" displayName="https" projectFiles="true">
             <itemPath>../../../../../../../demos/https/iot_demo_https_common.c</itemPath>
             <itemPath>../../../../../../../demos/https/iot_demo_https_common.h</itemPath>
             <itemPath>../../../../../../../demos/https/iot_demo_https_s3_download_async.c</itemPath>
@@ -157,7 +157,7 @@
             <itemPath>../../../../../../../demos/https/presigned_urls_gen.py</itemPath>
             <itemPath>../../../../../../../demos/https/README.md</itemPath>
           </logicalFolder>
-          <logicalFolder name="f6" displayName="include" projectFiles="true">
+          <logicalFolder name="f7" displayName="include" projectFiles="true">
             <itemPath>../../../../../../../demos/include/aws_application_version.h</itemPath>
             <itemPath>../../../../../../../demos/include/aws_ble_gatt_server_demo.h</itemPath>
             <itemPath>../../../../../../../demos/include/aws_clientcredential.h</itemPath>
@@ -171,24 +171,27 @@
             <itemPath>../../../../../../../demos/include/iot_demo_logging.h</itemPath>
             <itemPath>../../../../../../../demos/include/iot_demo_runner.h</itemPath>
           </logicalFolder>
-          <logicalFolder name="f7" displayName="mqtt" projectFiles="true">
+          <logicalFolder name="f8" displayName="mqtt" projectFiles="true">
             <itemPath>../../../../../../../demos/mqtt/iot_demo_mqtt.c</itemPath>
           </logicalFolder>
-          <logicalFolder name="f8" displayName="network_manager" projectFiles="true">
+          <logicalFolder name="f9" displayName="network_manager" projectFiles="true">
             <itemPath>../../../../../../../demos/network_manager/aws_iot_demo_network.c</itemPath>
             <itemPath>../../../../../../../demos/network_manager/aws_iot_network_manager.c</itemPath>
             <itemPath>../../../../../../../demos/network_manager/iot_network_manager_private.h</itemPath>
           </logicalFolder>
-          <logicalFolder name="f9" displayName="shadow" projectFiles="true">
+          <logicalFolder name="f1" displayName="ota" projectFiles="true">
+            <itemPath>../../../../../../../demos/ota/aws_iot_ota_update_demo.c</itemPath>
+          </logicalFolder>
+          <logicalFolder name="f10" displayName="shadow" projectFiles="true">
             <itemPath>../../../../../../../demos/shadow/aws_iot_demo_shadow.c</itemPath>
           </logicalFolder>
-          <logicalFolder name="f10" displayName="tcp" projectFiles="true">
+          <logicalFolder name="f11" displayName="tcp" projectFiles="true">
             <itemPath>../../../../../../../demos/tcp/aws_tcp_echo_client_single_task.c</itemPath>
             <itemPath>../../../../../../../demos/tcp/aws_tcp_echo_client_single_tasks.h</itemPath>
           </logicalFolder>
           <itemPath>../../../../../../../demos/README.md</itemPath>
         </logicalFolder>
-        <logicalFolder name="f1" displayName="freertos_kernel" projectFiles="true">
+        <logicalFolder name="f2" displayName="freertos_kernel" projectFiles="true">
           <logicalFolder name="f2" displayName="include" projectFiles="true">
             <itemPath>../../../../../../../freertos_kernel/include/atomic.h</itemPath>
             <itemPath>../../../../../../../freertos_kernel/include/deprecated_definitions.h</itemPath>
@@ -227,7 +230,7 @@
           <itemPath>../../../../../../../freertos_kernel/tasks.c</itemPath>
           <itemPath>../../../../../../../freertos_kernel/timers.c</itemPath>
         </logicalFolder>
-        <logicalFolder name="f2" displayName="libraries" projectFiles="true">
+        <logicalFolder name="f3" displayName="libraries" projectFiles="true">
           <logicalFolder name="f2" displayName="3rdparty" projectFiles="true">
             <logicalFolder name="f1" displayName="http-parser" projectFiles="true">
               <itemPath>../../../../../../../libraries/3rdparty/http-parser/http_parser.c</itemPath>
@@ -643,8 +646,8 @@
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f1" displayName="freertos_plus" projectFiles="true">
-            <logicalFolder name="f2" displayName="aws" projectFiles="true">
-              <logicalFolder name="f1" displayName="greengrass" projectFiles="true">
+            <logicalFolder name="f1" displayName="aws" projectFiles="true">
+              <logicalFolder name="f2" displayName="greengrass" projectFiles="true">
                 <logicalFolder name="f1" displayName="include" projectFiles="true">
                   <itemPath>../../../../../../../libraries/freertos_plus/aws/greengrass/include/aws_ggd_config_defaults.h</itemPath>
                   <itemPath>../../../../../../../libraries/freertos_plus/aws/greengrass/include/aws_greengrass_discovery.h</itemPath>
@@ -655,8 +658,23 @@
                   <itemPath>../../../../../../../libraries/freertos_plus/aws/greengrass/src/aws_helper_secure_connect.h</itemPath>
                 </logicalFolder>
               </logicalFolder>
+              <logicalFolder name="f1" displayName="ota" projectFiles="true">
+                <logicalFolder name="f2" displayName="include" projectFiles="true">
+                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/include/aws_iot_ota_agent.h</itemPath>
+                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/include/aws_ota_agent.h</itemPath>
+                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/include/aws_ota_types.h</itemPath>
+                </logicalFolder>
+                <logicalFolder name="f1" displayName="src" projectFiles="true">
+                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/aws_iot_ota_agent.c</itemPath>
+                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/aws_ota_agent_internal.h</itemPath>
+                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/aws_ota_cbor.c</itemPath>
+                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/aws_ota_cbor.h</itemPath>
+                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/aws_ota_cbor_internal.h</itemPath>
+                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/aws_ota_pal.h</itemPath>
+                </logicalFolder>
+              </logicalFolder>
             </logicalFolder>
-            <logicalFolder name="f1" displayName="standard" projectFiles="true">
+            <logicalFolder name="f2" displayName="standard" projectFiles="true">
               <logicalFolder name="f2" displayName="crypto" projectFiles="true">
                 <logicalFolder name="f1" displayName="include" projectFiles="true">
                   <itemPath>../../../../../../../libraries/freertos_plus/standard/crypto/include/iot_crypto.h</itemPath>
@@ -738,7 +756,7 @@
             </logicalFolder>
           </logicalFolder>
         </logicalFolder>
-        <logicalFolder name="f3" displayName="vendors" projectFiles="true">
+        <logicalFolder name="f4" displayName="vendors" projectFiles="true">
           <logicalFolder name="f1" displayName="microchip" projectFiles="true">
             <logicalFolder name="f1" displayName="boards" projectFiles="true">
               <logicalFolder name="f1" displayName="curiosity2_pic32mzef" projectFiles="true">
@@ -994,6 +1012,7 @@
       <C32>
         <property key="additional-warnings" value="true"/>
         <property key="addresss-attribute-use" value="false"/>
+        <property key="appendMe" value="-mnewlib-libc -std=gnu99 -fgnu89-inline"/>
         <property key="enable-app-io" value="false"/>
         <property key="enable-omit-frame-pointer" value="false"/>
         <property key="enable-symbols" value="true"/>
