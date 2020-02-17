@@ -39,7 +39,7 @@
 #define testrunnerFULL_SHADOWv4_ENABLED             0
 #define testrunnerFULL_MQTTv4_ENABLED               0
 #define testrunnerFULL_MEMORYLEAK_ENABLED           0
-#define testrunnerFULL_BLE_END_TO_END_TEST_ENABLED  0
+#define testrunnerFULL_BLE_END_TO_END_TEST_ENABLED  1
 #define testrunnerFULL_BLE_STRESS_TEST_ENABLED      0
 #define testrunnerFULL_BLE_KPI_TEST_ENABLED         0
 #define testrunnerFULL_BLE_INTEGRATION_TEST_ENABLED 0
