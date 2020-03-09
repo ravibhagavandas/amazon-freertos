@@ -642,4 +642,21 @@ BTStatus_t IotBle_ConfirmNumericComparisonKeys( BTBdaddr_t * pBdAddr,
                                                 bool keyAccepted );
 /* @[declare_iotble_confirmnumericcomparisonkeys] */
 
+
+/**
+ * @brief Set or change device name for BLE.
+ *
+ * API can be called any time after IotBle_Init().
+ * To set a new device name before turning on BLE, call the API before IotBle_On().
+ * To change the device name while BLE is advertising, call the API then restart
+ * the advertisement by calling IotBle_StopAdv() followed by IotBle_StartAdv().
+ *
+ * @param[in] pName Pointer to the device name string.
+ * @param[in] length Length of the device name string without null terminator.
+ * @return Returns eBTStatusSuccess on successful call or error code otherwise..
+ */
+/* @[declare_iotble_setdevicename] */
+BTStatus_t IotBle_SetDeviceName( const char *pName, size_t length );
+/* @[declare_iotble_setdevicename] */
+
 #endif /* _AWS_BLE_H_*/
