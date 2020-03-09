@@ -365,6 +365,13 @@
 #endif
 
 
+/**
+ * @brief As per BLE4.2 SPEC, device name length can be between 0 and 248 octet in length.
+ * This should not be modified.
+ *
+ */
+#define IOT_BLE_MAX_DEVICE_NAME_LENGTH    ( 248 )
+
 #define IOT_BLE_MESG_ENCODER    ( _IotSerializerCborEncoder )
 #define IOT_BLE_MESG_DECODER    ( _IotSerializerCborDecoder )
 
