@@ -67,13 +67,13 @@
 
   
 /*** Macros for WDRV_WINC_RESETN pin ***/
-#define WDRV_WINC_RESETN_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 6)
-#define WDRV_WINC_RESETN_Clear()             (PORT_REGS->GROUP[0].PORT_OUTCLR = 1 << 6)
-#define WDRV_WINC_RESETN_Toggle()            (PORT_REGS->GROUP[0].PORT_OUTTGL = 1 << 6)
-#define WDRV_WINC_RESETN_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 6)) & 0x01)
-#define WDRV_WINC_RESETN_OutputEnable()      (PORT_REGS->GROUP[0].PORT_DIRSET = 1 << 6)
-#define WDRV_WINC_RESETN_InputEnable()       (PORT_REGS->GROUP[0].PORT_DIRCLR = 1 << 6)
-#define WDRV_WINC_RESETN_PIN                  PORT_PIN_PA06
+#define WDRV_WINC_RESETN_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = 1 << 5)
+#define WDRV_WINC_RESETN_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = 1 << 5)
+#define WDRV_WINC_RESETN_Toggle()            (PORT_REGS->GROUP[1].PORT_OUTTGL = 1 << 5)
+#define WDRV_WINC_RESETN_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 5)) & 0x01)
+#define WDRV_WINC_RESETN_OutputEnable()      (PORT_REGS->GROUP[1].PORT_DIRSET = 1 << 5)
+#define WDRV_WINC_RESETN_InputEnable()       (PORT_REGS->GROUP[1].PORT_DIRCLR = 1 << 5)
+#define WDRV_WINC_RESETN_PIN                  PORT_PIN_PB05
 
 /*** Macros for WDRV_WINC_CHIP_EN pin ***/
 #define WDRV_WINC_CHIP_EN_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 27)

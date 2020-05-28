@@ -683,9 +683,10 @@ int32_t SOCKETS_SetSockOpt( Socket_t xSocket,
              * be used during TLS negotiation. */
             
 #ifdef WDRV_WINC_DEVICE_WINC1500
-			setsockopt(Socket, SOL_SSL_SOCKET, SO_SSL_SNI, (char*)pvOptionValue, strlen((char*)pvOptionValue) + 1);
+			
             setsockopt(Socket, SOL_SSL_SOCKET, SO_SSL_ENABLE_SNI_VALIDATION, &sslOptionEnable, 4);
 #else
+            setsockopt(Socket, SOL_SSL_SOCKET, SO_SSL_SNI, (char*)pvOptionValue, strlen((char*)pvOptionValue) + 1);
             setsockopt(Socket, SOL_SSL_SOCKET, SO_SSL_ENABLE_CERTNAME_VALIDATION, &sslOptionEnable, 4);
 #endif
             //SO_SSL_ENABLE_CERTNAME_VALIDATION

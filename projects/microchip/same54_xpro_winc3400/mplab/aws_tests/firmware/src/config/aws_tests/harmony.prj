@@ -3514,8 +3514,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">/amazon-freertos/vendors/microchip/boards/same54_xpro/ports/wifi</LogicalPath>
           <PhysicalPath dnOrder="4">/../../../../../../../../../../amazon-freertos/vendors/microchip/boards/same54_xpro/ports/wifi/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">B6608176FB7AE7C8D722AFA9444AB685</GeneratedChecksum>
-          <UserChecksum dnOrder="6">B6608176FB7AE7C8D722AFA9444AB685</UserChecksum>
+          <GeneratedChecksum dnOrder="5">A0F493A4245E3583769AA1FE9F47938A</GeneratedChecksum>
+          <UserChecksum dnOrder="6">A0F493A4245E3583769AA1FE9F47938A</UserChecksum>
         </File>
         <File dnOrder="390">
           <Type dnOrder="0">SOURCE</Type>
@@ -5053,8 +5053,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/aws_tests/peripheral/port/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/port/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">CC98951E43DDC576B484C4447015CD0F</GeneratedChecksum>
-          <UserChecksum dnOrder="6">CC98951E43DDC576B484C4447015CD0F</UserChecksum>
+          <GeneratedChecksum dnOrder="5">093B4367BA4496D89AF312F850297368</GeneratedChecksum>
+          <UserChecksum dnOrder="6">093B4367BA4496D89AF312F850297368</UserChecksum>
         </File>
         <File dnOrder="561">
           <Type dnOrder="0">SOURCE</Type>
@@ -5918,7 +5918,7 @@
           <LogicalPath dnOrder="3">config/aws_tests/driver/winc/</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/winc/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">E54B490D4B5BECC22D38961267ACF73F</GeneratedChecksum>
-          <UserChecksum dnOrder="6">6C4C435DD3E378A33A0AE679918E6B93</UserChecksum>
+          <UserChecksum dnOrder="6">D8BAA86357A5A04CE3BF881B8589C4E9</UserChecksum>
         </File>
         <File dnOrder="657">
           <Type dnOrder="0">SOURCE</Type>
@@ -6862,8 +6862,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/aws_tests/peripheral/port/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/port/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">6C5BA3A2CC4CDCFABCBA443816D7CC61</GeneratedChecksum>
-          <UserChecksum dnOrder="6">6C5BA3A2CC4CDCFABCBA443816D7CC61</UserChecksum>
+          <GeneratedChecksum dnOrder="5">DC56D5DA627C14337DC66B653699C52E</GeneratedChecksum>
+          <UserChecksum dnOrder="6">DC56D5DA627C14337DC66B653699C52E</UserChecksum>
         </File>
         <File dnOrder="762">
           <Type dnOrder="0">HEADER</Type>

@@ -89,7 +89,7 @@ FIXDEPS=fixDeps
 
 # The following macros may be used in the pre and post step lines
 Device=ATSAME54P20A
-ProjectDir="D:\AWS3_1\amazon-freertos\projects\microchip\same54_xpro\mplab\aws_demos\firmware\aws_demos.X"
+ProjectDir="D:\AWS3_1\amazon-freertos\projects\microchip\same54_xpro_winc3400\mplab\aws_demos\firmware\aws_demos.X"
 ProjectName=aws_demos
 ConfName=aws_demos
 ImagePath="dist\aws_demos\${IMAGE_TYPE}\aws_demos.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}"

@@ -756,7 +756,6 @@ static void _WDRV_WINC_SSLCallback(uint8_t msgType, void *pMsgContent)
             {
                 tstrEccReqInfo  *eccReqInfo;
                 eccReqInfo  = (tstrEccReqInfo *)pMsgContent;
-				eccProcessREQ(eccReqInfo);
                 
                 info.reqCmd = eccReqInfo->u16REQ;
                 info.seqNo = eccReqInfo->u32SeqNo;

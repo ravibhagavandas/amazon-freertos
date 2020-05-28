@@ -19,7 +19,7 @@
             </sourceRootList>
             <confList>
                 <confElem>
-                    <name>same54_xpro_nvm</name>
+                    <name>aws_demos</name>
                     <type>2</type>
                 </confElem>
             </confList>
