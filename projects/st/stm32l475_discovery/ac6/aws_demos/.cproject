@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?fileVersion 4.0.0?>
-<cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
+<?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
 	<storageModule moduleId="org.eclipse.cdt.core.settings">
 		<cconfiguration id="fr.ac6.managedbuild.config.gnu.cross.exe.debug.887144602">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="fr.ac6.managedbuild.config.gnu.cross.exe.debug.887144602" moduleId="org.eclipse.cdt.core.settings" name="Debug">
@@ -82,9 +81,17 @@
 									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/3rdparty/tinycbor"/>
 									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/3rdparty/http_parser"/>
 									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/3rdparty/jsmn"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/3rdparty/LoRaMac-node/src/boards"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/3rdparty/LoRaMac-node/src/mac"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/3rdparty/LoRaMac-node/src/system"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/3rdparty/LoRaMac-node/src/radio"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/3rdparty/LoRaMac-node/src/radio/sx1276"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/3rdparty/LoRaMac-node/src/peripherals/soft-se"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../vendors/st/boards/stm32l475_discovery/ports/lorawan"/>
 								</option>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1779062689" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="MBEDTLS_CONFIG_FILE=&quot;aws_mbedtls_config.h&quot;"/>
+									<listOptionValue builtIn="false" value="SX1276MB1LAS"/>
 									<listOptionValue builtIn="false" value="CONFIG_MEDTLS_USE_AFR_MEMORY"/>
 									<listOptionValue builtIn="false" value="USE_HAL_DRIVER"/>
 									<listOptionValue builtIn="false" value="STM32L475xx"/>
@@ -94,6 +101,8 @@
 									<listOptionValue builtIn="false" value="SENSOR"/>
 									<listOptionValue builtIn="false" value="RFU"/>
 									<listOptionValue builtIn="false" value="USE_OFFLOAD_SSL"/>
+									<listOptionValue builtIn="false" value="USE_FREERTOS_TIMERS"/>
+									<listOptionValue builtIn="false" value="REGION_US915"/>
 								</option>
 								<option id="fr.ac6.managedbuild.gnu.c.compiler.option.misc.other.475607660" superClass="fr.ac6.managedbuild.gnu.c.compiler.option.misc.other" useByScannerDiscovery="false" value="-fmessage-length=0" valueType="string"/>
 								<option id="fr.ac6.managedbuid.gnu.c.compiler.option.misc.other.1976542995" name="Other flags" superClass="fr.ac6.managedbuid.gnu.c.compiler.option.misc.other" useByScannerDiscovery="false" value="-fmessage-length=0" valueType="string"/>
@@ -145,6 +154,84 @@
 							<tool id="fr.ac6.managedbuild.tool.gnu.cross.assembler.1608533886" name="MCU GCC Assembler" superClass="fr.ac6.managedbuild.tool.gnu.cross.assembler.1750583696">
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.13715218" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.assembler.input.968349729" superClass="fr.ac6.managedbuild.tool.gnu.cross.assembler.input"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+					<folderInfo id="fr.ac6.managedbuild.config.gnu.cross.exe.debug.887144602.968321247" name="/" resourcePath="libraries/3rdparty/LoRaMac-node/src/peripherals">
+						<toolChain id="fr.ac6.managedbuild.toolchain.gnu.cross.exe.debug.1323102894" name="Ac6 STM32 MCU GCC" superClass="fr.ac6.managedbuild.toolchain.gnu.cross.exe.debug" unusedChildren="">
+							<option id="fr.ac6.managedbuild.option.gnu.cross.prefix.22516938.461657398" name="Prefix" superClass="fr.ac6.managedbuild.option.gnu.cross.prefix.22516938"/>
+							<option id="fr.ac6.managedbuild.option.gnu.cross.mcu.2075272782.1322457392" name="Mcu" superClass="fr.ac6.managedbuild.option.gnu.cross.mcu.2075272782"/>
+							<option id="fr.ac6.managedbuild.option.gnu.cross.board.209220969.939572507" name="Board" superClass="fr.ac6.managedbuild.option.gnu.cross.board.209220969"/>
+							<option id="fr.ac6.managedbuild.option.gnu.cross.instructionSet.422950132.759019946" name="Instruction Set" superClass="fr.ac6.managedbuild.option.gnu.cross.instructionSet.422950132"/>
+							<option id="fr.ac6.managedbuild.option.gnu.cross.fpu.1863501920.232023285" name="Floating point hardware" superClass="fr.ac6.managedbuild.option.gnu.cross.fpu.1863501920"/>
+							<option id="fr.ac6.managedbuild.option.gnu.cross.floatabi.1488937056.633190347" name="Floating-point ABI" superClass="fr.ac6.managedbuild.option.gnu.cross.floatabi.1488937056"/>
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="fr.ac6.managedbuild.targetPlatform.gnu.cross" isAbstract="false" osList="all" superClass="fr.ac6.managedbuild.targetPlatform.gnu.cross"/>
+							<tool command="gcc" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.2128827083" name="MCU GCC Compiler" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.684170490">
+								<option id="gnu.c.compiler.option.include.paths.547084693" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../freertos_kernel/include"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../freertos_kernel/portable/GCC/ARM_CM4F"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../vendors/st/stm32l475_discovery/BSP/B-L475E-IOT01"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../vendors/st/stm32l475_discovery/BSP/Components/Common"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../vendors/st/stm32l475_discovery/BSP/Components/es_wifi"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../vendors/st/stm32l475_discovery/BSP/Components/hts221"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../vendors/st/stm32l475_discovery/BSP/Components/lis3mdl"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../vendors/st/stm32l475_discovery/BSP/Components/lps22hb"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../vendors/st/stm32l475_discovery/BSP/Components/lsm6dsl"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../vendors/st/stm32l475_discovery/BSP/Components/mx25r6435f"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../vendors/st/stm32l475_discovery/BSP/Components/vl53l0x"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../vendors/st/stm32l475_discovery/CMSIS/Include"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../vendors/st/stm32l475_discovery/CMSIS/Device/ST/STM32L4xx/Include"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../vendors/st/stm32l475_discovery/STM32L4xx_HAL_Driver/Inc"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../vendors/st/stm32l475_discovery/STM32L4xx_HAL_Driver/Inc/Legacy"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../vendors/st/boards/stm32l475_discovery/aws_demos/application_code"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../vendors/st/boards/stm32l475_discovery/aws_demos/application_code/st_code"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../demos/include"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../vendors/st/boards/stm32l475_discovery/aws_demos/config_files"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../demos/network_manager"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/c_sdk/standard/common/include/private"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/c_sdk/standard/common/include"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/abstractions/platform/include"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/abstractions/platform/freertos/include"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/abstractions/secure_sockets/include"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/freertos_plus/standard/tls/include"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/freertos_plus/standard/crypto/include"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/freertos_plus/standard/pkcs11/include"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/abstractions/pkcs11/include"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/freertos_plus/standard/utils/include"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/abstractions/wifi/include"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../demos/dev_mode_key_provisioning/include"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/abstractions/common_io/include"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/c_sdk/aws/defender/include"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/c_sdk/standard/mqtt/include"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/c_sdk/standard/serializer/include"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/c_sdk/aws/shadow/include"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/c_sdk/standard/https/include"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/freertos_plus/aws/greengrass/include"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/3rdparty/pkcs11"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/3rdparty/mbedtls/include"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/3rdparty/mbedtls_utils"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/abstractions/pkcs11/mbedtls"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/3rdparty/mbedtls/include/mbedtls"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/3rdparty/mbedtls_config"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/3rdparty/tinycbor"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/3rdparty/http_parser"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/3rdparty/jsmn"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/3rdparty/LoRaMac-node/src/boards"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/3rdparty/LoRaMac-node/src/mac"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/3rdparty/LoRaMac-node/src/system"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/3rdparty/LoRaMac-node/src/radio"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/../../../../../libraries/3rdparty/LoRaMac-node/src/radio/sx1276"/>
+								</option>
+								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.c.583318171" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.c"/>
+								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.s.970337962" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.s"/>
+							</tool>
+							<tool id="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.1147168954" name="MCU G++ Compiler" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.1805541478"/>
+							<tool id="fr.ac6.managedbuild.tool.gnu.cross.c.linker.1098865087" name="MCU GCC Linker" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.linker.550678436"/>
+							<tool id="fr.ac6.managedbuild.tool.gnu.cross.cpp.linker.613212740" name="MCU G++ Linker" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.linker.1316057793"/>
+							<tool id="fr.ac6.managedbuild.tool.gnu.archiver.1532084953" name="MCU GCC Archiver" superClass="fr.ac6.managedbuild.tool.gnu.archiver.122685933"/>
+							<tool command="as" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" id="fr.ac6.managedbuild.tool.gnu.cross.assembler.320410497" name="MCU GCC Assembler" superClass="fr.ac6.managedbuild.tool.gnu.cross.assembler.1750583696">
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1998392539" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.assembler.input.465203271" superClass="fr.ac6.managedbuild.tool.gnu.cross.assembler.input"/>
 							</tool>
 						</toolChain>
 					</folderInfo>

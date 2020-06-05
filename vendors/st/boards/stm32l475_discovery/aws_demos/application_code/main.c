@@ -43,6 +43,7 @@
 
 /* Demo includes */
 #include "aws_demo.h"
+#include "iot_network_manager_private.h"
 #include "iot_system_init.h"
 #include "iot_logging_task.h"
 #include "iot_wifi.h"
@@ -51,6 +52,40 @@
 
 /* WiFi driver includes. */
 #include "es_wifi.h"
+
+
+/* Add LoraWAN specific includes only if the network is enabled for the board. */
+#if LORAWAN_ENABLED
+
+#include "utilities.h"
+#include "gpio.h"
+#include "adc.h"
+#include "spi.h"
+#include "i2c.h"
+#include "uart.h"
+#include "timer.h"
+#include "board-config.h"
+#include "lpm-board.h"
+#include "rtc-board.h"
+
+#if defined( SX1261MBXBAS ) || defined( SX1262MBXCAS ) || defined( SX1262MBXDAS )
+    #include "sx126x-board.h"
+#elif defined( LR1110MB1XXS )
+    #include "lr1110-board.h"
+#elif defined( SX1272MB2DAS)
+    #include "sx1272-board.h"
+#elif defined( SX1276MB1LAS ) || defined( SX1276MB1MAS )
+    #include "sx1276-board.h"
+#endif
+
+/*!
+ * Unique Devices IDs register set ( STM32L4xxx )
+ */
+#define         ID1                                 ( 0x1FFF7590 )
+#define         ID2                                 ( 0x1FFF7594 )
+#define         ID3                                 ( 0x1FFF7594 )
+
+#endif
 
 /* Application version info. */
 #include "aws_application_version.h"
@@ -111,6 +146,22 @@ static void prvWifiConnect( void );
  */
 static void prvMiscInitialization( void );
 
+
+#ifdef LORAWAN_ENABLED
+/**
+ * @brief Initialization of LoraWAN radio.
+ *
+ */
+static void prvLoraWanRadioInit( void );
+
+/**
+ * @brief De-Initialization of LoraWAN radio.
+ *
+ */
+static void prvLoraWanDeinit( void );
+#endif
+
+
 /**
  * @brief Initializes the FreeRTOS heap.
  *
@@ -141,6 +192,10 @@ int main( void )
      * running.  */
     prvMiscInitialization();
 
+#ifdef LORAWAN_ENABLED
+    prvLoraWanRadioInit();
+#endif
+
     /* Create tasks that are not dependent on the WiFi being initialized. */
     xLoggingTaskInitialize( mainLOGGING_TASK_STACK_SIZE,
                             mainLOGGING_TASK_PRIORITY,
@@ -157,13 +212,13 @@ int main( void )
 
 void vApplicationDaemonTaskStartupHook( void )
 {
-    WIFIReturnCode_t xWifiStatus;
+    WIFIReturnCode_t xWifiStatus = eWiFiSuccess;
 
     /* Turn on the WiFi before key provisioning. This is needed because
      * if we want to use offload SSL, device certificate and key is stored
      * on the WiFi module during key provisioning which requires the WiFi
      * module to be initialized. */
-    xWifiStatus = WIFI_On();
+    //xWifiStatus = WIFI_On();
 
     if( xWifiStatus == eWiFiSuccess )
     {
@@ -176,6 +231,8 @@ void vApplicationDaemonTaskStartupHook( void )
 
         if( SYSTEM_Init() == pdPASS )
         {
+
+#if WIFI_ENABLED
             /* Connect to the WiFi before running the demos */
             prvWifiConnect();
 
@@ -183,9 +240,10 @@ void vApplicationDaemonTaskStartupHook( void )
                 /* Check if WiFi firmware needs to be updated. */
                 prvCheckWiFiFirmwareVersion();
             #endif /* USE_OFFLOAD_SSL */
-
+#endif
             /* Start demos. */
-            DEMO_RUNNER_RunDemos();
+            //DEMO_RUNNER_RunDemos();
+            vLoRaWanDemo();
         }
     }
     else
@@ -353,6 +411,105 @@ static void prvMiscInitialization( void )
     /* UART console init. */
     Console_UART_Init();
 }
+
+/*
+ * All LoRaWAN specific functions should go here.
+ *
+ */
+#if LORAWAN_ENABLED
+
+void BoardGetUniqueId( uint8_t *id )
+{
+    id[7] = ( ( *( uint32_t* )ID1 )+ ( *( uint32_t* )ID3 ) ) >> 24;
+    id[6] = ( ( *( uint32_t* )ID1 )+ ( *( uint32_t* )ID3 ) ) >> 16;
+    id[5] = ( ( *( uint32_t* )ID1 )+ ( *( uint32_t* )ID3 ) ) >> 8;
+    id[4] = ( ( *( uint32_t* )ID1 )+ ( *( uint32_t* )ID3 ) );
+    id[3] = ( ( *( uint32_t* )ID2 ) ) >> 24;
+    id[2] = ( ( *( uint32_t* )ID2 ) ) >> 16;
+    id[1] = ( ( *( uint32_t* )ID2 ) ) >> 8;
+    id[0] = ( ( *( uint32_t* )ID2 ) );
+}
+
+/*!
+ * Disable interrupts, begins critical section
+ *
+ * \param [IN] mask Pointer to a variable where to store the CPU IRQ mask
+ */
+void BoardCriticalSectionBegin( uint32_t *mask )
+{
+	//taskENTER_CRITICAL();
+}
+
+void BoardCriticalSectionEnd( uint32_t *mask )
+{
+	//taskEXIT_CRITICAL();
+}
+
+static void BoardUnusedIoInit( void )
+{
+    HAL_DBGMCU_EnableDBGSleepMode( );
+    HAL_DBGMCU_EnableDBGStopMode( );
+    HAL_DBGMCU_EnableDBGStandbyMode( );
+}
+
+
+static void prvLoraWanRadioInit( void )
+{
+
+	RtcInit( );
+
+#if defined( SX1261MBXBAS ) || defined( SX1262MBXCAS ) || defined( SX1262MBXDAS )
+    SpiInit( &SX126x.Spi, SPI_1, RADIO_MOSI, RADIO_MISO, RADIO_SCLK, NC );
+    SX126xIoInit( );
+#elif defined( LR1110MB1XXS )
+    SpiInit( &LR1110.spi, SPI_1, RADIO_MOSI, RADIO_MISO, RADIO_SCLK, NC );
+    lr1110_board_init_io( &LR1110 );
+#elif defined( SX1272MB2DAS )
+    SpiInit( &SX1272.Spi, SPI_1, RADIO_MOSI, RADIO_MISO, RADIO_SCLK, NC );
+    SX1272IoInit( );
+#elif defined( SX1276MB1LAS ) || defined( SX1276MB1MAS )
+    SpiInit( &SX1276.Spi, SPI_1, RADIO_MOSI, RADIO_MISO, RADIO_SCLK, NC );
+    SX1276IoInit( );
+#endif
+
+    BoardUnusedIoInit();
+
+#if defined( SX1261MBXBAS ) || defined( SX1262MBXCAS ) || defined( SX1262MBXDAS )
+        SX126xIoDbgInit( );
+        // WARNING: If necessary the TCXO control is initialized by SX126xInit function.
+#elif defined( LR1110MB1XXS )
+        lr1110_board_init_dbg_io( &LR1110 );
+        // WARNING: If necessary the TCXO control is initialized by SX126xInit function.
+#elif defined( SX1272MB2DAS )
+        SX1272IoDbgInit( );
+        SX1272IoTcxoInit( );
+#elif defined( SX1276MB1LAS ) || defined( SX1276MB1MAS )
+        SX1276IoDbgInit( );
+        SX1276IoTcxoInit( );
+#endif
+}
+
+
+static void prvLoraWanDeinit( void )
+{
+#if defined( SX1261MBXBAS ) || defined( SX1262MBXCAS ) || defined( SX1262MBXDAS )
+    SpiDeInit( &SX126x.Spi );
+    SX126xIoDeInit( );
+#elif defined( LR1110MB1XXS )
+    SpiDeInit( &LR1110.spi );
+    lr1110_board_deinit_io( &LR1110 );
+#elif defined( SX1272MB2DAS )
+    SpiDeInit( &SX1272.Spi );
+    SX1272IoDeInit( );
+#elif defined( SX1276MB1LAS ) || defined( SX1276MB1MAS )
+    SpiDeInit( &SX1276.Spi );
+    SX1276IoDeInit( );
+#endif
+
+}
+
+#endif
+
 /*-----------------------------------------------------------*/
 
 /**
@@ -656,7 +813,7 @@ int iMainRand32( void )
 static void prvInitializeHeap( void )
 {
     static uint8_t ucHeap1[ configTOTAL_HEAP_SIZE ];
-    static uint8_t ucHeap2[ 25 * 1024 ] __attribute__( ( section( ".freertos_heap2" ) ) );
+    static uint8_t ucHeap2[ 24 * 1024 ] __attribute__( ( section( ".freertos_heap2" ) ) );
 
     HeapRegion_t xHeapRegions[] =
     {
@@ -745,6 +902,11 @@ static void prvInitializeHeap( void )
 #endif /* USE_OFFLOAD_SSL */
 /*-----------------------------------------------------------*/
 
+#if LORAWAN_ENABLED
+extern void LORAWAN_HAL_GPIO_EXTI_Callback( uint16_t gpioPin );
+#endif
+
+
 /**
  * @brief  EXTI line detection callback.
  *
@@ -752,6 +914,7 @@ static void prvInitializeHeap( void )
  */
 void HAL_GPIO_EXTI_Callback( uint16_t GPIO_Pin )
 {
+
     switch( GPIO_Pin )
     {
         /* Pin number 1 is connected to Inventek Module Cmd-Data
@@ -759,11 +922,37 @@ void HAL_GPIO_EXTI_Callback( uint16_t GPIO_Pin )
         case ( GPIO_PIN_1 ):
             SPI_WIFI_ISR();
             break;
-
         default:
+#if LORAWAN_ENABLED
+        	/**
+        	 * LoRa porting layer defines its own GPIO interrupt callback multiplexing in
+        	 * gpio-board.c.
+        	 */
+        	LORAWAN_HAL_GPIO_EXTI_Callback( GPIO_Pin );
+#endif
             break;
     }
 }
+
+
+#if ( LORAWAN_ENABLED == 0 )
+/**
+ * LoRa porting layer defines its own GPIO interrupt callback multiplexing in
+ * gpio-board.c.
+ */
+void EXTI15_10_IRQHandler(void)
+{
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_13);
+}
+
+void EXTI1_IRQHandler(void)
+{
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_1);
+}
+
+#endif
+
+
 /*-----------------------------------------------------------*/
 
 /**

@@ -27,3 +27,6 @@
 	path = libraries/3rdparty/mbedtls
 	url = https://github.com/ARMmbed/mbedtls.git
 	branch = mbedtls-2.16.6
+[submodule "libraries/3rdparty/LoRaMac-node"]
+	path = libraries/3rdparty/LoRaMac-node
+	url = https://github.com/dachalco/LoRaMac-node.git

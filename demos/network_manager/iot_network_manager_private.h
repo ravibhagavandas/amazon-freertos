@@ -65,6 +65,8 @@
  */
 #define ETH_ENABLED                                     ( ( configENABLED_NETWORKS & AWSIOT_NETWORK_TYPE_ETH ) == AWSIOT_NETWORK_TYPE_ETH )
 
+#define LORAWAN_ENABLED                                 ( ( configENABLED_NETWORKS & AWSIOT_NETWORK_TYPE_LORAWAN ) == AWSIOT_NETWORK_TYPE_LORAWAN )
+
 #define TCPIP_NETWORK_ENABLED                           ( ( configENABLED_NETWORKS & AWSIOT_NETWORK_TYPE_TCP_IP ) != 0 )
 
 /**
