@@ -102,7 +102,7 @@
 									<listOptionValue builtIn="false" value="RFU"/>
 									<listOptionValue builtIn="false" value="USE_OFFLOAD_SSL"/>
 									<listOptionValue builtIn="false" value="REGION_US915"/>
-									<listOptionValue builtIn="false" value="LORAWAN_USE_FREERTOS_TIMERS"/>
+									<listOptionValue builtIn="false" value="LORAWAN_USE_EXTERNAL_TIMERS"/>
 								</option>
 								<option id="fr.ac6.managedbuild.gnu.c.compiler.option.misc.other.475607660" superClass="fr.ac6.managedbuild.gnu.c.compiler.option.misc.other" useByScannerDiscovery="false" value="-fmessage-length=0" valueType="string"/>
 								<option id="fr.ac6.managedbuid.gnu.c.compiler.option.misc.other.1976542995" name="Other flags" superClass="fr.ac6.managedbuid.gnu.c.compiler.option.misc.other" useByScannerDiscovery="false" value="-fmessage-length=0" valueType="string"/>
