@@ -17,6 +17,9 @@
 
 /**
  * @brief Defines maximum message size for transmission.
+ * Applications should take care of duty cycle restrictions and fair access policies for
+ * each regions while determining the size of message to be transmitted. Larger messages can
+ * lead to longer air-time for radio, and this can lead to radio using up all the duty cycle limit.
  */
 #define LORAWAN_MAX_MESG_SIZE                     242
 
@@ -62,11 +65,11 @@
 /**
  * @biref Defines types of join methods.
  */
- typedef enum
- {
-	 LORAWAN_JOIN_MODE_OTAA = 0,
-	 LORAWAN_JOIN_MODE_ABP
- } LoraWanJoinMode_t;
+typedef enum
+{
+    LORAWAN_JOIN_MODE_OTAA = 0,
+    LORAWAN_JOIN_MODE_ABP
+} LoraWanJoinMode_t;
 
 
 /*!
@@ -87,30 +90,30 @@ typedef enum eDeviceState
  */
 static const char* MacStatusStrings[] =
 {
-    "OK",                            // LORAMAC_STATUS_OK
-    "Busy",                          // LORAMAC_STATUS_BUSY
-    "Service unknown",               // LORAMAC_STATUS_SERVICE_UNKNOWN
-    "Parameter invalid",             // LORAMAC_STATUS_PARAMETER_INVALID
-    "Frequency invalid",             // LORAMAC_STATUS_FREQUENCY_INVALID
-    "Datarate invalid",              // LORAMAC_STATUS_DATARATE_INVALID
-    "Frequency or datarate invalid", // LORAMAC_STATUS_FREQ_AND_DR_INVALID
-    "No network joined",             // LORAMAC_STATUS_NO_NETWORK_JOINED
-    "Length error",                  // LORAMAC_STATUS_LENGTH_ERROR
-    "Region not supported",          // LORAMAC_STATUS_REGION_NOT_SUPPORTED
-    "Skipped APP data",              // LORAMAC_STATUS_SKIPPED_APP_DATA
-    "Duty-cycle restricted",         // LORAMAC_STATUS_DUTYCYCLE_RESTRICTED
-    "No channel found",              // LORAMAC_STATUS_NO_CHANNEL_FOUND
-    "No free channel found",         // LORAMAC_STATUS_NO_FREE_CHANNEL_FOUND
-    "Busy beacon reserved time",     // LORAMAC_STATUS_BUSY_BEACON_RESERVED_TIME
-    "Busy ping-slot window time",    // LORAMAC_STATUS_BUSY_PING_SLOT_WINDOW_TIME
-    "Busy uplink collision",         // LORAMAC_STATUS_BUSY_UPLINK_COLLISION
-    "Crypto error",                  // LORAMAC_STATUS_CRYPTO_ERROR
-    "FCnt handler error",            // LORAMAC_STATUS_FCNT_HANDLER_ERROR
-    "MAC command error",             // LORAMAC_STATUS_MAC_COMMAD_ERROR
-    "ClassB error",                  // LORAMAC_STATUS_CLASS_B_ERROR
-    "Confirm queue error",           // LORAMAC_STATUS_CONFIRM_QUEUE_ERROR
-    "Multicast group undefined",     // LORAMAC_STATUS_MC_GROUP_UNDEFINED
-    "Unknown error",                 // LORAMAC_STATUS_ERROR
+        "OK",                            // LORAMAC_STATUS_OK
+        "Busy",                          // LORAMAC_STATUS_BUSY
+        "Service unknown",               // LORAMAC_STATUS_SERVICE_UNKNOWN
+        "Parameter invalid",             // LORAMAC_STATUS_PARAMETER_INVALID
+        "Frequency invalid",             // LORAMAC_STATUS_FREQUENCY_INVALID
+        "Datarate invalid",              // LORAMAC_STATUS_DATARATE_INVALID
+        "Frequency or datarate invalid", // LORAMAC_STATUS_FREQ_AND_DR_INVALID
+        "No network joined",             // LORAMAC_STATUS_NO_NETWORK_JOINED
+        "Length error",                  // LORAMAC_STATUS_LENGTH_ERROR
+        "Region not supported",          // LORAMAC_STATUS_REGION_NOT_SUPPORTED
+        "Skipped APP data",              // LORAMAC_STATUS_SKIPPED_APP_DATA
+        "Duty-cycle restricted",         // LORAMAC_STATUS_DUTYCYCLE_RESTRICTED
+        "No channel found",              // LORAMAC_STATUS_NO_CHANNEL_FOUND
+        "No free channel found",         // LORAMAC_STATUS_NO_FREE_CHANNEL_FOUND
+        "Busy beacon reserved time",     // LORAMAC_STATUS_BUSY_BEACON_RESERVED_TIME
+        "Busy ping-slot window time",    // LORAMAC_STATUS_BUSY_PING_SLOT_WINDOW_TIME
+        "Busy uplink collision",         // LORAMAC_STATUS_BUSY_UPLINK_COLLISION
+        "Crypto error",                  // LORAMAC_STATUS_CRYPTO_ERROR
+        "FCnt handler error",            // LORAMAC_STATUS_FCNT_HANDLER_ERROR
+        "MAC command error",             // LORAMAC_STATUS_MAC_COMMAD_ERROR
+        "ClassB error",                  // LORAMAC_STATUS_CLASS_B_ERROR
+        "Confirm queue error",           // LORAMAC_STATUS_CONFIRM_QUEUE_ERROR
+        "Multicast group undefined",     // LORAMAC_STATUS_MC_GROUP_UNDEFINED
+        "Unknown error",                 // LORAMAC_STATUS_ERROR
 };
 
 /**
@@ -118,25 +121,25 @@ static const char* MacStatusStrings[] =
  */
 static const char* EventInfoStatusStrings[] =
 { 
-    "OK",                            // LORAMAC_EVENT_INFO_STATUS_OK
-    "Error",                         // LORAMAC_EVENT_INFO_STATUS_ERROR
-    "Tx timeout",                    // LORAMAC_EVENT_INFO_STATUS_TX_TIMEOUT
-    "Rx 1 timeout",                  // LORAMAC_EVENT_INFO_STATUS_RX1_TIMEOUT
-    "Rx 2 timeout",                  // LORAMAC_EVENT_INFO_STATUS_RX2_TIMEOUT
-    "Rx1 error",                     // LORAMAC_EVENT_INFO_STATUS_RX1_ERROR
-    "Rx2 error",                     // LORAMAC_EVENT_INFO_STATUS_RX2_ERROR
-    "Join failed",                   // LORAMAC_EVENT_INFO_STATUS_JOIN_FAIL
-    "Downlink repeated",             // LORAMAC_EVENT_INFO_STATUS_DOWNLINK_REPEATED
-    "Tx DR payload size error",      // LORAMAC_EVENT_INFO_STATUS_TX_DR_PAYLOAD_SIZE_ERROR
-    "Downlink too many frames loss", // LORAMAC_EVENT_INFO_STATUS_DOWNLINK_TOO_MANY_FRAMES_LOSS
-    "Address fail",                  // LORAMAC_EVENT_INFO_STATUS_ADDRESS_FAIL
-    "MIC fail",                      // LORAMAC_EVENT_INFO_STATUS_MIC_FAIL
-    "Multicast fail",                // LORAMAC_EVENT_INFO_STATUS_MULTICAST_FAIL
-    "Beacon locked",                 // LORAMAC_EVENT_INFO_STATUS_BEACON_LOCKED
-    "Beacon lost",                   // LORAMAC_EVENT_INFO_STATUS_BEACON_LOST
-    "Beacon not found"               // LORAMAC_EVENT_INFO_STATUS_BEACON_NOT_FOUND
+        "OK",                            // LORAMAC_EVENT_INFO_STATUS_OK
+        "Error",                         // LORAMAC_EVENT_INFO_STATUS_ERROR
+        "Tx timeout",                    // LORAMAC_EVENT_INFO_STATUS_TX_TIMEOUT
+        "Rx 1 timeout",                  // LORAMAC_EVENT_INFO_STATUS_RX1_TIMEOUT
+        "Rx 2 timeout",                  // LORAMAC_EVENT_INFO_STATUS_RX2_TIMEOUT
+        "Rx1 error",                     // LORAMAC_EVENT_INFO_STATUS_RX1_ERROR
+        "Rx2 error",                     // LORAMAC_EVENT_INFO_STATUS_RX2_ERROR
+        "Join failed",                   // LORAMAC_EVENT_INFO_STATUS_JOIN_FAIL
+        "Downlink repeated",             // LORAMAC_EVENT_INFO_STATUS_DOWNLINK_REPEATED
+        "Tx DR payload size error",      // LORAMAC_EVENT_INFO_STATUS_TX_DR_PAYLOAD_SIZE_ERROR
+        "Downlink too many frames loss", // LORAMAC_EVENT_INFO_STATUS_DOWNLINK_TOO_MANY_FRAMES_LOSS
+        "Address fail",                  // LORAMAC_EVENT_INFO_STATUS_ADDRESS_FAIL
+        "MIC fail",                      // LORAMAC_EVENT_INFO_STATUS_MIC_FAIL
+        "Multicast fail",                // LORAMAC_EVENT_INFO_STATUS_MULTICAST_FAIL
+        "Beacon locked",                 // LORAMAC_EVENT_INFO_STATUS_BEACON_LOCKED
+        "Beacon lost",                   // LORAMAC_EVENT_INFO_STATUS_BEACON_LOST
+        "Beacon not found"               // LORAMAC_EVENT_INFO_STATUS_BEACON_NOT_FOUND
 };
- 
+
 /**
  * @brief Device state to LoRaWAN operations.
  */
@@ -185,7 +188,7 @@ static LoRaMacStatus_t prxJoinNetwork( void )
     {
         configPRINTF(( "Next Tx in  : ~%lu second(s)\n", ( mlmeReq.ReqReturn.DutyCycleWaitTime / 1000 ) ));
     }
-    
+
     return status;
 }
 
@@ -213,10 +216,10 @@ static void OnPacketTimerEvent( void* context )
         }
         else
         {
-        	/**
-        	 * Device already joined LoRaWAN network. Start
-        	 * sending data.
-        	 */
+            /**
+             * Device already joined LoRaWAN network. Start
+             * sending data.
+             */
             DeviceState = DEVICE_STATE_SEND;
         }
     }
@@ -235,38 +238,38 @@ static void McpsConfirm( McpsConfirm_t *mcpsConfirm )
     {
         switch( mcpsConfirm->McpsRequest )
         {
-            case MCPS_UNCONFIRMED:
+        case MCPS_UNCONFIRMED:
+        {
+            // Check Datarate
+            // Check TxPower
+            configPRINTF(("Unconfirmed message has been sent out.\n"));
+            DeviceState = DEVICE_STATE_CYCLE;
+            break;
+        }
+        case MCPS_CONFIRMED:
+        {
+            // Check Datarate
+            // Check TxPower
+            // Check AckReceived
+            // Check NbTrials
+            if( mcpsConfirm->AckReceived == true )
             {
-                // Check Datarate
-                // Check TxPower
-                configPRINTF(("Unconfirmed message sent out.\n"));
+                configPRINTF(("ACK received for confirmed message.\n"));
                 DeviceState = DEVICE_STATE_CYCLE;
-                break;
             }
-            case MCPS_CONFIRMED:
+            else
             {
-                // Check Datarate
-                // Check TxPower
-                // Check AckReceived
-                // Check NbTrials
-                if( mcpsConfirm->AckReceived == true )
-                {
-                    configPRINTF(("ACK received for confirmed message.\n"));
-                    DeviceState = DEVICE_STATE_CYCLE;
-                }
-                else
-                {
-                    configPRINTF(("NACK received for confirmed message.\n"));
-                    DeviceState = DEVICE_STATE_SLEEP;
-                }
-                break;
+                configPRINTF(("NACK received for confirmed message.\n"));
+                DeviceState = DEVICE_STATE_SLEEP;
             }
-            case MCPS_PROPRIETARY:
-            {
-                break;
-            }
-            default:
-                break;
+            break;
+        }
+        case MCPS_PROPRIETARY:
+        {
+            break;
+        }
+        default:
+            break;
         }
 
     }
@@ -299,7 +302,7 @@ static void PrintHexBuffer( uint8_t *buffer, uint8_t size )
     }
     configPRINTF(( "\n" ));
 }
- 
+
 
 static void McpsIndication( McpsIndication_t *mcpsIndication )
 {
@@ -311,24 +314,24 @@ static void McpsIndication( McpsIndication_t *mcpsIndication )
 
     switch( mcpsIndication->McpsIndication )
     {
-        case MCPS_UNCONFIRMED:
-        {
-            break;
-        }
-        case MCPS_CONFIRMED:
-        {
-            break;
-        }
-        case MCPS_PROPRIETARY:
-        {
-            break;
-        }
-        case MCPS_MULTICAST:
-        {
-            break;
-        }
-        default:
-            break;
+    case MCPS_UNCONFIRMED:
+    {
+        break;
+    }
+    case MCPS_CONFIRMED:
+    {
+        break;
+    }
+    case MCPS_PROPRIETARY:
+    {
+        break;
+    }
+    case MCPS_MULTICAST:
+    {
+        break;
+    }
+    default:
+        break;
     }
 
     // Check Multicast
@@ -348,81 +351,81 @@ static void McpsIndication( McpsIndication_t *mcpsIndication )
     // Check RxSlot
     if( mcpsIndication->RxData == true )
     {
-       configPRINTF(( "Downlink data received: port: %d, slot: %d, data_rate:%d, rssi: %d, snr:%d data:\n",
-       mcpsIndication->Port,
-       mcpsIndication->RxSlot,
-       mcpsIndication->RxDatarate,
-       mcpsIndication->Rssi,
-       mcpsIndication->Snr );
-       PrintHexBuffer( mcpsIndication->Buffer, mcpsIndication->BufferSize ));
+        configPRINTF(( "Downlink data received: port: %d, slot: %d, data_rate:%d, rssi: %d, snr:%d data:\n",
+                mcpsIndication->Port,
+                mcpsIndication->RxSlot,
+                mcpsIndication->RxDatarate,
+                mcpsIndication->Rssi,
+                mcpsIndication->Snr );
+        PrintHexBuffer( mcpsIndication->Buffer, mcpsIndication->BufferSize ));
     }
 }
 
 
 static void MlmeIndication ( MlmeIndication_t* MlmeIndication )
 {
-   // Implementation for MLME indication
+    // Implementation for MLME indication
 }
 
- 
+
 static void MlmeConfirm( MlmeConfirm_t *mlmeConfirm )
 {
     LoRaMacEventInfoStatus_t status = mlmeConfirm->Status;
     MibRequestConfirm_t mibGet;
     static int nJoinAttempts = LORAWAN_MAX_JOIN_ATTEMPTS;
 
-	configPRINTF(("MLME CONFIRM  status: %s\n", EventInfoStatusStrings[status]));
+    configPRINTF(("MLME CONFIRM  status: %s\n", EventInfoStatusStrings[status]));
 
-	switch( mlmeConfirm->MlmeRequest )
-	{
-		case MLME_JOIN:
+    switch( mlmeConfirm->MlmeRequest )
+    {
+    case MLME_JOIN:
+    {
+
+        if( status == LORAMAC_EVENT_INFO_STATUS_OK )
         {
+            configPRINTF(("OTAA JOIN Successful\n\n"));
 
-            if( status == LORAMAC_EVENT_INFO_STATUS_OK )
+            mibGet.Type = MIB_DEV_ADDR;
+            LoRaMacMibGetRequestConfirm( &mibGet );
+            configPRINTF(( "DevAddr : %08lX\n", mibGet.Param.DevAddr ));
+
+            mibGet.Type = MIB_CHANNELS_DATARATE;
+            LoRaMacMibGetRequestConfirm( &mibGet );
+            configPRINTF(( "DATA RATE   : DR_%d\n", mibGet.Param.ChannelsDatarate ));
+
+            DeviceState = DEVICE_STATE_SEND;
+            xSemaphoreGive( wakeupLoRaTask );
+        }
+        else
+        {
+            if( nJoinAttempts > 0 )
             {
-                configPRINTF(("OTAA JOIN Successful\n\n"));
-                
-                mibGet.Type = MIB_DEV_ADDR;
-                LoRaMacMibGetRequestConfirm( &mibGet );
-                configPRINTF(( "DevAddr : %08lX\n", mibGet.Param.DevAddr ));
-
-                mibGet.Type = MIB_CHANNELS_DATARATE;
-                LoRaMacMibGetRequestConfirm( &mibGet );
-                configPRINTF(( "DATA RATE   : DR_%d\n", mibGet.Param.ChannelsDatarate ));
-
-                DeviceState = DEVICE_STATE_SEND;
+                configPRINTF(("Join Failed, max join attempts left: %d\n", nJoinAttempts ));
+                nJoinAttempts--;
+                DeviceState = DEVICE_STATE_CYCLE;
                 xSemaphoreGive( wakeupLoRaTask );
             }
             else
             {
-                if( nJoinAttempts > 0 )
-                {
-                    configPRINTF(("Join Failed, max join attempts left: %d\n", nJoinAttempts ));
-                    nJoinAttempts--;
-                    DeviceState = DEVICE_STATE_CYCLE;
-                    xSemaphoreGive( wakeupLoRaTask );
-                }
-                else
-                {
-                    configPRINTF(( "Join Failed, no attempts left..\n" ));
-                    DeviceState = DEVICE_STATE_SLEEP;
-                }
+                configPRINTF(( "Join Failed, no attempts left..\n" ));
+                DeviceState = DEVICE_STATE_SLEEP;
             }
-            break;
         }
+        break;
+    }
 
-		default:
-            break;
-	}
+    default:
+        break;
+    }
 }
 
 static void OnMacProcessNotify( void )
 {
-	xSemaphoreGiveFromISR(wakeupLoRaTask, NULL);
+    xSemaphoreGiveFromISR(wakeupLoRaTask, NULL);
 }
 uint8_t  getBatteryLevel( void )
 {
-	return 0;
+    return 0;
 }
 
 static LoRaMacStatus_t configure( void )
@@ -458,7 +461,7 @@ static LoRaMacStatus_t configure( void )
         mibReq.Param.AppKey = appKey;
         status = LoRaMacMibSetRequestConfirm( &mibReq );
     }
-    
+
     if( status == LORAMAC_STATUS_OK )
     {            
         mibReq.Type = MIB_PUBLIC_NETWORK;
@@ -538,7 +541,7 @@ static LoRaMacStatus_t sendFrame( bool confirmed )
     }
 
     status = LoRaMacMcpsRequest( &mcpsReq );
-    
+
     configPRINTF(( "MCPS-Request status : %s\n", MacStatusStrings[status] ));
 
     if( status == LORAMAC_STATUS_DUTYCYCLE_RESTRICTED )
@@ -567,7 +570,7 @@ static void prvLorawanClassATask( void *params )
     status = LoRaMacInitialization( &LoRaMacPrimitives, &LoRaMacCallbacks, LORAMAC_REGION_US915);
     if( status == LORAMAC_STATUS_OK )
     {
-      configPRINTF(("Lora MAC initialization successful.\r\n"));
+        configPRINTF(("Lora MAC initialization successful.\r\n"));
     }
     else
     {
@@ -576,122 +579,122 @@ static void prvLorawanClassATask( void *params )
 
     if( status == LORAMAC_STATUS_OK )
     {
-    	status = configure();
+        status = configure();
     }
 
     if( status == LORAMAC_STATUS_OK )
     {
-    	configPRINTF(( "LoRaMAC configuration succeeded.\n" ));
+        configPRINTF(( "LoRaMAC configuration succeeded.\n" ));
     }
     else
     {
-    	configPRINTF(( "LoraMAC configuration failed, status = %d.\n", status ));
+        configPRINTF(( "LoraMAC configuration failed, status = %d.\n", status ));
     }
 
     if( status == LORAMAC_STATUS_OK )
     {
-    	status =  LoRaMacStart( );
+        status =  LoRaMacStart( );
     }
 
     if( status == LORAMAC_STATUS_OK )
-   	{
-       configPRINTF(( "LoraMAC start successful. \r\n" ));
-   	}
+    {
+        configPRINTF(( "LoraMAC start successful. \r\n" ));
+    }
     else
     {
-    	configPRINTF(( "LoRaMAC start failed, status = %d.\n", status ));
+        configPRINTF(( "LoRaMAC start failed, status = %d.\n", status ));
     }
 
     if( status == LORAMAC_STATUS_OK )
     {
-    	TimerInit( &packetTimer, OnPacketTimerEvent );
+        TimerInit( &packetTimer, OnPacketTimerEvent );
 
-    	mibReq.Type = MIB_NETWORK_ACTIVATION;
-    	status = LoRaMacMibGetRequestConfirm( &mibReq );
-    	if( status == LORAMAC_STATUS_OK )
-    	{
-    		if( mibReq.Param.NetworkActivation == ACTIVATION_TYPE_NONE )
-    		{
-    			configPRINTF(("Initiating join. \r\n"));
-    			DeviceState = DEVICE_STATE_JOIN;
-    		}
-    		else
-    		{
-    			configPRINTF(("Already joined.Sending data \r\n"));
-    			DeviceState = DEVICE_STATE_SEND;
-    		}
-    	}
-    	else
-    	{
-    		configPRINTF(("Error while fetching activation, status = %d.", status ));
-    	}
+        mibReq.Type = MIB_NETWORK_ACTIVATION;
+        status = LoRaMacMibGetRequestConfirm( &mibReq );
+        if( status == LORAMAC_STATUS_OK )
+        {
+            if( mibReq.Param.NetworkActivation == ACTIVATION_TYPE_NONE )
+            {
+                configPRINTF(("Initiating join. \r\n"));
+                DeviceState = DEVICE_STATE_JOIN;
+            }
+            else
+            {
+                configPRINTF(("Already joined.Sending data \r\n"));
+                DeviceState = DEVICE_STATE_SEND;
+            }
+        }
+        else
+        {
+            configPRINTF(("Error while fetching activation, status = %d.", status ));
+        }
     }
-    
+
 
     if( status == LORAMAC_STATUS_OK )
     {
 
-    	for( ;; )
-    	{
-    		xSemaphoreTake(wakeupLoRaTask, portMAX_DELAY);
-    		// Process Radio IRQ.
-    		if( Radio.IrqProcess != NULL )
-    		{
-    			Radio.IrqProcess( );
-    		}
+        for( ;; )
+        {
+            xSemaphoreTake(wakeupLoRaTask, portMAX_DELAY);
+            // Process Radio IRQ.
+            if( Radio.IrqProcess != NULL )
+            {
+                Radio.IrqProcess( );
+            }
 
-    		//Process Lora mac events.
-    		LoRaMacProcess( );
+            //Process Lora mac events.
+            LoRaMacProcess( );
 
-    		switch( DeviceState )
-    		{
+            switch( DeviceState )
+            {
 
-    		case DEVICE_STATE_JOIN:
-    			status = prxJoinNetwork();
-    			if( status == LORAMAC_STATUS_OK )
-    			{
-    				configPRINTF(("Join Initiated.\n"));
-    				DeviceState = DEVICE_STATE_SLEEP;
-    			}
-    			else
-    			{
-    				if( status == LORAMAC_STATUS_DUTYCYCLE_RESTRICTED )
-    				{
-    					DeviceState = DEVICE_STATE_CYCLE;
-    				}
-    			}
+            case DEVICE_STATE_JOIN:
+                status = prxJoinNetwork();
+                if( status == LORAMAC_STATUS_OK )
+                {
+                    configPRINTF(("Join Initiated.\n"));
+                    DeviceState = DEVICE_STATE_SLEEP;
+                }
+                else
+                {
+                    if( status == LORAMAC_STATUS_DUTYCYCLE_RESTRICTED )
+                    {
+                        DeviceState = DEVICE_STATE_CYCLE;
+                    }
+                }
 
-    			break;
-    		case DEVICE_STATE_SEND:
-    			status = sendFrame( LORAWAN_SEND_CONFIRMED_MESSAGES );
-    			if( status == LORAMAC_STATUS_OK )
-    			{
-    				DeviceState = DEVICE_STATE_SLEEP;
-    			}
-    			else
-    			{
-    				if( status == LORAMAC_STATUS_DUTYCYCLE_RESTRICTED )
-    				{
-    					DeviceState = DEVICE_STATE_CYCLE;
-    				}
-    			}
+                break;
+            case DEVICE_STATE_SEND:
+                status = sendFrame( LORAWAN_SEND_CONFIRMED_MESSAGES );
+                if( status == LORAMAC_STATUS_OK )
+                {
+                    DeviceState = DEVICE_STATE_SLEEP;
+                }
+                else
+                {
+                    if( status == LORAMAC_STATUS_DUTYCYCLE_RESTRICTED )
+                    {
+                        DeviceState = DEVICE_STATE_CYCLE;
+                    }
+                }
 
-    			break;
-    		case DEVICE_STATE_CYCLE:
-    			// Schedule next packet transmission
-				DeviceState = DEVICE_STATE_SLEEP;
-    			dutyCycleTime = LORAWAN_APP_TX_DUTYCYCLE_MS + randr( -LORAWAN_APP_TX_DUTYCYCLE_RND_MS, LORAWAN_APP_TX_DUTYCYCLE_RND_MS );
-    			// Schedule next packet transmission
-    			TimerSetValue( &packetTimer, dutyCycleTime );
-    			TimerStart( &packetTimer );
-    			break;
-    		default:
-    			break;
-    		}
+                break;
+            case DEVICE_STATE_CYCLE:
+                // Schedule next packet transmission
+                DeviceState = DEVICE_STATE_SLEEP;
+                dutyCycleTime = LORAWAN_APP_TX_DUTYCYCLE_MS + randr( -LORAWAN_APP_TX_DUTYCYCLE_RND_MS, LORAWAN_APP_TX_DUTYCYCLE_RND_MS );
+                // Schedule next packet transmission
+                TimerSetValue( &packetTimer, dutyCycleTime );
+                TimerStart( &packetTimer );
+                break;
+            default:
+                break;
+            }
 
-    	}
+        }
     }
-    
+
     vTaskDelete(NULL);
 }
 
@@ -700,10 +703,10 @@ static void prvLorawanClassATask( void *params )
  * *****************************************************************************************/ 
 void vLoRaWanDemo(void)
 {
-	wakeupLoRaTask = xSemaphoreCreateBinary();
-	if( wakeupLoRaTask != NULL )
-	{
-		xSemaphoreGive( wakeupLoRaTask );
-		xTaskCreate( prvLorawanClassATask, "LoRa", configMINIMAL_STACK_SIZE * 40 , NULL, tskIDLE_PRIORITY + 1, &loRaWANTask );
-	}
+    wakeupLoRaTask = xSemaphoreCreateBinary();
+    if( wakeupLoRaTask != NULL )
+    {
+        xSemaphoreGive( wakeupLoRaTask );
+        xTaskCreate( prvLorawanClassATask, "LoRa", configMINIMAL_STACK_SIZE * 40 , NULL, tskIDLE_PRIORITY + 1, &loRaWANTask );
+    }
 }
