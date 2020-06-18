@@ -1,5 +1,5 @@
 /*
- * FreeRTOS Common IO V0.1.1
+ *
  * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -27,6 +27,10 @@
 
 #include "delay.h"
 
+/**
+ * @file delay.c Provides a delay implementation using FreeRTOS task delay function.
+ */
+
 void Delay( float s )
 {
     DelayMs( s * 1000.0f );
@@ -34,10 +38,10 @@ void Delay( float s )
 
 void DelayMs( uint32_t ms )
 {
-	TickType_t xTicks = pdMS_TO_TICKS( ms );
-	if( xTicks == 0 )
-	{
-		xTicks++;
-	}
+    TickType_t xTicks = pdMS_TO_TICKS( ms );
+    if( xTicks == 0 )
+    {
+        xTicks++;
+    }
     vTaskDelay( xTicks );
 }
