@@ -62,7 +62,7 @@ typedef enum
 } WDRV_MAC_EVENT_TYPE;
 
 
-#define SOCKET_CONNECT_TIMEOUT           ( pdMS_TO_TICKS( 50000 ) )
+#define SOCKET_CONNECT_TIMEOUT           ( pdMS_TO_TICKS( 10000 ) )
 
 /*-----------------------------------------------------------*/
 
@@ -130,6 +130,7 @@ typedef struct xSocketsSockaddr
     StaticSemaphore_t xSocketsOpSemaphoreBuffer[MAX_SEM];/**<  Semaphores used for various operations. */
     TaskHandle_t waitingTask[MAX_SEM]; /**<  Task handle used for various operations. */
     volatile tpfAppSocketRecvCb    appSocketRecvCb;  /**<  Socket Recv callback. */
+    char sniServerName[HOSTNAME_MAX_SIZE];
 } SocketCntx_t;
 
 /* Internal variables. */
@@ -142,7 +143,7 @@ extern SemaphoreHandle_t xWiFiSemaphore;
 extern const TickType_t xSemaphoreWaitTicks;
 extern TaskHandle_t waiting_task;
 extern volatile tstrSocket                gastrSockets[MAX_SOCKET];
-extern void dns_resolve_cb(uint8_t *hostName, uint32_t hostIp);
+
 
 #define SOCKET_OFFSET 1
 #define RECV_BUFFER_SIZE 1500
@@ -206,12 +207,12 @@ void socket_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
             tstrSocketConnectMsg *pstrConnect = (tstrSocketConnectMsg *)pvMsg;
             if (pstrConnect && pstrConnect->s8Error >= SOCK_ERR_NO_ERROR) {
 
-                configPRINTF(("Successfully connected.\r\n"));
+                configPRINTF(("Successfully connected, sock =%d\r\n", sock));
                 xSocketCntx[sock].socketConnected= 1;
                 
                 } else {
                 xSocketCntx[sock].socketConnected = pstrConnect->s8Error;
-                configPRINTF(("Connect error! code(%d)\r\n", (xSocketCntx[sock].socketConnected)));
+                configPRINTF(("Connect error! code(%d), sock = %d\r\n", (xSocketCntx[sock].socketConnected), sock));
             }
 
             if(xSocketCntx[sock].socketConnecting)
@@ -295,9 +296,10 @@ int32_t SOCKETS_Close( Socket_t xSocket )
     }
 
     xSocketCntx[sock].socketConnected = 0;
-
+    memset(xSocketCntx[sock].sniServerName, 0, sizeof(xSocketCntx[sock].sniServerName));
+    
     /* wait until all outstanding data are sent */
-    //while(xSocketCntx[sock].socketSendOutstanding!=0)vTaskDelay(10);
+    while(xSocketCntx[sock].socketSendOutstanding!=0)vTaskDelay(10);
 
     if( xSemaphoreTake( xWiFiSemaphore, xSemaphoreWaitTicks ) == pdTRUE )
     { 
@@ -392,15 +394,20 @@ int32_t SOCKETS_Connect( Socket_t xSocket,
                 /* Timed out. */
                 configPRINTF( ( "connect timeout\r\n" ) );
                 lStatus =  SOCKETS_SOCKET_ERROR;
+                xSocketCntx[Socket].socketConnecting = 0;
             }
             else
             {
-
-                if(xSocketCntx[Socket].socketConnected == 1)
+                if(1 == xSocketCntx[Socket].socketConnected)
+                {
                     lStatus = SOCKETS_ERROR_NONE;
+                }
                 else
+                {
                     lStatus = xSocketCntx[Socket].socketConnected;
-
+                    xSocketCntx[Socket].socketConnected = 0;
+                }
+                
                  xSocketCntx[Socket].socketConnecting = 0;
             }
           xSemaphoreGive((xSocketCntx[Socket].xSocketsOpSemaphore)[CONNECT_SEM]);
@@ -442,7 +449,25 @@ uint32_t SOCKETS_GetHostByName( const char * pcHostName )
     return ipAddress;
 }
 /*-----------------------------------------------------------*/
-
+void socket_recv_command_task (void * params)
+{
+    int32_t lStatus = SOCKETS_SOCKET_ERROR;
+    SOCKET Socket =  (( SOCKET ) params);
+    if( xSemaphoreTake( xWiFiSemaphore, xSemaphoreWaitTicks ) == pdTRUE )
+    {    
+        lStatus = recv( Socket, xSocketCntx[Socket].recvBuffer, RECV_BUFFER_SIZE, 0 );
+        if(lStatus !=M2M_SUCCESS)
+        {
+            configPRINTF( ( "recv fail, ret = %d\r\n", lStatus ) );
+        }
+        xSemaphoreGive(xWiFiSemaphore);
+    }
+    else
+    {
+    }
+    
+    vTaskDelete( NULL );   
+}
 int32_t SOCKETS_Recv( Socket_t xSocket,
                       void * pvBuffer,
                       size_t xBufferLength,
@@ -452,6 +477,8 @@ int32_t SOCKETS_Recv( Socket_t xSocket,
     SOCKET Socket =  (( SOCKET ) xSocket) -SOCKET_OFFSET;
     EventBits_t evBits;
 
+    if((Socket<0) || (pvBuffer == NULL))
+        return SOCKETS_EINVAL;
 
     if(xSocketCntx[Socket].socketConnected==0)
         return SOCKETS_SOCKET_ERROR;
@@ -488,24 +515,11 @@ int32_t SOCKETS_Recv( Socket_t xSocket,
 
         if(xSocketCntx[Socket].recvCalled != 1)
         {
-            //Wi-Fi semaphore is for SPI mutual access
-            if( xSemaphoreTake( xWiFiSemaphore, xSemaphoreWaitTicks ) == pdTRUE )
-            {                  
-                   lStatus = recv( Socket, xSocketCntx[Socket].recvBuffer, RECV_BUFFER_SIZE, 0 );
-                if(lStatus !=M2M_SUCCESS)
-                {
-                    xSemaphoreGive((xSocketCntx[Socket].xSocketsOpSemaphore)[RECV_SEM]);
-                         xSemaphoreGive(xWiFiSemaphore);
-                    return SOCKETS_SOCKET_ERROR; 
-                }
-            }
-            else
-            {
-                xSemaphoreGive((xSocketCntx[Socket].xSocketsOpSemaphore)[RECV_SEM]);
-                   return SOCKETS_SOCKET_ERROR;
-            }
-
-                 xSemaphoreGive(xWiFiSemaphore);
+            xTaskCreate( socket_recv_command_task,
+                         "socket_recv_command_task",
+                         512,
+                         Socket,
+                         tskIDLE_PRIORITY, NULL );          
         }
         
         //indicate recv called, don't call again until data is received.
@@ -514,39 +528,40 @@ int32_t SOCKETS_Recv( Socket_t xSocket,
             /* Wait for socket recv to complete if it's a blocking socket. */
         if(xSocketCntx[Socket].socketRecvTO> 0){
 
-              (xSocketCntx[Socket].waitingTask)[RECV_SEM] = xTaskGetCurrentTaskHandle();
+            (xSocketCntx[Socket].waitingTask)[RECV_SEM] = xTaskGetCurrentTaskHandle();
             
-                xTaskNotifyWait( WDRV_MAC_EVENT_SOCKET_RECV, WDRV_MAC_EVENT_SOCKET_RECV, &evBits, ~0);
+            xTaskNotifyWait( WDRV_MAC_EVENT_SOCKET_RECV, WDRV_MAC_EVENT_SOCKET_RECV, &evBits, xSocketCntx[Socket].socketRecvTO);
 
-                if( ( evBits & WDRV_MAC_EVENT_SOCKET_RECV ) == 0 )
-                {
-                    /* Timed out. */
-                    configPRINTF( ( "recv timeout\r\n" ) );
-                    lStatus =  SOCKETS_SOCKET_ERROR;
-                }
-               else
-               {
-                /* Socket recv callback completed */
-
-                if(xSocketCntx[Socket].socketRecvLength <= xBufferLength)
-                {
-                    // the buffer supplied is enough to accommdate all the data received
-                    lStatus = xSocketCntx[Socket].socketRecvLength;
-                    xSocketCntx[Socket].socketRecvLength =0;
-                    xSocketCntx[Socket].socketRecvOffset =0;
-
-
-                }
-                else
-                {
-                    // Buffer is smaller than all the received data.
-                    xSocketCntx[Socket].socketRecvLength -= xBufferLength;
-                xSocketCntx[Socket].socketRecvOffset+= xBufferLength;
-                lStatus = xBufferLength;
-                }
-               
-                memcpy((uint8_t*)pvBuffer, xSocketCntx[Socket].recvBuffer, lStatus);
+            if( ( evBits & WDRV_MAC_EVENT_SOCKET_RECV ) == 0 )
+            {
+                /* Timed out. */
+                configPRINTF( ( "recv timeout\r\n" ) );
+                lStatus =  SOCKETS_SOCKET_ERROR;
             }
+           else
+           {
+            /* Socket recv callback completed */
+
+            if(xSocketCntx[Socket].socketRecvLength <= xBufferLength)
+            {
+                // the buffer supplied is enough to accommdate all the data received
+                lStatus = xSocketCntx[Socket].socketRecvLength;
+                xSocketCntx[Socket].socketRecvLength =0;
+                xSocketCntx[Socket].socketRecvOffset =0;
+
+
+            }
+            else
+            {
+                // Buffer is smaller than all the received data.
+                xSocketCntx[Socket].socketRecvLength -= xBufferLength;
+            xSocketCntx[Socket].socketRecvOffset+= xBufferLength;
+            lStatus = xBufferLength;
+            }
+
+            memcpy((uint8_t*)pvBuffer, xSocketCntx[Socket].recvBuffer, lStatus);
+            }
+              
         }
         else
                lStatus = SOCKETS_EWOULDBLOCK;  
@@ -579,6 +594,9 @@ int32_t SOCKETS_Send( Socket_t xSocket,
     if((Socket<0) || (pvBuffer == NULL))
         return SOCKETS_EINVAL;
     
+    if (xSocketCntx[Socket].socketConnected <= 0)
+        return SOCKETS_SOCKET_ERROR;
+        
     if( xSemaphoreTake( (xSocketCntx[Socket].xSocketsOpSemaphore)[SEND_SEM], xSocketSemConnectWaitTicks ) == pdTRUE )
     {  
             xSocketCntx[Socket].socketSendLength = 0;
@@ -682,38 +700,74 @@ int32_t SOCKETS_SetSockOpt( Socket_t xSocket,
             /* Non-NULL destination string indicates that SNI extension should
              * be used during TLS negotiation. */
             
+			if (xSocketCntx[Socket].socketConnected > 0)
+           	{
+                lStatus = SOCKETS_ENOPROTOOPT;
+                break;
+            }
+			memcpy(xSocketCntx[Socket].sniServerName, pvOptionValue,strlen((char*)pvOptionValue)); 
+            if (gastrSockets[Socket].u8SSLFlags & SSL_FLAGS_ACTIVE)
+            {
+				setsockopt(Socket, SOL_SSL_SOCKET, SO_SSL_SNI, (char*)pvOptionValue, strlen((char*)pvOptionValue) + 1);
 #ifdef WDRV_WINC_DEVICE_WINC1500
-			
-            setsockopt(Socket, SOL_SSL_SOCKET, SO_SSL_ENABLE_SNI_VALIDATION, &sslOptionEnable, 4);
+            	setsockopt(Socket, SOL_SSL_SOCKET, SO_SSL_ENABLE_SNI_VALIDATION, &sslOptionEnable, 4);
 #else
-            setsockopt(Socket, SOL_SSL_SOCKET, SO_SSL_SNI, (char*)pvOptionValue, strlen((char*)pvOptionValue) + 1);
-            setsockopt(Socket, SOL_SSL_SOCKET, SO_SSL_ENABLE_CERTNAME_VALIDATION, &sslOptionEnable, 4);
+            	setsockopt(Socket, SOL_SSL_SOCKET, SO_SSL_ENABLE_CERTNAME_VALIDATION, &sslOptionEnable, 4);
 #endif
-            //SO_SSL_ENABLE_CERTNAME_VALIDATION
+            	//SO_SSL_ENABLE_CERTNAME_VALIDATION
+			}
             break;
 
         case SOCKETS_SO_TRUSTED_SERVER_CERTIFICATE:
             /* Non-NULL server certificate field indicates that the WINC1500 default trust
              * list should not be used. */
-
-        /* Not supported for now */
-        //WriteRootCertificate((char*)pvOptionValue, xOptionLength);
+			if (xSocketCntx[Socket].socketConnected > 0)
+            {
+                lStatus = SOCKETS_ENOPROTOOPT;
+                break;
+            }
+	        /* Not supported for now */
+	        //WriteRootCertificate((char*)pvOptionValue, xOptionLength);
             break;
 
         case SOCKETS_SO_REQUIRE_TLS:
+            
+            if (xSocketCntx[Socket].socketConnected > 0)
+            {
+                lStatus = SOCKETS_ENOPROTOOPT;
+                break;
+            }
+            
             SocketRequireTLS(Socket);
             setsockopt(Socket, SOL_SSL_SOCKET, SO_SSL_ENABLE_SESSION_CACHING, &sslOptionEnable, 4);
+            
+            if (strlen((char*)xSocketCntx[Socket].sniServerName) > 0)
+            {
+                setsockopt(Socket, SOL_SSL_SOCKET, SO_SSL_SNI, xSocketCntx[Socket].sniServerName, strlen(xSocketCntx[Socket].sniServerName) + 1);
+#ifdef WDRV_WINC_DEVICE_WINC1500
+                setsockopt(Socket, SOL_SSL_SOCKET, SO_SSL_ENABLE_SNI_VALIDATION, &sslOptionEnable, 4);
+#else
+                setsockopt(Socket, SOL_SSL_SOCKET, SO_SSL_ENABLE_CERTNAME_VALIDATION, &sslOptionEnable, 4);
+#endif
+				//SO_SSL_ENABLE_CERTNAME_VALIDATION
+            }                
+            
 
             break;
 
         case SOCKETS_SO_ALPN_PROTOCOLS:
            /* currently not supported */
-           lStatus = SOCKETS_ENOPROTOOPT;
+            lStatus = SOCKETS_ENOPROTOOPT;
             break;
 
         case SOCKETS_SO_NONBLOCK:
-         xSocketCntx[Socket].socketRecvTO=0;
-         xSocketCntx[Socket].socketSendTO=0;
+            if (xSocketCntx[Socket].socketConnected <= 0)
+            {
+                lStatus = SOCKETS_ENOPROTOOPT;
+                break;
+            }
+            xSocketCntx[Socket].socketRecvTO=0;
+            xSocketCntx[Socket].socketSendTO=0;
             break;
 
         case SOCKETS_SO_RCVTIMEO:
@@ -761,7 +815,7 @@ int32_t SOCKETS_Shutdown( Socket_t xSocket,
     }
 
     /* Wait until all outgoing data has been sent */
-    //while(xSocketCntx[Socket].socketSendOutstanding!=0)vTaskDelay(10);
+    while(xSocketCntx[Socket].socketSendOutstanding!=0)vTaskDelay(10);
 
     if( xSemaphoreTake( xWiFiSemaphore, xSemaphoreWaitTicks ) == pdTRUE )
     {
@@ -773,6 +827,11 @@ int32_t SOCKETS_Shutdown( Socket_t xSocket,
             xSocketCntx[Socket].socketConnected= 0;
             if(xSocketCntx[Socket].recvBuffer != NULL)
                 vPortFree(xSocketCntx[Socket].recvBuffer);
+            for(i =0 ; i <MAX_SEM ; i++)
+            {
+                if ((xSocketCntx[Socket].xSocketsOpSemaphore)[i] != NULL)
+                    vSemaphoreDelete((xSocketCntx[Socket].xSocketsOpSemaphore)[i]);
+            }
 
             ret = SOCKETS_ERROR_NONE;
             configPRINTF(("Shutdown Completed 1\r\n"));  
@@ -829,7 +888,7 @@ Socket_t SOCKETS_Socket( int32_t lDomain,
                        {
                             /* Init failed. */
                             configPRINTF( ( "\r\nfailed to allocate Sockets semaphore\r\n" ) );
-                            close(Socket);
+                            shutdown(Socket);
                             xSemaphoreGive(xSocketsSemaphore);
                             return SOCKETS_INVALID_SOCKET;
                        }
@@ -840,7 +899,7 @@ Socket_t SOCKETS_Socket( int32_t lDomain,
                     {
                         // We would expect this call to not fail to allow one task in
                         configPRINTF( ( "\r\nfailed to Give Sockets semaphore\r\n" ) );
-                        close(Socket);
+                        shutdown(Socket);
                         xSemaphoreGive(xSocketsSemaphore);
                         return SOCKETS_INVALID_SOCKET;
                     }
@@ -887,8 +946,8 @@ BaseType_t SOCKETS_Init( void )
     }
     }
     
-    	/* set DNS/IP callbacks */
-   registerSocketCallback( socket_cb, dns_resolve_cb);
+    /* set DNS/IP callbacks */
+    //registerSocketCallback( socket_cb, dns_resolve_cb);
 
     return pdPASS;
 }

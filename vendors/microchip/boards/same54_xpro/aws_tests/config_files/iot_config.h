@@ -25,7 +25,7 @@
 #define IOT_CONFIG_H_
 
 /* How long the MQTT library will wait for PINGRESPs or PUBACKs. */
-#define IOT_MQTT_RESPONSE_WAIT_MS            ( 10000 )
+#define IOT_MQTT_RESPONSE_WAIT_MS            ( 1000 )
 
 #define IOT_NETWORK_SOCKET_POLL_MS    ( 5000 )
 //#define IOT_NETWORK_SOCKET_POLL_MS    ( 1000 )

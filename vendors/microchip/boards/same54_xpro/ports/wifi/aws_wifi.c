@@ -35,12 +35,14 @@
 #include "socket.h"
 #include "m2m_periph.h"
 #include "m2m_ssl.h"
+#include "m2m_socket_host_if.h"
 #include "ecc_types.h"
 #include "cryptoauthlib.h"
 #include "wdrv_winc_client_api.h"
 #include "atca_cert_chain.h"
 #include "iot_pkcs11_config.h"
 #include "iot_wifi.h"
+#include "types/iot_network_types.h"
 #include "configuration.h"
 
 #ifdef WDRV_WINC_DEVICE_WINC1500
@@ -54,7 +56,7 @@ void AWS_MCHP_ConnectEvent();
 void AWS_MCHP_DisconnectEvent();
 uint32_t *get_winc_buffer();
 void dns_resolve_cb(uint8_t *hostName, uint32_t hostIp);
-WIFIReturnCode_t Wifi_Connect_Ex(DRV_HANDLE handle, const char *pcSSID, const char *pcPassword);
+WIFIReturnCode_t Wifi_Connect_Ex(DRV_HANDLE handle, const WIFINetworkParams_t * const pxNetworkParams);
 static void APP_ExampleConnectNotifyCallback(DRV_HANDLE handle, WDRV_WINC_CONN_STATE currentState, WDRV_WINC_CONN_ERROR errorCode);
 int8_t ecc_transfer_certificates(uint8_t * subject_key_id);
 extern const atcacert_def_t g_cert_def_0_root ;
@@ -68,10 +70,12 @@ extern const atcacert_def_t g_cert_def_0_root ;
 
 
 /* initialization done timeout. */
-#define WIFI_MAC_INIT_TIMEOUT                  ( pdMS_TO_TICKS( 5000 ) )
-#define WIFI_MAC_CONNECT_TIMEOUT           ( pdMS_TO_TICKS( 10000 ) )
-#define WIFI_MAC_DISCONNECT_TIMEOUT     ( pdMS_TO_TICKS( 3000 ) )
-#define WIFI_MAC_PING_TIMEOUT(x,y)           ( pdMS_TO_TICKS( (x)*(y)) )
+#define WIFI_MAC_INIT_TIMEOUT                   ( pdMS_TO_TICKS( 5000 ) )
+#define WIFI_MAC_CONNECT_TIMEOUT                ( pdMS_TO_TICKS( 15000 ) )
+#define WIFI_MAC_DISCONNECT_TIMEOUT             ( pdMS_TO_TICKS( 3000 ) )
+#define WIFI_MAC_PING_TIMEOUT                   ( pdMS_TO_TICKS( 5000 ) )
+#define WIFI_MAC_SET_CIPHER_TIMEOUT             ( pdMS_TO_TICKS( 3000 ) )
+
 
 /*Ping block for a free buffer timeout (ms) */
 #define WIFI_PING_WAIT_FOR_BUFF_TIMEOUT        ( 10000 / portTICK_PERIOD_MS )
@@ -117,6 +121,11 @@ uint8_t g_network_param[512];
 const uint8_t address=0x8000;
 const uint8_t * p_network_param = &g_network_param;
 
+/* device mode */
+WIFIDeviceMode_t g_device_mode = eWiFiModeStation;
+
+/* callback function for network state change event*/
+IotNetworkStateChangeEventCallback_t g_network_change_cb = NULL;
 TaskHandle_t waiting_task;
 static TaskHandle_t wifi_task = NULL;
 
@@ -135,10 +144,12 @@ static tstrM2MAPConfig wifiAPConfig={0};
 static WIFIPMMode_t wifiPMModeType = eWiFiPMNormal; //eWiFiPMLowPower;
 static tstrM2mLsnInt strM2mLsnInt = {WIFI_LISTEN_INTERVAL,{0}};
 	
+static uint16_t numBeaconIntervals = 0;
 /* Internal variable reflecting wifi connection state*/
 static uint8_t wifiConnected = false;
-static uint8_t tryReconnect = 20;
+static uint8_t tryReconnect = 5;
 static uint8_t disconnectRequested = 0;
+static uint8_t setChipherRequested = 0;
 static uint8_t wifiIPv4Address[IPV4_ADDRESS_LEN] = {0};
 static uint32_t dnsHostIP =0;
 static uint32_t pingCount=0;
@@ -146,6 +157,11 @@ static uint32_t numScannedAP =0;
 static tstrM2mWifiscanResult scanResult = {0};
 static uint8_t apIPAddress[]	=	HTTP_PROV_SERVER_IP_ADDRESS;
 static char gacHttpProvDomainName[] = HTTPS_PROV_SERVER_DN;
+
+// connected AP context
+static WDRV_WINC_AUTH_CONTEXT authCtx;
+static WDRV_WINC_BSS_CONTEXT  bssCtx;
+
 
 typedef struct{
 	uint32_t	u32FileSz;
@@ -178,9 +194,19 @@ typedef enum
     WDRV_MAC_EVENT_DNS_DONE = 0x008,    /* DNS done event */
     WDRV_MAC_EVENT_PING_DONE = 0x010,    /* PING done event */
     WDRV_MAC_EVENT_SCAN_DONE = 0x020,    /* Scan done event */
+    WDRV_MAC_EVENT_SET_CIPHER_DONE = 0x040,    /* Scan done event */
 
 } WDRV_MAC_EVENT_TYPE;
 
+
+typedef enum
+{
+    WIFI_SCAN_STATE_INIT = 0,
+    WIFI_SCAN_STATE_SCANNING,
+    WIFI_SCAN_STATE_SCAN_GET_RESULTS,
+    WIFI_SCAN_STATE_SCAN_DONE,
+    WIFI_SCAN_STATE_ERROR
+} WIFI_SCAN_STATE;
 
 extern void socket_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg);
 
@@ -206,6 +232,22 @@ DRV_HANDLE get_wifi_handle()
 	return eWiFiModeNotSupported;
 
 }
+    
+ 
+/**
+ * @brief Registers application callback for network state change events from WiFi layer.
+ *
+ * @param[in] xCallback Application callback for network state change events.
+ *
+ * @return @ref eWiFiSuccess if application callback registration was successful, failure code if otherwise.
+ */
+/* @[declare_wifi_wifi_registernetworkstatechangeeventcallback] */
+WIFIReturnCode_t WIFI_RegisterNetworkStateChangeEventCallback( IotNetworkStateChangeEventCallback_t xCallback )
+{
+    g_network_change_cb = xCallback;
+    return eWiFiSuccess;
+}
+   
 
 /**
  * @brief Wi-Fi Get Network profile .
@@ -251,7 +293,112 @@ WIFIReturnCode_t WIFI_NetworkDelete( uint16_t usIndex )
 WIFIReturnCode_t WIFI_Scan( WIFIScanResult_t * pxBuffer,
                             uint8_t ucNumNetworks )
 {
-  
+    WDRV_WINC_STATUS status;
+    WIFI_SCAN_STATE state;
+    int found_num = 0;
+    
+    configREJECT( pxBuffer != NULL );
+    
+    if (DRV_HANDLE_INVALID == wifi_handle)
+    {
+        configPRINTF(("[%s] Driver not yet open ...\r\n", __func__));
+        return eWiFiSuccess ;
+    }
+    
+    if( xSemaphoreTake( xWiFiSemaphore, xSemaphoreWaitTicks ) == pdTRUE )
+	{
+
+        state = WIFI_SCAN_STATE_INIT;
+        while (1)
+        {
+            switch (state)
+            {
+                case WIFI_SCAN_STATE_INIT:
+                {
+                    if (WDRV_WINC_STATUS_OK == WDRV_WINC_BSSFindFirst(wifi_handle, WDRV_WINC_ALL_CHANNELS, true, NULL))
+                    {
+                        state = WIFI_SCAN_STATE_SCANNING;
+                    }
+                }
+                case WIFI_SCAN_STATE_SCANNING:
+                {
+                    /* Wait for BSS find operation to complete, then report the number
+                     of results found. */
+
+                    if (false == WDRV_WINC_BSSFindInProgress(wifi_handle))
+                    {
+                        configPRINTF((("Scan complete, %d AP(s) found\r\n", WDRV_WINC_BSSFindGetNumBSSResults(wifi_handle))));
+                        state = WIFI_SCAN_STATE_SCAN_GET_RESULTS;
+                    }
+                    break;
+                }
+                case WIFI_SCAN_STATE_SCAN_GET_RESULTS:
+                {
+                    WDRV_WINC_BSS_INFO BSSInfo;
+
+                    /* Request the current BSS find results. */
+                    if (WDRV_WINC_STATUS_OK == WDRV_WINC_BSSFindGetInfo(wifi_handle, &BSSInfo))
+                    {
+                        configPRINTF(("AP found: RSSI: %d %s\r\n", BSSInfo.rssi, BSSInfo.ssid.name));
+
+                        if (found_num >= ucNumNetworks)
+                        {
+                            xSemaphoreGive(xWiFiSemaphore);
+                            return eWiFiSuccess;
+                        }
+                        memset(&pxBuffer[found_num], 0, sizeof(WIFIScanResult_t));
+                        memcpy(pxBuffer[found_num].cSSID,BSSInfo.ssid.name,BSSInfo.ssid.length);
+                        memcpy(pxBuffer[found_num].ucBSSID,BSSInfo.bssid,wificonfigMAX_BSSID_LEN);
+                        pxBuffer[found_num].cChannel = BSSInfo.channel;
+                        pxBuffer[found_num].cRSSI = BSSInfo.rssi;                
+
+                        if (BSSInfo.authType == WDRV_WINC_AUTH_TYPE_OPEN)      
+                            pxBuffer[found_num].xSecurity = eWiFiSecurityOpen;
+                        else if (BSSInfo.authType == WDRV_WINC_AUTH_TYPE_WEP)      
+                            pxBuffer[found_num].xSecurity = eWiFiSecurityWEP;
+                        else if (BSSInfo.authType == WDRV_WINC_AUTH_TYPE_WPA_PSK)      
+                            pxBuffer[found_num].xSecurity = eWiFiSecurityWPA2 ;
+                        else 
+                            pxBuffer[found_num].xSecurity = eWiFiSecurityNotSupported ;
+
+
+                        found_num++;
+                        /* Request the next set of BSS find results. */
+                        status = WDRV_WINC_BSSFindNext(wifi_handle, NULL);
+
+                        if (WDRV_WINC_STATUS_BSS_FIND_END == status)
+                        {   
+                            state = WIFI_SCAN_STATE_SCAN_DONE;  
+                            xSemaphoreGive(xWiFiSemaphore);
+                            return eWiFiSuccess;
+                        }
+                        else if ((WDRV_WINC_STATUS_NOT_OPEN == status) || (WDRV_WINC_STATUS_INVALID_ARG == status))
+                        {
+                            /* An error occurred requesting results. */
+                            state = WIFI_SCAN_STATE_ERROR;
+                        }
+                    }
+                    break;
+                }
+                case WIFI_SCAN_STATE_ERROR:
+                {
+                    xSemaphoreGive(xWiFiSemaphore);
+                    return eWiFiFailure;
+                    break;
+                }
+                default:
+                {
+                    break;
+                }
+            }
+
+            vTaskDelay(10 / portTICK_PERIOD_MS);
+        }
+
+        xSemaphoreGive(xWiFiSemaphore);
+    }
+    
+    
     return eWiFiNotSupported;
 }
 /*-----------------------------------------------------------*/
@@ -266,7 +413,22 @@ WIFIReturnCode_t WIFI_Scan( WIFIScanResult_t * pxBuffer,
  */
 WIFIReturnCode_t WIFI_SetMode( WIFIDeviceMode_t xDeviceMode )
 {
-    return eWiFiNotSupported;
+    configREJECT( xDeviceMode != eWiFiModeNotSupported );
+    
+    if (xDeviceMode == eWiFiModeP2P)
+        return eWiFiNotSupported;
+    
+    if (xDeviceMode == eWiFiModeAP)
+    {
+        g_device_mode = eWiFiModeAP;
+        WDRV_WINC_BSSDisconnect(wifi_handle);
+    }
+    else if (xDeviceMode == eWiFiModeStation)
+    {
+        g_device_mode = eWiFiModeStation;
+        WDRV_WINC_APStop(wifi_handle);
+    }    
+    return eWiFiSuccess;
 }
 
 /**
@@ -451,14 +613,16 @@ void AWS_MCHP_DisconnectEvent(void)
 	if((!disconnectRequested) && tryReconnect)
 	{
 		/* If the AP disconnected without an explicit request, attempt a reconnection */
-	   WDRV_WINC_BSSReconnect(wifi_handle, &APP_ExampleConnectNotifyCallback);
+        WDRV_WINC_BSSConnect(wifi_handle, &bssCtx, &authCtx, &APP_ExampleConnectNotifyCallback);
+
         //SHAN: TODO
 		tryReconnect--;
 	}
 	/*Don't notify waiting task unless give up with reconnection attempts*/
 	else
 	{	
-		xTaskNotify( waiting_task, WDRV_MAC_EVENT_DISCONNECT_DONE, eSetBits );
+        if (disconnectRequested)
+            xTaskNotify( waiting_task, WDRV_MAC_EVENT_DISCONNECT_DONE, eSetBits );
 	}
 
 	disconnectRequested = 0;
@@ -522,23 +686,244 @@ void initialize_wifi()
 
 /*-----------------------------------------------------------*/
 
-void pingCb(uint32_t u32IPAddr, uint32_t u32RTT, uint8_t u8ERR)
+void pingCb(DRV_HANDLE handle,uint32_t u32IPAddr, uint32_t u32RTT, WDRV_WINC_ICMP_ECHO_STATUS statusCode)
 {
-	configPRINTF(("(%u)Ping status %u\n", pingCount, u8ERR));
-	pingCount --;
-	if(pingCount > 0)
+	configPRINTF(("Ping status %u, addr=0x%x\r\n", statusCode, u32IPAddr));
+	if (statusCode == PING_ERR_SUCCESS)
 	{
-		m2m_ping_req(u32IPAddr, u32RTT, pingCb);
-	}
-	else
-	{
-		configPRINTF(("Ping Finished\n"));
+		configPRINTF(("Ping Success\n"));
 		AWS_MCHP_PingEvent();
 	}
 }
 
 
- 
+void ssl_cipher_suit_ctx_cb(DRV_HANDLE handle, WDRV_WINC_CIPHER_SUITE_CONTEXT *pSSLCipherSuiteCtx)
+{
+     configPRINTF(("[ssl_cipher_suit_ctx_cb] cipherSuites = %d \r\n", pSSLCipherSuiteCtx->ciperSuites));
+     if (setChipherRequested)
+        xTaskNotify( waiting_task, WDRV_MAC_EVENT_SET_CIPHER_DONE, eSetBits );
+}
+
+
+static signed char ecdh_derive_client_shared_secret(
+    WDRV_WINC_EC_Point_Rep *server_public_key,
+    uint8_t *ecdh_shared_secret,
+    WDRV_WINC_EC_Point_Rep *client_public_Key
+)
+{
+	signed char status = M2M_ERR_FAIL;
+
+    configPRINTF(("ecdh_derive_client_shared_secret called\r\n"));
+
+    if (ATCA_SUCCESS == atcab_genkey(GENKEY_PRIVATE_TO_TEMPKEY, client_public_Key->x))
+    {
+        client_public_Key->size = 32;
+        if (ATCA_SUCCESS == atcab_ecdh_tempkey(server_public_key->x, ecdh_shared_secret))
+        {
+            status = M2M_SUCCESS;
+        }
+    }
+	return status;
+}
+
+static signed char ecdh_derive_key_pair(tstrECPoint *server_public_key)
+{
+	signed char status = M2M_ERR_FAIL;
+	
+    configPRINTF(("ecdh_derive_key_pair called\r\n"));
+
+	return status;
+}
+
+static signed char ecdsa_process_sign_verify_request(uint32_t number_of_signatures)
+{
+	WDRV_WINC_EC_Point_Rep	Key;
+	uint32_t index = 0;
+	uint8_t signature[80];
+	uint8_t hash[80] = {0};
+	uint16_t curve_type = 0;
+	signed char status = M2M_ERR_FAIL;
+
+	for(index = 0; index < number_of_signatures; index++)
+	{
+		status = WDRV_WINC_SSLRetrieveCert(&curve_type, hash, signature, &Key);
+		if (status != WDRV_WINC_STATUS_OK)
+		{
+			configPRINTF(("m2m_ssl_retrieve_cert() failed with ret=%d", status));
+			return status;
+		}
+
+		if(curve_type == EC_SECP256R1)
+		{
+			bool is_verified = false;
+			status = atcab_verify_extern(hash, signature, Key.x, &is_verified);
+			status = M2M_SUCCESS;
+			break;
+			if(status == ATCA_SUCCESS)
+			{
+				status = (is_verified == true) ? M2M_SUCCESS : M2M_ERR_FAIL;
+				if(is_verified == false)
+				{
+					configPRINTF(("ECDSA SigVerif FAILED\n"));
+				}
+			}
+			else
+			{
+				status = M2M_ERR_FAIL;
+			}
+			
+			if(status != M2M_SUCCESS)
+			{
+				WDRV_WINC_SSLStopRetrieveCert();
+				break;
+			}
+		}
+	}
+	return status;
+}
+
+static signed char ecdsa_process_sign_gen_request(tstrEcdsaSignReqInfo *sign_request,
+uint8_t *signature,
+uint16_t *signature_size)
+{
+    CK_RV xResult = CKR_OK;
+	CK_MECHANISM xMech = { CKM_SHA256, NULL, 0 };
+    CK_ULONG ulSigSize;
+    uint8_t hash[32];
+    CK_SLOT_ID  slots[2] = {0, 0};
+    CK_ULONG    ulCount;
+
+    configPRINTF(("ecdsa_process_sign_gen_request called\r\n"));
+    
+    xResult = WDRV_WINC_SSLRetrieveHash(hash, sign_request->u16HashSz);
+    if (WDRV_WINC_STATUS_OK != xResult)
+    {
+        M2M_ERR("m2m_ssl_retrieve_hash() failed with ret=%d", xResult);
+        return xResult;
+    }
+
+    /* Get the default private key storage ID. */
+    if (CKR_OK == xResult)
+    {
+        ulCount = sizeof(slots)/sizeof(slots[0]);
+        xResult = wifi_context.pkcs11_funcs->C_GetSlotList( CK_TRUE, &slots, &ulCount );
+    }
+
+    /* Start a private session with the P#11 module. */
+    if (CKR_OK == xResult)
+    {
+        xResult = wifi_context.pkcs11_funcs->C_OpenSession( slots[0], CKF_SERIAL_SESSION,
+                                                            NULL, NULL, &wifi_context.pkcs11_session );
+    }
+
+   	/* Use the PKCS#11 module to sign. */
+	xResult =  wifi_context.pkcs11_funcs->C_SignInit(wifi_context.pkcs11_session, &xMech, 
+                                                    wifi_context.pkcs11_private_key);
+
+    /* Perform the signature */
+    if (CKR_OK == xResult)
+    {
+        ulSigSize = 64;
+        xResult =  wifi_context.pkcs11_funcs->C_Sign(wifi_context.pkcs11_session, hash, 
+                                                    sizeof(hash), signature, &ulSigSize);
+        *signature_size = ulSigSize;
+    }
+
+    /* Attempt to close the PKCS11 Session */
+    if (wifi_context.pkcs11_funcs)
+    {
+        wifi_context.pkcs11_funcs->C_CloseSession(wifi_context.pkcs11_session);
+    }
+
+    return xResult;
+}
+
+static signed char ecdh_derive_server_shared_secret(uint16_t private_key_id,
+WDRV_WINC_EC_Point_Rep *client_public_key,
+uint8_t *ecdh_shared_secret)
+{
+	signed char status = M2M_ERR_FAIL;
+
+    configPRINTF(("ecdh_derive_server_shared_secret called\r\n"));
+
+    if (ATCA_SUCCESS == atcab_ecdh_tempkey(client_public_key->x, ecdh_shared_secret))
+    {
+		status = M2M_SUCCESS;
+	}
+	
+	return status;
+}
+void ssl_req_ecc_cb(DRV_HANDLE handle, WDRV_WINC_ECC_REQ_INFO ecc_request, void *pParams )
+{
+    configPRINTF(("[%s] In\r\n", __func__));
+    
+    WDRV_WINC_ECC_RSP_INFO ecc_response;
+    
+    
+	uint8_t signature[80];
+	uint16_t response_data_size = 0;
+	uint8_t *response_data_buffer = NULL;
+	
+	ecc_response.status = 1;
+
+	switch (ecc_request.reqCmd)
+	{
+		case ECC_REQ_CLIENT_ECDH:
+        {
+            WDRV_WINC_ECDH_REQ_INFO *pEcdhReqInfo;
+            pEcdhReqInfo = (WDRV_WINC_ECDH_REQ_INFO *) pParams;
+            
+            ecc_response.status = ecdh_derive_client_shared_secret(&(pEcdhReqInfo->pubKey),
+            ecc_response.ecdhRspInfo.key,
+            &ecc_response.ecdhRspInfo.pubKey);
+            break;
+        }
+
+		case ECC_REQ_GEN_KEY:   
+        {
+            ecc_response.status = ecdh_derive_key_pair(&ecc_response.ecdhRspInfo.pubKey);
+            break;
+        }
+		case ECC_REQ_SERVER_ECDH:
+        {
+            WDRV_WINC_ECDH_REQ_INFO *pEcdhReqInfo;
+            pEcdhReqInfo = (WDRV_WINC_ECDH_REQ_INFO *) pParams;    
+            
+            ecc_response.status = ecdh_derive_server_shared_secret(pEcdhReqInfo->pubKey.privKeyID,
+            &(pEcdhReqInfo->pubKey),
+            ecc_response.ecdhRspInfo.key);
+            break;
+		}
+		case ECC_REQ_SIGN_VERIFY:
+        {
+            WDRV_WINC_ECDSA_VERIFY_REQ_INFO *pEcdsaVerifyReqInfo;
+            pEcdsaVerifyReqInfo = (WDRV_WINC_ECDSA_VERIFY_REQ_INFO *) pParams;
+            
+            ecc_response.status = ecdsa_process_sign_verify_request(pEcdsaVerifyReqInfo->nSig);
+
+            break;
+        }
+		
+		case ECC_REQ_SIGN_GEN:
+        {
+            WDRV_WINC_ECDSA_SIGN_REQ_INFO *pEcdsaSignReqInfo;
+            pEcdsaSignReqInfo = (WDRV_WINC_ECDSA_SIGN_REQ_INFO *) pParams; 
+            ecc_response.status = ecdsa_process_sign_gen_request(pEcdsaSignReqInfo, signature,
+            &response_data_size);
+            response_data_buffer = signature;
+            break;
+		}
+		default:
+		// Do nothing
+		break;
+	}
+	
+	ecc_response.reqCmd  = ecc_request.reqCmd;
+	ecc_response.userData = ecc_request.userData;
+	ecc_response.seqNo   = ecc_request.seqNo;
+
+	WDRV_WINC_SSLECCHandShakeRsp(ecc_response, response_data_buffer, response_data_size);
+}
 
 /*-----------------------------------------------------------*/
 
@@ -553,11 +938,19 @@ void pingCb(uint32_t u32IPAddr, uint32_t u32RTT, uint8_t u8ERR)
 WIFIReturnCode_t WIFI_On( void )
 {
      int8_t ret;
+     EventBits_t evBits;
     tstrWifiInitParam param;
-  
+  	WDRV_WINC_CIPHER_SUITE_CONTEXT cipher_ctx;
     //Read Here first!!!.
+    
+    uint16_t cipherSuite[2] = {WDRV_WINC_TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256, \
+        WDRV_WINC_TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256};
 
     configPRINTF( ( "\r\nturning Wi-Fi On\r\n" ) );
+    
+    if (wifi_handle != DRV_HANDLE_INVALID)
+        return eWiFiSuccess;
+        
 	if( xSemaphoreTake( xWiFiSemaphore, xSemaphoreWaitTicks ) == pdTRUE )
 	{
   	/* Initialize the crypto system and copy certificates if required */
@@ -567,7 +960,7 @@ WIFIReturnCode_t WIFI_On( void )
             vTaskDelay(100);
          }
         
-        wifi_handle = WDRV_WINC_Open(0, 0);
+        wifi_handle = WDRV_WINC_Open(0, (int)NULL);
 
         if (DRV_HANDLE_INVALID == wifi_handle)
         {
@@ -576,9 +969,36 @@ WIFIReturnCode_t WIFI_On( void )
             return eWiFiFailure;
         }
         wifi_update();
+        
+        /* set DNS/IP callbacks */
+        registerSocketCallback( socket_cb, dns_resolve_cb);
 
+        waiting_task = xTaskGetCurrentTaskHandle();
+        
+        
+        WDRV_WINC_SSLCTXCipherSuitesSet(&cipher_ctx, cipherSuite, 2);
+        ret = WDRV_WINC_SSLActiveCipherSuitesSet(wifi_handle, &cipher_ctx, &ssl_cipher_suit_ctx_cb, &ssl_req_ecc_cb);
+		if (ret == WDRV_WINC_STATUS_OK)
+            configPRINTF( ( "\r\n Setting Cipher Success\r\n" ) );
+        else
+            configPRINTF( ( "\r\n Setting Cipher Fail\r\n" ) );
+
+        setChipherRequested = 1;
+        xTaskNotifyWait( WDRV_MAC_EVENT_SET_CIPHER_DONE, WDRV_MAC_EVENT_SET_CIPHER_DONE, &evBits, WIFI_MAC_SET_CIPHER_TIMEOUT );
+
+        if( ( evBits & WDRV_MAC_EVENT_SET_CIPHER_DONE ) == 0 )
+        {
+            /* Timed out. */
+            configPRINTF( ( "Set Cipher timeout\r\n" ) );
+            setChipherRequested = 0;
+	     	xSemaphoreGive(xWiFiSemaphore);
+
+            return eWiFiTimeout;
+        }
+        
+        setChipherRequested = 0;
 		xSemaphoreGive(xWiFiSemaphore);
-
+        configPRINTF( ( "Set Cipher success 1\r\n" ) );
 	
 	}
 	else
@@ -600,12 +1020,6 @@ static void wifi_update()
         {
             return ;
         }
-
-    if (m2m_ssl_set_active_ciphersuites(SSL_ECC_ONLY_CIPHERS) != M2M_SUCCESS)
-    {
-        return ;
-    }
-
 }
 
 
@@ -618,6 +1032,15 @@ static void wifi_update()
  */
 WIFIReturnCode_t WIFI_Off( void )
 {
+    //return eWiFiSuccess;
+    
+    if (DRV_HANDLE_INVALID == wifi_handle)
+    {
+        configPRINTF(("[%s] Driver not yet open ...\r\n", __func__));
+        return eWiFiSuccess ;
+    }
+    
+    socketDeinit();
     
     if( xSemaphoreTake( xWiFiSemaphore, xSemaphoreWaitTicks ) == pdTRUE )
     {   
@@ -648,10 +1071,15 @@ WIFIReturnCode_t WIFI_ConnectAP( const WIFINetworkParams_t * const pxNetworkPara
 {
     EventBits_t evBits;
     uint8_t ret =0;
-	uint8_t channelNum = pxNetworkParams->cChannel;
+	uint8_t channelNum;
 
     configREJECT( pxNetworkParams != NULL );
     configREJECT( pxNetworkParams->pcSSID != NULL );
+    
+    channelNum = pxNetworkParams->cChannel;
+    
+    if ( g_device_mode != eWiFiModeStation )
+        return eWiFiFailure;
 
     if  (( pxNetworkParams->xSecurity == eWiFiSecurityNotSupported )||
         ( pxNetworkParams->ucSSIDLength > wificonfigMAX_SSID_LEN )||
@@ -722,19 +1150,22 @@ WIFIReturnCode_t WIFI_ConnectAP( const WIFINetworkParams_t * const pxNetworkPara
         }
 
       
-        if (Wifi_Connect_Ex(wifi_handle,wifiSSID,wifiPSK) !=eWiFiSuccess)
+        if (Wifi_Connect_Ex(wifi_handle,pxNetworkParams) !=eWiFiSuccess)
         {
             xSemaphoreGive(xWiFiSemaphore);  
             return eWiFiFailure;
         }
-        xTaskNotifyWait( WDRV_MAC_EVENT_DISCONNECT_DONE, WDRV_MAC_EVENT_CONNECT_DONE, &evBits, WIFI_MAC_DISCONNECT_TIMEOUT );
+        
+        
+        xTaskNotifyWait( WDRV_MAC_EVENT_CONNECT_DONE, WDRV_MAC_EVENT_CONNECT_DONE, &evBits, WIFI_MAC_CONNECT_TIMEOUT );
 
         if( ( evBits & WDRV_MAC_EVENT_CONNECT_DONE ) == 0 )
         {
             /* Timed out. */
             configPRINTF( ( "Connection timeout\r\n" ) );
-	     	 xSemaphoreGive(xWiFiSemaphore);
-
+            tryReconnect = 0;
+	     	xSemaphoreGive(xWiFiSemaphore);
+             
             return eWiFiTimeout;
         }
         
@@ -759,7 +1190,7 @@ WIFIReturnCode_t WIFI_ConnectAP( const WIFINetworkParams_t * const pxNetworkPara
 WIFIReturnCode_t WIFI_Disconnect( void )
 {
     EventBits_t evBits;
-
+    WDRV_WINC_STATUS results;
 
     if( xSemaphoreTake( xWiFiSemaphore, xSemaphoreWaitTicks ) == pdTRUE )
     {
@@ -772,28 +1203,31 @@ WIFIReturnCode_t WIFI_Disconnect( void )
 
     	 disconnectRequested = 1;
 		 
-        WDRV_WINC_BSSDisconnect(wifi_handle);
+        results = WDRV_WINC_BSSDisconnect(wifi_handle);
+
+        configPRINTF( ( "WDRV_WINC_BSSDisconnect, results=%d \r\n", results ) );
            
 	    waiting_task = xTaskGetCurrentTaskHandle();
 	
         /* Wait for Wi-Fi disconnection to complete. */
-        xTaskNotifyWait( WDRV_MAC_EVENT_CONNECT_DONE, WDRV_MAC_EVENT_DISCONNECT_DONE, &evBits, WIFI_MAC_DISCONNECT_TIMEOUT );
+        xTaskNotifyWait( WDRV_MAC_EVENT_DISCONNECT_DONE, WDRV_MAC_EVENT_DISCONNECT_DONE, &evBits, WIFI_MAC_DISCONNECT_TIMEOUT );
 
         if( ( evBits & WDRV_MAC_EVENT_DISCONNECT_DONE ) == 0 )
         {
             /* Timed out. */
             configPRINTF( ( "Disconnection timeout\r\n" ) );
-	     	 xSemaphoreGive(xWiFiSemaphore);
-
+            disconnectRequested = 0;
+	     	xSemaphoreGive(xWiFiSemaphore);           
             return eWiFiTimeout;
         }
     }
     else
     {
-        return eWiFiFailure;
+        return eWiFiTimeout;
     }
     
     xSemaphoreGive(xWiFiSemaphore);
+    disconnectRequested = 0;
     configPRINTF( ( "Disconnection done\r\n" ) );
 
     return eWiFiSuccess;
@@ -1041,30 +1475,79 @@ WIFIReturnCode_t WIFI_StartProvisioning( void )
 WIFIReturnCode_t WIFI_StartAP( void )
 {
     EventBits_t evBits;
+    
+    configPRINTF(("WIFI_StartAP\r\n"));
+    
+    if ( g_device_mode != eWiFiModeAP )
+        return eWiFiFailure;
+    
+    if( xSemaphoreTake( xWiFiSemaphore, xSemaphoreWaitTicks ) == pdTRUE )
+    {
 
-     if( xSemaphoreTake( xWiFiSemaphore, xSemaphoreWaitTicks ) == pdTRUE )
-     {
-        if( m2m_wifi_enable_ap(&wifiAPConfig) != M2M_SUCCESS )
-        {
-            /* Connection failed miserably. */
-            xSemaphoreGive(xWiFiSemaphore);
-            return eWiFiFailure;
-        }
+       if (WDRV_WINC_STATUS_OK != WDRV_WINC_BSSCtxSetDefaults(&bssCtx))
+       {
+           return eWiFiFailure;
+       }
 
+       /* Update BSS context with target SSID for connection. */
+
+       if (WDRV_WINC_STATUS_OK != WDRV_WINC_BSSCtxSetSSID(&bssCtx, (uint8_t*)wifiAPConfig.au8SSID, strlen(wifiAPConfig.au8SSID)))
+       {
+           return eWiFiFailure;
+       }
+       if (WDRV_WINC_STATUS_OK != WDRV_WINC_BSSCtxSetChannel(&bssCtx, 1))
+       {
+           return eWiFiFailure;
+       }
+
+       switch (wifiAPConfig.u8SecType)
+       {
+           case WDRV_WINC_AUTH_TYPE_OPEN:
+           {
+               if (WDRV_WINC_STATUS_OK != WDRV_WINC_AuthCtxSetOpen(&authCtx))
+               {
+                   return eWiFiFailure;
+               }
+               break;
+           }
+
+           case WDRV_WINC_AUTH_TYPE_WEP: 
+           {
+               if (WDRV_WINC_STATUS_OK != WDRV_WINC_AuthCtxSetWEP(&authCtx, 1, (uint8_t*)wifiAPConfig.au8WepKey, wifiAPConfig.u8KeySz))
+               {
+                   configPRINTF(("Set WEP fail, password len = %d\r\n ", wifiAPConfig.u8KeySz));
+                   return eWiFiFailure;
+               }
+               configPRINTF( ( "Set WEP success\r\n " ) );
+               break;
+           }
+           case WDRV_WINC_AUTH_TYPE_WPA_PSK:
+           {
+               /*
+               if (WDRV_WINC_STATUS_OK != WDRV_WINC_AuthCtxSetWPA(&authCtx, (uint8_t*)pxNetworkParams->pcPassword, pxNetworkParams->ucPasswordLength))
+               {
+                   return eWiFiFailure;
+               }
+                */
+               return eWiFiNotSupported;
+               break;
+           }
+           default:
+               return eWiFiNotSupported;
+               break;
+       }
+   
+        WDRV_WINC_STATUS ret;
+        ret = WDRV_WINC_APStart(wifi_handle, &bssCtx, &authCtx, NULL, &APP_ExampleConnectNotifyCallback);
+        configPRINTF(("WIFI_StartAP, ret = %d\r\n", ret));
+        
         xSemaphoreGive(xWiFiSemaphore);
         waiting_task = xTaskGetCurrentTaskHandle();
-
-        /* Wait for Wi-Fi connection to complete. */
-        xTaskNotifyWait( WDRV_MAC_EVENT_CONNECT_DONE, WDRV_MAC_EVENT_CONNECT_DONE, &evBits, WIFI_MAC_CONNECT_TIMEOUT );
-
-        if( ( evBits & WDRV_MAC_EVENT_CONNECT_DONE ) == 0 )
-        {
-            /* Timed out. */
-            return eWiFiTimeout;
-        }
-        
-        
-        return eWiFiSuccess;
+     
+        if (ret == WDRV_WINC_STATUS_OK)
+            return eWiFiSuccess;
+        else
+            return eWiFiFailure;
      }
     else
         return eWiFiTimeout;
@@ -1085,8 +1568,6 @@ WIFIReturnCode_t WIFI_StopAP( void )
 
     if( xSemaphoreTake( xWiFiSemaphore, xSemaphoreWaitTicks ) == pdTRUE )
     {   
-	    disconnectRequested = 1;
-		 
 	    ret = m2m_wifi_disable_ap();
     }
     else
@@ -1118,12 +1599,58 @@ WIFIReturnCode_t WIFI_SetPMMode( WIFIPMMode_t xPMModeType,
 {
     WIFIReturnCode_t ret = eWiFiSuccess;
 
-    return eWiFiNotSupported;
     configREJECT( pvOptionValue != NULL );
 
    wifiPMModeType = xPMModeType;
-   strM2mLsnInt.u16LsnInt = (uint16_t)pvOptionValue;
-   WIFI_Reset();
+   memcpy(&numBeaconIntervals, pvOptionValue, sizeof(numBeaconIntervals));
+  
+   
+   if( xSemaphoreTake( xWiFiSemaphore, xSemaphoreWaitTicks ) == pdTRUE )
+   {
+        switch (wifiPMModeType)
+        {
+            case eWiFiPMLowPower:
+            {           
+                if (WDRV_WINC_STATUS_OK !=  WDRV_WINC_PowerSaveSetBeaconInterval(wifi_handle, 1))
+                {
+                    configPRINTF( ( "PS set beacon fail...\n" ) );
+                    ret = eWiFiFailure;
+                    break;
+                }
+
+                if (WDRV_WINC_STATUS_OK != WDRV_WINC_PowerSaveSetMode(wifi_handle, WDRV_WINC_PS_MODE_AUTO_LOW_POWER ))
+                {
+                    configPRINTF( ( "PS configure fail...\n" ) );
+                    ret = eWiFiFailure;
+                    break;
+                }
+                
+                ret = eWiFiSuccess;
+                break;
+            }
+            case eWiFiPMNormal:
+            {
+               if (WDRV_WINC_STATUS_OK != WDRV_WINC_PowerSaveSetMode(wifi_handle, WDRV_WINC_PS_MODE_OFF ))
+                {
+                    configPRINTF( ( "PS configure fail...\n" ) );
+                    ret = eWiFiFailure;
+                    break;
+                }
+                ret = eWiFiSuccess;
+                break;
+            }
+            default:
+            {
+                ret = eWiFiNotSupported;
+                break;
+            }
+        }
+    }
+    else
+        return eWiFiTimeout;
+    
+    xSemaphoreGive(xWiFiSemaphore);
+       
     return ret;
 }
 
@@ -1141,7 +1668,12 @@ WIFIReturnCode_t WIFI_SetPMMode( WIFIPMMode_t xPMModeType,
 WIFIReturnCode_t WIFI_GetPMMode( WIFIPMMode_t * pxPMModeType,
                                  void * pvOptionValue )
 {
-    return eWiFiNotSupported;
+    configREJECT( pxPMModeType != NULL );
+    configREJECT( pvOptionValue != NULL );
+    
+    *pxPMModeType = wifiPMModeType;
+    memcpy(pvOptionValue, &numBeaconIntervals, sizeof(numBeaconIntervals));
+    return eWiFiSuccess;
 }
 
 /*-----------------------------------------------------------*/
@@ -1161,8 +1693,8 @@ WIFIReturnCode_t WIFI_GetMAC( uint8_t * pucMac )
 
     if( xSemaphoreTake( xWiFiSemaphore, xSemaphoreWaitTicks ) == pdTRUE )
     {   
-	    if( m2m_wifi_get_mac_address( pucMac ) == M2M_SUCCESS )
-	    {
+        if (WDRV_WINC_InfoDeviceMACAddressGet(wifi_handle, false, pucMac) == WDRV_WINC_STATUS_OK)
+        {    
 	        xReturnStatus = eWiFiSuccess;
 	    }
     }
@@ -1197,24 +1729,34 @@ WIFIReturnCode_t WIFI_Ping( uint8_t * pucIPAddr,
         return eWiFiFailure;
     }
 
-	return eWiFiNotSupported;
-
     if( xSemaphoreTake( xWiFiSemaphore, xSemaphoreWaitTicks ) == pdTRUE )
     {   
         pingCount = usCount;
-        m2m_ping_req((uint32_t)pucIPAddr, ulIntervalMS, pingCb);
-
-	    waiting_task = xTaskGetCurrentTaskHandle();
-	 
-       /* Wait for resolve DNS to complete. */
-        xTaskNotifyWait( WDRV_MAC_EVENT_PING_DONE, WDRV_MAC_EVENT_PING_DONE, &evBits, WIFI_MAC_PING_TIMEOUT(ulIntervalMS,usCount) );
-
-        if( ( evBits & WDRV_MAC_EVENT_PING_DONE ) == 0 )
+        
+        
+        uint32_t ipAddr = pucIPAddr[3]<<24 | pucIPAddr[2]<<16 | pucIPAddr[1]<<8 | pucIPAddr[0];
+        
+        for (int i = 0; i < usCount; i++)
         {
-            /* Timed out. */
-            configPRINTF( ( "PING timeout\r\n" ) );
-            xSemaphoreGive(xWiFiSemaphore);
-            return eWiFiTimeout;
+            
+            if (WDRV_WINC_STATUS_OK != WDRV_WINC_ICMPEchoRequest(wifi_handle, ipAddr, 0, pingCb))
+            {
+                configPRINTF( ( "WDRV_WINC_ICMPEchoRequest fail...\r\n" ) );
+                xSemaphoreGive(xWiFiSemaphore);
+                return eWiFiFailure;
+            }
+            waiting_task = xTaskGetCurrentTaskHandle();
+           /* Wait for resolve DNS to complete. */
+            xTaskNotifyWait( WDRV_MAC_EVENT_PING_DONE, WDRV_MAC_EVENT_PING_DONE, &evBits, WIFI_MAC_PING_TIMEOUT );
+
+            if( ( evBits & WDRV_MAC_EVENT_PING_DONE ) == 0 )
+            {
+                /* Timed out. */
+                configPRINTF( ( "PING timeout\r\n" ) );
+                xSemaphoreGive(xWiFiSemaphore);
+                return eWiFiTimeout;
+            }
+            vTaskDelay( pdMS_TO_TICKS( ulIntervalMS ));
         }
 		
     }
@@ -1244,157 +1786,15 @@ BaseType_t WIFI_IsConnected( void )
     return xIsConnected;
 }
 
-
+static void APP_ExampleDHCPAddressEventCallback(DRV_HANDLE handle, uint32_t ipAddress)
+{
+    char s[20];
+    
+    memcpy(wifiIPv4Address, &ipAddress, sizeof(wifiIPv4Address));
+    configPRINTF(("IP address is %s\r\n", inet_ntop(AF_INET, &ipAddress, s, sizeof(s))));
+}
  
 
-static signed char ecdh_derive_client_shared_secret(
-    tstrECPoint *server_public_key,
-    uint8_t *ecdh_shared_secret,
-    tstrECPoint *client_public_Key
-)
-{
-	signed char status = M2M_ERR_FAIL;
-
-    configPRINTF(("ecdh_derive_client_shared_secret called\r\n"));
-
-    if (ATCA_SUCCESS == atcab_genkey(GENKEY_PRIVATE_TO_TEMPKEY, client_public_Key->X))
-    {
-        client_public_Key->u16Size = 32;
-        if (ATCA_SUCCESS == atcab_ecdh_tempkey(server_public_key->X, ecdh_shared_secret))
-        {
-            status = M2M_SUCCESS;
-        }
-    }
-	return status;
-}
-
-static signed char ecdh_derive_key_pair(tstrECPoint *server_public_key)
-{
-	signed char status = M2M_ERR_FAIL;
-	
-    configPRINTF(("ecdh_derive_key_pair called\r\n"));
-
-	return status;
-}
-
-static signed char ecdsa_process_sign_verify_request(uint32_t number_of_signatures)
-{
-	tstrECPoint	Key;
-	uint32_t index = 0;
-	uint8_t signature[80];
-	uint8_t hash[80] = {0};
-	uint16_t curve_type = 0;
-	signed char status = M2M_ERR_FAIL;
-
-	for(index = 0; index < number_of_signatures; index++)
-	{
-		status = m2m_ssl_retrieve_cert(&curve_type, hash, signature, &Key);
-		if (status != M2M_SUCCESS)
-		{
-			configPRINTF(("m2m_ssl_retrieve_cert() failed with ret=%d", status));
-			return status;
-		}
-
-		if(curve_type == EC_SECP256R1)
-		{
-			bool is_verified = false;
-			status = atcab_verify_extern(hash, signature, Key.X, &is_verified);
-			status = M2M_SUCCESS;
-			break;
-			if(status == ATCA_SUCCESS)
-			{
-				status = (is_verified == true) ? M2M_SUCCESS : M2M_ERR_FAIL;
-				if(is_verified == false)
-				{
-					configPRINTF(("ECDSA SigVerif FAILED\n"));
-				}
-			}
-			else
-			{
-				status = M2M_ERR_FAIL;
-			}
-			
-			if(status != M2M_SUCCESS)
-			{
-				m2m_ssl_stop_processing_certs();
-				break;
-			}
-		}
-	}
-	return status;
-}
-
-static signed char ecdsa_process_sign_gen_request(tstrEcdsaSignReqInfo *sign_request,
-uint8_t *signature,
-uint16_t *signature_size)
-{
-    CK_RV xResult = CKR_OK;
-	CK_MECHANISM xMech = { CKM_SHA256, NULL, 0 };
-    CK_ULONG ulSigSize;
-    uint8_t hash[32];
-    CK_SLOT_ID  slots[2] = {0, 0};
-    CK_ULONG    ulCount;
-
-    configPRINTF(("ecdsa_process_sign_gen_request called\r\n"));
-    
-    xResult = m2m_ssl_retrieve_hash(hash, sign_request->u16HashSz);
-    if (M2M_SUCCESS != xResult)
-    {
-        M2M_ERR("m2m_ssl_retrieve_hash() failed with ret=%d", xResult);
-        return xResult;
-    }
-
-    /* Get the default private key storage ID. */
-    if (CKR_OK == xResult)
-    {
-        ulCount = sizeof(slots)/sizeof(slots[0]);
-        xResult = wifi_context.pkcs11_funcs->C_GetSlotList( CK_TRUE, &slots, &ulCount );
-    }
-
-    /* Start a private session with the P#11 module. */
-    if (CKR_OK == xResult)
-    {
-        xResult = wifi_context.pkcs11_funcs->C_OpenSession( slots[0], CKF_SERIAL_SESSION,
-                                                            NULL, NULL, &wifi_context.pkcs11_session );
-    }
-
-   	/* Use the PKCS#11 module to sign. */
-	xResult =  wifi_context.pkcs11_funcs->C_SignInit(wifi_context.pkcs11_session, &xMech, 
-                                                    wifi_context.pkcs11_private_key);
-
-    /* Perform the signature */
-    if (CKR_OK == xResult)
-    {
-        ulSigSize = 64;
-        xResult =  wifi_context.pkcs11_funcs->C_Sign(wifi_context.pkcs11_session, hash, 
-                                                    sizeof(hash), signature, &ulSigSize);
-        *signature_size = ulSigSize;
-    }
-
-    /* Attempt to close the PKCS11 Session */
-    if (wifi_context.pkcs11_funcs)
-    {
-        wifi_context.pkcs11_funcs->C_CloseSession(wifi_context.pkcs11_session);
-    }
-
-    return xResult;
-}
-
-static signed char ecdh_derive_server_shared_secret(uint16_t private_key_id,
-tstrECPoint *client_public_key,
-uint8_t *ecdh_shared_secret)
-{
-	signed char status = M2M_ERR_FAIL;
-
-    configPRINTF(("ecdh_derive_server_shared_secret called\r\n"));
-
-    if (ATCA_SUCCESS == atcab_ecdh_tempkey(client_public_key->X, ecdh_shared_secret))
-    {
-		status = M2M_SUCCESS;
-	}
-	
-	return status;
-}
 
  void eccProcessREQ(tstrEccReqInfo *ecc_request)
 {
@@ -1450,52 +1850,104 @@ uint8_t *ecdh_shared_secret)
 {
     if (WDRV_WINC_CONN_STATE_CONNECTED == currentState)
     {
+        configPRINTF(("[%s] Connected\r\n", __func__));
         AWS_MCHP_ConnectEvent();
+        if (g_network_change_cb != NULL)
+            g_network_change_cb(AWSIOT_NETWORK_TYPE_WIFI, eNetworkStateEnabled);
        
     }
     else if (WDRV_WINC_CONN_STATE_DISCONNECTED == currentState)
     {
+        configPRINTF(("[%s] Disconnect\r\n", __func__));
         AWS_MCHP_DisconnectEvent();
+        if (g_network_change_cb != NULL)
+            g_network_change_cb(AWSIOT_NETWORK_TYPE_WIFI, eNetworkStateDisabled);
+
     }
 }
  
- WIFIReturnCode_t Wifi_Connect_Ex(DRV_HANDLE handle, const char *pcSSID, const char *pcPassword)
+ WIFIReturnCode_t Wifi_Connect_Ex(DRV_HANDLE handle, const WIFINetworkParams_t * const pxNetworkParams)
 {
      uint8_t dev_id[32];
-     WDRV_WINC_AUTH_CONTEXT authCtx;
-            WDRV_WINC_BSS_CONTEXT  bssCtx;
-            extern ATCAIfaceCfg atecc608a_0_init_data;
-            do
-            {
-            /* Enable use of DHCP for network configuration, DHCP is the default
-             but this also registers the callback for notifications. */
-
-           
-            WDRV_WINC_SocketRegisterResolverCallback(handle, &dns_resolve_cb);
-            /* Preset the error state incase any following operations fail. */
+     
+    extern ATCAIfaceCfg atecc608a_0_init_data;
+    /* Enable use of DHCP for network configuration, DHCP is the default
+     but this also registers the callback for notifications. */
+    WDRV_WINC_IPUseDHCPSet(handle, &APP_ExampleDHCPAddressEventCallback);
+    WDRV_WINC_SocketRegisterResolverCallback(handle, &dns_resolve_cb);
+    /* Preset the error state incase any following operations fail. */
 
 
-            /* Initialize the BSS context to use default values. */
+    do
+    {
+    /* Initialize the BSS context to use default values. */
 
-            if (WDRV_WINC_STATUS_OK != WDRV_WINC_BSSCtxSetDefaults(&bssCtx))
+    if (WDRV_WINC_STATUS_OK != WDRV_WINC_BSSCtxSetDefaults(&bssCtx))
+    {
+        return eWiFiFailure;
+    }
+
+    /* Update BSS context with target SSID for connection. */
+
+    if (WDRV_WINC_STATUS_OK != WDRV_WINC_BSSCtxSetSSID(&bssCtx, (uint8_t*)pxNetworkParams->pcSSID, pxNetworkParams->ucSSIDLength))
+    {
+        return eWiFiFailure;
+    }
+
+    switch (pxNetworkParams->xSecurity)
+    {
+        case eWiFiSecurityOpen:
+        {
+            if (WDRV_WINC_STATUS_OK != WDRV_WINC_AuthCtxSetOpen(&authCtx))
             {
                 return eWiFiFailure;
             }
+            break;
+        }
 
-            /* Update BSS context with target SSID for connection. */
-
-            if (WDRV_WINC_STATUS_OK != WDRV_WINC_BSSCtxSetSSID(&bssCtx, (uint8_t*)pcSSID, strlen(pcSSID)))
+        case eWiFiSecurityWEP: 
+        {
+            if (WDRV_WINC_STATUS_OK != WDRV_WINC_AuthCtxSetWEP(&authCtx, 1, (uint8_t*)pxNetworkParams->pcPassword, pxNetworkParams->ucPasswordLength))
+            {
+                configPRINTF(("Set WEP fail, password len = %d\r\n ", pxNetworkParams->ucPasswordLength));
+                return eWiFiFailure;
+            }
+            break;
+        }
+        case eWiFiSecurityWPA:
+        case eWiFiSecurityWPA2:
+        {
+            if (WDRV_WINC_STATUS_OK != WDRV_WINC_AuthCtxSetWPA(&authCtx, (uint8_t*)pxNetworkParams->pcPassword, pxNetworkParams->ucPasswordLength))
             {
                 return eWiFiFailure;
             }
+            break;
+        }
+        case eWiFiSecurityNotSupported:
+            break;
+    }
+#if 0            
+#if defined(WLAN_AUTH_OPEN)
+            /* Initialize the authentication context for open mode. */
 
+            if (WDRV_WINC_STATUS_OK != WDRV_WINC_AuthCtxSetOpen(&authCtx))
+            {
+                return ;
+            }
+#elif defined(WLAN_AUTH_WPA_PSK)
             /* Initialize the authentication context for WPA. */
 
-            if (WDRV_WINC_STATUS_OK != WDRV_WINC_AuthCtxSetWPA(&authCtx, (uint8_t*)pcPassword, strlen(pcPassword)))
+            if (WDRV_WINC_STATUS_OK != WDRV_WINC_AuthCtxSetWPA(&authCtx, (uint8_t*)pxNetworkParams->pcPassword, pxNetworkParams->ucPasswordLength))
             {
                 return eWiFiFailure;
             }
-
+#else
+            if (WDRV_WINC_STATUS_OK != WDRV_WINC_AuthCtxSetWEP(&authCtx, WLAN_WEP_KEY_INDEX, (uint8_t*)WLAN_WEP_KEY_40, strlen(WLAN_WEP_KEY_40)))
+            {
+                return eWiFiFailure;
+            }
+#endif
+#endif
             /* Connect to the target BSS with the chosen authentication. */
 
            if(WDRV_WINC_STATUS_OK == WDRV_WINC_BSSConnect(handle, &bssCtx, &authCtx, &APP_ExampleConnectNotifyCallback))
@@ -1505,7 +1957,7 @@ uint8_t *ecdh_shared_secret)
             }
  }while(1);
             
-            return eWiFiSuccess;
+            return eWiFiFailure;
 
 }
  
@@ -1603,7 +2055,7 @@ static	uint8_t cert_sn[CERT_SN_MAX_LEN];
 static	char pem_cert[1024];
 static int bECCInstance=0;
 
-uint32_t *get_winc_buffer();
+
 
 uint32_t *get_winc_buffer()
 {
@@ -1653,7 +2105,7 @@ uint32_t *get_winc_buffer()
         }
 		pem_cert_size = sizeof(pem_cert);
 		atcacert_encode_pem_cert(signer_cert, signer_cert_size, pem_cert, &pem_cert_size);
-		printf("Signer Cert : \r\n%s\r\n", pem_cert);
+		configPRINTF(("Signer Cert : \r\n%s\r\n", pem_cert));
 
 	    // Get the signer's public key from its certificate
 	    atca_status = atcacert_get_subj_public_key(&g_cert_def_1_signer, signer_cert, 
@@ -1675,7 +2127,7 @@ uint32_t *get_winc_buffer()
         }
 		pem_cert_size = sizeof(pem_cert);
 		atcacert_encode_pem_cert(device_cert, device_cert_size, pem_cert, &pem_cert_size);
-		printf("Device Cert : \r\n%s\r\n", pem_cert);
+		configPRINTF(("Device Cert : \r\n%s\r\n", pem_cert));
 
         if (subject_key_id)
         {

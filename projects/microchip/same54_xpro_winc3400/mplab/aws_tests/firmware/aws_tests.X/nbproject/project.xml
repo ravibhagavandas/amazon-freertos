@@ -18,6 +18,7 @@
                 <sourceRootElem>../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/linker_script</sourceRootElem>
                 <sourceRootElem>../../../../../../../vendors/microchip/boards/same70_xult/aws_tests/linker_script</sourceRootElem>
                 <sourceRootElem>../../../../../../../vendors/microchip/boards/same54_xpro/aws_tests/linker_script</sourceRootElem>
+                <sourceRootElem>../../../../../../../vendors/microchip/boards/same54_xpro/ports/pkcs11</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>
