@@ -1108,8 +1108,8 @@ WIFIReturnCode_t WIFI_ConnectAP( const WIFINetworkParams_t * const pxNetworkPara
 	
     waiting_task = xTaskGetCurrentTaskHandle();
 
-    memcpy(wifiSSID , pxNetworkParams->pcSSID, pxNetworkParams->ucSSIDLength);
-    wifiSSID[ pxNetworkParams->ucSSIDLength ] = '\0';
+    memcpy(wifiSSID , pxNetworkParams->pcSSID, strlen(pxNetworkParams->pcSSID));
+    wifiSSID[ strlen(pxNetworkParams->pcSSID) ] = '\0';
     
     /*Set the AP security. */
     if (eWiFiSecurityOpen == pxNetworkParams->xSecurity)
@@ -1121,15 +1121,15 @@ WIFIReturnCode_t WIFI_ConnectAP( const WIFINetworkParams_t * const pxNetworkPara
 	     wincSecurityType = M2M_WIFI_SEC_WEP;
 	     wepInfo.u8KeyIndx = M2M_WIFI_WEP_KEY_INDEX_1; //assume index = 1
 	     wepInfo.u8KeySz = pxNetworkParams->ucPasswordLength; 
-	     memcpy( wepInfo.au8WepKey , pxNetworkParams->pcPassword, pxNetworkParams->ucPasswordLength);
-		 wepInfo.au8WepKey[ pxNetworkParams->ucPasswordLength ] = '\0';
+	     memcpy( wepInfo.au8WepKey , pxNetworkParams->pcPassword, strlen(pxNetworkParams->pcPassword));
+		 wepInfo.au8WepKey[ strlen(pxNetworkParams->pcPassword) ] = '\0';
 	}
 	else if((eWiFiSecurityWPA == pxNetworkParams->xSecurity)||
 		(eWiFiSecurityWPA2 == pxNetworkParams->xSecurity))
 	{
 	     wincSecurityType = M2M_WIFI_SEC_WPA_PSK;
-	     memcpy( wifiPSK, pxNetworkParams->pcPassword, pxNetworkParams->ucPasswordLength);
-		 wifiPSK[ pxNetworkParams->ucPasswordLength ] = '\0';
+	     memcpy( wifiPSK, pxNetworkParams->pcPassword, strlen(pxNetworkParams->pcPassword));
+		 wifiPSK[ strlen(pxNetworkParams->pcPassword) ] = '\0';
 	}
 	else
 	{
@@ -1148,8 +1148,7 @@ WIFIReturnCode_t WIFI_ConnectAP( const WIFINetworkParams_t * const pxNetworkPara
 	        xSemaphoreGive(xWiFiSemaphore);
             return eWiFiFailure;
         }
-
-      
+        
         if (Wifi_Connect_Ex(wifi_handle,pxNetworkParams) !=eWiFiSuccess)
         {
             xSemaphoreGive(xWiFiSemaphore);  
@@ -1889,7 +1888,7 @@ static void APP_ExampleDHCPAddressEventCallback(DRV_HANDLE handle, uint32_t ipAd
 
     /* Update BSS context with target SSID for connection. */
 
-    if (WDRV_WINC_STATUS_OK != WDRV_WINC_BSSCtxSetSSID(&bssCtx, (uint8_t*)pxNetworkParams->pcSSID, pxNetworkParams->ucSSIDLength))
+    if (WDRV_WINC_STATUS_OK != WDRV_WINC_BSSCtxSetSSID(&bssCtx, (uint8_t*)pxNetworkParams->pcSSID, strlen(pxNetworkParams->pcSSID)))
     {
         return eWiFiFailure;
     }
@@ -1907,9 +1906,9 @@ static void APP_ExampleDHCPAddressEventCallback(DRV_HANDLE handle, uint32_t ipAd
 
         case eWiFiSecurityWEP: 
         {
-            if (WDRV_WINC_STATUS_OK != WDRV_WINC_AuthCtxSetWEP(&authCtx, 1, (uint8_t*)pxNetworkParams->pcPassword, pxNetworkParams->ucPasswordLength))
+            if (WDRV_WINC_STATUS_OK != WDRV_WINC_AuthCtxSetWEP(&authCtx, 1, (uint8_t*)pxNetworkParams->pcPassword, strlen(pxNetworkParams->pcPassword)))
             {
-                configPRINTF(("Set WEP fail, password len = %d\r\n ", pxNetworkParams->ucPasswordLength));
+                configPRINTF(("Set WEP fail, password len = %d\r\n ", strlen(pxNetworkParams->pcPassword)));
                 return eWiFiFailure;
             }
             break;
@@ -1917,7 +1916,7 @@ static void APP_ExampleDHCPAddressEventCallback(DRV_HANDLE handle, uint32_t ipAd
         case eWiFiSecurityWPA:
         case eWiFiSecurityWPA2:
         {
-            if (WDRV_WINC_STATUS_OK != WDRV_WINC_AuthCtxSetWPA(&authCtx, (uint8_t*)pxNetworkParams->pcPassword, pxNetworkParams->ucPasswordLength))
+            if (WDRV_WINC_STATUS_OK != WDRV_WINC_AuthCtxSetWPA(&authCtx, (uint8_t*)pxNetworkParams->pcPassword, strlen(pxNetworkParams->pcPassword)))
             {
                 return eWiFiFailure;
             }
@@ -1949,14 +1948,12 @@ static void APP_ExampleDHCPAddressEventCallback(DRV_HANDLE handle, uint32_t ipAd
 #endif
 #endif
             /* Connect to the target BSS with the chosen authentication. */
-
            if(WDRV_WINC_STATUS_OK == WDRV_WINC_BSSConnect(handle, &bssCtx, &authCtx, &APP_ExampleConnectNotifyCallback))
             {
                return eWiFiSuccess;
                
             }
  }while(1);
-            
             return eWiFiFailure;
 
 }
