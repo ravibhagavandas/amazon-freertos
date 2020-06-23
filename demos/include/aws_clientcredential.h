@@ -31,14 +31,14 @@
  *
  * @todo Set this to the fully-qualified DNS name of your MQTT broker.
  */
-#define clientcredentialMQTT_BROKER_ENDPOINT         "a1o1j8efdlx2mm.iot.us-east-1.amazonaws.com"
+#define clientcredentialMQTT_BROKER_ENDPOINT         ""
 
 /*
  * @brief Host name.
  *
  * @todo Set this to the unique name of your IoT Thing.
  */
-#define clientcredentialIOT_THING_NAME               "01239D630C8BED25EE"
+#define clientcredentialIOT_THING_NAME               ""
 
 /*
  * @brief Port number the MQTT broker is using.
@@ -50,9 +50,6 @@
  */
 #define clientcredentialGREENGRASS_DISCOVERY_PORT    8443
 
-#define WLAN_SSID           ""
-#define WLAN_AUTH_WPA_PSK
-#define WLAN_PSK            "2ri4-yowp-ied7"
 /*
  * @brief Wi-Fi network to join.
  *
@@ -64,7 +61,7 @@
  * @brief Password needed to join Wi-Fi network.
  * @todo If you are using WPA, set this to your network password.
  */
-#define clientcredentialWIFI_PASSWORD                "2ri4-yowp-ied7"
+#define clientcredentialWIFI_PASSWORD                ""
 
 /*
  * @brief Wi-Fi network security type.
