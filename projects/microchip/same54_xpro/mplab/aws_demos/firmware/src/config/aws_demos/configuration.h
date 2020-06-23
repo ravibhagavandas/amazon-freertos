@@ -79,20 +79,6 @@ extern "C" {
 // Section: System Service Configuration
 // *****************************************************************************
 // *****************************************************************************
-/* TIME System Service Configuration Options */
-#define SYS_TIME_INDEX_0                     0
-#define SYS_TIME_MAX_TIMERS                  5
-#define SYS_TIME_HW_COUNTER_WIDTH            16
-#define SYS_TIME_HW_COUNTER_PERIOD           0xFFFFU
-#define SYS_TIME_HW_COUNTER_HALF_PERIOD	     (SYS_TIME_HW_COUNTER_PERIOD>>1)
-#define SYS_TIME_CPU_CLOCK_FREQUENCY         120000000
-#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (188)
-
-#define SYS_CONSOLE_INDEX_0                       0
-
-
-
-
 
 #define SYS_CMD_ENABLE
 #define SYS_CMD_DEVICE_MAX_INSTANCES       SYS_CONSOLE_DEVICE_MAX_INSTANCES
@@ -103,17 +89,24 @@ extern "C" {
 #define SYS_CMD_RTOS_STACK_SIZE                256
 #define SYS_CMD_RTOS_TASK_PRIORITY             1
 
-
-#define SYS_DEBUG_ENABLE
-#define SYS_DEBUG_GLOBAL_ERROR_LEVEL       SYS_ERROR_DEBUG
-#define SYS_DEBUG_BUFFER_DMA_READY
-#define SYS_DEBUG_USE_CONSOLE
-
+/* TIME System Service Configuration Options */
+#define SYS_TIME_INDEX_0                     0
+#define SYS_TIME_MAX_TIMERS                  5
+#define SYS_TIME_HW_COUNTER_WIDTH            16
+#define SYS_TIME_HW_COUNTER_PERIOD           0xFFFFU
+#define SYS_TIME_HW_COUNTER_HALF_PERIOD	     (SYS_TIME_HW_COUNTER_PERIOD>>1)
+#define SYS_TIME_CPU_CLOCK_FREQUENCY         120000000
+#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (188)
 
 #define SYS_CONSOLE_DEVICE_MAX_INSTANCES   			1
 #define SYS_CONSOLE_UART_MAX_INSTANCES 	   			1
 #define SYS_CONSOLE_USB_CDC_MAX_INSTANCES 	   		0
 #define SYS_CONSOLE_PRINT_BUFFER_SIZE        		200
+
+
+#define SYS_CONSOLE_INDEX_0                       0
+
+
 
 
 
@@ -123,29 +116,22 @@ extern "C" {
 // Section: Driver Configuration
 // *****************************************************************************
 // *****************************************************************************
-/* SPI Driver Common Configuration Options */
-#define DRV_SPI_INSTANCES_NUMBER              1
 
-/*** WiFi WINC Driver Configuration ***/
-#define WDRV_WINC_EIC_SOURCE                EIC_PIN_7
-#define WDRV_WINC_SPI_INDEX                 DRV_SPI_INDEX_0
-#define WDRV_WINC_NETWORK_MODE_SOCKET
-#define WDRV_WINC_DEVICE_WINC3400
-#define WDRV_WINC_DEVICE_SPLIT_INIT
-#define WDRV_WINC_DEVICE_MULTI_GAIN_TABLE
-#define WDRV_WINC_DEVICE_USE_FLASH_INIT
-#define WDRV_WINC_DEBUG_LEVEL               WDRV_WINC_DEBUG_TYPE_NONE
-/*** WiFi WINC Driver RTOS Configuration ***/
-#define DRV_WIFI_WINC_RTOS_STACK_SIZE           1024
-#define DRV_WIFI_WINC_RTOS_TASK_PRIORITY        1
 
-/* SPI Driver Instance 0 Configuration Options */
-#define DRV_SPI_INDEX_0                       0
-#define DRV_SPI_CLIENTS_NUMBER_IDX0           1
-#define DRV_SPI_DMA_MODE
-#define DRV_SPI_XMIT_DMA_CH_IDX0              SYS_DMA_CHANNEL_0
-#define DRV_SPI_RCV_DMA_CH_IDX0               SYS_DMA_CHANNEL_1
-#define DRV_SPI_QUEUE_SIZE_IDX0               4
+/*** MIIM Driver Configuration ***/
+#define DRV_MIIM_ETH_MODULE_ID              GMAC_BASE_ADDRESS
+#define DRV_MIIM_INSTANCES_NUMBER           1
+#define DRV_MIIM_INSTANCE_OPERATIONS        4
+#define DRV_MIIM_INSTANCE_CLIENTS           2
+#define DRV_MIIM_CLIENT_OP_PROTECTION   false
+#define DRV_MIIM_COMMANDS   false
+#define DRV_MIIM_DRIVER_OBJECT              DRV_MIIM_OBJECT_BASE_Default
+#define DRV_MIIM_DRIVER_INDEX               DRV_MIIM_INDEX_0              
+
+/* MIIM RTOS Configurations*/
+#define DRV_MIIM_RTOS_STACK_SIZE                1024
+#define DRV_MIIM_RTOS_TASK_PRIORITY             1
+
 
 
 
@@ -154,6 +140,74 @@ extern "C" {
 // Section: Middleware & Other Library Configuration
 // *****************************************************************************
 // *****************************************************************************
+/*** TCPIP MAC Configuration ***/
+#define TCPIP_GMAC_TX_DESCRIPTORS_COUNT_DUMMY				1
+#define TCPIP_GMAC_RX_DESCRIPTORS_COUNT_DUMMY				1
+#define TCPIP_GMAC_RX_BUFF_SIZE_DUMMY				    	64
+#define TCPIP_GMAC_TX_BUFF_SIZE_DUMMY				    	64
+
+/*** QUEUE 0 Configuration ***/
+#define TCPIP_GMAC_TX_DESCRIPTORS_COUNT_QUE0				10
+#define TCPIP_GMAC_RX_DESCRIPTORS_COUNT_QUE0				10
+#define TCPIP_GMAC_RX_BUFF_SIZE_QUE0				    	1536
+#define TCPIP_GMAC_TX_BUFF_SIZE_QUE0				    	1536
+#define TCPIP_GMAC_RX_BUFF_COUNT_QUE0				   		12
+#define TCPIP_GMAC_RX_BUFF_COUNT_THRESHOLD_QUE0				1
+#define TCPIP_GMAC_RX_BUFF_ALLOC_COUNT_QUE0					1
+
+
+
+
+
+
+#define TCPIP_GMAC_RX_MAX_FRAME		    			1536
+#define TCPIP_GMAC_RX_FILTERS                       \
+                                                    TCPIP_MAC_RX_FILTER_TYPE_BCAST_ACCEPT |\
+                                                    TCPIP_MAC_RX_FILTER_TYPE_MCAST_ACCEPT |\
+                                                    TCPIP_MAC_RX_FILTER_TYPE_UCAST_ACCEPT |\
+                                                    TCPIP_MAC_RX_FILTER_TYPE_CRC_ERROR_REJECT |\
+                                                    0
+#define TCPIP_GMAC_ETH_OPEN_FLAGS       			\
+                                                    TCPIP_ETH_OPEN_AUTO |\
+                                                    TCPIP_ETH_OPEN_FDUPLEX |\
+                                                    TCPIP_ETH_OPEN_HDUPLEX |\
+                                                    TCPIP_ETH_OPEN_100 |\
+                                                    TCPIP_ETH_OPEN_10 |\
+                                                    TCPIP_ETH_OPEN_MDIX_AUTO |\
+                                                    TCPIP_ETH_OPEN_RMII |\
+                                                    0
+
+#define TCPIP_INTMAC_MODULE_ID		    			GMAC_BASE_ADDRESS
+#define TCPIP_INTMAC_PERIPHERAL_CLK  				120000000
+
+#define DRV_GMAC_INSTANCES_NUMBER				1
+#define DRV_GMAC_NUMBER_OF_QUEUES				1
+#define DRV_GMAC_CLIENTS_NUMBER					1
+#define DRV_GMAC_INDEX	    	    				1
+#define DRV_GMAC_PERIPHERAL_ID					1
+#define DRV_GMAC_INTERRUPT_SOURCE				GMAC_IRQn
+
+#define DRV_GMAC_INTERRUPT_MODE        				true
+#define DRV_GMAC_RMII_MODE					0
+
+
+
+
+#define TCPIP_INTMAC_PHY_CONFIG_FLAGS               \
+                                                    DRV_ETHPHY_CFG_RMII | \
+                                                    0 
+
+#define TCPIP_INTMAC_PHY_LINK_INIT_DELAY            500
+#define TCPIP_INTMAC_PHY_ADDRESS                    0
+#define DRV_ETHPHY_INSTANCES_NUMBER                 1
+#define DRV_ETHPHY_CLIENTS_NUMBER                   1
+#define DRV_ETHPHY_INDEX                            1
+#define DRV_ETHPHY_PERIPHERAL_ID                    1
+#define DRV_ETHPHY_NEG_INIT_TMO                     1
+#define DRV_ETHPHY_NEG_DONE_TMO                     2000
+#define DRV_ETHPHY_RESET_CLR_TMO                    500
+
+
 
 
 // *****************************************************************************

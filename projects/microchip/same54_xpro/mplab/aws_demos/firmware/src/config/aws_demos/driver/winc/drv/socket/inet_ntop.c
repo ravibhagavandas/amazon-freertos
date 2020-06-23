@@ -1,5 +1,5 @@
 /*******************************************************************************
-  WINC3400 Wireless Driver
+  WINC1500 Wireless Driver
 
   File Name:
     inet_ntop.c

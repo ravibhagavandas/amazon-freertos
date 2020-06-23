@@ -1,6 +1,6 @@
 /*
- * Amazon FreeRTOS PKCS#11 V1.0.8
- * Copyright (C) 2019 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS PKCS#11 V1.0.8
+ * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -41,6 +41,10 @@
 
 #include <string.h>
 
+
+
+#define ATCA_I2C_ECC_ADDRESS 0x6C
+
 #ifdef AMAZON_FREERTOS_ENABLE_UNIT_TESTS
 #include "iot_test_pkcs11_config.h"
 #endif
@@ -60,6 +64,15 @@
 #include "pkcs11_config.h"
 #include "pkcs11/pkcs11_object.h"
 #include "pkcs11/pkcs11_slot.h"
+
+extern ATCAIfaceCfg atecc608a_0_init_data;
+
+int mbedtls_hardware_poll( void * data,
+                           unsigned char * output,
+                           size_t len,
+                           size_t * olen );
+
+CK_RV pkcs11_config_interface(pkcs11_slot_ctx_ptr pSlot);
 
 /*
  * PKCS#11 module implementation.
@@ -204,101 +217,108 @@ const char * pcPkcs11GetThingName(void)
     return gcPkcs11ThingNameCache;
 }
 
-/** \defgroup config Configuration (cfg_)
- * \brief Logical device configurations describe the CryptoAuth device type and logical interface.
-   @{ */
 
-/** \brief default configuration for an ECCx08A device */
-ATCAIfaceCfg cfg_ateccx08a_kithid_default = {
-    .iface_type = ATCA_HID_IFACE,
-    .devtype = ATECC608A,
-    .atcahid.idx = 0,
-    .atcahid.vid = 0x03EB,
-    .atcahid.pid = 0x2312,
-    .atcahid.packetsize = 64,
-    .atcahid.guid = { 0x4d,        0x1e, 0x55, 0xb2, 0xf1, 0x6f, 0x11, 0xcf, 0x88, 0xcb, 0x00, 0x11, 0x11, 0x00, 0x00, 0x30 },
-};
+
+#ifdef ATCA_HAL_KIT_HID
+/** \brief default configuration for Kit protocol over the device's async interface */
+    ATCAIfaceCfg cfg_ateccx08a_kithid_default =
+    {
+        .iface_type         = ATCA_HID_IFACE,
+        .devtype            = ATECC608A,
+        .atcahid.idx        = 0,
+        .atcahid.vid        = 0x03EB,
+        .atcahid.pid        = 0x2312,
+        .atcahid.packetsize = 64,
+        .atcahid.guid       = { 0x4d,        0x1e,0x55, 0xb2, 0xf1, 0x6f, 0x11, 0xcf, 0x88, 0xcb, 0x00, 0x11, 0x11, 0x00, 0x00, 0x30 },
+    };
+#endif /* ifdef ATCA_HAL_KIT_HID */
 
 #ifdef AMAZON_FREERTOS_ENABLE_UNIT_TESTS
-/* This configuration is only suitable for testing of a device and does not enforce good 
-security policies that should be practiced in production */
-const uint8_t atecc608_config[] = {
-    0x01, 0x23, 0x00, 0x00,  /* SN03 */
-    0x00, 0x00, 0x60, 0x01,  /* RevNum */
-    0x00, 0x00, 0x00, 0x00,  /* SN47 */
-    0xEE, /* SN8 */
-    0x01, /* AES_Enable */
-    0x01, /* I2C */
-    0x00, /* Reserved */
-    ATCA_I2C_ECC_ADDRESS, /* I2C Address */
-    0x00,  /* Reserved 2 */
-    0x00,  /* Count match */
-    0x01,  /* Chip mode */
-    0x85, 0x66, /* SlotConfig 0 */
-    0x82, 0x00, //1
-    0x85, 0x66, //2
-    0x85, 0x20, //3
-    0x85, 0x20, //4
-    0xC6, 0x46, //5
-    0x8F, 0x0F, //6
-    0x9F, 0x8F, //7
-    0x0F, 0x0F, //8
-    0x8F, 0x0F, //9
-    0x0F, 0x0F, //10
-    0x0F, 0x0F, //11
-    0x0F, 0x0F, //12
-    0x0F, 0x0F, //13
-    0x0D, 0x1F, //14
-    0x0F, 0x0F, //15
-    0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00,  /* Counter0 */
-    0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00,  /* Counter1 */
-    0x00,    /* Use Lock */
-    0x00,    /* Volatile Key Permission */
-    0x03, 0xF7, 
-    0x00, 
-    0x69, 0x76,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,  /* Reserve3 */
-    0x00,  // User Extra
-    0x00,  // UserExtraAdd
-    0x55,  // Lock Value 
-    0x55,  // Lock Config
-    0xFF, 0xFF,  /* Slot locked. */ 
-    0x0E,0x60,  /* Chip options */
-    0x00, 0x00, 0x00, 0x00, /* X509 Format */
-    0x53, 0x00,  /* KeyConfig[0] */
-    0x53, 0x00, //1
-    0x53, 0x00, //2
-    0x73, 0x00, //3
-    0x73, 0x00, //4
-    0x38, 0x00, //5
-    0x7C, 0x00, //6
-    0x1C, 0x00, //7
-    0x3C, 0x00, //8
-    0x1A, 0x00, //9
-    0x3C, 0x00, //10
-    0x30, 0x00, //11
-    0x3C, 0x00, //12
-    0x30, 0x00, //13
-    0x12, 0x00, //14
-    0x30, 0x00  //15
-};   
-#else
+
+/* This configuration is only suitable for testing of a device and does not enforce good
+ * security policies that should be practiced in production */
+    const uint8_t atecc608_config[] =
+    {
+        0x01, 0x23, 0x00, 0x00,                         /* SN03 */
+        0x00, 0x00, 0x60, 0x01,                         /* RevNum */
+        0x00, 0x00, 0x00, 0x00,                         /* SN47 */
+        0xEE,                                           /* SN8 */
+        0x01,                                           /* AES_Enable */
+        0x01,                                           /* I2C */
+        0x00,                                           /* Reserved */
+        ATCA_I2C_ECC_ADDRESS,                           /* I2C Address */
+        0x00,                                           /* Reserved 2 */
+        0x00,                                           /* Count match */
+        0x01,                                           /* Chip mode */
+        0x85, 0x66,                                     /* SlotConfig 0 */
+        0x82, 0x00,                                     /*1 */
+        0x85, 0x66,                                     /*2 */
+        0x85, 0x20,                                     /*3 */
+        0x85, 0x20,                                     /*4 */
+        0xC6, 0x46,                                     /*5 */
+        0x8F, 0x0F,                                     /*6 */
+        0x9F, 0x8F,                                     /*7 */
+        0x0F, 0x0F,                                     /*8 */
+        0x8F, 0x0F,                                     /*9 */
+        0x0F, 0x0F,                                     /*10 */
+        0x0F, 0x0F,                                     /*11 */
+        0x0F, 0x0F,                                     /*12 */
+        0x0F, 0x0F,                                     /*13 */
+        0x0D, 0x1F,                                     /*14 */
+        0x0F, 0x0F,                                     /*15 */
+        0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, /* Counter0 */
+        0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, /* Counter1 */
+        0x00,                                           /* Use Lock */
+        0x00,                                           /* Volatile Key Permission */
+        0x03, 0xF7,
+        0x00,
+        0x69, 0x76,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* Reserve3 */
+        0x00,                                                 /* User Extra */
+        0x00,                                                 /* UserExtraAdd */
+        0x55,                                                 /* Lock Value */
+        0x55,                                                 /* Lock Config */
+        0xFF, 0xFF,                                           /* Slot locked. */
+        0x0E, 0x60,                                           /* Chip options */
+        0x00, 0x00, 0x00, 0x00,                               /* X509 Format */
+        0x53, 0x00,                                           /* KeyConfig[0] */
+        0x53, 0x00,                                           /*1 */
+        0x53, 0x00,                                           /*2 */
+        0x73, 0x00,                                           /*3 */
+        0x73, 0x00,                                           /*4 */
+        0x38, 0x00,                                           /*5 */
+        0x7C, 0x00,                                           /*6 */
+        0x1C, 0x00,                                           /*7 */
+        0x3C, 0x00,                                           /*8 */
+        0x1A, 0x00,                                           /*9 */
+        0x3C, 0x00,                                           /*10 */
+        0x30, 0x00,                                           /*11 */
+        0x3C, 0x00,                                           /*12 */
+        0x30, 0x00,                                           /*13 */
+        0x12, 0x00,                                           /*14 */
+        0x30, 0x00                                            /*15 */
+    };
+#else /* ifdef AMAZON_FREERTOS_ENABLE_UNIT_TESTS */
 /** Standard Configuration Structure for ATECC608A devices */
-const uint8_t atecc608_config[] = {
-    0x01, 0x23, 0x00, 0x00, 0x00, 0x00, 0x60, 0x01, 0x00, 0x00, 0x00, 0x00, 0xEE, 0x01, 0x01, 0x00,
-    ATCA_I2C_ECC_ADDRESS, 0x00, 0x00, 0x01, 0x8F, 0x20, 0xC4, 0x44, 0x87, 0x20, 0x87, 0x20, 0x8F, 0x0F, 0xC4, 0x36,
-    0x9F, 0x0F, 0x82, 0x20, 0x0F, 0x0F, 0xC4, 0x44, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F,
-    0x0F, 0x0F, 0x0F, 0x0F, 0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x33, 0x00, 0x1C, 0x00, 0x13, 0x00, 0x13, 0x00, 0x7C, 0x00, 0x1C, 0x00, 0x3C, 0x00, 0x33, 0x00,
-    0x3C, 0x00, 0x3C, 0x00, 0x3C, 0x00, 0x30, 0x00, 0x3C, 0x00, 0x3C, 0x00, 0x3C, 0x00, 0x30, 0x00,
-};
-#endif
+    const uint8_t atecc608_config[] =
+    {
+        0x01,                 0x23, 0x00, 0x00, 0x00, 0x00, 0x60, 0x01, 0x00, 0x00, 0x00, 0x00, 0xEE, 0x01, 0x01, 0x00,
+        ATCA_I2C_ECC_ADDRESS, 0x00, 0x00, 0x01, 0x8F, 0x20, 0xC4, 0x44, 0x87, 0x20, 0x87, 0x20, 0x8F, 0x0F, 0xC4, 0x36,
+        0x9F,                 0x0F, 0x82, 0x20, 0x0F, 0x0F, 0xC4, 0x44, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F,
+        0x0F,                 0x0F, 0x0F, 0x0F, 0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF,
+        0x00,                 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00,                 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x33,                 0x00, 0x1C, 0x00, 0x13, 0x00, 0x13, 0x00, 0x7C, 0x00, 0x1C, 0x00, 0x3C, 0x00, 0x33, 0x00,
+        0x3C,                 0x00, 0x3C, 0x00, 0x3C, 0x00, 0x30, 0x00, 0x3C, 0x00, 0x3C, 0x00, 0x3C, 0x00, 0x30, 0x00,
+    };
+#endif /* ifdef AMAZON_FREERTOS_ENABLE_UNIT_TESTS */
 
 
 /* Helper function to assign the proper fields to an certificate object from a cert def */
-CK_RV pkcs11_config_cert(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pLabel)
+CK_RV pkcs11_config_cert( pkcs11_lib_ctx_ptr pLibCtx,
+                          pkcs11_slot_ctx_ptr pSlot,
+                          pkcs11_object_ptr pObject,
+                          CK_ATTRIBUTE_PTR pLabel )
 {
     CK_RV rv = CKR_OK;
 	size_t len;
@@ -361,7 +381,10 @@ CK_RV pkcs11_config_cert(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, 
 }
 
 /* Helper function to assign the proper fields to a key object */
-CK_RV pkcs11_config_key(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pLabel)
+CK_RV pkcs11_config_key( pkcs11_lib_ctx_ptr pLibCtx,
+                         pkcs11_slot_ctx_ptr pSlot,
+                         pkcs11_object_ptr pObject,
+                         CK_ATTRIBUTE_PTR pLabel )
 {
     CK_RV rv = CKR_OK;
 	size_t len;
@@ -432,14 +455,16 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr pSlot)
 	CK_RV rv = CKR_OK;
     CK_ATTRIBUTE xLabel;
 
-	if (CKR_OK == rv)
-	{
-		rv = pkcs11_object_alloc(&pObject);
-		if (pObject)
-		{
-			/* Slot 0 - Device Private Key */
-			xLabel.pValue = pkcs11configLABEL_DEVICE_PRIVATE_KEY_FOR_TLS;
-            xLabel.ulValueLen = strlen(xLabel.pValue);
+    pkcs11_config_interface(pSlot);
+    if( CKR_OK == rv )
+    {
+        rv = pkcs11_object_alloc( &pObject );
+
+        if( pObject )
+        {
+            /* Slot 0 - Device Private Key */
+            xLabel.pValue = pkcs11configLABEL_DEVICE_PRIVATE_KEY_FOR_TLS;
+            xLabel.ulValueLen = strlen( xLabel.pValue );
             xLabel.type = CKA_LABEL;
 			pkcs11_config_key(NULL, pSlot, pObject, &xLabel );
 		}
@@ -528,4 +553,19 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr pSlot)
 #endif
 
 	return rv;
+}
+
+
+
+
+
+CK_RV pkcs11_config_interface(pkcs11_slot_ctx_ptr pSlot)
+{
+    CK_RV rv = CKR_ARGUMENTS_BAD;
+    if (pSlot)
+    {
+        pSlot->interface_config = atecc608a_0_init_data;
+        rv = CKR_OK;
+    }
+    return rv;
 }

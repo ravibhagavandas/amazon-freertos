@@ -112,11 +112,11 @@ void EIC_EXTINT_15_Handler      ( void ) __attribute__((weak, alias("Dummy_Handl
 void FREQM_Handler              ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void NVMCTRL_0_Handler          ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void NVMCTRL_1_Handler          ( void ) __attribute__((weak, alias("Dummy_Handler")));
-void DMAC_0_InterruptHandler    ( void ) __attribute__((weak, alias("Dummy_Handler")));
-void DMAC_1_InterruptHandler    ( void ) __attribute__((weak, alias("Dummy_Handler")));
-void DMAC_2_InterruptHandler    ( void ) __attribute__((weak, alias("Dummy_Handler")));
-void DMAC_3_InterruptHandler    ( void ) __attribute__((weak, alias("Dummy_Handler")));
-void DMAC_OTHER_InterruptHandler ( void ) __attribute__((weak, alias("Dummy_Handler")));
+void DMAC_0_Handler             ( void ) __attribute__((weak, alias("Dummy_Handler")));
+void DMAC_1_Handler             ( void ) __attribute__((weak, alias("Dummy_Handler")));
+void DMAC_2_Handler             ( void ) __attribute__((weak, alias("Dummy_Handler")));
+void DMAC_3_Handler             ( void ) __attribute__((weak, alias("Dummy_Handler")));
+void DMAC_OTHER_Handler         ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void EVSYS_0_Handler            ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void EVSYS_1_Handler            ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void EVSYS_2_Handler            ( void ) __attribute__((weak, alias("Dummy_Handler")));
@@ -137,20 +137,26 @@ void SERCOM3_0_Handler          ( void ) __attribute__((weak, alias("Dummy_Handl
 void SERCOM3_1_Handler          ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void SERCOM3_2_Handler          ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void SERCOM3_OTHER_Handler      ( void ) __attribute__((weak, alias("Dummy_Handler")));
-void SERCOM4_SPI_InterruptHandler ( void ) __attribute__((weak, alias("Dummy_Handler")));
+void SERCOM4_0_Handler          ( void ) __attribute__((weak, alias("Dummy_Handler")));
+void SERCOM4_1_Handler          ( void ) __attribute__((weak, alias("Dummy_Handler")));
+void SERCOM4_2_Handler          ( void ) __attribute__((weak, alias("Dummy_Handler")));
+void SERCOM4_OTHER_Handler      ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void SERCOM5_0_Handler          ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void SERCOM5_1_Handler          ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void SERCOM5_2_Handler          ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void SERCOM5_OTHER_Handler      ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void SERCOM6_USART_InterruptHandler ( void ) __attribute__((weak, alias("Dummy_Handler")));
-void SERCOM7_I2C_InterruptHandler ( void ) __attribute__((weak, alias("Dummy_Handler")));
+void SERCOM7_0_Handler          ( void ) __attribute__((weak, alias("Dummy_Handler")));
+void SERCOM7_1_Handler          ( void ) __attribute__((weak, alias("Dummy_Handler")));
+void SERCOM7_2_Handler          ( void ) __attribute__((weak, alias("Dummy_Handler")));
+void SERCOM7_OTHER_Handler      ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void CAN0_Handler               ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void CAN1_Handler               ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void USB_OTHER_Handler          ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void USB_SOF_HSOF_Handler       ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void USB_TRCPT0_Handler         ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void USB_TRCPT1_Handler         ( void ) __attribute__((weak, alias("Dummy_Handler")));
-void GMAC_Handler               ( void ) __attribute__((weak, alias("Dummy_Handler")));
+void GMAC_InterruptHandler      ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void TCC0_OTHER_Handler         ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void TCC0_MC0_Handler           ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void TCC0_MC1_Handler           ( void ) __attribute__((weak, alias("Dummy_Handler")));
@@ -257,11 +263,11 @@ const DeviceVectors exception_table=
     .pfnFREQM_Handler              = ( void * ) FREQM_Handler,
     .pfnNVMCTRL_0_Handler          = ( void * ) NVMCTRL_0_Handler,
     .pfnNVMCTRL_1_Handler          = ( void * ) NVMCTRL_1_Handler,
-    .pfnDMAC_0_Handler             = ( void * ) DMAC_0_InterruptHandler,
-    .pfnDMAC_1_Handler             = ( void * ) DMAC_1_InterruptHandler,
-    .pfnDMAC_2_Handler             = ( void * ) DMAC_2_InterruptHandler,
-    .pfnDMAC_3_Handler             = ( void * ) DMAC_3_InterruptHandler,
-    .pfnDMAC_OTHER_Handler         = ( void * ) DMAC_OTHER_InterruptHandler,
+    .pfnDMAC_0_Handler             = ( void * ) DMAC_0_Handler,
+    .pfnDMAC_1_Handler             = ( void * ) DMAC_1_Handler,
+    .pfnDMAC_2_Handler             = ( void * ) DMAC_2_Handler,
+    .pfnDMAC_3_Handler             = ( void * ) DMAC_3_Handler,
+    .pfnDMAC_OTHER_Handler         = ( void * ) DMAC_OTHER_Handler,
     .pfnEVSYS_0_Handler            = ( void * ) EVSYS_0_Handler,
     .pfnEVSYS_1_Handler            = ( void * ) EVSYS_1_Handler,
     .pfnEVSYS_2_Handler            = ( void * ) EVSYS_2_Handler,
@@ -285,10 +291,10 @@ const DeviceVectors exception_table=
     .pfnSERCOM3_1_Handler          = ( void * ) SERCOM3_1_Handler,
     .pfnSERCOM3_2_Handler          = ( void * ) SERCOM3_2_Handler,
     .pfnSERCOM3_OTHER_Handler      = ( void * ) SERCOM3_OTHER_Handler,
-    .pfnSERCOM4_0_Handler          = ( void * ) SERCOM4_SPI_InterruptHandler,
-    .pfnSERCOM4_1_Handler          = ( void * ) SERCOM4_SPI_InterruptHandler,
-    .pfnSERCOM4_2_Handler          = ( void * ) SERCOM4_SPI_InterruptHandler,
-    .pfnSERCOM4_OTHER_Handler      = ( void * ) SERCOM4_SPI_InterruptHandler,
+    .pfnSERCOM4_0_Handler          = ( void * ) SERCOM4_0_Handler,
+    .pfnSERCOM4_1_Handler          = ( void * ) SERCOM4_1_Handler,
+    .pfnSERCOM4_2_Handler          = ( void * ) SERCOM4_2_Handler,
+    .pfnSERCOM4_OTHER_Handler      = ( void * ) SERCOM4_OTHER_Handler,
     .pfnSERCOM5_0_Handler          = ( void * ) SERCOM5_0_Handler,
     .pfnSERCOM5_1_Handler          = ( void * ) SERCOM5_1_Handler,
     .pfnSERCOM5_2_Handler          = ( void * ) SERCOM5_2_Handler,
@@ -297,17 +303,17 @@ const DeviceVectors exception_table=
     .pfnSERCOM6_1_Handler          = ( void * ) SERCOM6_USART_InterruptHandler,
     .pfnSERCOM6_2_Handler          = ( void * ) SERCOM6_USART_InterruptHandler,
     .pfnSERCOM6_OTHER_Handler      = ( void * ) SERCOM6_USART_InterruptHandler,
-    .pfnSERCOM7_0_Handler          = ( void * ) SERCOM7_I2C_InterruptHandler,
-    .pfnSERCOM7_1_Handler          = ( void * ) SERCOM7_I2C_InterruptHandler,
-    .pfnSERCOM7_2_Handler          = ( void * ) SERCOM7_I2C_InterruptHandler,
-    .pfnSERCOM7_OTHER_Handler      = ( void * ) SERCOM7_I2C_InterruptHandler,
+    .pfnSERCOM7_0_Handler          = ( void * ) SERCOM7_0_Handler,
+    .pfnSERCOM7_1_Handler          = ( void * ) SERCOM7_1_Handler,
+    .pfnSERCOM7_2_Handler          = ( void * ) SERCOM7_2_Handler,
+    .pfnSERCOM7_OTHER_Handler      = ( void * ) SERCOM7_OTHER_Handler,
     .pfnCAN0_Handler               = ( void * ) CAN0_Handler,
     .pfnCAN1_Handler               = ( void * ) CAN1_Handler,
     .pfnUSB_OTHER_Handler          = ( void * ) USB_OTHER_Handler,
     .pfnUSB_SOF_HSOF_Handler       = ( void * ) USB_SOF_HSOF_Handler,
     .pfnUSB_TRCPT0_Handler         = ( void * ) USB_TRCPT0_Handler,
     .pfnUSB_TRCPT1_Handler         = ( void * ) USB_TRCPT1_Handler,
-    .pfnGMAC_Handler               = ( void * ) GMAC_Handler,
+    .pfnGMAC_Handler               = ( void * ) GMAC_InterruptHandler,
     .pfnTCC0_OTHER_Handler         = ( void * ) TCC0_OTHER_Handler,
     .pfnTCC0_MC0_Handler           = ( void * ) TCC0_MC0_Handler,
     .pfnTCC0_MC1_Handler           = ( void * ) TCC0_MC1_Handler,

@@ -1,14 +1,14 @@
 /*******************************************************************************
-  This module contains WINC3400 bus APIs implementation.
+  This module contains WINC1500 bus APIs implementation.
 
   File Name:
     nmbus.h
 
   Summary:
-    This module contains WINC3400 bus APIs implementation.
+    This module contains WINC1500 bus APIs implementation.
 
   Description:
-    This module contains WINC3400 bus APIs implementation.
+    This module contains WINC1500 bus APIs implementation.
  *******************************************************************************/
 
 //DOM-IGNORE-BEGIN
@@ -49,7 +49,7 @@ extern "C"{
 *   @brief  Initialize bus interface
 *   @return M2M_SUCCESS in case of success and M2M_ERR_BUS_FAIL in case of failure
 */
-int8_t nm_bus_iface_init(void *pvInitVal);
+int8_t nm_bus_iface_init(void *);
 
 
 /**
@@ -58,6 +58,14 @@ int8_t nm_bus_iface_init(void *pvInitVal);
 *   @return M2M_SUCCESS in case of success and M2M_ERR_BUS_FAIL in case of failure
 */
 int8_t nm_bus_iface_deinit(void);
+
+/**
+*   @fn     nm_bus_reset
+*   @brief  reset bus interface
+*   @return M2M_SUCCESS in case of success and M2M_ERR_BUS_FAIL in case of failure
+*   @version    1.0
+*/
+int8_t nm_bus_reset(void);
 
 /**
 *   @fn     nm_bus_iface_reconfigure

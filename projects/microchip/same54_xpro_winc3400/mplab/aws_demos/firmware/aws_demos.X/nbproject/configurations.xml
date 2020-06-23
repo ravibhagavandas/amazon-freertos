@@ -76,6 +76,30 @@
           </logicalFolder>
           <logicalFolder name="f4" displayName="library" projectFiles="true">
             <logicalFolder name="f1" displayName="cryptoauthlib" projectFiles="true">
+              <logicalFolder name="f1" displayName="pkcs11" projectFiles="true">
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/cryptoki.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11f.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11t.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11_attrib.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11_cert.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11_config.h.in</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11_debug.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11_digest.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11_find.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11_info.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11_init.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11_key.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11_mech.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11_object.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11_os.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11_session.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11_signature.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11_slot.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11_token.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11_util.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11_config.h</itemPath>
+              </logicalFolder>
               <itemPath>../src/config/aws_demos/library/cryptoauthlib/atca_config.h</itemPath>
             </logicalFolder>
           </logicalFolder>
@@ -355,7 +379,7 @@
           <itemPath>../../../../../../../freertos_kernel/timers.c</itemPath>
         </logicalFolder>
         <logicalFolder name="f2" displayName="libraries" projectFiles="true">
-          <logicalFolder name="f3" displayName="3rdparty" projectFiles="true">
+          <logicalFolder name="f2" displayName="3rdparty" projectFiles="true">
             <logicalFolder name="f1" displayName="http_parser" projectFiles="true">
               <itemPath>../../../../../../../libraries/3rdparty/http_parser/.git</itemPath>
               <itemPath>../../../../../../../libraries/3rdparty/http_parser/.mailmap</itemPath>
@@ -694,7 +718,7 @@
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f4" displayName="c_sdk" projectFiles="true">
+          <logicalFolder name="f3" displayName="c_sdk" projectFiles="true">
             <logicalFolder name="f1" displayName="aws" projectFiles="true">
               <logicalFolder name="f1" displayName="defender" projectFiles="true">
                 <logicalFolder name="f1" displayName="include" projectFiles="true">
@@ -830,8 +854,8 @@
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f2" displayName="freertos_plus" projectFiles="true">
-            <logicalFolder name="f2" displayName="aws" projectFiles="true">
+          <logicalFolder name="f4" displayName="freertos_plus" projectFiles="true">
+            <logicalFolder name="f1" displayName="aws" projectFiles="true">
               <logicalFolder name="f1" displayName="greengrass" projectFiles="true">
                 <logicalFolder name="f1" displayName="include" projectFiles="true">
                   <itemPath>../../../../../../../libraries/freertos_plus/aws/greengrass/include/aws_ggd_config_defaults.h</itemPath>
@@ -848,10 +872,24 @@
                   <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/include/aws_iot_ota_agent.h</itemPath>
                   <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/include/aws_iot_ota_types.h</itemPath>
                 </logicalFolder>
+                <logicalFolder name="f2" displayName="src" projectFiles="true">
+                  <logicalFolder name="f1" displayName="mqtt" projectFiles="true">
+                    <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/mqtt/aws_iot_ota_cbor.c</itemPath>
+                    <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/mqtt/aws_iot_ota_cbor_internal.h</itemPath>
+                    <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/mqtt/aws_iot_ota_cbor.h</itemPath>
+                    <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/mqtt/aws_iot_ota_mqtt.c</itemPath>
+                    <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/mqtt/aws_iot_ota_mqtt.h</itemPath>
+                  </logicalFolder>
+                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/aws_iot_ota_agent.c</itemPath>
+                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/aws_iot_ota_agent_internal.h</itemPath>
+                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/aws_iot_ota_interface.c</itemPath>
+                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/aws_iot_ota_interface.h</itemPath>
+                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/aws_iot_ota_pal.h</itemPath>
+                </logicalFolder>
               </logicalFolder>
             </logicalFolder>
-            <logicalFolder name="f1" displayName="standard" projectFiles="true">
-              <logicalFolder name="f2" displayName="crypto" projectFiles="true">
+            <logicalFolder name="f2" displayName="standard" projectFiles="true">
+              <logicalFolder name="f1" displayName="crypto" projectFiles="true">
                 <logicalFolder name="f1" displayName="include" projectFiles="true">
                   <itemPath>../../../../../../../libraries/freertos_plus/standard/crypto/include/iot_crypto.h</itemPath>
                 </logicalFolder>
@@ -859,53 +897,7 @@
                   <itemPath>../../../../../../../libraries/freertos_plus/standard/crypto/src/iot_crypto.c</itemPath>
                 </logicalFolder>
               </logicalFolder>
-              <logicalFolder name="f1" displayName="freertos_plus_tcp" projectFiles="true">
-                <logicalFolder name="f2" displayName="include" projectFiles="true">
-                  <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include/FreeRTOSIPConfigDefaults.h</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include/FreeRTOS_ARP.h</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include/FreeRTOS_DHCP.h</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include/FreeRTOS_DNS.h</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include/FreeRTOS_errno_TCP.h</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include/FreeRTOS_IP.h</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include/FreeRTOS_IP_Private.h</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include/FreeRTOS_Sockets.h</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include/FreeRTOS_Stream_Buffer.h</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include/FreeRTOS_TCP_IP.h</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include/FreeRTOS_TCP_WIN.h</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include/FreeRTOS_UDP_IP.h</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include/IPTraceMacroDefaults.h</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include/NetworkBufferManagement.h</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include/NetworkInterface.h</itemPath>
-                </logicalFolder>
-                <logicalFolder name="f1" displayName="source" projectFiles="true">
-                  <logicalFolder name="f1" displayName="portable" projectFiles="true">
-                    <logicalFolder name="f1" displayName="Compiler" projectFiles="true">
-                      <logicalFolder name="f1" displayName="GCC" projectFiles="true">
-                        <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/portable/Compiler/GCC/pack_struct_end.h</itemPath>
-                        <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/portable/Compiler/GCC/pack_struct_start.h</itemPath>
-                      </logicalFolder>
-                    </logicalFolder>
-                    <logicalFolder name="f2" displayName="NetworkInterface" projectFiles="true">
-                      <logicalFolder name="f1" displayName="same54" projectFiles="true">
-                        <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/portable/NetworkInterface/same54/BufferAllocation_2.c</itemPath>
-                        <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/portable/NetworkInterface/same54/NetworkInterface_wifi.c</itemPath>
-                      </logicalFolder>
-                    </logicalFolder>
-                  </logicalFolder>
-                  <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/FreeRTOS_ARP.c</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/FreeRTOS_DHCP.c</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/FreeRTOS_DNS.c</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/FreeRTOS_IP.c</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/FreeRTOS_Sockets.c</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/FreeRTOS_Stream_Buffer.c</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/FreeRTOS_TCP_IP.c</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/FreeRTOS_TCP_WIN.c</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/FreeRTOS_UDP_IP.c</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/ReadMe.url</itemPath>
-                </logicalFolder>
-                <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/uncrustify.cfg</itemPath>
-              </logicalFolder>
-              <logicalFolder name="f3" displayName="pkcs11" projectFiles="true">
+              <logicalFolder name="f2" displayName="pkcs11" projectFiles="true">
                 <logicalFolder name="f1" displayName="include" projectFiles="true">
                   <itemPath>../../../../../../../libraries/freertos_plus/standard/pkcs11/include/iot_pkcs11.h</itemPath>
                 </logicalFolder>
@@ -913,7 +905,7 @@
                   <itemPath>../../../../../../../libraries/freertos_plus/standard/pkcs11/src/iot_pkcs11.c</itemPath>
                 </logicalFolder>
               </logicalFolder>
-              <logicalFolder name="f4" displayName="tls" projectFiles="true">
+              <logicalFolder name="f3" displayName="tls" projectFiles="true">
                 <logicalFolder name="f1" displayName="include" projectFiles="true">
                   <itemPath>../../../../../../../libraries/freertos_plus/standard/tls/include/iot_tls.h</itemPath>
                 </logicalFolder>
@@ -921,7 +913,7 @@
                   <itemPath>../../../../../../../libraries/freertos_plus/standard/tls/src/iot_tls.c</itemPath>
                 </logicalFolder>
               </logicalFolder>
-              <logicalFolder name="f5" displayName="utils" projectFiles="true">
+              <logicalFolder name="f4" displayName="utils" projectFiles="true">
                 <logicalFolder name="f1" displayName="include" projectFiles="true">
                   <itemPath>../../../../../../../libraries/freertos_plus/standard/utils/include/iot_pki_utils.h</itemPath>
                   <itemPath>../../../../../../../libraries/freertos_plus/standard/utils/include/iot_system_init.h</itemPath>
@@ -944,7 +936,6 @@
                     <itemPath>../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/application_code/atca_cert_chain.h</itemPath>
                   </logicalFolder>
                   <logicalFolder name="f2" displayName="config_files" projectFiles="true">
-                    <itemPath>../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/config_files/atca_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/config_files/aws_demo_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/config_files/aws_ggd_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/config_files/aws_iot_network_config.h</itemPath>
@@ -959,7 +950,6 @@
                     <itemPath>../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/config_files/iot_mqtt_agent_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/config_files/iot_pkcs11_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/config_files/NetworkConfig.h</itemPath>
-                    <itemPath>../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/config_files/pkcs11_config.h</itemPath>
                   </logicalFolder>
                 </logicalFolder>
                 <logicalFolder name="f2" displayName="ports" projectFiles="true">
@@ -979,146 +969,6 @@
                     <itemPath>../../../../../../../vendors/microchip/boards/same54_xpro/ports/wifi/iot_secure_sockets.c</itemPath>
                   </logicalFolder>
                 </logicalFolder>
-              </logicalFolder>
-            </logicalFolder>
-            <logicalFolder name="f2" displayName="secure_elements" projectFiles="true">
-              <logicalFolder name="f1" displayName="lib" projectFiles="true">
-                <logicalFolder name="f1" displayName="atcacert" projectFiles="true">
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/atcacert/atcacert.h</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/atcacert/atcacert_client.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/atcacert/atcacert_client.h</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/atcacert/atcacert_date.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/atcacert/atcacert_date.h</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/atcacert/atcacert_def.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/atcacert/atcacert_def.h</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/atcacert/atcacert_der.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/atcacert/atcacert_der.h</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/atcacert/atcacert_host_hw.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/atcacert/atcacert_host_hw.h</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/atcacert/atcacert_host_sw.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/atcacert/atcacert_host_sw.h</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/atcacert/atcacert_pem.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/atcacert/atcacert_pem.h</itemPath>
-                </logicalFolder>
-                <logicalFolder name="f2" displayName="basic" projectFiles="true">
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/basic/atca_basic.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/basic/atca_basic.h</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/basic/atca_basic_aes.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/basic/atca_basic_aes_cbc.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/basic/atca_basic_aes_cmac.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/basic/atca_basic_aes_ctr.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/basic/atca_basic_aes_gcm.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/basic/atca_basic_aes_gcm.h</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/basic/atca_basic_checkmac.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/basic/atca_basic_counter.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/basic/atca_basic_derivekey.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/basic/atca_basic_ecdh.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/basic/atca_basic_gendig.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/basic/atca_basic_genkey.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/basic/atca_basic_hmac.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/basic/atca_basic_info.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/basic/atca_basic_kdf.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/basic/atca_basic_lock.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/basic/atca_basic_mac.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/basic/atca_basic_nonce.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/basic/atca_basic_privwrite.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/basic/atca_basic_random.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/basic/atca_basic_read.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/basic/atca_basic_secureboot.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/basic/atca_basic_selftest.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/basic/atca_basic_sha.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/basic/atca_basic_sign.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/basic/atca_basic_updateextra.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/basic/atca_basic_verify.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/basic/atca_basic_write.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/basic/atca_helpers.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/basic/atca_helpers.h</itemPath>
-                </logicalFolder>
-                <logicalFolder name="f3" displayName="crypto" projectFiles="true">
-                  <logicalFolder name="f1" displayName="hashes" projectFiles="true">
-                    <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/crypto/hashes/sha1_routines.c</itemPath>
-                    <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/crypto/hashes/sha1_routines.h</itemPath>
-                    <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/crypto/hashes/sha2_routines.c</itemPath>
-                    <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/crypto/hashes/sha2_routines.h</itemPath>
-                  </logicalFolder>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/crypto/atca_crypto_sw.h</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/crypto/atca_crypto_sw_ecdsa.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/crypto/atca_crypto_sw_ecdsa.h</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/crypto/atca_crypto_sw_rand.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/crypto/atca_crypto_sw_rand.h</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/crypto/atca_crypto_sw_sha1.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/crypto/atca_crypto_sw_sha1.h</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/crypto/atca_crypto_sw_sha2.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/crypto/atca_crypto_sw_sha2.h</itemPath>
-                </logicalFolder>
-                <logicalFolder name="f4" displayName="host" projectFiles="true">
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/host/atca_host.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/host/atca_host.h</itemPath>
-                </logicalFolder>
-                <logicalFolder name="f5" displayName="jwt" projectFiles="true">
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/jwt/atca_jwt.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/jwt/atca_jwt.h</itemPath>
-                </logicalFolder>
-                <logicalFolder name="f6" displayName="mbedtls" projectFiles="true">
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/mbedtls/atca_mbedtls_ecdh.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/mbedtls/atca_mbedtls_ecdsa.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/mbedtls/atca_mbedtls_wrap.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/mbedtls/atca_mbedtls_wrap.h</itemPath>
-                </logicalFolder>
-                <logicalFolder name="f7" displayName="pkcs11" projectFiles="true">
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/cryptoki.h</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/pkcs11.h</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/pkcs11f.h</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/pkcs11t.h</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/pkcs11_attrib.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/pkcs11_attrib.h</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/pkcs11_cert.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/pkcs11_cert.h</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/pkcs11_config.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/pkcs11_debug.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/pkcs11_debug.h</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/pkcs11_digest.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/pkcs11_digest.h</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/pkcs11_find.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/pkcs11_find.h</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/pkcs11_info.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/pkcs11_info.h</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/pkcs11_init.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/pkcs11_init.h</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/pkcs11_key.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/pkcs11_key.h</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/pkcs11_main.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/pkcs11_mech.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/pkcs11_mech.h</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/pkcs11_object.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/pkcs11_object.h</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/pkcs11_os.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/pkcs11_os.h</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/pkcs11_session.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/pkcs11_session.h</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/pkcs11_signature.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/pkcs11_signature.h</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/pkcs11_slot.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/pkcs11_slot.h</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/pkcs11_token.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/pkcs11_token.h</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/pkcs11_util.c</itemPath>
-                  <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/pkcs11/pkcs11_util.h</itemPath>
-                </logicalFolder>
-                <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/atca_bool.h</itemPath>
-                <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/atca_cfgs.h</itemPath>
-                <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/atca_command.c</itemPath>
-                <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/atca_command.h</itemPath>
-                <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/atca_compiler.h</itemPath>
-                <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/atca_device.c</itemPath>
-                <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/atca_device.h</itemPath>
-                <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/atca_devtypes.h</itemPath>
-                <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/atca_execution.c</itemPath>
-                <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/atca_execution.h</itemPath>
-                <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/atca_iface.c</itemPath>
-                <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/atca_iface.h</itemPath>
-                <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/atca_status.h</itemPath>
-                <itemPath>../../../../../../../vendors/microchip/secure_elements/lib/cryptoauthlib.h</itemPath>
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
@@ -1189,17 +1039,141 @@
           </logicalFolder>
           <logicalFolder name="f4" displayName="library" projectFiles="true">
             <logicalFolder name="f1" displayName="cryptoauthlib" projectFiles="true">
+              <logicalFolder name="f8" displayName="app" projectFiles="true">
+                <logicalFolder name="f1" displayName="pkcs11" projectFiles="true">
+                  <itemPath>../src/config/aws_demos/library/cryptoauthlib/app/pkcs11/trust_pkcs11_config.c</itemPath>
+                </logicalFolder>
+              </logicalFolder>
+              <logicalFolder name="f4" displayName="atcacert" projectFiles="true">
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/atcacert/atcacert.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/atcacert/atcacert_client.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/atcacert/atcacert_client.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/atcacert/atcacert_date.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/atcacert/atcacert_date.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/atcacert/atcacert_def.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/atcacert/atcacert_def.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/atcacert/atcacert_der.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/atcacert/atcacert_der.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/atcacert/atcacert_host_hw.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/atcacert/atcacert_host_hw.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/atcacert/atcacert_host_sw.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/atcacert/atcacert_host_sw.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/atcacert/atcacert_pem.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/atcacert/atcacert_pem.h</itemPath>
+              </logicalFolder>
+              <logicalFolder name="f5" displayName="calib" projectFiles="true">
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/calib/calib_aes.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/calib/calib_aes_gcm.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/calib/calib_aes_gcm.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/calib/calib_basic.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/calib/calib_basic.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/calib/calib_checkmac.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/calib/calib_command.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/calib/calib_command.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/calib/calib_counter.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/calib/calib_derivekey.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/calib/calib_ecdh.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/calib/calib_execution.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/calib/calib_execution.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/calib/calib_gendig.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/calib/calib_genkey.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/calib/calib_hmac.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/calib/calib_info.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/calib/calib_kdf.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/calib/calib_lock.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/calib/calib_mac.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/calib/calib_nonce.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/calib/calib_privwrite.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/calib/calib_random.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/calib/calib_read.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/calib/calib_secureboot.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/calib/calib_selftest.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/calib/calib_sha.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/calib/calib_sign.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/calib/calib_updateextra.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/calib/calib_verify.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/calib/calib_write.c</itemPath>
+              </logicalFolder>
+              <logicalFolder name="f2" displayName="crypto" projectFiles="true">
+                <logicalFolder name="f1" displayName="hashes" projectFiles="true">
+                  <itemPath>../src/config/aws_demos/library/cryptoauthlib/crypto/hashes/sha1_routines.c</itemPath>
+                  <itemPath>../src/config/aws_demos/library/cryptoauthlib/crypto/hashes/sha1_routines.h</itemPath>
+                  <itemPath>../src/config/aws_demos/library/cryptoauthlib/crypto/hashes/sha2_routines.c</itemPath>
+                  <itemPath>../src/config/aws_demos/library/cryptoauthlib/crypto/hashes/sha2_routines.h</itemPath>
+                </logicalFolder>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/crypto/atca_crypto_hw_aes.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/crypto/atca_crypto_hw_aes_cbc.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/crypto/atca_crypto_hw_aes_cmac.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/crypto/atca_crypto_hw_aes_ctr.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/crypto/atca_crypto_sw.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/crypto/atca_crypto_sw_ecdsa.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/crypto/atca_crypto_sw_ecdsa.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/crypto/atca_crypto_sw_rand.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/crypto/atca_crypto_sw_rand.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/crypto/atca_crypto_sw_sha1.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/crypto/atca_crypto_sw_sha1.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/crypto/atca_crypto_sw_sha2.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/crypto/atca_crypto_sw_sha2.h</itemPath>
+              </logicalFolder>
               <logicalFolder name="f1" displayName="hal" projectFiles="true">
                 <itemPath>../src/config/aws_demos/library/cryptoauthlib/hal/ATECC608A_0.c</itemPath>
-                <itemPath>../src/config/aws_demos/library/cryptoauthlib/hal/hal_i2c_harmony.c</itemPath>
                 <itemPath>../src/config/aws_demos/library/cryptoauthlib/hal/atca_hal.c</itemPath>
                 <itemPath>../src/config/aws_demos/library/cryptoauthlib/hal/atca_hal.h</itemPath>
                 <itemPath>../src/config/aws_demos/library/cryptoauthlib/hal/atca_start_config.h</itemPath>
                 <itemPath>../src/config/aws_demos/library/cryptoauthlib/hal/atca_start_iface.h</itemPath>
                 <itemPath>../src/config/aws_demos/library/cryptoauthlib/hal/hal_freertos.c</itemPath>
-                <itemPath>../src/config/aws_demos/library/cryptoauthlib/hal/hal_i2c_harmony_init.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/hal/hal_i2c_harmony.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/hal/hal_harmony_init.c</itemPath>
                 <itemPath>../src/config/aws_demos/library/cryptoauthlib/hal/hal_cortex_m_delay.c</itemPath>
               </logicalFolder>
+              <logicalFolder name="f6" displayName="host" projectFiles="true">
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/host/atca_host.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/host/atca_host.h</itemPath>
+              </logicalFolder>
+              <logicalFolder name="f3" displayName="jwt" projectFiles="true">
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/jwt/atca_jwt.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/jwt/atca_jwt.h</itemPath>
+              </logicalFolder>
+              <logicalFolder name="f7" displayName="pkcs11" projectFiles="true">
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11_attrib.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11_cert.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11_config.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11_debug.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11_digest.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11_find.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11_info.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11_init.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11_key.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11_main.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11_mech.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11_object.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11_os.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11_session.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11_signature.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11_slot.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11_token.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/pkcs11/pkcs11_util.c</itemPath>
+              </logicalFolder>
+              <itemPath>../src/config/aws_demos/library/cryptoauthlib/atca_basic.c</itemPath>
+              <itemPath>../src/config/aws_demos/library/cryptoauthlib/atca_basic.h</itemPath>
+              <itemPath>../src/config/aws_demos/library/cryptoauthlib/atca_bool.h</itemPath>
+              <itemPath>../src/config/aws_demos/library/cryptoauthlib/atca_cfgs.c</itemPath>
+              <itemPath>../src/config/aws_demos/library/cryptoauthlib/atca_cfgs.h</itemPath>
+              <itemPath>../src/config/aws_demos/library/cryptoauthlib/atca_command.c</itemPath>
+              <itemPath>../src/config/aws_demos/library/cryptoauthlib/atca_command.h</itemPath>
+              <itemPath>../src/config/aws_demos/library/cryptoauthlib/atca_compiler.h</itemPath>
+              <itemPath>../src/config/aws_demos/library/cryptoauthlib/atca_debug.c</itemPath>
+              <itemPath>../src/config/aws_demos/library/cryptoauthlib/atca_debug.h</itemPath>
+              <itemPath>../src/config/aws_demos/library/cryptoauthlib/atca_device.c</itemPath>
+              <itemPath>../src/config/aws_demos/library/cryptoauthlib/atca_device.h</itemPath>
+              <itemPath>../src/config/aws_demos/library/cryptoauthlib/atca_devtypes.h</itemPath>
+              <itemPath>../src/config/aws_demos/library/cryptoauthlib/atca_helpers.c</itemPath>
+              <itemPath>../src/config/aws_demos/library/cryptoauthlib/atca_helpers.h</itemPath>
+              <itemPath>../src/config/aws_demos/library/cryptoauthlib/atca_iface.c</itemPath>
+              <itemPath>../src/config/aws_demos/library/cryptoauthlib/atca_iface.h</itemPath>
+              <itemPath>../src/config/aws_demos/library/cryptoauthlib/atca_status.h</itemPath>
+              <itemPath>../src/config/aws_demos/library/cryptoauthlib/atca_version.h</itemPath>
+              <itemPath>../src/config/aws_demos/library/cryptoauthlib/cryptoauthlib.h</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
@@ -1372,7 +1346,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src/config/aws_demos/driver/winc/include/;../src/config/aws_demos/driver/winc/include/dev;../src/config/aws_demos/driver/winc/include/drv/bsp;../src/config/aws_demos/driver/winc/include/drv/bsp/include;../src/config/aws_demos/driver/winc/include/drv/common;../src/config/aws_demos/driver/winc/include/drv/driver;../src/config/aws_demos/driver/winc/include/drv/socket;../src/config/aws_demos/driver/winc/include/drv/spi_flash;../src;../src/config/aws_demos;../src/packs/ATSAME54P20A_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../../../../../../../demos/include;../../../../../../../freertos_kernel/include;../../../../../../../libraries/abstractions/platform/freertos/include;../../../../../../../libraries/abstractions/secure_sockets/include;../../../../../../../libraries/abstractions/pkcs11/include;../../../../../../../libraries/c_sdk/aws/defender/include;../../../../../../../libraries/c_sdk/aws/shadow/include;../../../../../../../libraries/c_sdk/standard/common/include;../../../../../../../libraries/c_sdk/standard/https/include;../../../../../../../libraries/c_sdk/standard/mqtt/include;../../../../../../../libraries/c_sdk/standard/serializer/include;../../../../../../../libraries/freertos_plus/aws/greengrass/include;../../../../../../../libraries/freertos_plus/aws/ota/include;../../../../../../../libraries/freertos_plus/standard/crypto/include;../../../../../../../libraries/freertos_plus/standard/utils/include;../../../../../../../libraries/freertos_plus/standard/tls/include;../../../../../../../libraries/freertos_plus/standard/pkcs11/include;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include;../../../../../../../libraries/abstractions/platform/include;../../../../../../../libraries/c_sdk/standard/common/include/private;../../../../../../../libraries/c_sdk/standard/common/include/types;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/portable/Compiler/GCC;../../../../../../../demos/network_manager;../../../../../../../demos/https;../../../../../../../demos/tcp;../../../../../../../libraries/3rdparty/jsmn;../../../../../../../libraries/3rdparty/mbedtls/include;../../../../../../../libraries/3rdparty/tinycbor;../../../../../../../libraries/3rdparty/pkcs11;../../../../../../../libraries/3rdparty/tinycrypt/asn1;../../../../../../../libraries/3rdparty/tinycrypt/lib/include;../../../../../../../demos/dev_mode_key_provisioning/include;../../../../../../../libraries/abstractions/pkcs11/mbedtls;../../../../../../../libraries/3rdparty/http_parser;../../../../../../../libraries/freertos_plus/aws/ota/src;../../../../../../../vendors/microchip/boards/same54_xpro/ports/pkcs11;../../../../../../../libraries/abstractions/wifi/include;../../../../../../../vendors/microchip/boards/same54/ports/wifi;../../../../../../../vendors/microchip/harmony3/afr;../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/config_files;../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/application_code;../../../../../../../vendors/microchip/secure_elements/lib;../../../../../../../vendors/microchip/secure_elements/lib/hal;../../../../../../../freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../../vendors/microchip/harmony3/afr/tcpip/src/common;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/portable/NetworkInterface/same54;../src/config/aws_demos/library/cryptoauthlib;../src/config/aws_demos/library/cryptoauthlib/crypto"/>
+                  value="../../../../../../../demos/include;../../../../../../../freertos_kernel/include;../../../../../../../libraries/abstractions/platform/freertos/include;../../../../../../../libraries/abstractions/secure_sockets/include;../../../../../../../libraries/abstractions/pkcs11/include;../../../../../../../libraries/c_sdk/aws/defender/include;../../../../../../../libraries/c_sdk/aws/shadow/include;../../../../../../../libraries/c_sdk/standard/common/include;../../../../../../../libraries/c_sdk/standard/https/include;../../../../../../../libraries/c_sdk/standard/mqtt/include;../../../../../../../libraries/c_sdk/standard/serializer/include;../../../../../../../libraries/freertos_plus/aws/greengrass/include;../../../../../../../libraries/freertos_plus/aws/ota/include;../../../../../../../libraries/freertos_plus/standard/crypto/include;../../../../../../../libraries/freertos_plus/standard/utils/include;../../../../../../../libraries/freertos_plus/standard/tls/include;../../../../../../../libraries/freertos_plus/standard/pkcs11/include;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include;../../../../../../../libraries/abstractions/platform/include;../../../../../../../libraries/c_sdk/standard/common/include/private;../../../../../../../libraries/c_sdk/standard/common/include/types;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/portable/Compiler/GCC;../../../../../../../demos/network_manager;../../../../../../../demos/https;../../../../../../../demos/tcp;../../../../../../../libraries/3rdparty/jsmn;../../../../../../../libraries/3rdparty/mbedtls/include;../../../../../../../libraries/3rdparty/tinycbor;../../../../../../../libraries/3rdparty/pkcs11;../../../../../../../libraries/3rdparty/tinycrypt/asn1;../../../../../../../libraries/3rdparty/tinycrypt/lib/include;../../../../../../../demos/dev_mode_key_provisioning/include;../../../../../../../libraries/abstractions/pkcs11/mbedtls;../../../../../../../libraries/3rdparty/http_parser;../../../../../../../libraries/freertos_plus/aws/ota/src;../../../../../../../vendors/microchip/boards/same54_xpro/ports/pkcs11;../../../../../../../libraries/abstractions/wifi/include;../../../../../../../vendors/microchip/boards/same54/ports/wifi;../../../../../../../vendors/microchip/harmony3/afr;../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/config_files;../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/application_code;../../../../../../../vendors/microchip/boards/same54_xpro/ports/posix;../../../../../../../freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../../vendors/microchip/harmony3/afr/tcpip/src/common;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/portable/NetworkInterface/same54;../src/config/aws_demos/driver/winc/include/;../src/config/aws_demos/driver/winc/include/dev;../src/config/aws_demos/driver/winc/include/drv/bsp;../src/config/aws_demos/driver/winc/include/drv/bsp/include;../src/config/aws_demos/driver/winc/include/drv/common;../src/config/aws_demos/driver/winc/include/drv/driver;../src/config/aws_demos/driver/winc/include/drv/socket;../src/config/aws_demos/driver/winc/include/drv/spi_flash;../src;../src/config/aws_demos;../src/packs/ATSAME54P20A_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/config/aws_demos/library/cryptoauthlib;../src/config/aws_demos/library/cryptoauthlib/crypto;../src/config/aws_demos/library/cryptoauthlib/pkcs11"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="false"/>
@@ -1381,7 +1355,7 @@
         <property key="place-data-into-section" value="false"/>
         <property key="post-instruction-scheduling" value="default"/>
         <property key="pre-instruction-scheduling" value="default"/>
-        <property key="preprocessor-macros" value=""/>
+        <property key="preprocessor-macros" value="PIC32_USE_ECC;__free_rtos__"/>
         <property key="strict-ansi" value="false"/>
         <property key="support-ansi" value="false"/>
         <property key="toplevel-reordering" value=""/>
@@ -1523,8 +1497,6 @@
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="0-fffff"/>
         <property key="poweroptions.powerenable" value="false"/>
-        <property key="programmerToGoFilePath"
-                  value="D:/AWS3_1/amazon-freertos/projects/microchip/same54_xpro_winc3400/mplab/aws_demos/firmware/aws_demos.X/debug/aws_demos/aws_demos_ptg"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges"

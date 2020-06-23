@@ -1,15 +1,15 @@
 /*******************************************************************************
-  This module contains WINC3400 bus APIs implementation.
+  This module contains WINC1500 bus APIs implementation.
 
   File Name:
     nmbus.c
 
   Summary:
-    This module contains WINC3400 bus APIs implementation.
+    This module contains WINC1500 bus APIs implementation.
 
   Description:
-    This module contains WINC3400 bus APIs implementation.
-*******************************************************************************/
+    This module contains WINC1500 bus APIs implementation.
+ *******************************************************************************/
 
 //DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -34,6 +34,7 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
+
 #include "nmbus.h"
 #include "nmspi.h"
 
@@ -80,12 +81,14 @@ static int8_t nm_bus_deinit(void)
 *   @fn     nm_bus_iface_init
 *   @brief  Initialize bus interface
 *   @return M2M_SUCCESS in case of success and M2M_ERR_BUS_FAIL in case of failure
+*   @author M. Abdelmawla
+*   @date   11 July 2012
+*   @version    1.0
 */
 int8_t nm_bus_iface_init(void *pvInitVal)
 {
     int8_t ret = M2M_SUCCESS;
     ret = nm_bus_init(pvInitVal);
-
     return ret;
 }
 
@@ -93,6 +96,9 @@ int8_t nm_bus_iface_init(void *pvInitVal)
 *   @fn     nm_bus_iface_deinit
 *   @brief  Deinitialize bus interface
 *   @return M2M_SUCCESS in case of success and M2M_ERR_BUS_FAIL in case of failure
+*   @author Samer Sarhan
+*   @date   07 April 2014
+*   @version    1.0
 */
 int8_t nm_bus_iface_deinit(void)
 {
@@ -103,14 +109,27 @@ int8_t nm_bus_iface_deinit(void)
 }
 
 /**
+*   @fn     nm_bus_reset
+*   @brief  reset bus interface
+*   @return M2M_SUCCESS in case of success and M2M_ERR_BUS_FAIL in case of failure
+*   @version    1.0
+*/
+int8_t nm_bus_reset(void)
+{
+    return nm_spi_reset();
+}
+
+/**
 *   @fn     nm_bus_iface_reconfigure
 *   @brief  reconfigure bus interface
 *   @return M2M_SUCCESS in case of success and M2M_ERR_BUS_FAIL in case of failure
+*   @author Viswanathan Murugesan
+*   @date   22 Oct 2014
+*   @version    1.0
 */
 int8_t nm_bus_iface_reconfigure(void *ptr)
 {
-    int8_t ret = M2M_SUCCESS;
-    return ret;
+    return M2M_SUCCESS;
 }
 
 /*
@@ -119,6 +138,9 @@ int8_t nm_bus_iface_reconfigure(void *ptr)
 *   @param [in] u32Addr
 *               Register address
 *   @return Register value
+*   @author M. Abdelmawla
+*   @date   11 July 2012
+*   @version    1.0
 */
 uint32_t nm_read_reg(uint32_t u32Addr)
 {
@@ -133,10 +155,13 @@ uint32_t nm_read_reg(uint32_t u32Addr)
 *   @param [out]    pu32RetVal
 *               Pointer to u32 variable used to return the read value
 *   @return M2M_SUCCESS in case of success and M2M_ERR_BUS_FAIL in case of failure
+*   @author M. Abdelmawla
+*   @date   11 July 2012
+*   @version    1.0
 */
 int8_t nm_read_reg_with_ret(uint32_t u32Addr, uint32_t* pu32RetVal)
 {
-    return nm_spi_read_reg_with_ret(u32Addr, pu32RetVal);
+    return nm_spi_read_reg_with_ret(u32Addr,pu32RetVal);
 }
 
 /*
@@ -147,15 +172,18 @@ int8_t nm_read_reg_with_ret(uint32_t u32Addr, uint32_t* pu32RetVal)
 *   @param [in] u32Val
 *               Value to be written to the register
 *   @return M2M_SUCCESS in case of success and M2M_ERR_BUS_FAIL in case of failure
+*   @author M. Abdelmawla
+*   @date   11 July 2012
+*   @version    1.0
 */
 int8_t nm_write_reg(uint32_t u32Addr, uint32_t u32Val)
 {
-    return nm_spi_write_reg(u32Addr, u32Val);
+    return nm_spi_write_reg(u32Addr,u32Val);
 }
 
-static inline int8_t p_nm_read_block(uint32_t u32Addr, uint8_t *puBuf, uint16_t u16Sz)
+static int8_t p_nm_read_block(uint32_t u32Addr, uint8_t *puBuf, uint16_t u16Sz)
 {
-    return nm_spi_read_block(u32Addr, puBuf, u16Sz);
+    return nm_spi_read_block(u32Addr,puBuf,u16Sz);
 }
 /*
 *   @fn     nm_read_block
@@ -167,6 +195,9 @@ static inline int8_t p_nm_read_block(uint32_t u32Addr, uint8_t *puBuf, uint16_t 
 *   @param [in] u32Sz
 *               Number of bytes to read. The buffer size must be >= u32Sz
 *   @return M2M_SUCCESS in case of success and M2M_ERR_BUS_FAIL in case of failure
+*   @author M. Abdelmawla
+*   @date   11 July 2012
+*   @version    1.0
 */
 int8_t nm_read_block(uint32_t u32Addr, uint8_t *puBuf, uint32_t u32Sz)
 {
@@ -194,9 +225,9 @@ int8_t nm_read_block(uint32_t u32Addr, uint8_t *puBuf, uint32_t u32Sz)
     return s8Ret;
 }
 
-static inline int8_t p_nm_write_block(uint32_t u32Addr, uint8_t *puBuf, uint16_t u16Sz)
+static int8_t p_nm_write_block(uint32_t u32Addr, uint8_t *puBuf, uint16_t u16Sz)
 {
-    return nm_spi_write_block(u32Addr, puBuf, u16Sz);
+    return nm_spi_write_block(u32Addr,puBuf,u16Sz);
 }
 /**
 *   @fn     nm_write_block
@@ -208,6 +239,9 @@ static inline int8_t p_nm_write_block(uint32_t u32Addr, uint8_t *puBuf, uint16_t
 *   @param [in] u32Sz
 *               Number of bytes to write. The buffer size must be >= u32Sz
 *   @return M2M_SUCCESS in case of success and M2M_ERR_BUS_FAIL in case of failure
+*   @author M. Abdelmawla
+*   @date   11 July 2012
+*   @version    1.0
 */
 int8_t nm_write_block(uint32_t u32Addr, uint8_t *puBuf, uint32_t u32Sz)
 {

@@ -1,14 +1,14 @@
 /*******************************************************************************
-  WINC3400 Peripherials Application Interface.
+  WINC1500 Peripherals Application Interface
 
   File Name:
     m2m_periph.c
 
   Summary:
-    WINC3400 Peripherals Application Interface
+    WINC1500 Peripherals Application Interface
 
   Description:
-    WINC3400 Peripherals Application Interface
+    WINC1500 Peripherals Application Interface
  *******************************************************************************/
 
 //DOM-IGNORE-BEGIN
@@ -49,7 +49,6 @@ MACROS
 #define GPIO_OP_DIR     0
 #define GPIO_OP_SET     1
 #define GPIO_OP_GET     2
-
 /*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 DATA TYPES
 *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*/
@@ -63,6 +62,10 @@ static int8_t get_gpio_idx(uint8_t u8GpioNum)
     if(u8GpioNum == M2M_PERIPH_GPIO15) { return 15;
     } else if(u8GpioNum == M2M_PERIPH_GPIO16) { return 16;
     } else if(u8GpioNum == M2M_PERIPH_GPIO18) { return 18;
+    } else if(u8GpioNum == M2M_PERIPH_GPIO3) { return 3;
+    } else if(u8GpioNum == M2M_PERIPH_GPIO4) { return 4;
+    } else if(u8GpioNum == M2M_PERIPH_GPIO5) { return 5;
+    } else if(u8GpioNum == M2M_PERIPH_GPIO6) { return 6;
     } else {
         return -2;
     }
@@ -94,10 +97,11 @@ _EXIT1:
 _EXIT:
     return ret;
 }
-
 /*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 FUNCTION IMPLEMENTATION
 *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*/
+
+
 int8_t m2m_periph_init(tstrPerphInitParam * param)
 {
     return M2M_SUCCESS;

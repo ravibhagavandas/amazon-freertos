@@ -57,7 +57,7 @@ MACROS
 
 #define SOCKET_CMD_INVALID                  0x00
 /*!<
-    Invlaid Socket command value.
+	Invalid Socket command value.
 */
 
 
@@ -93,7 +93,7 @@ MACROS
 
 #define SOCKET_CMD_RECV                     0x46
 /*!<
-    Socket Recieve command value.
+	Socket Receive command value.
 */
 
 
@@ -105,7 +105,7 @@ MACROS
 
 #define SOCKET_CMD_RECVFROM                 0x48
 /*!<
-    Socket RecieveFrom command value.
+	Socket ReceiveFrom command value.
 */
 
 
@@ -135,7 +135,7 @@ MACROS
 
 #define SOCKET_CMD_SSL_RECV                 0x4D
 /*!<
-    SSL-Socket Recieve command value.
+	SSL-Socket Receive command value.
 */
 
 
@@ -166,6 +166,21 @@ MACROS
 */
 
 
+#define SOCKET_CMD_SSL_SET_CS_LIST          0x53
+/*!<
+    Recommend instead using @ref M2M_SSL_REQ_SET_CS_LIST and
+    associated response @ref M2M_SSL_RESP_SET_CS_LIST
+*/
+
+
+#define SOCKET_CMD_SSL_BIND                 0x54
+/*!<
+*/
+
+
+#define SOCKET_CMD_SSL_EXP_CHECK            0x55
+/*!<
+*/
 
 
 
@@ -182,9 +197,9 @@ DATA TYPES
 *  @brief
 */
 typedef struct{
-    uint16_t    u16Family;
-    uint16_t    u16Port;
-    uint32_t    u32IPAddr;
+    uint16_t        u16Family;
+    uint16_t        u16Port;
+    uint32_t        u32IPAddr;
 }tstrSockAddr;
 
 
@@ -262,7 +277,11 @@ typedef struct{
     tstrSockAddr    strAddr;
     SOCKET          sListenSock;
     SOCKET          sConnectedSock;
-    uint16_t        u16Void;
+    uint16_t        u16AppDataOffset;
+    /*!<
+        In further packet send requests the host interface should put the user application
+        data at this offset in the allocated shared data packet.
+    */
 }tstrAcceptReply;
 
 
@@ -332,13 +351,11 @@ typedef struct{
     SOCKET      sock;
     uint8_t     u8Void;
     uint16_t    u16SessionID;
-    uint16_t    u16BufLen;
 }tstrRecvCmd;
 
 
 /*!
-@struct \
-  tstrRecvReply
+@struct
 @brief
 */
 typedef struct{
@@ -400,6 +417,22 @@ typedef struct{
     uint8_t     u8ErrorCode;
     uint8_t     __PAD24__[3];
 }tstrPingReply;
+
+/*!
+@struct\
+    tstrSslCertExpSettings
+
+@brief  SSL Certificate Expiry Validation Settings
+
+@sa     tenuSslCertExpSettings
+*/
+typedef struct{
+    uint32_t    u32CertExpValidationOpt;
+    /*!<
+        See @tenuSslCertExpSettings for possible values.
+    */
+}tstrSslCertExpSettings;
+
 
 #ifdef  __cplusplus
 }

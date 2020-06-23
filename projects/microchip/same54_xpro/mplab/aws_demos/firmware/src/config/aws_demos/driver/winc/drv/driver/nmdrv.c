@@ -3,10 +3,10 @@
     nmdrv.c
 
   Summary:
-    This module contains WINC3400 M2M driver APIs implementation.
+    This module contains WINC1500 M2M driver APIs implementation.
 
   Description:
-    This module contains WINC3400 M2M driver APIs implementation.
+    This module contains WINC1500 M2M driver APIs implementation.
  *******************************************************************************/
 
 //DOM-IGNORE-BEGIN
@@ -39,57 +39,70 @@
 #include "nmdrv.h"
 #include "nmasic.h"
 #include "m2m_types.h"
+#include "spi_flash.h"
 
 #include "nmspi.h"
 
 /**
-*   @fn     nm_get_hif_info(uint16_t *pu16FwHifInfo, uint16_t *pu16OtaHifInfo);
-*   @brief  Get Hif info of images in both partitions (Firmware and Ota).
-*   @param [out]    pu16FwHifInfo
-*                   Pointer holding Hif info of image in the active partition.
-*   @param [out]    pu16OtaHifInfo
-*                   Pointer holding Hif info of image in the inactive partition.
-*   @return ZERO in case of success and Negative error code in case of failure
+*   @fn     nm_get_firmware_info(tstrM2mRev* M2mRev)
+*   @brief  Get Firmware version info
+*   @param [out]    M2mRev
+*               pointer holds address of structure "tstrM2mRev" that contains the firmware version parameters
+*   @version    1.0
 */
-int8_t nm_get_hif_info(uint16_t *pu16FwHifInfo, uint16_t *pu16OtaHifInfo)
+int8_t nm_get_firmware_info(tstrM2mRev* M2mRev)
 {
-    int8_t ret = M2M_SUCCESS;
-    uint32_t reg = 0;
+    uint16_t  curr_drv_ver, min_req_drv_ver,curr_firm_ver;
+    uint32_t    reg = 0;
+    int8_t  ret = M2M_SUCCESS;
 
     ret = nm_read_reg_with_ret(NMI_REV_REG, &reg);
-    if(ret == M2M_SUCCESS)
+    //In case the Firmware running is ATE fw
+    if(M2M_ATE_FW_IS_UP_VALUE == reg)
     {
-        if(pu16FwHifInfo != NULL)
-        {
-            *pu16FwHifInfo = (uint16_t)reg;
-        }
-        if(pu16OtaHifInfo)
-        {
-            *pu16OtaHifInfo = (uint16_t)(reg>>16);
-        }
+        //Read FW info again from the register specified for ATE
+        ret = nm_read_reg_with_ret(NMI_REV_REG_ATE, &reg);
+    }
+    M2mRev->u8DriverMajor   = M2M_GET_DRV_MAJOR(reg);
+    M2mRev->u8DriverMinor   = M2M_GET_DRV_MINOR(reg);
+    M2mRev->u8DriverPatch   = M2M_GET_DRV_PATCH(reg);
+    M2mRev->u8FirmwareMajor = M2M_GET_FW_MAJOR(reg);
+    M2mRev->u8FirmwareMinor = M2M_GET_FW_MINOR(reg);
+    M2mRev->u8FirmwarePatch = M2M_GET_FW_PATCH(reg);
+    M2mRev->u32Chipid   = nmi_get_chipid();
+    M2mRev->u16FirmwareSvnNum = 0;
+
+    curr_firm_ver   = M2M_MAKE_VERSION(M2mRev->u8FirmwareMajor, M2mRev->u8FirmwareMinor,M2mRev->u8FirmwarePatch);
+    curr_drv_ver    = M2M_MAKE_VERSION(M2M_RELEASE_VERSION_MAJOR_NO, M2M_RELEASE_VERSION_MINOR_NO, M2M_RELEASE_VERSION_PATCH_NO);
+    min_req_drv_ver = M2M_MAKE_VERSION(M2mRev->u8DriverMajor, M2mRev->u8DriverMinor,M2mRev->u8DriverPatch);
+    if(curr_drv_ver <  min_req_drv_ver) {
+        /*The current driver version should be larger or equal
+        than the min driver that the current firmware support  */
+        ret = M2M_ERR_FW_VER_MISMATCH;
+    }
+    if(curr_drv_ver >  curr_firm_ver) {
+        /*The current driver should be equal or less than the firmware version*/
+        ret = M2M_ERR_FW_VER_MISMATCH;
     }
     return ret;
 }
 /**
-*   @fn     nm_get_firmware_full_info(tstrM2mRev* M2mRev)
+*   @fn     nm_get_firmware_info(tstrM2mRev* M2mRev)
 *   @brief  Get Firmware version info
 *   @param [out]    M2mRev
 *               pointer holds address of structure "tstrM2mRev" that contains the firmware version parameters
+*   @version    1.0
 */
 int8_t nm_get_firmware_full_info(tstrM2mRev* pstrRev)
 {
-    uint16_t    fw_hif_info = 0;
+    uint16_t  curr_drv_ver, min_req_drv_ver,curr_firm_ver;
     uint32_t    reg = 0;
-    int8_t      ret = M2M_SUCCESS;
+    int8_t  ret = M2M_SUCCESS;
     tstrGpRegs strgp = {0};
-
-    memset((uint8_t*)pstrRev,0,sizeof(tstrM2mRev));
-    nm_get_hif_info(&fw_hif_info, NULL);
-
-    M2M_INFO("Fw HIF: %04x\r\n", fw_hif_info);
-    if(M2M_GET_HIF_BLOCK(fw_hif_info) == M2M_HIF_BLOCK_VALUE)
+    if (pstrRev != NULL)
     {
-        ret = nm_read_reg_with_ret(rNMI_GP_REG_0, &reg);
+        memset((uint8_t*)pstrRev,0,sizeof(tstrM2mRev));
+        ret = nm_read_reg_with_ret(rNMI_GP_REG_2, &reg);
         if(ret == M2M_SUCCESS)
         {
             if(reg != 0)
@@ -104,62 +117,56 @@ int8_t nm_get_firmware_full_info(tstrM2mRev* pstrRev)
                         ret = nm_read_block(reg|0x30000,(uint8_t*)pstrRev,sizeof(tstrM2mRev));
                         if(ret == M2M_SUCCESS)
                         {
-                            M2M_INFO("Firmware HIF (%u) : %u.%u\r\n", M2M_GET_HIF_BLOCK(pstrRev->u16FirmwareHifInfo), M2M_GET_HIF_MAJOR(pstrRev->u16FirmwareHifInfo), M2M_GET_HIF_MINOR(pstrRev->u16FirmwareHifInfo));
-                            M2M_INFO("Firmware ver   : %u.%u.%u\r\n", pstrRev->u8FirmwareMajor, pstrRev->u8FirmwareMinor, pstrRev->u8FirmwarePatch);
-                            M2M_INFO("Firmware Build %s Time %s\r\n", pstrRev->BuildDate, pstrRev->BuildTime);
-
-                            /* Check Hif info is consistent */
-                            if(fw_hif_info != pstrRev->u16FirmwareHifInfo)
-                            {
+                            curr_firm_ver   = M2M_MAKE_VERSION(pstrRev->u8FirmwareMajor, pstrRev->u8FirmwareMinor,pstrRev->u8FirmwarePatch);
+                            curr_drv_ver    = M2M_MAKE_VERSION(M2M_RELEASE_VERSION_MAJOR_NO, M2M_RELEASE_VERSION_MINOR_NO, M2M_RELEASE_VERSION_PATCH_NO);
+                            min_req_drv_ver = M2M_MAKE_VERSION(pstrRev->u8DriverMajor, pstrRev->u8DriverMinor,pstrRev->u8DriverPatch);
+                            if((curr_firm_ver == 0)||(min_req_drv_ver == 0)||(min_req_drv_ver == 0)){
                                 ret = M2M_ERR_FAIL;
-                                M2M_ERR("Inconsistent Firmware Version\r\n");
+                                goto EXIT;
+                            }
+                            if(curr_drv_ver <  min_req_drv_ver) {
+                                /*The current driver version should be larger or equal
+                                than the min driver that the current firmware support  */
+                                ret = M2M_ERR_FW_VER_MISMATCH;
+                                goto EXIT;
+                            }
+                            if(curr_drv_ver >  curr_firm_ver) {
+                                /*The current driver should be equal or less than the firmware version*/
+                                ret = M2M_ERR_FW_VER_MISMATCH;
+                                goto EXIT;
                             }
                         }
-                    }
-                    else
-                    {
+                    }else {
                         ret = M2M_ERR_FAIL;
                     }
                 }
-            }
-            else
-            {
+            }else{
                 ret = M2M_ERR_FAIL;
             }
         }
     }
-    else
-    {
-        ret = M2M_ERR_FAIL;
-    }
-    if(ret != M2M_SUCCESS)
-    {
-        M2M_ERR("Unknown Firmware Version\r\n");
-    }
-
+EXIT:
     return ret;
 }
-
 /**
 *   @fn     nm_get_ota_firmware_info(tstrM2mRev* pstrRev)
 *   @brief  Get Firmware version info
 *   @param [out]    M2mRev
 *               pointer holds address of structure "tstrM2mRev" that contains the firmware version parameters
+
+*   @version    1.0
 */
 int8_t nm_get_ota_firmware_info(tstrM2mRev* pstrRev)
 {
-    uint16_t    ota_hif_info = 0;
+    uint16_t  curr_drv_ver, min_req_drv_ver,curr_firm_ver;
     uint32_t    reg = 0;
-    int8_t      ret = M2M_SUCCESS;
+    int8_t  ret;
     tstrGpRegs strgp = {0};
 
-    memset((uint8_t*)pstrRev,0,sizeof(tstrM2mRev));
-    nm_get_hif_info(NULL, &ota_hif_info);
-
-    M2M_INFO("OTA HIF: %04x\r\n", ota_hif_info);
-    if(M2M_GET_HIF_BLOCK(ota_hif_info) == M2M_HIF_BLOCK_VALUE)
+    if (pstrRev != NULL)
     {
-        ret = nm_read_reg_with_ret(rNMI_GP_REG_0, &reg);
+        memset((uint8_t*)pstrRev,0,sizeof(tstrM2mRev));
+        ret = nm_read_reg_with_ret(rNMI_GP_REG_2, &reg);
         if(ret == M2M_SUCCESS)
         {
             if(reg != 0)
@@ -174,40 +181,39 @@ int8_t nm_get_ota_firmware_info(tstrM2mRev* pstrRev)
                         ret = nm_read_block(reg|0x30000,(uint8_t*)pstrRev,sizeof(tstrM2mRev));
                         if(ret == M2M_SUCCESS)
                         {
-                            M2M_INFO("OTA HIF (%u) : %u.%u\r\n", M2M_GET_HIF_BLOCK(pstrRev->u16FirmwareHifInfo), M2M_GET_HIF_MAJOR(pstrRev->u16FirmwareHifInfo), M2M_GET_HIF_MINOR(pstrRev->u16FirmwareHifInfo));
-                            M2M_INFO("OTA ver   : %u.%u.%u\r\n", pstrRev->u8FirmwareMajor, pstrRev->u8FirmwareMinor, pstrRev->u8FirmwarePatch);
-                            M2M_INFO("OTA Build %s Time %s\r\n", pstrRev->BuildDate, pstrRev->BuildTime);
-
-                            /* Check Hif info is consistent */
-                            if(ota_hif_info != pstrRev->u16FirmwareHifInfo)
-                            {
+                            curr_firm_ver   = M2M_MAKE_VERSION(pstrRev->u8FirmwareMajor, pstrRev->u8FirmwareMinor,pstrRev->u8FirmwarePatch);
+                            curr_drv_ver    = M2M_MAKE_VERSION(M2M_RELEASE_VERSION_MAJOR_NO, M2M_RELEASE_VERSION_MINOR_NO, M2M_RELEASE_VERSION_PATCH_NO);
+                            min_req_drv_ver = M2M_MAKE_VERSION(pstrRev->u8DriverMajor, pstrRev->u8DriverMinor,pstrRev->u8DriverPatch);
+                            if((curr_firm_ver == 0)||(min_req_drv_ver == 0)||(min_req_drv_ver == 0)){
                                 ret = M2M_ERR_FAIL;
-                                M2M_ERR("Inconsistent OTA Version\r\n");
+                                goto EXIT;
+                            }
+                            if(curr_drv_ver <  min_req_drv_ver) {
+                                /*The current driver version should be larger or equal
+                                than the min driver that the current firmware support  */
+                                ret = M2M_ERR_FW_VER_MISMATCH;
+                            }
+                            if(curr_drv_ver >  curr_firm_ver) {
+                                /*The current driver should be equal or less than the firmware version*/
+                                ret = M2M_ERR_FW_VER_MISMATCH;
                             }
                         }
-                    }
-                    else
-                    {
-                        ret = M2M_ERR_FAIL;
+                    }else{
+                        ret = M2M_ERR_INVALID;
                     }
                 }
-            }
-            else
-            {
+            }else{
                 ret = M2M_ERR_FAIL;
             }
         }
+    } else {
+        ret = M2M_ERR_INVALID_ARG;
     }
-    else
-    {
-        ret = M2M_ERR_FAIL;
-    }
-    if(ret != M2M_SUCCESS)
-    {
-        M2M_INFO("No valid OTA image\r\n");
-    }
+EXIT:
     return ret;
 }
+
+
 
 /*
 *   @fn     nm_drv_init_download_mode
@@ -215,6 +221,9 @@ int8_t nm_get_ota_firmware_info(tstrM2mRev* pstrRev)
 *   @return M2M_SUCCESS in case of success and Negative error code in case of failure
 *   @param [in] arg
 *               Generic argument
+*   @author Viswanathan Murugesan
+*   @date   10 Oct 2014
+*   @version    1.0
 */
 int8_t nm_drv_init_download_mode(void)
 {
@@ -227,6 +236,15 @@ int8_t nm_drv_init_download_mode(void)
     }
 
     nm_spi_lock_init();
+
+    /**
+        TODO:reset the chip and halt the cpu in case of no wait efuse is set (add the no wait effuse check)
+    */
+    if(!ISNMC3000(GET_CHIPID()))
+    {
+        /*Execuate that function only for 1500A/B, no room in 3000, but it may be needed in 3400 no wait*/
+        cpu_halt();
+    }
 
     /* Must do this after global reset to set SPI data packet size. */
     nm_spi_init();
@@ -258,7 +276,6 @@ int8_t nm_drv_init_hold(void)
 
 #ifdef NO_HW_CHIP_EN
     ret = chip_wake();
-    nm_sleep(10);
     if (M2M_SUCCESS != ret) {
         M2M_ERR("[nmi start]: fail chip_wakeup\r\n");
         goto ERR2;
@@ -275,8 +292,6 @@ int8_t nm_drv_init_hold(void)
     M2M_INFO("Chip ID %lx\r\n", nmi_get_chipid());
     /* Must do this after global reset to set SPI data packet size. */
     nm_spi_init();
-    /*return power save to default value*/
-    chip_idle();
 
     return ret;
 #ifdef NO_HW_CHIP_EN
@@ -292,16 +307,13 @@ int8_t nm_drv_init_start(void * arg)
     int8_t ret = M2M_SUCCESS;
     uint8_t u8Mode = M2M_WIFI_MODE_NORMAL;
 
-    if(NULL != arg)
-    {
-        if(M2M_WIFI_MODE_CONFIG == *((uint8_t *)arg))
-            u8Mode = M2M_WIFI_MODE_CONFIG;
+    if(NULL != arg) {
+        u8Mode = *((uint8_t *)arg);
+        if((u8Mode < M2M_WIFI_MODE_NORMAL)||(u8Mode >= M2M_WIFI_MODE_MAX)) {
+            u8Mode = M2M_WIFI_MODE_NORMAL;
+        }
     }
 
-    ret = cpu_start();
-    if (M2M_SUCCESS != ret) {
-        goto ERR2;
-    }
     ret = wait_for_bootrom(u8Mode);
     if (M2M_SUCCESS != ret) {
         goto ERR2;
@@ -312,7 +324,7 @@ int8_t nm_drv_init_start(void * arg)
         goto ERR2;
     }
 
-    if(M2M_WIFI_MODE_CONFIG == u8Mode) {
+    if((M2M_WIFI_MODE_ATE_HIGH == u8Mode)||(M2M_WIFI_MODE_ATE_LOW == u8Mode)) {
         goto ERR1;
     } else {
         /*continue running*/
@@ -323,9 +335,7 @@ int8_t nm_drv_init_start(void * arg)
         M2M_ERR("failed to enable interrupts..\r\n");
         goto ERR2;
     }
-
     return ret;
-
 ERR2:
     nm_bus_iface_deinit();
     nm_spi_deinit();
@@ -337,7 +347,11 @@ ERR1:
 *   @fn     nm_drv_init
 *   @brief  Initialize NMC1000 driver
 *   @return M2M_SUCCESS in case of success and Negative error code in case of failure
-*   @param [in] arg - Generic argument passed on to nm_drv_init_start
+*   @param [in] arg
+*               Generic argument
+*   @author M. Abdelmawla
+*   @date   15 July 2012
+*   @version    1.0
 */
 int8_t nm_drv_init(void * arg)
 {
@@ -354,6 +368,9 @@ int8_t nm_drv_init(void * arg)
 /*
 *   @fn     nm_drv_deinit
 *   @brief  Deinitialize NMC1000 driver
+*   @author M. Abdelmawla
+*   @date   17 July 2012
+*   @version    1.0
 */
 int8_t nm_drv_deinit(void * arg)
 {
@@ -362,6 +379,15 @@ int8_t nm_drv_deinit(void * arg)
     ret = chip_deinit();
     if (M2M_SUCCESS != ret) {
         M2M_ERR("[nmi stop]: chip_deinit fail\r\n");
+        goto ERR1;
+    }
+
+    nm_bus_reset();
+
+    /* Disable SPI flash to save power when the chip is off */
+    ret = spi_flash_enable(0);
+    if (M2M_SUCCESS != ret) {
+        M2M_ERR("[nmi stop]: SPI flash disable fail\r\n");
         goto ERR1;
     }
 
@@ -374,21 +400,6 @@ int8_t nm_drv_deinit(void * arg)
     nm_spi_deinit();
 
 ERR1:
-    return ret;
-}
-
-
-/**
-*   @fn     nm_cpu_start(void)
-*   @brief  Start CPU from the WINC module
-*   @return ZERO in case of success and Negative error code in case of failure
-*/
-
-int8_t nm_cpu_start(void)
-{
-    int8_t ret;
-
-    ret = cpu_start();
     return ret;
 }
 

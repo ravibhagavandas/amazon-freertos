@@ -62,11 +62,7 @@
 #ifdef WDRV_WINC_ENABLE_BLE
 #include "platform.h"
 #endif
-#include "m2m_types.h"
 
-uint32_t *get_winc_buffer();
-extern void eccProcessREQ(tstrEccReqInfo *ecc_request);
-extern size_t winc_certs_get_total_files_size(const tstrTlsSrvSecHdr* header);
 // *****************************************************************************
 // *****************************************************************************
 // Section: Global Data
@@ -748,15 +744,10 @@ static void _WDRV_WINC_SSLCallback(uint8_t msgType, void *pMsgContent)
         case M2M_SSL_REQ_ECC:
 		{
             WDRV_WINC_ECC_REQ_INFO info;
-            tstrEccReqInfo  *eccReqInfo;
-            eccReqInfo  = (tstrEccReqInfo *)pMsgContent;
-			eccProcessREQ(eccReqInfo);
-#if 0
             if (NULL != pDcpt->pfSSLReqECCCB)
             {
                 tstrEccReqInfo  *eccReqInfo;
                 eccReqInfo  = (tstrEccReqInfo *)pMsgContent;
-				eccProcessREQ(eccReqInfo);
                 
                 info.reqCmd = eccReqInfo->u16REQ;
                 info.seqNo = eccReqInfo->u32SeqNo;
@@ -799,7 +790,6 @@ static void _WDRV_WINC_SSLCallback(uint8_t msgType, void *pMsgContent)
                 }
                                         
             }
-#endif
             break;
         }
 

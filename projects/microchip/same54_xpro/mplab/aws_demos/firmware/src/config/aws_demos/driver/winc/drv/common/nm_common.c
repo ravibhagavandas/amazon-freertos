@@ -50,7 +50,7 @@ void nm_sleep(uint32_t u32TimeMsec)
 
 /*!
  *  @fn     nm_reset
- *  @brief  Reset NMC3400 SoC by setting CHIP_EN and RESET_N signals low,
+ *  @brief  Reset NMC1500 SoC by setting CHIP_EN and RESET_N signals low,
  *           CHIP_EN high then RESET_N high
  */
 void nm_reset(void)

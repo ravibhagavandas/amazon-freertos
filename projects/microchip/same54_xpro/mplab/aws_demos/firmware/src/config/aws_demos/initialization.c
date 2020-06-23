@@ -79,90 +79,13 @@
 // *****************************************************************************
 // *****************************************************************************
 
-// <editor-fold defaultstate="collapsed" desc="DRV_SPI Instance 0 Initialization Data">
 
-/* SPI Client Objects Pool */
-static DRV_SPI_CLIENT_OBJ drvSPI0ClientObjPool[DRV_SPI_CLIENTS_NUMBER_IDX0];
-
-/* SPI Transfer Objects Pool */
-static DRV_SPI_TRANSFER_OBJ drvSPI0TransferObjPool[DRV_SPI_QUEUE_SIZE_IDX0];
-
-/* SPI PLIB Interface Initialization */
-const DRV_SPI_PLIB_INTERFACE drvSPI0PlibAPI = {
-
-    /* SPI PLIB Setup */
-    .setup = (DRV_SPI_PLIB_SETUP)SERCOM4_SPI_TransferSetup,
-
-    /* SPI PLIB WriteRead function */
-    .writeRead = (DRV_SPI_PLIB_WRITE_READ)SERCOM4_SPI_WriteRead,
-
-    /* SPI PLIB Transfer Status function */
-    .isBusy = (DRV_SPI_PLIB_IS_BUSY)SERCOM4_SPI_IsBusy,
-
-    /* SPI PLIB Callback Register */
-    .callbackRegister = (DRV_SPI_PLIB_CALLBACK_REGISTER)SERCOM4_SPI_CallbackRegister,
-};
-
-const uint32_t drvSPI0remapDataBits[]= { 0x0, 0x1, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
-const uint32_t drvSPI0remapClockPolarity[] = { 0x0, 0x20000000 };
-const uint32_t drvSPI0remapClockPhase[] = { 0x10000000, 0x0 };
-
-const DRV_SPI_INTERRUPT_SOURCES drvSPI0InterruptSources =
+/* MIIM Driver Configuration */
+static const DRV_MIIM_INIT drvMiimInitData =
 {
-    /* Peripheral has more than one interrupt vectors */
-    .isSingleIntSrc                        = false,
-
-    /* Peripheral interrupt lines */
-    .intSources.multi.spiTxReadyInt      = SERCOM4_0_IRQn,
-    .intSources.multi.spiTxCompleteInt   = SERCOM4_1_IRQn,
-    .intSources.multi.spiRxInt           = SERCOM4_2_IRQn,
-    /* DMA Tx interrupt line */
-    .intSources.multi.dmaTxChannelInt      = DMAC_0_IRQn,
-    /* DMA Rx interrupt line */
-    .intSources.multi.dmaRxChannelInt      = DMAC_1_IRQn,
+    .ethphyId = DRV_MIIM_ETH_MODULE_ID,
 };
 
-/* SPI Driver Initialization Data */
-const DRV_SPI_INIT drvSPI0InitData =
-{
-    /* SPI PLIB API */
-    .spiPlib = &drvSPI0PlibAPI,
-
-    .remapDataBits = drvSPI0remapDataBits,
-
-    .remapClockPolarity = drvSPI0remapClockPolarity,
-
-    .remapClockPhase = drvSPI0remapClockPhase,
-
-    /* SPI Number of clients */
-    .numClients = DRV_SPI_CLIENTS_NUMBER_IDX0,
-
-    /* SPI Client Objects Pool */
-    .clientObjPool = (uintptr_t)&drvSPI0ClientObjPool[0],
-
-    /* DMA Channel for Transmit */
-    .dmaChannelTransmit = DRV_SPI_XMIT_DMA_CH_IDX0,
-
-    /* DMA Channel for Receive */
-    .dmaChannelReceive  = DRV_SPI_RCV_DMA_CH_IDX0,
-
-    /* SPI Transmit Register */
-    .spiTransmitAddress =  (void *)&(SERCOM4_REGS->SPIM.SERCOM_DATA),
-
-    /* SPI Receive Register */
-    .spiReceiveAddress  = (void *)&(SERCOM4_REGS->SPIM.SERCOM_DATA),
-
-    /* SPI Queue Size */
-    .transferObjPoolSize = DRV_SPI_QUEUE_SIZE_IDX0,
-
-    /* SPI Transfer Objects Pool */
-    .transferObjPool = (uintptr_t)&drvSPI0TransferObjPool[0],
-
-    /* SPI interrupt sources (SPI peripheral and DMA) */
-    .interruptSources = &drvSPI0InterruptSources,
-};
-
-// </editor-fold>
 
 
 // *****************************************************************************
@@ -185,6 +108,14 @@ SYSTEM_OBJECTS sysObj;
 // Section: System Initialization
 // *****************************************************************************
 // *****************************************************************************
+
+const SYS_CMD_INIT sysCmdInit =
+{
+    .moduleInit = {0},
+    .consoleCmdIOParam = SYS_CMD_SINGLE_CHARACTER_READ_CONSOLE_IO_PARAM,
+	.consoleIndex = 0,
+};
+
 // <editor-fold defaultstate="collapsed" desc="SYS_TIME Initialization Data">
 
 const SYS_TIME_PLIB_INTERFACE sysTimePlibAPI = {
@@ -237,23 +168,6 @@ const SYS_CONSOLE_INIT sysConsole0Init =
 // </editor-fold>
 
 
-const SYS_CMD_INIT sysCmdInit =
-{
-    .moduleInit = {0},
-    .consoleCmdIOParam = SYS_CMD_SINGLE_CHARACTER_READ_CONSOLE_IO_PARAM,
-	.consoleIndex = 0,
-};
-
-
-const SYS_DEBUG_INIT debugInit =
-{
-    .moduleInit = {0},
-    .errorLevel = SYS_DEBUG_GLOBAL_ERROR_LEVEL,
-    .consoleIndex = 0,
-};
-
-
-
 
 
 // *****************************************************************************
@@ -286,42 +200,29 @@ void SYS_Initialize ( void* data )
 
 
 
-    TC3_TimerInitialize();
-
-	TRNG_Initialize();
-
     SERCOM2_USART_Initialize();
 
     EVSYS_Initialize();
 
-    SERCOM7_I2C_Initialize();
-
     SERCOM6_USART_Initialize();
-
-    DMAC_Initialize();
-
-    SERCOM4_SPI_Initialize();
 
     EIC_Initialize();
 
+    TC3_TimerInitialize();
 
-    /* Initialize the WINC Driver */
-    sysObj.drvWifiWinc = WDRV_WINC_Initialize(0, NULL);
+	TRNG_Initialize();
 
-    /* Initialize SPI0 Driver Instance */
-    sysObj.drvSPI0 = DRV_SPI_Initialize(DRV_SPI_INDEX_0, (SYS_MODULE_INIT *)&drvSPI0InitData);
+
+
+    /* Initialize the MIIM Driver */
+    sysObj.drvMiim = DRV_MIIM_Initialize( DRV_MIIM_INDEX_0, (const SYS_MODULE_INIT *) &drvMiimInitData );
+
+
+    SYS_CMD_Initialize((SYS_MODULE_INIT*)&sysCmdInit);
 
     sysObj.sysTime = SYS_TIME_Initialize(SYS_TIME_INDEX_0, (SYS_MODULE_INIT *)&sysTimeInitData);
     sysObj.sysConsole0 = SYS_CONSOLE_Initialize(SYS_CONSOLE_INDEX_0, (SYS_MODULE_INIT *)&sysConsole0Init);
 
-    SYS_CMD_Initialize((SYS_MODULE_INIT*)&sysCmdInit);
-
-    sysObj.sysDebug = SYS_DEBUG_Initialize(SYS_DEBUG_INDEX_0, (SYS_MODULE_INIT*)&debugInit);
-
-
-
-
-    APP_Initialize();
 
 
     NVIC_Initialize();

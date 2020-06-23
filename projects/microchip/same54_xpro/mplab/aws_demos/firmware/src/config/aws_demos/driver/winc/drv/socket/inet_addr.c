@@ -1,5 +1,5 @@
 /*******************************************************************************
-  WINC3400 Wireless Driver
+  WINC1500 Wireless Driver
 
   File Name:
     inet_addr.c
@@ -34,7 +34,6 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
-
 #include <stdint.h>
 #include "socket.h"
 

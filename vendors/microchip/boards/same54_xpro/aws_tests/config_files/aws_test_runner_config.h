@@ -67,4 +67,7 @@
 #define testrunnerUTIL_PLATFORM_CLOCK_ENABLED         0
 #define testrunnerUTIL_PLATFORM_THREADS_ENABLED       0
 
+/* On systems using FreeRTOS+TCP (such as this one) the TCP segments must be
+ * cleaned up before running the memory leak check. */
+
 #endif /* AWS_TEST_RUNNER_CONFIG_H */

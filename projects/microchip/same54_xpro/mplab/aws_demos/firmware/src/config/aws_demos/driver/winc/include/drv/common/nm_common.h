@@ -34,18 +34,13 @@
 *******************************************************************************/
 //DOM-IGNORE-END
 
-/**@defgroup COMMON COMMON
-*/
-
 #ifndef _NM_COMMON_H_
 #define _NM_COMMON_H_
 
 #include "nm_bsp.h"
 #include "nm_debug.h"
 
-
-/**@defgroup  COMMONDEF Defines
- * @ingroup COMMON
+/**@addtogroup COMMONDEF
  */
 /**@{*/
 
@@ -66,6 +61,7 @@
 #define M2M_ERR_FW_VER_MISMATCH     ((int8_t)-13)
 #define M2M_ERR_SCAN_IN_PROGRESS    ((int8_t)-14)
 #define M2M_ERR_INVALID_ARG         ((int8_t)-15)
+#define M2M_ERR_INVALID             ((int8_t)-16)
 
 #define NBIT31                      (0x80000000)
 #define NBIT30                      (0x40000000)
@@ -101,33 +97,21 @@
 #define NBIT0                       (0x00000001)
 
 #ifndef BIG_ENDIAN
-/*! Most significant byte of 32bit word (LE) */
-#define BYTE_0(word)                ((uint8_t)(((word) >> 0 ) & 0x000000FFUL))
-/*! Second most significant byte of 32bit word (LE) */
-#define BYTE_1(word)                ((uint8_t)(((word) >> 8 ) & 0x000000FFUL))
-/*! Third most significant byte of 32bit word (LE) */
-#define BYTE_2(word)                ((uint8_t)(((word) >> 16) & 0x000000FFUL))
-/*! Least significant byte of 32bit word (LE) */
-#define BYTE_3(word)                ((uint8_t)(((word) >> 24) & 0x000000FFUL))
+#define BYTE_0(word)                    ((uint8_t)(((word) >> 0 ) & 0x000000FFUL))
+#define BYTE_1(word)                    ((uint8_t)(((word) >> 8 ) & 0x000000FFUL))
+#define BYTE_2(word)                    ((uint8_t)(((word) >> 16) & 0x000000FFUL))
+#define BYTE_3(word)                    ((uint8_t)(((word) >> 24) & 0x000000FFUL))
 #else
-/*! Most significant byte of 32bit word (BE) */
-#define BYTE_0(word)                ((uint8_t)(((word) >> 24) & 0x000000FFUL))
-/*! Second most significant byte of 32bit word (BE) */
-#define BYTE_1(word)                ((uint8_t)(((word) >> 16) & 0x000000FFUL))
-/*! Third most significant byte of 32bit word (BE) */
-#define BYTE_2(word)                ((uint8_t)(((word) >> 8 ) & 0x000000FFUL))
-/*! Least significant byte of 32bit word (BE) */
-#define BYTE_3(word)                ((uint8_t)(((word) >> 0 ) & 0x000000FFUL))
+#define BYTE_0(word)                    ((uint8_t)(((word) >> 24) & 0x000000FFUL))
+#define BYTE_1(word)                    ((uint8_t)(((word) >> 16) & 0x000000FFUL))
+#define BYTE_2(word)                    ((uint8_t)(((word) >> 8 ) & 0x000000FFUL))
+#define BYTE_3(word)                    ((uint8_t)(((word) >> 0 ) & 0x000000FFUL))
 #endif
-/**@}*/
 
+/**@}*/     //COMMONDEF
 #ifdef __cplusplus
-     extern "C" {
- #endif
-/**@defgroup  COMMONAPI Functions
- * @ingroup COMMON
- */
-/**@{*/
+extern "C" {
+#endif
 
 /*!
  *  @fn         void nm_sleep(uint32_t);
@@ -144,11 +128,11 @@ void nm_sleep(uint32_t u32TimeMsec);
 
 /*!
  *  @fn     nm_reset
- *  @brief  Reset NMC3400 SoC by setting CHIP_EN and RESET_N signals low,
+ *  @brief  Reset NMC1500 SoC by setting CHIP_EN and RESET_N signals low,
  *           CHIP_EN high then RESET_N high
  */
 void nm_reset(void);
-/**@}*/
+
 #ifdef __cplusplus
 }
 #endif

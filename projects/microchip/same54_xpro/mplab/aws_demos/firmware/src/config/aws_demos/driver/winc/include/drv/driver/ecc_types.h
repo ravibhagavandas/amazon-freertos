@@ -1,16 +1,4 @@
 /*******************************************************************************
-  File Name:
-    ecc_types.h
-
-  Summary:
-    Elliptic Curve Cryptography Module Interface.
-
-  Description:
-    Elliptic Curve Cryptography Module Interface.
- *******************************************************************************/
-
-//DOM-IGNORE-BEGIN
-/*******************************************************************************
 * Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
@@ -32,6 +20,16 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
+
+/*!
+@file
+    ecc_types.h
+
+@brief  Elliptic Curve Cryptography Module Interface
+
+    The file defines the APIs and data types that abstract the ECC operations
+    required for TLS library.
+*/
 
 #ifndef __ECC_TYPES_H__
 #define __ECC_TYPES_H__
@@ -78,7 +76,7 @@ DATA TYPES
 
 
 /*!
-@enum   \
+@enum \
     tenuEcNamedCurve
 
 @brief  EC Named Curves

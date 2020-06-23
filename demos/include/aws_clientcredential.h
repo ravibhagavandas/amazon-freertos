@@ -50,7 +50,7 @@
  */
 #define clientcredentialGREENGRASS_DISCOVERY_PORT    8443
 
-#define WLAN_SSID           "Sathvika"
+#define WLAN_SSID           ""
 #define WLAN_AUTH_WPA_PSK
 #define WLAN_PSK            "2ri4-yowp-ied7"
 /*
@@ -58,7 +58,7 @@
  *
  * @todo If you are using Wi-Fi, set this to your network name.
  */
-#define clientcredentialWIFI_SSID                    "Sathvika"
+#define clientcredentialWIFI_SSID                    ""
 
 /*
  * @brief Password needed to join Wi-Fi network.

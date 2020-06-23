@@ -31,8 +31,9 @@
 #ifndef _AWS_PKCS11_CONFIG_H_
 #define _AWS_PKCS11_CONFIG_H_
 
-
+#ifdef PIC32_USE_ECC
 extern const char * pcPkcs11GetThingName(void);
+#endif
 
 /* A non-standard version of C_INITIALIZE should be used by this port. */
 /* #define pkcs11configC_INITIALIZE_ALT */
@@ -46,8 +47,11 @@ extern const char * pcPkcs11GetThingName(void);
  * both of those, the user PIN is assumed to be used herein for interoperability
  * purposes only, and not as a security feature.
  */
+#ifdef PIC32_USE_ECC
 #define configPKCS11_DEFAULT_USER_PIN    "00112233445566778899AABBCCDDEEFF00112233445566778899AABBCCDDEEFF"
-
+#else
+#define configPKCS11_DEFAULT_USER_PIN    "0000"
+#endif
 /**
  * @brief Maximum length (in characters) for a PKCS #11 CKA_LABEL
  * attribute.
@@ -68,11 +72,12 @@ extern const char * pcPkcs11GetThingName(void);
  */
 #define pkcs11configPAL_DESTROY_SUPPORTED                  0
 
+#ifdef PIC32_USE_ECC
 /**
  * @brief Set to 1 if importing device private key via C_CreateObject is supported.  0 if not.
  */
 #define pkcs11configIMPORT_PRIVATE_KEYS_SUPPORTED          0
-
+#endif
 /**
  * @brief Set to 1 if OTA image verification via PKCS #11 module is supported.
  *

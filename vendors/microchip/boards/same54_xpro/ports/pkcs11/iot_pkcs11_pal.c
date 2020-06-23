@@ -286,7 +286,6 @@ CK_OBJECT_HANDLE PKCS11_PAL_SaveObject( CK_ATTRIBUTE_PTR pxLabel,
         
         if( pCertSave != 0 && xHandle !=eInvalidHandle)
         {
-            printf("Flash Address = 0x%x\r\n",P11ConfigFlashPtr);
             taskENTER_CRITICAL();
             /* can proceed with the write */
             *P11ConfigSavePtr = *P11ConfigFlashPtr; /* copy the (whole) existent data before erasing flash */

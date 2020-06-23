@@ -82,8 +82,8 @@ bool AWS_FlashPagesWrite(const uint32_t* ptrFlash, const uint32_t* pageData, int
     while(NVMCTRL_IsBusy());
     for(int i=0;((i<nPages) && bResult);i++)
     {
-        addr = (uint32_t)(ptrFlash + (NVMCTRL_FLASH_PAGESIZE*i));
-        bResult = NVMCTRL_PageWrite( (uint32_t*) (pageDataAddr + (NVMCTRL_FLASH_PAGESIZE*i)), addr );
+        addr = (uint32_t)(ptrFlash + (NVMCTRL_FLASH_PAGESIZE*i)/sizeof(uint32_t));
+        bResult = NVMCTRL_PageWrite(pageData + (NVMCTRL_FLASH_PAGESIZE*i)/sizeof(uint32_t), addr );
         while(NVMCTRL_IsBusy());
     }
     
@@ -98,8 +98,8 @@ bool AWS_FlashRegionProtect(int regionNo, uint32_t regionSize, const void* flash
 
 bool AWS_FlashEraseUpdateBank()
 {
-    int nBlocks = (AWS_NVM_FLASH_SIZE-AWS_NVM_BOOTLOADER_SIZE)/AWS_NVM_BLOCK_SIZE;
-    const uint32_t * ptrFlash = (const uint32_t *)(AWS_NVM_FLASH_START_ADDRESS + AWS_NVM_FLASH_SIZE) + AWS_NVM_BOOTLOADER_SIZE;
+    int nBlocks = AWS_NVM_FLASH_SIZE/AWS_NVM_BLOCK_SIZE;
+    const uint32_t * ptrFlash = (const uint32_t *)(AWS_NVM_FLASH_START_ADDRESS + AWS_NVM_FLASH_SIZE);
     // Erases upper Bank.
     return AWS_FlashBlockErase(ptrFlash, nBlocks);
     
@@ -112,15 +112,10 @@ bool AWS_FlashProgramBlock(const uint8_t* ptrFlash, const uint8_t* pData, uint32
     int nBlocks = (size2 - (size2 % AWS_NVM_PAGE_SIZE))/AWS_NVM_PAGE_SIZE;
     const uint8_t *pAddr =(const uint8_t *)ptrFlash;
     bool bResult = true;
-    if(size >= AWS_NVM_PAGE_SIZE)
+    if(size > AWS_NVM_PAGE_SIZE)
     {
         bResult = AWS_FlashPagesWrite(pAddr,pData,nBlocks);
-        if(memcmp(pAddr, pData, nBlocks * AWS_NVM_PAGE_SIZE))
-        {
-            configPRINTF(("Page write nBlocks= %d, Rem Size = %d\r\n",nBlocks,size2));
-            return false;
-        }
-         size2 = size2 % AWS_NVM_PAGE_SIZE;
+        size2 = size2 % AWS_NVM_PAGE_SIZE;
     }
     
     if(size2 > 0 && bResult)

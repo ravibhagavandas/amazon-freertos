@@ -1,6 +1,6 @@
 /*
- * Amazon FreeRTOS V1.4.8
- * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS V1.1.4
+ * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -71,9 +71,6 @@
 #define mqttconfigKEEP_ALIVE_TIMEOUT_TICKS            ( 5000 )
 
 /**
- * @brief The maximum time in ticks for which the MQTT task is permitted to block.
- *
- * The MQTT task blocks until the user initiates any action or until it receives
  * any data from the broker. This macro controls the maximum time the MQTT task can
  * block. It should be set to a low number for the platforms which do not have any
  * mechanism to wake up the MQTT task whenever data is received on a connected socket.
@@ -93,7 +90,7 @@
 /**
  * @brief Maximum number of MQTT clients that can exist simultaneously.
  */
-#define mqttconfigMAX_BROKERS                  ( 4 )
+#define mqttconfigMAX_BROKERS            ( 10 )
 
 /**
  * @brief Maximum number of parallel operations per client.

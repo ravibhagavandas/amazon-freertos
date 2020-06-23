@@ -50,33 +50,23 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include "peripheral/nvmctrl/plib_nvmctrl.h"
-#include "peripheral/tc/plib_tc3.h"
-#include "system/time/sys_time.h"
-#include "peripheral/trng/plib_trng.h"
-#include "driver/spi/drv_spi.h"
-#include "system/int/sys_int.h"
-#include "system/ports/sys_ports.h"
-#include "system/dma/sys_dma.h"
-#include "osal/osal.h"
-#include "system/debug/sys_debug.h"
 #include "peripheral/sercom/usart/plib_sercom2_usart.h"
 #include "peripheral/evsys/plib_evsys.h"
-#include "driver/winc/include/wdrv_winc_api.h"
-#include "peripheral/sercom/i2c_master/plib_sercom7_i2c_master.h"
 #include "system/command/sys_command.h"
 #include "peripheral/sercom/usart/plib_sercom6_usart.h"
 #include "peripheral/port/plib_port.h"
 #include "peripheral/clock/plib_clock.h"
 #include "peripheral/nvic/plib_nvic.h"
-#include "peripheral/dmac/plib_dmac.h"
-#include "peripheral/sercom/spim/plib_sercom4_spi.h"
 #include "peripheral/eic/plib_eic.h"
+#include "peripheral/tc/plib_tc3.h"
+#include "system/time/sys_time.h"
 #include "afr.h"
+#include "peripheral/trng/plib_trng.h"
 #include "system/console/sys_console.h"
 #include "system/console/src/sys_console_uart_definitions.h"
-#include "app.h"
-
-
+#include "system/int/sys_int.h"
+#include "osal/osal.h"
+#include "system/debug/sys_debug.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -196,14 +186,10 @@ Remarks:
         
 typedef struct
 {
+
+    SYS_MODULE_OBJ  drvMiim;
     SYS_MODULE_OBJ  sysTime;
     SYS_MODULE_OBJ  sysConsole0;
-
-    SYS_MODULE_OBJ  drvWifiWinc;
-    /* SPI0 Driver Object */
-    SYS_MODULE_OBJ drvSPI0;
-
-    SYS_MODULE_OBJ  sysDebug;
 
 
 } SYSTEM_OBJECTS;

@@ -1,14 +1,14 @@
 /*******************************************************************************
-  WINC3400 SPI Flash Map
+  WINC1500 SPI Flash Map
 
   File Name:
     spi_flash_map.h
 
   Summary:
-    WINC3400 SPI Flash Map
+    WINC1500 SPI Flash Map
 
   Description:
-    WINC3400 SPI Flash Map
+    WINC1500 SPI Flash Map
  *******************************************************************************/
 
 //DOM-IGNORE-BEGIN
@@ -45,10 +45,16 @@
 #ifndef __SPI_FLASH_MAP_H__
 #define __SPI_FLASH_MAP_H__
 
+#define FLASH_MAP_VER_0     (0)
+#define FLASH_MAP_VER_1     (1)
+#define FLASH_MAP_VER_2     (2)
+#define FLASH_MAP_VER_4     (4)
+
+#define FLASH_MAP_VERSION   FLASH_MAP_VER_4
+
 //#define DOWNLOAD_ROLLBACK
 //#define OTA_GEN
 #define _PROGRAM_POWER_SAVE_
-#define BT_IMAGE_PRESENT
 
 /* =======*=======*=======*=======*=======
  *    General Sizes for Flash Memory
@@ -79,200 +85,166 @@
  */
 
 /*
- * Detailed Sizes and locations for 8M Flash Memory:
- *  ____________________ ___________ ___________________________ _______________________________________________
- * | Starting Address   |   Size    |   Location's Name         |   Description                                 |
+ * Detailed Sizes and locations for Flash Memory:
+ *  ____________________ ___________ ____________________________________________________________________________
+ * | Starting Address   |   Size    |   Location's Name         |    Description                                |
  * |____________________|___________|___________________________|_______________________________________________|
- * |      0 K           |     4 K   |   Boot Firmware           |   Firmware to select which version to run     |
- * |      4 K           |     8 K   |   Control Section         |   Structured data used by Boot firmware       |
- * |      8 K           |     4 K   |   Backup                  |   Generic sector backup                       |
- * |     12 K           |     8 K   |   PLL+GAIN :              |   LookUp Table for PLL and Gain calculations  |
- * |                    |           |       PLL  Size = 2K      |       PLL                                     |
- * |                    |           |       GAIN Size = 6K      |       Gain configuration                      |
- * |     20 K           |     4 K   |   TLS CERTIFICATE         |   X.509 Root certificate storage              |
- * |     24 K           |     8 K   |   TLS Server              |   TLS Server Private Key and certificates     |
- * |     32 K           |     4 K   |   Connection Parameters   |   Parameters for success connection to AP     |
- * |     36 K           |     8 K   |   Program Firmware        |   Downloader firmware                         |
- * |     44 K           |   296 K   |   Main Firmware           |   Main Firmware to run WiFi Chip              |
- * |    340 K           |     8 K   |   HTTP Files              |   Files used with Provisioning Mode           |
- * |    348 K           |     0 K   |   PS_Firmware             |   Power Save Firmware (Unused)                |
- * |    348 K           |   160 K   |   BT Firmware             |   BT Firmware for BT Cortus                   |
- * |    508 K           |     4 K   |   Host control section    |   Structured data used by Host driver         |
- * |    512 K           |   472 K   |   OTA                     |   OTA image                                   |
- * |                    |           |       Program Firmware    |                                               |
- * |                    |           |       Main Firmware       |                                               |
- * |                    |           |       HTTP Files          |                                               |
- * |                    |           |       BT Firmware         |                                               |
- * |    984 K           |    40 K   |   Empty                   |   Unused                                      |
- * |____________________|___________|___________________________|_______________________________________________|
+ * |      0 K           |     4 K   |   Boot Firmware           |    Firmware to select which version to run    |
+ * |      4 K           |     8 K   |   Control Section         |    Structured data used by Boot firmware      |
+ * |     12 K           |     4 K   |   PLL+GAIN :              |    LookUp Table for PLL and Gain calculations |
+ * |                    |           |   PLL  Size = 1K          |        PLL                                    |
+ * |                    |           |   GAIN Size = 3K          |        Gain configuration                     |
+ * |     16 K           |     4 K   |   CERTIFICATE             |    X.509 Certificate storage                  |
+ * |     20 K           |     8 K   |   TLS Server              |    TLS Server Private Key and certificates    |
+ * |     28 K           |     8 K   |   HTTP Files              |    Files used with Provisioning Mode          |
+ * |     36 K           |     4 K   |   Connection Parameters   |    Parameters for success connection to AP    |
+ * |     40 K           |   236 K   |   Main Firmware/program   |    Main Firmware to run WiFi Chip             |
+ * |    276 K           |   236 K   |   OTA Firmware            |    OTA firmware                               |
+ * |    512 K           |   512 K   |   Host File Storage       |    WINC1510 (8Mb of Flash) only               |
+ * |------------------------------------------------------------------------------------------------------------|
+ * |                     Total flash size is 512 K for WINC1500 and 1024 K for WINC1510                         |
+ * |____________________________________________________________________________________________________________|
  *
  *
+ * *Keys for Comments with each MACRO:
+ *      "L:xxxK" -means-> location  :xxxK
+ *      "S:xxxK" -means-> Size is   :xxxK
  */
 
 /*
- * Boot Firmware: used to select which firmware to run
+ * Boot Firmware: which used to select which firmware to run
+ *
  */
-#define M2M_BOOT_FIRMWARE_STARTING_ADDR     (FLASH_START_ADDR)
-#define M2M_BOOT_FIRMWARE_FLASH_SZ          (FLASH_SECTOR_SZ * 1)
+#define M2M_BOOT_FIRMWARE_STARTING_ADDR         (FLASH_START_ADDR)
+#define M2M_BOOT_FIRMWARE_FLASH_SZ              (FLASH_SECTOR_SZ)
 
 /*
- * Control Section: used by Boot firmware
+ * Control Section: which used by Boot firmware
+ *
  */
-#define M2M_CONTROL_FLASH_OFFSET            (M2M_BOOT_FIRMWARE_STARTING_ADDR + M2M_BOOT_FIRMWARE_FLASH_SZ)
-#define M2M_CONTROL_FLASH_SZ                (FLASH_SECTOR_SZ * 1)
+#define M2M_CONTROL_FLASH_OFFSET                (M2M_BOOT_FIRMWARE_STARTING_ADDR + M2M_BOOT_FIRMWARE_FLASH_SZ)
+#define M2M_CONTROL_FLASH_BKP_OFFSET            (M2M_CONTROL_FLASH_OFFSET + FLASH_SECTOR_SZ)
+#define M2M_CONTROL_FLASH_SEC_SZ                (FLASH_SECTOR_SZ)
+#define M2M_CONTROL_FLASH_TOTAL_SZ              (FLASH_SECTOR_SZ * 2)
 
 /*
- * Generic Sector Backup: used as backup in case of interruption during sector read-erase-write
+ * LUT for PLL and TX Gain settings:
+ *
  */
-#define M2M_BACKUP_FLASH_OFFSET             (M2M_CONTROL_FLASH_OFFSET + M2M_CONTROL_FLASH_SZ)
-#define M2M_BACKUP_FLASH_SZ                 (FLASH_SECTOR_SZ * 1)
+#define M2M_PLL_FLASH_OFFSET                    (M2M_CONTROL_FLASH_OFFSET + M2M_CONTROL_FLASH_TOTAL_SZ)
+#define M2M_PLL_FLASH_SZ                        (1024 * 1)
+#define M2M_GAIN_FLASH_OFFSET                   (M2M_PLL_FLASH_OFFSET + M2M_PLL_FLASH_SZ)
+#define M2M_GAIN_FLASH_SZ                       (M2M_CONFIG_SECT_TOTAL_SZ - M2M_PLL_FLASH_SZ)
+#define M2M_CONFIG_SECT_TOTAL_SZ                (FLASH_SECTOR_SZ)
 
 /*
- * LUT for PLL and TX Gain settings
+ * Certificate:
+ *
  */
-#define M2M_PLL_FLASH_OFFSET                (M2M_BACKUP_FLASH_OFFSET + M2M_BACKUP_FLASH_SZ)
-#define M2M_PLL_MAGIC_NUMBER_FLASH_SZ       (2*4)       // 2 32bit values
-#define M2M_PLL_WIFI_CHAN_FLASH_OFFSET      (M2M_PLL_FLASH_OFFSET + M2M_PLL_MAGIC_NUMBER_FLASH_SZ)
-#define M2M_PLL_WIFI_CHAN_FLASH_SZ          (14*8*4)    // Wifi Channels 1 to 14 inclusive, 8 32bit values for each channel.
-#define M2M_PLL_FREQ_FLASH_OFFSET           (M2M_PLL_WIFI_CHAN_FLASH_OFFSET + M2M_PLL_WIFI_CHAN_FLASH_SZ)
-#define M2M_PLL_FREQ_FLASH_SZ               ((1+84)*4)  // Frequencies 2401 to 2484MHz inclusive, also 1920 used for cpll compensate.
-#define M2M_PLL_FLASH_SZ                    (1024 * 2)
-#define M2M_GAIN_FLASH_OFFSET               (M2M_PLL_FLASH_OFFSET + M2M_PLL_FLASH_SZ)
-#define M2M_GAIN_FLASH_SZ                   (M2M_CONFIG_SECT_TOTAL_SZ - M2M_PLL_FLASH_SZ)
-#define M2M_CONFIG_SECT_TOTAL_SZ            (FLASH_SECTOR_SZ * 2)
-
-/*
- * TLS Certificates
- */
-#define M2M_TLS_ROOTCER_FLASH_OFFSET        (M2M_PLL_FLASH_OFFSET + M2M_CONFIG_SECT_TOTAL_SZ)
-#define M2M_TLS_ROOTCER_FLASH_SZ            (FLASH_SECTOR_SZ * 1)
-#define M2M_TLS_ROOTCER_FLASH_SIG           {0x01,0xF1,0x02,0xF2,0x03,0xF3,0x04,0xF4,0x05,0xF5,0x06,0xF6,0x07,0xF7,0x08,0xF8}
-#define M2M_TLS_ROOTCER_FLASH_SIG_LENGTH    16
-/*!<
-*/
+#define M2M_TLS_ROOTCER_FLASH_OFFSET            (M2M_PLL_FLASH_OFFSET + M2M_CONFIG_SECT_TOTAL_SZ)
+#define M2M_TLS_ROOTCER_FLASH_SIZE              (FLASH_SECTOR_SZ * 1)
 
 /*
  * TLS Server Key Files
+ *
  */
-#define M2M_TLS_SERVER_FLASH_OFFSET         (M2M_TLS_ROOTCER_FLASH_OFFSET + M2M_TLS_ROOTCER_FLASH_SZ)
-#define M2M_TLS_SERVER_FLASH_SZ             (FLASH_SECTOR_SZ * 2)
-#define M2M_TLS_SERVER_FLASH_SIG
+#define M2M_TLS_SERVER_FLASH_OFFSET             (M2M_TLS_ROOTCER_FLASH_OFFSET + M2M_TLS_ROOTCER_FLASH_SIZE)
+#define M2M_TLS_SERVER_FLASH_SIZE               (FLASH_SECTOR_SZ * 2)
 
 /*
- * Saved Connection Parameters
+ * HTTP Files
+ *
  */
-#define M2M_CACHED_CONNS_FLASH_OFFSET       (M2M_TLS_SERVER_FLASH_OFFSET + M2M_TLS_SERVER_FLASH_SZ)
-#define M2M_CACHED_CONNS_FLASH_SZ           (FLASH_SECTOR_SZ * 1)
-#define M2M_CACHED_CONNS_FLASH_SIG
+#define M2M_HTTP_MEM_FLASH_OFFSET               (M2M_TLS_SERVER_FLASH_OFFSET + M2M_TLS_SERVER_FLASH_SIZE)
+#define M2M_HTTP_MEM_FLASH_SZ                   (FLASH_SECTOR_SZ * 2)
+
+/*
+ * Saved Connection Parameters:
+ *
+ */
+#define M2M_CACHED_CONNS_FLASH_OFFSET           (M2M_HTTP_MEM_FLASH_OFFSET + M2M_HTTP_MEM_FLASH_SZ)
+#define M2M_CACHED_CONNS_FLASH_SZ               (FLASH_SECTOR_SZ * 1)
 
 /*
  *
- * OTA image1 Offset (Firmware offset)
- */
-#define M2M_OTA_IMAGE1_OFFSET               (M2M_CACHED_CONNS_FLASH_OFFSET + M2M_CACHED_CONNS_FLASH_SZ)
-
-/*
  * Common section size
  */
-#define FLASH_COMMON_SZ (\
-        M2M_BOOT_FIRMWARE_FLASH_SZ      +\
-        M2M_CONTROL_FLASH_SZ            +\
-        M2M_BACKUP_FLASH_SZ             +\
-        M2M_CONFIG_SECT_TOTAL_SZ        +\
-        M2M_TLS_ROOTCER_FLASH_SZ        +\
-        M2M_TLS_SERVER_FLASH_SZ         +\
-        M2M_CACHED_CONNS_FLASH_SZ       )
+
+#define M2M_COMMON_DATA_SEC     \
+    (\
+        M2M_BOOT_FIRMWARE_FLASH_SZ      +   \
+        M2M_CONTROL_FLASH_TOTAL_SZ      +   \
+        M2M_CONFIG_SECT_TOTAL_SZ        +   \
+        M2M_TLS_ROOTCER_FLASH_SIZE      +   \
+        M2M_TLS_SERVER_FLASH_SIZE       +   \
+        M2M_HTTP_MEM_FLASH_SZ           +   \
+        M2M_CACHED_CONNS_FLASH_SZ           \
+    )
 
 /*
- * Check addition
+ *
+ * OTA image1 Offset
  */
-#if (FLASH_COMMON_SZ != M2M_OTA_IMAGE1_OFFSET)
-#error "Common Size Mismatch"
+
+#define M2M_OTA_IMAGE1_OFFSET                   (M2M_CACHED_CONNS_FLASH_OFFSET + M2M_CACHED_CONNS_FLASH_SZ)
+/*
+ * Firmware Offset
+ *
+ */
+#if (defined _FIRMWARE_)||(defined OTA_GEN)
+#define M2M_FIRMWARE_FLASH_OFFSET               (0UL)
+#else
+#if (defined DOWNLOAD_ROLLBACK)
+#define M2M_FIRMWARE_FLASH_OFFSET               (M2M_OTA_IMAGE2_OFFSET)
+#else
+#define M2M_FIRMWARE_FLASH_OFFSET               (M2M_OTA_IMAGE1_OFFSET)
 #endif
-
+#endif
 /*
- * Host Control Section
+ *
+ * Firmware
  */
-#define HOST_CONTROL_FLASH_OFFSET           (M2M_OTA_IMAGE1_OFFSET + OTA_IMAGE_SIZE)
-#define HOST_CONTROL_FLASH_SZ               (FLASH_SECTOR_SZ * 1)
-#define HOST_CONTROL_FLASH_SIG              0x414f5354
+#define M2M_FIRMWARE_FLASH_SZ                   (236 * 1024UL)
+/**
+ *
+ * OTA image Size
+ */
+#define OTA_IMAGE_SIZE                          (M2M_FIRMWARE_FLASH_SZ)
+/**
+ *
+ * Flash Total size
+ */
+#define FLASH_IMAGE1_CONTENT_SZ                 (M2M_COMMON_DATA_SEC  +  OTA_IMAGE_SIZE)
 
 /**
  *
  * OTA image 2 offset
  */
-#define M2M_OTA_IMAGE2_OFFSET               (FLASH_4M_TOTAL_SZ)
+#define M2M_OTA_IMAGE2_OFFSET                   (FLASH_IMAGE1_CONTENT_SZ)
 
 /*
- * Firmware (including downloader firmware)
+ * App(Cortus App 4M): App. which runs over firmware
+ *
  */
-#if (defined _FIRMWARE_)||(defined OTA_GEN)
-#define M2M_FIRMWARE_FLASH_OFFSET           (0UL)
-#else
-#if (defined DOWNLOAD_ROLLBACK)
-#define M2M_FIRMWARE_FLASH_OFFSET           (M2M_OTA_IMAGE2_OFFSET)
-#else
-#define M2M_FIRMWARE_FLASH_OFFSET           (M2M_OTA_IMAGE1_OFFSET)
-#endif
-#endif
-#ifdef _PROGRAM_POWER_SAVE_
-#define M2M_PROGRAM_FLASH_SZ                (8 * 1024UL)    /* downloader firmware */
-#else
-#define M2M_PROGRAM_FLASH_SZ                (0UL)
-#endif  /* _PROGRAM_POWER_SAVE_ */
-#define M2M_FIRMWARE_FLASH_SZ               (304 * 1024UL)  /* downloader firmware and main firmware */
+#define M2M_APP_4M_MEM_FLASH_SZ                 (FLASH_SECTOR_SZ * 16)
+#define M2M_APP_4M_MEM_FLASH_OFFSET             (FLASH_4M_TOTAL_SZ - M2M_APP_4M_MEM_FLASH_SZ)
+#define M2M_APP_8M_MEM_FLASH_OFFSET             (M2M_OTA_IMAGE2_OFFSET + OTA_IMAGE_SIZE)
+#define M2M_APP_8M_MEM_FLASH_SZ                 (FLASH_SECTOR_SZ * 32)
+#define M2M_APP_OTA_MEM_FLASH_OFFSET            (M2M_APP_8M_MEM_FLASH_OFFSET + M2M_APP_8M_MEM_FLASH_SZ)
 
-/*
- * HTTP Files
- */
-#define M2M_HTTP_MEM_FLASH_OFFSET           (M2M_FIRMWARE_FLASH_OFFSET + M2M_FIRMWARE_FLASH_SZ)
-#define M2M_HTTP_MEM_FLASH_SZ               (FLASH_SECTOR_SZ * 2)
+/* Check if total size of content
+ *  don't exceed total size of memory allowed
+ **/
+#if (M2M_COMMON_DATA_SEC  +  (OTA_IMAGE_SIZE *2)> FLASH_4M_TOTAL_SZ)
+#error "Exceed 4M Flash Size"
+#endif /* (FLASH_CONTENT_SZ > FLASH_TOTAL_SZ) */
 
-/*
- * ps_Firmware(Power Save Firmware): App. which runs for power saving purpose
- */
-#define M2M_PS_FIRMWARE_FLASH_OFFSET        (M2M_HTTP_MEM_FLASH_OFFSET + M2M_HTTP_MEM_FLASH_SZ)
-#define M2M_PS_FIRMWARE_FLASH_SZ            (FLASH_SECTOR_SZ * 0)
-
-/*
- * BT(Bluetooth Firmware): BT/BLE firmware to run on the BT cortus
- */
-#define M2M_BT_FIRMWARE_FLASH_OFFSET        (M2M_PS_FIRMWARE_FLASH_OFFSET + M2M_PS_FIRMWARE_FLASH_SZ)
-#ifdef BT_IMAGE_PRESENT
-#define M2M_BT_FIRMWARE_FLASH_SZ            (160 * 1024UL)
-#else
-#define M2M_BT_FIRMWARE_FLASH_SZ            (0)
-#endif
-
-
-/*
- * OTA image size
- */
-#define OTA_IMAGE_SIZE (\
-        M2M_FIRMWARE_FLASH_SZ       +\
-        M2M_HTTP_MEM_FLASH_SZ       +\
-        M2M_PS_FIRMWARE_FLASH_SZ    +\
-        M2M_BT_FIRMWARE_FLASH_SZ    )
-
-/*
- * Check addition
- */
-#if ((M2M_FIRMWARE_FLASH_OFFSET + OTA_IMAGE_SIZE) != (M2M_BT_FIRMWARE_FLASH_OFFSET + M2M_BT_FIRMWARE_FLASH_SZ))
-#error "OTA Size Mismatch"
-#endif
-
-
-/*
- * Check that total size of content
- * does not exceed total size of memory allocated
- */
-#if ((FLASH_COMMON_SZ + OTA_IMAGE_SIZE + HOST_CONTROL_FLASH_SZ) > M2M_OTA_IMAGE2_OFFSET)
-#error "Exceed Flash Size"
-#endif /* ((FLASH_COMMON_SZ + OTA_IMAGE_SIZE + HOST_CONTROL_FLASH_SZ) > M2M_OTA_IMAGE2_OFFSET) */
-#if ((M2M_OTA_IMAGE2_OFFSET + OTA_IMAGE_SIZE) > FLASH_8M_TOTAL_SZ)
-#error "OTA Exceed Flash Size"
-#endif /* ((M2M_OTA_IMAGE2_OFFSET + OTA_IMAGE_SIZE) > FLASH_8M_TOTAL_SZ) */
+/**
+ * Magic value to differentiate between old HTTP flash section format and newer formats.
+ * The lowest byte is ignored when checking the value as it contains the
+ * version number (it should always be 00 here, image_builder will set this value in flash).
+ **/
+#define HTTP_FLASH_SECTION_MAGIC	0xB00B1500
+#define HTTP_FLASH_SECTION_VERSION	2
 
 #endif /* __SPI_FLASH_MAP_H__ */
-
-//DOM-IGNORE-END

@@ -3,10 +3,10 @@
     nm_common.h
 
   Summary:
-    This module contains WINC3400 BSP APIs declarations.
+    This module contains WINC1500 BSP APIs declarations.
 
   Description:
-    This module contains WINC3400 BSP APIs declarations.
+    This module contains WINC1500 BSP APIs declarations.
  *******************************************************************************/
 
 //DOM-IGNORE-BEGIN
@@ -34,47 +34,46 @@
 *******************************************************************************/
 //DOM-IGNORE-END
 
-/**@defgroup nm_bsp BSP
+/** @defgroup nm_bsp BSP
+    @brief
+        Description of the BSP (<strong>B</strong>oard <strong>S</strong>upport <strong>P</strong>ackage) module.
+    @{
+        @defgroup   DataT       Data Types
+        @defgroup   BSPDefine   Defines
+        @defgroup   BSPAPI      Functions
+        @brief
+            Lists the available BSP (<strong>B</strong>oard <strong>S</strong>upport <strong>P</strong>ackage) APIs.
+    @}
  */
 
-/**@defgroup  BSPDefine Defines
- * @ingroup nm_bsp
- * @{
+/**@addtogroup BSPDefine
+   @{
  */
 #ifndef _NM_BSP_H_
 #define _NM_BSP_H_
 
+
 #define BSP_MIN(x,y) ((x)>(y)?(y):(x))
 /*!<
-*     Computes the minimum of \b x and \b y.
+*     Computes the minimum value between \b x and \b y.
 */
+/**@}*/     //BSPDefine
 
  //@}
 
-/**
- * @addtogroup BSPDefine
- * @{
- */
-
 #ifdef _NM_BSP_BIG_END
-/*! Switch endianness of 32bit word (In the case that Host is BE) */
-#define NM_BSP_B_L_32(x) \
+#define NM_BSP_B_L_32(x)      \
 ((((x) & 0x000000FF) << 24) + \
-(((x) & 0x0000FF00) << 8)  + \
+(((x) & 0x0000FF00) << 8)   + \
 (((x) & 0x00FF0000) >> 8)   + \
 (((x) & 0xFF000000) >> 24))
-/*! Switch endianness of 16bit word (In the case that Host is BE) */
+
 #define NM_BSP_B_L_16(x) \
 ((((x) & 0x00FF) << 8) + \
 (((x)  & 0xFF00) >> 8))
 #else
-/*! Retain endianness of 32bit word (In the case that Host is LE) */
 #define NM_BSP_B_L_32(x)  (x)
-/*! Retain endianness of 16bit word (In the case that Host is LE) */
 #define NM_BSP_B_L_16(x)  (x)
 #endif
-
-/**@}
- */
 
 #endif  /*_NM_BSP_H_*/

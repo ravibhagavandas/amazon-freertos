@@ -14,12 +14,14 @@
             <make-dep-projects/>
             <sourceRootList>
                 <sourceRootElem>../src</sourceRootElem>
-                <sourceRootElem>../../../../../../../vendors/microchip/boards/same54_xpro/aws_tests</sourceRootElem>
-                <sourceRootElem>../../../../../../../freertos_kernel/portable/MemMang</sourceRootElem>
+                <sourceRootElem>../../../../../../../vendors/microchip/boards/same70_xult/aws_demos/linker_script</sourceRootElem>
+                <sourceRootElem>../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/linker_script</sourceRootElem>
+                <sourceRootElem>../../../../../../../vendors/microchip/boards/same70_xult/aws_tests/linker_script</sourceRootElem>
+                <sourceRootElem>../../../../../../../vendors/microchip/boards/same54_xpro/aws_tests/linker_script</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>
-                    <name>same54_xpro_nvm</name>
+                    <name>aws_tests</name>
                     <type>2</type>
                 </confElem>
             </confList>

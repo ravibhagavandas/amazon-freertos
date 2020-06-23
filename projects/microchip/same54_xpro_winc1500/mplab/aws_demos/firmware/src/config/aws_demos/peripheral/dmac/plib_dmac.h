@@ -81,8 +81,6 @@ typedef enum
     DMAC_CHANNEL_0 = 0,
     /* DMAC Channel 1 */
     DMAC_CHANNEL_1 = 1,
-    DMAC_CHANNEL_2 = 2,
-    DMAC_CHANNEL_3 = 3,
 } DMAC_CHANNEL;
 
 typedef enum

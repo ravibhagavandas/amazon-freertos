@@ -27,12 +27,14 @@
 #include <stddef.h>                     // Defines NULL
 #include <stdbool.h>                    // Defines true
 #include <stdlib.h>                     // Defines EXIT_FAILURE
+#include "iot_pkcs11_config.h"
+
 #include "definitions.h"                // SYS function prototypes
 
 #include "iot_network_types.h"
 /* Standard includes. */
 #include <time.h>
-#include "atca_config.h"
+
 /* FreeRTOS includes. */
 #include "FreeRTOS.h"
 #include "task.h"
@@ -67,7 +69,7 @@
 #define mainLOGGING_TASK_STACK_SIZE         ( configMINIMAL_STACK_SIZE * 5 )
 #define mainLOGGING_MESSAGE_QUEUE_LENGTH    ( 128 )
 
-ATCAIfaceCfg cfg_ateccx08a_i2c_default;
+extern ATCAIfaceCfg cfg_ateccx08a_i2c_default;
 extern ATCAIfaceCfg atecc608a_0_init_data;
 
 void prvWifiConnect( void );
@@ -92,8 +94,8 @@ int main( void )
 {
     /* Perform any hardware initialization that does not require the RTOS to be
      * running.  */
-    cfg_ateccx08a_i2c_default=atecc608a_0_init_data;
  
+    cfg_ateccx08a_i2c_default = atecc608a_0_init_data;
     prvMiscInitialization();
 
 
@@ -111,11 +113,11 @@ void prvWifiConnect( void )
     static int iInit=0;
     if(!iInit)
     {
-     SYSTEM_Init();
-     wifi_winc_crypto_init();
-     vDevModeKeyProvisioning();
-     DEMO_RUNNER_RunDemos();    
-     iInit=1;
+        SYSTEM_Init();
+        wifi_winc_crypto_init();
+        vDevModeKeyProvisioning();
+        DEMO_RUNNER_RunDemos();    
+        iInit=1;
     }
 }
 

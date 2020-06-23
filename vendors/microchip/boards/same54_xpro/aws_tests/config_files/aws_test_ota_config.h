@@ -1,6 +1,6 @@
 /*
- * Amazon FreeRTOS V1.1.4
- * Copyright (C) 2018 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS V1.1.4
+ * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -35,7 +35,7 @@
  * If applicable, the device must be pre-provisioned with this certificate. Please see
  * test/common/ota/test_files for the set of certificates.
  */
-#define otatestpalCERTIFICATE_FILE    "libraries\\freertos_plus\\aws\\ota\\test\\test_files\\ecdsa-sha256-signer.crt.pem"
+#define otatestpalCERTIFICATE_FILE                         "ecdsa-sha256-signer.crt.pem"
 
 /**
  * @brief Some devices have a hard-coded name for the firmware image to boot.
@@ -62,7 +62,7 @@
 /**
  * @brief 1 if using PKCS #11 to access the code sign certificate from NVM.
  */
-#define otatestpalREAD_CERTIFICATE_FROM_NVM_WITH_PKCS11    0
+#define otatestpalREAD_CERTIFICATE_FROM_NVM_WITH_PKCS11    1
 
 /**
  * @brief Include of signature testing data applicable to this device.

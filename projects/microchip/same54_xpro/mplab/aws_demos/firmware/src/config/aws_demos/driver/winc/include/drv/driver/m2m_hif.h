@@ -53,20 +53,19 @@ MACROS
 
 #define M2M_HIF_HDR_OFFSET (sizeof(tstrHifHdr) + 4)
 
-
 /**
 *   @struct     tstrHifHdr
 *   @brief      Structure to hold HIF header
 */
 typedef struct
 {
-    uint8_t   u8Gid;      /*!< Group ID */
-    uint8_t   u8Opcode;   /*!< OP code */
-    uint16_t  u16Length;  /*!< Payload length */
-} tstrHifHdr;
+    uint8_t   u8Gid;        /*!< Group ID */
+    uint8_t   u8Opcode; /*!< OP code */
+    uint16_t  u16Length;    /*!< Payload length */
+}tstrHifHdr;
 
 #ifdef __cplusplus
-extern "C" {
+     extern "C" {
 #endif
 
 /*!
@@ -83,7 +82,7 @@ extern "C" {
 */
 typedef void (*tpfHifCallBack)(uint8_t u8OpCode, uint16_t u16DataSize, uint32_t u32Addr);
 /**
-*   @fn         int8_t hif_init(void *arg);
+*   @fn         int8_t hif_init(void * arg);
 *   @brief
                 To initialize HIF layer.
 *   @param [in] arg
@@ -91,9 +90,9 @@ typedef void (*tpfHifCallBack)(uint8_t u8OpCode, uint16_t u16DataSize, uint32_t 
 *   @return
                 The function shall return ZERO for successful operation and a negative value otherwise.
 */
-int8_t hif_init(void *arg);
+int8_t hif_init(void * arg);
 /**
-*   @fn         int8_t hif_deinit(void *arg);
+*   @fn         int8_t hif_deinit(void * arg);
 *   @brief
                 To Deinitialize HIF layer.
 *   @param [in] arg
@@ -101,38 +100,10 @@ int8_t hif_init(void *arg);
 *    @return
                 The function shall return ZERO for successful operation and a negative value otherwise.
 */
-int8_t hif_deinit(void *arg);
+int8_t hif_deinit(void * arg);
 /**
-*   @fn         int8_t hif_check_compatibility(uint16_t u16HifInfo);
-*   @brief
-*               To check the compatibility of an image with the current driver.
-*   @param [in] u16HifInfo
-*               HIF info of image to be checked.
-*   @return     The function shall return ZERO for compatible image and a negative value otherwise.
-*/
-int8_t hif_check_compatibility(uint16_t u16HifInfo);
-/**
-*   @fn         int8_t hif_enable_access(void);
-*   @brief
-*               To enable access to HIF layer, based on HIF level of Firmware.
-*               This function reads HIF level directly from a register written by Firmware.
-*   @return     The function shall return ZERO for full match operation and a negative value if operation is restricted.
-*/
-int8_t hif_enable_access(void);
-/**
-*   @fn         int8_t hif_check_code(uint8_t u8Gid, uint8_t u8OpCode);
-*   @brief
-*               To check that a particular hif message is supported with the current driver/firmware pair.
-*   @param [in] u8Gid
-*               Group ID.
-*   @param [in] u8Opcode
-*               Operation ID.
-*   @return     The function shall return ZERO for support and a negative value otherwise.
-*/
-int8_t hif_check_code(uint8_t u8Gid, uint8_t u8OpCode);
-/**
-*   @fn     int8_t hif_send(uint8_t u8Gid, uint8_t u8Opcode, uint8_t *pu8CtrlBuf, uint16_t u16CtrlBufSize,
-                       uint8_t *pu8DataBuf, uint16_t u16DataSize, uint16_t u16DataOffset)
+*   @fn     int8_t hif_send(uint8_t u8Gid,uint8_t u8Opcode,uint8_t *pu8CtrlBuf,uint16_t u16CtrlBufSize,
+                       uint8_t *pu8DataBuf,uint16_t u16DataSize, uint16_t u16DataOffset)
 *   @brief  Send packet using host interface.
 
 *   @param [in] u8Gid
@@ -151,8 +122,8 @@ int8_t hif_check_code(uint8_t u8Gid, uint8_t u8OpCode);
                 Packet buffer size (including the HIF header).
 *    @return    The function shall return ZERO for successful operation and a negative value otherwise.
 */
-int8_t hif_send(uint8_t u8Gid, uint8_t u8Opcode, uint8_t *pu8CtrlBuf, uint16_t u16CtrlBufSize,
-                       uint8_t *pu8DataBuf, uint16_t u16DataSize, uint16_t u16DataOffset);
+int8_t hif_send(uint8_t u8Gid,uint8_t u8Opcode,uint8_t *pu8CtrlBuf,uint16_t u16CtrlBufSize,
+                       uint8_t *pu8DataBuf,uint16_t u16DataSize, uint16_t u16DataOffset);
 /**
 *   @fn     hif_receive
 *   @brief  Host interface interrupt service routine
@@ -182,7 +153,7 @@ int8_t hif_receive(uint32_t u32Addr, uint8_t *pu8Buf, uint16_t u16Sz, uint8_t is
 *   @return
                 The function shall return ZERO for successful operation and a negative value otherwise.
 */
-int8_t hif_register_cb(uint8_t u8Grp, tpfHifCallBack fn);
+int8_t hif_register_cb(uint8_t u8Grp,tpfHifCallBack fn);
 /**
 *   @fn     int8_t hif_chip_sleep(void);
 *   @brief
@@ -191,6 +162,14 @@ int8_t hif_register_cb(uint8_t u8Grp, tpfHifCallBack fn);
                 The function shall return ZERO for successful operation and a negative value otherwise.
 */
 int8_t hif_chip_sleep(void);
+/**
+*   @fn     int8_t hif_chip_sleep_sc(void);
+*   @brief
+                To clear the chip count only but keep the chip awake
+*   @return
+                The function shall return ZERO for successful operation and a negative value otherwise.
+*/
+int8_t hif_chip_sleep_sc(void);
 /**
 *   @fn     int8_t hif_chip_wake(void);
 *   @brief
@@ -231,7 +210,7 @@ uint8_t hif_get_sleep_mode(void);
 /**
 *   @fn     hif_handle_isr(void)
 *   @brief
-            Handle interrupt received from WINC3400 firmware.
+            Handle interrupt received from NMC1500 firmware.
 *   @return
             The function SHALL return 0 for success and a negative value otherwise.
 */

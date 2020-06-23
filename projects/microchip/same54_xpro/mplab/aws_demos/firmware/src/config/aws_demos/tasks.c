@@ -59,27 +59,6 @@
 // Section: RTOS "Tasks" Routine
 // *****************************************************************************
 // *****************************************************************************
-/* Handle for the APP_Tasks. */
-TaskHandle_t xAPP_Tasks;
-
-void _APP_Tasks(  void *pvParameters  )
-{
-    while(1)
-    {
-        APP_Tasks();
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
-    }
-}
-
-static void _WDRV_WINC_Tasks(  void *pvParameters  )
-{
-    while(1)
-    {
-        WDRV_WINC_Tasks(sysObj.drvWifiWinc);
-        vTaskDelay(1 / portTICK_PERIOD_MS);
-    }
-}
-
 void _SYS_CMD_Tasks(  void *pvParameters  )
 {
     while(1)
@@ -89,6 +68,16 @@ void _SYS_CMD_Tasks(  void *pvParameters  )
     }
 }
 
+
+
+void _DRV_MIIM_Task(  void *pvParameters  )
+{
+    while(1)
+    {
+        DRV_MIIM_Tasks(sysObj.drvMiim);
+        vTaskDelay(1 / portTICK_PERIOD_MS);
+    }
+}
 
 
 
@@ -110,7 +99,6 @@ void SYS_Tasks ( void )
 {
     /* Maintain system services */
     
-
     xTaskCreate( _SYS_CMD_Tasks,
         "SYS_CMD_TASKS",
         SYS_CMD_RTOS_STACK_SIZE,
@@ -122,12 +110,13 @@ void SYS_Tasks ( void )
 
 
 
+
     /* Maintain Device Drivers */
-        xTaskCreate( _WDRV_WINC_Tasks,
-        "WDRV_WINC_Tasks",
-        DRV_WIFI_WINC_RTOS_STACK_SIZE,
+        xTaskCreate( _DRV_MIIM_Task,
+        "DRV_MIIM_Tasks",
+        DRV_MIIM_RTOS_STACK_SIZE,
         (void*)NULL,
-        DRV_WIFI_WINC_RTOS_TASK_PRIORITY,
+        DRV_MIIM_RTOS_TASK_PRIORITY,
         (TaskHandle_t*)NULL
     );
 
@@ -136,17 +125,6 @@ void SYS_Tasks ( void )
 
     /* Maintain Middleware & Other Libraries */
     
-
-    /* Maintain the application's state machine. */
-        /* Create OS Thread for APP_Tasks. */
-    xTaskCreate((TaskFunction_t) _APP_Tasks,
-                "APP_Tasks",
-                1024,
-                NULL,
-                1,
-                &xAPP_Tasks);
-
-
 
 
     /* Start RTOS Scheduler. */

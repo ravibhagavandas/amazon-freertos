@@ -3,10 +3,8 @@
     m2m_ssl.c
 
   Summary:
-    WINC SSL Interface.
 
   Description:
-    WINC SSL Interface.
  *******************************************************************************/
 
 //DOM-IGNORE-BEGIN
@@ -96,56 +94,56 @@ static void m2m_ssl_cb(uint8_t u8OpCode, uint16_t u16DataSize, uint32_t u32Addr)
                 if (gpfAppSSLCb)
                     gpfAppSSLCb(M2M_SSL_RESP_SET_CS_LIST, &strCsList);
             }
-        }
-        break;
-        case M2M_SSL_RESP_WRITE_OWN_CERTS:
-        {
-            tstrTlsSrvChunkHdr strTlsSrvChunkRsp;
-            uint8_t bCallApp = 1;
+		}
+		break;
+		case M2M_SSL_RESP_WRITE_OWN_CERTS:
+		{
+			tstrTlsSrvChunkHdr strTlsSrvChunkRsp;
+			uint8_t bCallApp = 1;
 
-            s8tmp = hif_receive(u32Addr, (uint8_t*)&strTlsSrvChunkRsp, sizeof(tstrTlsSrvChunkHdr), 0);
-            if(s8tmp == M2M_SUCCESS)
-            {
-                uint16_t offset = strTlsSrvChunkRsp.u16Offset32;
-                uint16_t chunk_size = strTlsSrvChunkRsp.u16Size32;
-                uint16_t total_size = strTlsSrvChunkRsp.u16TotalSize32;
-                tenuTlsFlashStatus status = (tenuTlsFlashStatus)(strTlsSrvChunkRsp.u16Sig);
+			s8tmp = hif_receive(u32Addr, (uint8_t*)&strTlsSrvChunkRsp, sizeof(tstrTlsSrvChunkHdr), 0);
+			if(s8tmp == M2M_SUCCESS)
+			{
+				uint16_t offset = strTlsSrvChunkRsp.u16Offset32;
+				uint16_t chunk_size = strTlsSrvChunkRsp.u16Size32;
+				uint16_t total_size = strTlsSrvChunkRsp.u16TotalSize32;
+				tenuTlsFlashStatus status = (tenuTlsFlashStatus)(strTlsSrvChunkRsp.u16Sig);
+				
+				/* If first chunk, reset status. */
+				if (offset == 0)
+					genuStatus = TLS_FLASH_OK_NO_CHANGE;
+				/* Only send status to app when processing last chunk. */
+				if (offset + chunk_size != total_size)
+					bCallApp = 0;
 
-                /* If first chunk, reset status. */
-                if (offset == 0)
-                    genuStatus = TLS_FLASH_OK_NO_CHANGE;
-                /* Only send status to app when processing last chunk. */
-                if (offset + chunk_size != total_size)
-                    bCallApp = 0;
-
-                switch (status)
-                {
-                    case TLS_FLASH_OK:
-                        // Good flash write. Update status if no errors yet.
-                        if (genuStatus == TLS_FLASH_OK_NO_CHANGE)
-                            genuStatus = status;
-                    break;
-                    case TLS_FLASH_OK_NO_CHANGE:
-                        // No change, don't update status.
-                    break;
-                    case TLS_FLASH_ERR_CORRUPT:
-                        // Corrupt. Always update status.
-                        genuStatus = status;
-                    break;
-                    case TLS_FLASH_ERR_NO_CHANGE:
-                        // Failed flash write. Update status if no more serious error.
-                        if ((genuStatus != TLS_FLASH_ERR_CORRUPT) && (genuStatus != TLS_FLASH_ERR_UNKNOWN))
-                            genuStatus = status;
-                    break;
-                    default:
-                        // Don't expect any other case. Ensure we don't mask a previous corrupt error.
-                        if (genuStatus != TLS_FLASH_ERR_CORRUPT)
-                            genuStatus = TLS_FLASH_ERR_UNKNOWN;
-                    break;
-                }
-            }
-            if (bCallApp && gpfAppSSLCb)
-                gpfAppSSLCb(M2M_SSL_RESP_WRITE_OWN_CERTS, &genuStatus);
+				switch (status)
+				{
+					case TLS_FLASH_OK:
+						// Good flash write. Update status if no errors yet.
+						if (genuStatus == TLS_FLASH_OK_NO_CHANGE)
+							genuStatus = status;
+					break;
+					case TLS_FLASH_OK_NO_CHANGE:
+						// No change, don't update status.
+					break;
+					case TLS_FLASH_ERR_CORRUPT:
+						// Corrupt. Always update status.
+						genuStatus = status;
+					break;
+					case TLS_FLASH_ERR_NO_CHANGE:
+						// Failed flash write. Update status if no more serious error.
+						if ((genuStatus != TLS_FLASH_ERR_CORRUPT) && (genuStatus != TLS_FLASH_ERR_UNKNOWN))
+							genuStatus = status;
+					break;
+					default:
+						// Don't expect any other case. Ensure we don't mask a previous corrupt error.
+						if (genuStatus != TLS_FLASH_ERR_CORRUPT)
+							genuStatus = TLS_FLASH_ERR_UNKNOWN;
+					break;
+				}
+			}
+			if (bCallApp && gpfAppSSLCb)
+				gpfAppSSLCb(M2M_SSL_RESP_WRITE_OWN_CERTS, &genuStatus);
         }
         break;
     }
@@ -188,62 +186,62 @@ int8_t m2m_ssl_handshake_rsp(tstrEccReqInfo* strECCResp, uint8_t* pu8RspDataBuff
 int8_t m2m_ssl_send_certs_to_winc(uint8_t* pu8Buffer, uint32_t u32BufferSz)
 {
     int8_t s8Ret = M2M_SUCCESS;
-    #define TXLIMIT  (256 * 6)
+	#define TXLIMIT  (256 * 6)
 
-    if(u32BufferSz <= TXLIMIT)
-    {
-        // set chunk header for one chunk
-        tstrTlsSrvChunkHdr *pchkhdr = (tstrTlsSrvChunkHdr *)pu8Buffer;
-        pchkhdr->u16Sig = TLS_CERTS_CHUNKED_SIG_VALUE;
-        pchkhdr->u16TotalSize32 = (u32BufferSz + 3) >> 2;
-        pchkhdr->u16Offset32 = 0;
-        pchkhdr->u16Size32 = (u32BufferSz + 3) >> 2;
-        s8Ret = hif_send(M2M_REQ_GROUP_SSL, (M2M_SSL_REQ_WRITE_OWN_CERTS | M2M_REQ_DATA_PKT), NULL, 0, pu8Buffer, u32BufferSz, 0);
-        M2M_INFO("Transferred %u bytes of cert data NON-CHUNKED\n", u32BufferSz);
-    }
-    else
-    {
-        // chunk it
-        // We are sneaking in a header - tstrTlsSrvChunkHdr
-        #define CHUNKHDRSZ (sizeof(tstrTlsSrvChunkHdr))
-        #define CHUNKSZ    (TXLIMIT - 256) // divisible by 4
-        uint8_t saveblob[CHUNKHDRSZ];
-        uint32_t ofs = 0;
-        uint32_t thischunksz = 0;
+	if(u32BufferSz <= TXLIMIT)
+	{
+		// set chunk header for one chunk
+		tstrTlsSrvChunkHdr *pchkhdr = (tstrTlsSrvChunkHdr *)pu8Buffer;
+		pchkhdr->u16Sig = TLS_CERTS_CHUNKED_SIG_VALUE;
+		pchkhdr->u16TotalSize32 = (u32BufferSz + 3) >> 2;
+		pchkhdr->u16Offset32 = 0;
+		pchkhdr->u16Size32 = (u32BufferSz + 3) >> 2;
+		s8Ret = hif_send(M2M_REQ_GROUP_SSL, (M2M_SSL_REQ_WRITE_OWN_CERTS | M2M_REQ_DATA_PKT), NULL, 0, pu8Buffer, u32BufferSz, 0);
+		M2M_INFO("Transferred %u bytes of cert data NON-CHUNKED\n", u32BufferSz);
+	}
+	else
+	{
+		// chunk it
+		// We are sneaking in a header - tstrTlsSrvChunkHdr
+		#define CHUNKHDRSZ (sizeof(tstrTlsSrvChunkHdr))
+		#define CHUNKSZ    (TXLIMIT - 256) // divisible by 4
+		uint8_t saveblob[CHUNKHDRSZ];
+		uint32_t ofs = 0;
+		uint32_t thischunksz = 0;
+		
+		// first is special - over writing our header
+		memcpy(saveblob, &pu8Buffer[ofs], CHUNKHDRSZ);
+		thischunksz = min(CHUNKSZ,u32BufferSz-ofs); // no need to round up to quad words this time
 
-        // first is special - over writing our header
-        memcpy(saveblob, &pu8Buffer[ofs], CHUNKHDRSZ);
-        thischunksz = min(CHUNKSZ,u32BufferSz-ofs); // no need to round up to quad words this time
+		tstrTlsSrvChunkHdr* pchkhdr = (tstrTlsSrvChunkHdr*)&pu8Buffer[ofs];
+		pchkhdr->u16Sig = TLS_CERTS_CHUNKED_SIG_VALUE;
+		pchkhdr->u16TotalSize32 = ((u32BufferSz + 3) >> 2);
+		pchkhdr->u16Offset32 = ((ofs + 3) >> 2);
+		pchkhdr->u16Size32 = ((thischunksz + 3) >> 2);
+		s8Ret = hif_send(M2M_REQ_GROUP_SSL, (M2M_SSL_REQ_WRITE_OWN_CERTS | M2M_REQ_DATA_PKT), NULL, 0, &pu8Buffer[ofs], thischunksz, 0);
+		M2M_INFO("Transferred %u bytes of cert data CHUNKED to offset %u total %u\n", thischunksz, ofs, u32BufferSz);
+		memcpy(&pu8Buffer[ofs], saveblob, CHUNKHDRSZ);
+		ofs += thischunksz;
 
-        tstrTlsSrvChunkHdr* pchkhdr = (tstrTlsSrvChunkHdr*)&pu8Buffer[ofs];
-        pchkhdr->u16Sig = TLS_CERTS_CHUNKED_SIG_VALUE;
-        pchkhdr->u16TotalSize32 = ((u32BufferSz + 3) >> 2);
-        pchkhdr->u16Offset32 = ((ofs + 3) >> 2);
-        pchkhdr->u16Size32 = ((thischunksz + 3) >> 2);
-        s8Ret = hif_send(M2M_REQ_GROUP_SSL, (M2M_SSL_REQ_WRITE_OWN_CERTS | M2M_REQ_DATA_PKT), NULL, 0, &pu8Buffer[ofs], thischunksz, 0);
-        M2M_INFO("Transferred %u bytes of cert data CHUNKED to offset %u total %u\n", thischunksz, ofs, u32BufferSz);
-        memcpy(&pu8Buffer[ofs], saveblob, CHUNKHDRSZ);
-        ofs += thischunksz;
+		while (ofs < u32BufferSz)
+		{
+			// Subsequent chunks write header before and send a little more
+			memcpy(saveblob, &pu8Buffer[ofs-CHUNKHDRSZ], CHUNKHDRSZ);
+			thischunksz = min(CHUNKSZ,u32BufferSz-ofs);
+			thischunksz = (thischunksz + 3) & 0xFFFFFFFC; // needs to round up to quad word length
+			pchkhdr = (tstrTlsSrvChunkHdr*)&pu8Buffer[ofs - CHUNKHDRSZ];
+			pchkhdr->u16Sig = TLS_CERTS_CHUNKED_SIG_VALUE;
+			pchkhdr->u16TotalSize32 = ((u32BufferSz + 3) >> 2);
+			pchkhdr->u16Offset32 = ((ofs + 3) >> 2);
+			pchkhdr->u16Size32 = ((thischunksz + 3) >> 2);
+			s8Ret = hif_send(M2M_REQ_GROUP_SSL, (M2M_SSL_REQ_WRITE_OWN_CERTS | M2M_REQ_DATA_PKT), NULL, 0, &pu8Buffer[ofs - CHUNKHDRSZ], thischunksz + CHUNKHDRSZ, 0);
+			M2M_INFO("Transferred %u bytes of cert data CHUNKED to offset %u total %u\n", thischunksz, ofs, u32BufferSz);
+			memcpy(&pu8Buffer[ofs - CHUNKHDRSZ], saveblob, CHUNKHDRSZ);
+			ofs += thischunksz;
+		}
+	}
 
-        while (ofs < u32BufferSz)
-        {
-            // Subsequent chunks write header before and send a little more
-            memcpy(saveblob, &pu8Buffer[ofs-CHUNKHDRSZ], CHUNKHDRSZ);
-            thischunksz = min(CHUNKSZ,u32BufferSz-ofs);
-            thischunksz = (thischunksz + 3) & 0xFFFFFFFC; // needs to round up to quad word length
-            pchkhdr = (tstrTlsSrvChunkHdr*)&pu8Buffer[ofs - CHUNKHDRSZ];
-            pchkhdr->u16Sig = TLS_CERTS_CHUNKED_SIG_VALUE;
-            pchkhdr->u16TotalSize32 = ((u32BufferSz + 3) >> 2);
-            pchkhdr->u16Offset32 = ((ofs + 3) >> 2);
-            pchkhdr->u16Size32 = ((thischunksz + 3) >> 2);
-            s8Ret = hif_send(M2M_REQ_GROUP_SSL, (M2M_SSL_REQ_WRITE_OWN_CERTS | M2M_REQ_DATA_PKT), NULL, 0, &pu8Buffer[ofs - CHUNKHDRSZ], thischunksz + CHUNKHDRSZ, 0);
-            M2M_INFO("Transferred %u bytes of cert data CHUNKED to offset %u total %u\n", thischunksz, ofs, u32BufferSz);
-            memcpy(&pu8Buffer[ofs - CHUNKHDRSZ], saveblob, CHUNKHDRSZ);
-            ofs += thischunksz;
-        }
-    }
-
-    return s8Ret;
+	return s8Ret;
 }
 
 /*!
@@ -395,7 +393,7 @@ int8_t m2m_ssl_init(tpfAppSSLCb pfAppSSLCb)
 
     gpfAppSSLCb = pfAppSSLCb;
     gu32HIFAddr = 0;
-    genuStatus = TLS_FLASH_ERR_UNKNOWN;
+	genuStatus = TLS_FLASH_ERR_UNKNOWN;
 
     s8Ret = hif_register_cb(M2M_REQ_GROUP_SSL,m2m_ssl_cb);
     if (s8Ret != M2M_SUCCESS)

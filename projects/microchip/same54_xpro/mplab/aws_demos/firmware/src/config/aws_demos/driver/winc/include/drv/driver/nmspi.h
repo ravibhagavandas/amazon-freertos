@@ -1,14 +1,14 @@
 /*******************************************************************************
-  This module contains WINC3400 SPI protocol bus APIs implementation.
+  This module contains WINC1500 SPI protocol bus APIs implementation.
 
   File Name:
     nmspi.h
 
   Summary:
-    This module contains WINC3400 SPI protocol bus APIs implementation.
+    This module contains WINC1500 SPI protocol bus APIs implementation.
 
   Description:
-    This module contains WINC3400 SPI protocol bus APIs implementation.
+    This module contains WINC1500 SPI protocol bus APIs implementation.
  *******************************************************************************/
 
 //DOM-IGNORE-BEGIN

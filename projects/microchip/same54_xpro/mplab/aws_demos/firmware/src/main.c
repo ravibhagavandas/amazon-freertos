@@ -27,19 +27,20 @@
 #include <stddef.h>                     // Defines NULL
 #include <stdbool.h>                    // Defines true
 #include <stdlib.h>                     // Defines EXIT_FAILURE
+#include "iot_pkcs11_config.h"
+
 #include "definitions.h"                // SYS function prototypes
 
 #include "iot_network_types.h"
 /* Standard includes. */
 #include <time.h>
-#include "atca_config.h"
+
 /* FreeRTOS includes. */
 #include "FreeRTOS.h"
 #include "task.h"
 #include "FreeRTOS_IP.h"
 #include "FreeRTOS_Sockets.h"
 #include "task.h"
-
 /* AWS System includes. */
 #include "aws_application_version.h"
 #include "iot_system_init.h"
@@ -51,10 +52,10 @@
 #include "aws_demo.h"
 #include "iot_logging_task.h"
 #include "iot_wifi.h"
-#include "cryptoauthlib.h"
 /* Application version info. */
 #include "aws_application_version.h"
 #include "iot_wifi.h"
+#include "amazon-freertos/demos/include/aws_demo.h"
 
 /* Sleep on this platform */
 #define Sleep( nMs )    vTaskDelay( pdMS_TO_TICKS( nMs ) );
@@ -66,9 +67,6 @@
 
 #define mainLOGGING_TASK_STACK_SIZE         ( configMINIMAL_STACK_SIZE * 5 )
 #define mainLOGGING_MESSAGE_QUEUE_LENGTH    ( 128 )
-
-ATCAIfaceCfg cfg_ateccx08a_i2c_default;
-extern ATCAIfaceCfg atecc608a_0_init_data;
 
 void prvWifiConnect( void );
 extern void wifi_winc_crypto_init (void);	
@@ -92,10 +90,11 @@ int main( void )
 {
     /* Perform any hardware initialization that does not require the RTOS to be
      * running.  */
-    cfg_ateccx08a_i2c_default=atecc608a_0_init_data;
  
     prvMiscInitialization();
+    vApplicationIPInit();
 
+    
 
     /* Start the scheduler.  Initialization that requires the OS to be running,
      * including the WiFi initialization, is performed in the RTOS daemon task
@@ -108,15 +107,6 @@ int main( void )
 
 void prvWifiConnect( void )
 {
-    static int iInit=0;
-    if(!iInit)
-    {
-     SYSTEM_Init();
-     wifi_winc_crypto_init();
-     vDevModeKeyProvisioning();
-     DEMO_RUNNER_RunDemos();    
-     iInit=1;
-    }
 }
 
 static void CLOCK_DeInitialize(void)
@@ -167,14 +157,53 @@ static void prvMiscInitialization( void )
                             tskIDLE_PRIORITY,
                             mainLOGGING_MESSAGE_QUEUE_LENGTH );
 
-   
     SYS_Initialize( NULL );
-    SOCKETS_Init();
-    initialize_wifi();
-   
     SYS_Tasks();
 }
 /*-----------------------------------------------------------*/
+
+void vApplicationIPNetworkEventHook(eIPCallbackEvent_t eNetworkEvent )
+{
+        uint32_t ulIPAddress, ulNetMask, ulGatewayAddress, ulDNSServerAddress;
+    char cBuffer[ 16 ];
+    static BaseType_t xTasksAlreadyCreated = pdFALSE;
+
+    /* If the network has just come up...*/
+    if( eNetworkEvent == eNetworkUp )
+    {
+        /* The network is up so we can run. */
+        if( ( SYSTEM_Init() == pdPASS ) && ( xTasksAlreadyCreated == pdFALSE ) )
+        {
+            /* A simple example to demonstrate key and certificate provisioning in
+             * microcontroller flash using PKCS#11 interface. This should be replaced
+             * by production ready key provisioning mechanism. */
+            vDevModeKeyProvisioning();
+
+            /* Run all demos. */
+            DEMO_RUNNER_RunDemos();
+            xTasksAlreadyCreated = pdTRUE;
+        }
+
+        /* Print out the network configuration, which may have come from a DHCP
+         * server. */
+        FreeRTOS_GetAddressConfiguration(
+            &ulIPAddress,
+            &ulNetMask,
+            &ulGatewayAddress,
+            &ulDNSServerAddress );
+        FreeRTOS_inet_ntoa( ulIPAddress, cBuffer );
+        FreeRTOS_printf( ( "\r\n\r\nIP Address: %s\r\n", cBuffer ) );
+
+        FreeRTOS_inet_ntoa( ulNetMask, cBuffer );
+        FreeRTOS_printf( ( "Subnet Mask: %s\r\n", cBuffer ) );
+
+        FreeRTOS_inet_ntoa( ulGatewayAddress, cBuffer );
+        FreeRTOS_printf( ( "Gateway Address: %s\r\n", cBuffer ) );
+
+        FreeRTOS_inet_ntoa( ulDNSServerAddress, cBuffer );
+        FreeRTOS_printf( ( "DNS Server Address: %s\r\n\r\n\r\n", cBuffer ) );
+    }
+}
 
 
   
@@ -270,12 +299,3 @@ void vApplicationIdleHook( void )
 }
 /*-----------------------------------------------------------*/
 
-
-WIFIReturnCode_t WIFI_RegisterNetworkStateChangeEventCallback( IotNetworkStateChangeEventCallback_t xCallback )
-{
-    if(xCallback)
-    {
-        xCallback(AWSIOT_NETWORK_TYPE_WIFI,eNetworkStateUnknown);
-    }
-    return 0;
-}

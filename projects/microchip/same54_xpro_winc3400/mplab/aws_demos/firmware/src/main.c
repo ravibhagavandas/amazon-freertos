@@ -271,4 +271,11 @@ void vApplicationIdleHook( void )
 /*-----------------------------------------------------------*/
 
 
-
+WIFIReturnCode_t WIFI_RegisterNetworkStateChangeEventCallback( IotNetworkStateChangeEventCallback_t xCallback )
+{
+    if(xCallback)
+    {
+        xCallback(AWSIOT_NETWORK_TYPE_WIFI,eNetworkStateUnknown);
+    }
+    return 0;
+}

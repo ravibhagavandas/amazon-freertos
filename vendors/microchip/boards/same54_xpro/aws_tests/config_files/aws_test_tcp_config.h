@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2018 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS V1.1.4
+ * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -53,13 +54,19 @@
  *  @brief Indicates how long  receive needs to wait for data before Timeout happens.
  *
  */
-#define         integrationtestportableRECEIVE_TIMEOUT             2000
+#define         integrationtestportableRECEIVE_TIMEOUT             20000
 
 /**
  * @brief Indicates how long  send needs to wait before Timeout happens.
  *
  */
-#define         integrationtestportableSEND_TIMEOUT                2000
+#define         integrationtestportableSEND_TIMEOUT                20000
+
+
+/**
+ * @brief TCP Echo tests timeout for the Rx and Tx tasks.
+ */
+#define         tcptestECHO_TEST_RXTX_TIMEOUT                      10000
 
 
 #endif /*AWS_INTEGRATION_TEST_TCP_CONFIG_H */

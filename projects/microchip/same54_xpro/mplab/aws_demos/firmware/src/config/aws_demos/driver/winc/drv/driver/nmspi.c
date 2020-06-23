@@ -1,14 +1,14 @@
 /*******************************************************************************
-  This module contains WINC3400 SPI protocol bus APIs implementation.
+  This module contains WINC1500 SPI protocol bus APIs implementation.
 
   File Name:
     nmspi.c
 
   Summary:
-    This module contains WINC3400 SPI protocol bus APIs implementation.
+    This module contains WINC1500 SPI protocol bus APIs implementation.
 
   Description:
-    This module contains WINC3400 SPI protocol bus APIs implementation.
+    This module contains WINC1500 SPI protocol bus APIs implementation.
  *******************************************************************************/
 
 //DOM-IGNORE-BEGIN
@@ -39,6 +39,7 @@
 #include "nm_common.h"
 
 #include "nmspi.h"
+#include "nmasic.h"
 #include "wdrv_winc_common.h"
 #include "wdrv_winc_spi.h"
 
@@ -533,6 +534,11 @@ static int8_t spi_write_reg(uint32_t u32Addr, uint32_t u32Val)
         return N_FAIL;
     }
 
+    if (rNMI_GLB_RESET == u32Addr)
+    {
+        return N_OK;
+    }
+
     if (spi_cmd_rsp(cmd) != N_OK)
     {
         M2M_ERR("[spi_write_reg]: Failed cmd response, write reg (%08x)...\r\n", u32Addr);
@@ -711,6 +717,9 @@ void nm_spi_lock_init(void)
 *   @fn     nm_spi_init
 *   @brief  Initialize the SPI
 *   @return M2M_SUCCESS in case of success and M2M_ERR_BUS_FAIL in case of failure
+*   @author M. Abdelmawla
+*   @date   11 July 2012
+*   @version    1.0
 */
 int8_t nm_spi_init(void)
 {
@@ -772,6 +781,9 @@ int8_t nm_spi_init(void)
 *   @fn     nm_spi_deinit
 *   @brief  DeInitialize the SPI
 *   @return M2M_SUCCESS in case of success and M2M_ERR_BUS_FAIL in case of failure
+*   @author Samer Sarhan
+*   @date   27 Feb 2015
+*   @version    1.0
 */
 int8_t nm_spi_deinit(void)
 {
@@ -786,6 +798,9 @@ int8_t nm_spi_deinit(void)
 *   @param [in] u32Addr
 *               Register address
 *   @return Register value
+*   @author M. Abdelmawla
+*   @date   11 July 2012
+*   @version    1.0
 */
 uint32_t nm_spi_read_reg(uint32_t u32Addr)
 {
@@ -804,6 +819,9 @@ uint32_t nm_spi_read_reg(uint32_t u32Addr)
 *   @param [out]    pu32RetVal
 *               Pointer to u32 variable used to return the read value
 *   @return M2M_SUCCESS in case of success and M2M_ERR_BUS_FAIL in case of failure
+*   @author M. Abdelmawla
+*   @date   11 July 2012
+*   @version    1.0
 */
 int8_t nm_spi_read_reg_with_ret(uint32_t u32Addr, uint32_t* pu32RetVal)
 {
@@ -838,6 +856,9 @@ int8_t nm_spi_read_reg_with_ret(uint32_t u32Addr, uint32_t* pu32RetVal)
 *   @param [in] u32Val
 *               Value to be written to the register
 *   @return M2M_SUCCESS in case of success and M2M_ERR_BUS_FAIL in case of failure
+*   @author M. Abdelmawla
+*   @date   11 July 2012
+*   @version    1.0
 */
 int8_t nm_spi_write_reg(uint32_t u32Addr, uint32_t u32Val)
 {
@@ -874,6 +895,9 @@ int8_t nm_spi_write_reg(uint32_t u32Addr, uint32_t u32Val)
 *   @param [in] u16Sz
 *               Number of bytes to read. The buffer size must be >= u16Sz
 *   @return M2M_SUCCESS in case of success and M2M_ERR_BUS_FAIL in case of failure
+*   @author M. Abdelmawla
+*   @date   11 July 2012
+*   @version    1.0
 */
 int8_t nm_spi_read_block(uint32_t u32Addr, uint8_t *puBuf, uint16_t u16Sz)
 {
@@ -925,6 +949,9 @@ int8_t nm_spi_read_block(uint32_t u32Addr, uint8_t *puBuf, uint16_t u16Sz)
 *   @param [in] u16Sz
 *               Number of bytes to write. The buffer size must be >= u16Sz
 *   @return M2M_SUCCESS in case of success and M2M_ERR_BUS_FAIL in case of failure
+*   @author M. Abdelmawla
+*   @date   11 July 2012
+*   @version    1.0
 */
 int8_t nm_spi_write_block(uint32_t u32Addr, uint8_t *puBuf, uint16_t u16Sz)
 {
