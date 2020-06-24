@@ -52,7 +52,7 @@ extern void vLoggingPrintf( const char * pcFormatString,
  * FreeRTOS_netstat() command, and ping replies.  If ipconfigHAS_PRINTF is set to 1
  * then FreeRTOS_printf should be set to the function used to print out the
  * messages. */
-#define ipconfigHAS_PRINTF    0
+#define ipconfigHAS_PRINTF    1
 #if ( ipconfigHAS_PRINTF == 1 )
     #define FreeRTOS_printf( X )    configPRINTF( X )
 #endif
@@ -222,7 +222,7 @@ extern uint32_t ulRand();
 /* USE_TCP: Use TCP and all its features */
 #define ipconfigUSE_TCP                                ( 1 ) 
 /* USE_WIN: Let TCP use windowing mechanism. */
-#define ipconfigUSE_TCP_WIN                            ( 0 ) 
+#define ipconfigUSE_TCP_WIN                            ( 1 ) 
 
 /* The MTU is the maximum number of bytes the payload of a network frame can
  * contain.  For normal Ethernet V2 frames the maximum MTU is 1500.  Setting a

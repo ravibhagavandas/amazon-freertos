@@ -22,6 +22,10 @@
  * http://aws.amazon.com/freertos
  * http://www.FreeRTOS.org
  */
+ #include <stdint.h>
+
+/* Unity includes. */
+#include "unity_internals.h"
 
 /**
  * @file aws_mqtt_config.h
@@ -31,18 +35,10 @@
 #ifndef _AWS_MQTT_CONFIG_H_
 #define _AWS_MQTT_CONFIG_H_
 
-/* Unity includes. */
-#include "unity_internals.h"
-
-/**
- * @brief Define assert for test project.
- */
-#define mqttconfigASSERT( x )    if( ( x ) == 0 ) TEST_ABORT()
-
 /**
  * @brief Enable subscription management.
  *
- * This gives the user flexibility of registering a callback per subscription.
+ * This gives the user flexibility of registering a callback per topic.
  */
 #define mqttconfigENABLE_SUBSCRIPTION_MANAGEMENT            ( 1 )
 
@@ -58,6 +54,9 @@
  */
 #define mqttconfigSUBSCRIPTION_MANAGER_MAX_SUBSCRIPTIONS    ( 8 )
 
+#define mqttconfigASSERT( x )                       if( ( x ) == 0 ) TEST_ABORT()
+
+
 /*
  * Uncomment the following two lines to enable asserts.
  */
@@ -67,6 +66,6 @@
 /**
  * @brief Set this macro to 1 for enabling debug logs.
  */
-#define mqttconfigENABLE_DEBUG_LOGS    0
+#define mqttconfigENABLE_DEBUG_LOGS                 ( 0 )
 
 #endif /* _AWS_MQTT_CONFIG_H_ */

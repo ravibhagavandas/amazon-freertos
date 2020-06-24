@@ -63,7 +63,7 @@
 #define wificonfigMAX_BSSID_LEN               ( 6 )
 
 /**
- * @brief Max passphrase length
+ * @brief Max passphrase length.
  * 
  * This length is designated by the Wi-Fi driver as both the WPA PSK and
  * Passphrase length.

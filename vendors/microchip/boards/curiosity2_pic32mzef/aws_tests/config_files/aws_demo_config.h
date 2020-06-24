@@ -1,6 +1,6 @@
 /*
- * Amazon FreeRTOS V1.1.4
- * Copyright (C) 2018 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS V1.1.4
+ * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -31,6 +31,6 @@
 #define democonfigOTA_UPDATE_TASK_TASK_PRIORITY              ( tskIDLE_PRIORITY )
 
 /* Send AWS IoT MQTT traffic encrypted to destination port 443. */
-#define democonfigMQTT_AGENT_CONNECT_FLAGS          	     ( mqttagentREQUIRE_TLS | mqttagentUSE_AWS_IOT_ALPN_443 )
+#define democonfigMQTT_AGENT_CONNECT_FLAGS             ( mqttagentREQUIRE_TLS | mqttagentUSE_AWS_IOT_ALPN_443 )
 
 #endif /* _AWS_DEMO_CONFIG_H_ */
