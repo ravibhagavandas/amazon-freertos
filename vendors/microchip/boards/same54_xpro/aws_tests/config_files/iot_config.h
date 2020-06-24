@@ -27,6 +27,10 @@
 /* Standard include. */
 #include <stdbool.h>
 
+#ifndef PIC32_USE_ETHERNET
+#define IOT_NETWORK_SOCKET_POLL_MS    ( 2000 )
+#endif
+
 /* Platform thread priority. */
 #define IOT_THREAD_DEFAULT_PRIORITY      5
 

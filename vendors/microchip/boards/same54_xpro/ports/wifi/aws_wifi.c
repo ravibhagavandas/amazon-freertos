@@ -1032,7 +1032,9 @@ static void wifi_update()
  */
 WIFIReturnCode_t WIFI_Off( void )
 {
-    //return eWiFiSuccess;
+#ifdef WDRV_WINC_DEVICE_WINC1500
+    return eWiFiSuccess;
+#endif
     
     if (DRV_HANDLE_INVALID == wifi_handle)
     {
