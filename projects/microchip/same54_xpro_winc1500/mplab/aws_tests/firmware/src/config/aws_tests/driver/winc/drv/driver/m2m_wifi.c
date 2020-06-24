@@ -698,7 +698,7 @@ int8_t m2m_wifi_connect_psk(
 
 		if (ret == M2M_SUCCESS)
 		{
-			tstrM2mWifiPsk	*pstrPsk = (tstrM2mWifiPsk*)malloc(sizeof(tstrM2mWifiPsk));
+			tstrM2mWifiPsk	*pstrPsk = (tstrM2mWifiPsk*)pvPortMalloc(sizeof(tstrM2mWifiPsk));
 
 			if (pstrPsk != NULL)
 			{
@@ -734,7 +734,7 @@ int8_t m2m_wifi_connect_psk(
 									(uint8_t*)&strConnHdr, sizeof(tstrM2mWifiConnHdr),
 									(uint8_t*)pstrPsk, sizeof(tstrM2mWifiPsk), sizeof(tstrM2mWifiConnHdr));
 				}
-				free(pstrPsk);
+				vPortFree(pstrPsk);
 			}
             else
             {

@@ -74,7 +74,7 @@ static void prvMiscInitialization( void );
 #define mainDEVICE_NICK_NAME                "Microchip_Demo"
 
 #define mainLOGGING_TASK_STACK_SIZE         ( configMINIMAL_STACK_SIZE * 5 )
-#define mainLOGGING_MESSAGE_QUEUE_LENGTH    ( 32 )
+#define mainLOGGING_MESSAGE_QUEUE_LENGTH    ( 128 )
 
 #define mainTEST_RUNNER_TASK_STACK_SIZE     ( configMINIMAL_STACK_SIZE * 8 )
 /* The default IP and MAC address used by the demo.  The address configuration
@@ -171,15 +171,25 @@ void prvWifiConnect( void )
     
     if(!iInit)
     {
-     SYSTEM_Init();
-     wifi_winc_crypto_init();
-     vDevModeKeyProvisioning();
-     xTaskCreate( TEST_RUNNER_RunTests_task,
-                         "TestRunner",
-                         mainTEST_RUNNER_TASK_STACK_SIZE,
-                         NULL,
-                         tskIDLE_PRIORITY, NULL );
-     iInit=1;
+        SYSTEM_Init();
+        vDevModeKeyProvisioning();
+        wifi_winc_crypto_init();
+        WIFI_On();
+
+        WIFINetworkParams_t xNetworkParams = { 0 };
+        xNetworkParams.pcSSID = clientcredentialWIFI_SSID;
+        xNetworkParams.ucSSIDLength = sizeof( clientcredentialWIFI_SSID );
+        xNetworkParams.pcPassword = clientcredentialWIFI_PASSWORD;
+        xNetworkParams.ucPasswordLength = sizeof( clientcredentialWIFI_PASSWORD );
+        xNetworkParams.xSecurity = clientcredentialWIFI_SECURITY;
+        WIFI_ConnectAP( &xNetworkParams );
+
+        xTaskCreate( TEST_RUNNER_RunTests_task,
+            "TestRunner",
+            mainTEST_RUNNER_TASK_STACK_SIZE,
+            NULL,
+            tskIDLE_PRIORITY, NULL );
+        iInit=1;
     }
 }
 
@@ -336,12 +346,3 @@ void vApplicationIdleHook( void )
 }
 /*-----------------------------------------------------------*/
 
-
-WIFIReturnCode_t WIFI_RegisterNetworkStateChangeEventCallback( IotNetworkStateChangeEventCallback_t xCallback )
-{
-    if(xCallback)
-    {
-        xCallback(AWSIOT_NETWORK_TYPE_WIFI,eNetworkStateUnknown);
-    }
-    return 0;
-}
