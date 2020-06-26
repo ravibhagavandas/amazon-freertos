@@ -3,7 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/D:/10_AFR/amazon-freertos/libraries/3rdparty/mbedtls/include/mbedtls/ssl.h</file>
+            <file>file:/D:/10_AFR/amazon-freertos/libraries/c_sdk/standard/mqtt/test/system/iot_tests_mqtt_system.c</file>
+            <file>file:/D:/10_AFR/amazon-freertos/projects/microchip/curiosity2_pic32mzef_ecc/mplab/aws_tests/firmware/src/config/aws_tests/library/cryptoauthlib/atca_config.h</file>
+            <file>file:/D:/10_AFR/amazon-freertos/tests/common/aws_test_runner.c</file>
+            <file>file:/D:/10_AFR/amazon-freertos/libraries/abstractions/secure_sockets/freertos_plus_tcp/iot_secure_sockets.c</file>
+            <file>file:/D:/10_AFR/amazon-freertos/projects/microchip/curiosity2_pic32mzef_ecc/mplab/aws_tests/firmware/src/config/aws_tests/library/cryptoauthlib/atca_iface.c</file>
+            <file>file:/D:/10_AFR/amazon-freertos/libraries/freertos_plus/standard/tls/src/iot_tls.c</file>
+            <file>file:/D:/10_AFR/amazon-freertos/projects/microchip/curiosity2_pic32mzef_ecc/mplab/aws_tests/firmware/src/config/aws_tests/library/cryptoauthlib/hal/hal_freertos.c</file>
+            <file>file:/D:/10_AFR/amazon-freertos/projects/microchip/curiosity2_pic32mzef_ecc/mplab/aws_tests/firmware/src/config/aws_tests/library/cryptoauthlib/hal/atca_hal.h</file>
+            <file>file:/D:/10_AFR/amazon-freertos/projects/microchip/curiosity2_pic32mzef_ecc/mplab/aws_tests/firmware/src/config/aws_tests/library/cryptoauthlib/hal/hal_i2c_harmony.c</file>
+            <file>file:/D:/10_AFR/amazon-freertos/libraries/abstractions/secure_sockets/test/iot_test_tcp.c</file>
             <file>file:/D:/10_AFR/amazon-freertos/vendors/microchip/boards/curiosity2_pic32mzef/aws_tests/config_files/aws_test_runner_config.h</file>
+            <file>file:/D:/10_AFR/amazon-freertos/projects/microchip/curiosity2_pic32mzef_ecc/mplab/aws_tests/firmware/src/main.c</file>
         </group>
     </open-files>
 </project-private>

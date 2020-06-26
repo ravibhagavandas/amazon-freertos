@@ -222,7 +222,7 @@ extern uint32_t ulRand();
 /* USE_TCP: Use TCP and all its features */
 #define ipconfigUSE_TCP                                ( 1 ) 
 /* USE_WIN: Let TCP use windowing mechanism. */
-#define ipconfigUSE_TCP_WIN                            ( 0 ) 
+#define ipconfigUSE_TCP_WIN                            ( 1 ) 
 
 /* The MTU is the maximum number of bytes the payload of a network frame can
  * contain.  For normal Ethernet V2 frames the maximum MTU is 1500.  Setting a
@@ -271,7 +271,7 @@ extern uint32_t ulRand();
  * This has to do with the contents of the IP-packets: all 32-bit fields are
  * 32-bit-aligned, plus 16-bit(!) */
 #define ipconfigPACKET_FILLER_SIZE                     2
-#define ipconfigBUFFER_PADDING                         14
+#define ipconfigBUFFER_PADDING                         10
 
 /* Define the size of the pool of TCP window descriptors.  On the average, each
  * TCP socket will use up to 2 x 6 descriptors, meaning that it can have 2 x 6
