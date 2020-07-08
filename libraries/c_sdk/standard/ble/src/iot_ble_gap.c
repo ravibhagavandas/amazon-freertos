@@ -166,6 +166,14 @@ static BTStatus_t _setDeviceProperty( BTPropertyType_t type,
                                       const void * pValue,
                                       size_t length );
 
+static void _connParameterUpdateCb( BTStatus_t xStatus,
+                             const BTBdaddr_t * pxBdAddr,
+                             uint32_t ulMinInterval,
+                             uint32_t ulMaxInterval,
+                             uint32_t ulLatency,
+                             uint32_t usConnInterval,
+                             uint32_t ulTimeout );
+
 static const BTCallbacks_t _BTManagerCb =
 {
     .pxDeviceStateChangedCb     = _deviceStateChangedCb,
@@ -192,6 +200,7 @@ static const BTBleAdapterCallbacks_t _BTBleAdapterCb =
     .pxReadRemoteRssiCb              = NULL,
     .pxAdvStatusCb                   = _advStatusCb,
     .pxSetAdvDataCb                  = _setAdvDataCb,
+    .pxConnParameterUpdateCb         = _connParameterUpdateCb,
     .pxScanFilterCfgCb               = NULL,
     .pxScanFilterParamCb             = NULL,
     .pxScanFilterStatusCb            = NULL,
@@ -206,7 +215,7 @@ static const BTBleAdapterCallbacks_t _BTBleAdapterCb =
     .pxBatchscanThresholdCb          = NULL,
     .pxTrackAdvEventCb               = NULL,
     .pxScanParameterSetupCompletedCb = NULL,
-    .pxPhyUpdatedCb                  = NULL,
+    .pxPhyUpdatedCb                  = NULL
 };
 
 /*-----------------------------------------------------------*/
@@ -338,6 +347,27 @@ void _bleStopAdvCb( BTStatus_t status )
 void _setAdvDataCb( BTStatus_t status )
 {
     _BTInterface.cbStatus = status;
+    IotSemaphore_Post( &_BTInterface.callbackSemaphore );
+}
+
+void _connParameterUpdateCb( BTStatus_t xStatus,
+                             const BTBdaddr_t * pxBdAddr,
+                             uint32_t ulMinInterval,
+                             uint32_t ulMaxInterval,
+                             uint32_t ulLatency,
+                             uint32_t usConnInterval,
+                             uint32_t ulTimeout )
+{
+    if( xStatus == eBTStatusSuccess )
+    {
+        configPRINTF(("Connection parameters negotiated successfully min: %d, max:%d, latency:%d, timeout:%d\n",
+                            ulMinInterval,
+                            ulMaxInterval,
+                            ulLatency,
+                            usConnInterval,
+                            ulTimeout ));
+    }
+    _BTInterface.cbStatus = xStatus;
     IotSemaphore_Post( &_BTInterface.callbackSemaphore );
 }
 
@@ -518,7 +548,16 @@ BTStatus_t IotBle_ConnParameterUpdateRequest( const BTBdaddr_t * pBdAddr,
     BTStatus_t status = eBTStatusSuccess;
 
 
-    /*pxConnParameterUpdateRequest */
+    status = _BTInterface.pBTLeAdapterInterface->pxConnParameterUpdateRequest(
+                    pBdAddr,
+                    pConnectionParam->minInterval,
+                    pConnectionParam->maxInterval,
+                    pConnectionParam->latency,
+                    pConnectionParam->timeout );
+    
+    //IotSemaphore_Wait( &_BTInterface.callbackSemaphore );
+    //status = _BTInterface.cbStatus;
+                    
     return status;
 }
 

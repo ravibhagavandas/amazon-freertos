@@ -273,6 +273,13 @@ void _connectionCb( uint16_t connId,
     IotBleConnectionInfoListElement_t * pConnInfoListElem;
     IotLink_t * pEventListIndex;
     _bleSubscrEventListElement_t * pEventIndex;
+    IotBleConnectionParam_t connParam =
+    {
+        .minInterval = IOT_BLE_ADVERTISING_CONN_INTERVAL_MIN,
+        .maxInterval = IOT_BLE_ADVERTISING_CONN_INTERVAL_MAX,
+        .latency = 0,
+        .timeout = 400
+    };
 
     IotMutex_Lock( &_BTInterface.threadSafetyMutex );
 
@@ -305,6 +312,8 @@ void _connectionCb( uint16_t connId,
             IotBle_Free( pConnInfoListElem );
         }
     }
+    
+    status = IotBle_ConnParameterUpdateRequest( pBda, &connParam );
 
     /* Get the event associated to the callback */
     IotContainers_ForEach( &_BTInterface.subscrEventListHead[ eBLEConnection ], pEventListIndex )

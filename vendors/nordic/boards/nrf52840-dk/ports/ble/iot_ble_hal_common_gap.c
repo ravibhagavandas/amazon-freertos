@@ -27,6 +27,7 @@
  * @file iot_ble_hal_common_gap.c
  * @brief Hardware Abstraction Layer for GAP ble stack.
  */
+#include "FreeRTOS.h"
 #include "iot_config.h"
 #include <string.h>
 #include <stdlib.h>
@@ -315,7 +316,11 @@ void prvGAPeventHandler( ble_evt_t const * p_ble_evt,
             }
 
             memcpy( &xConnectionRemoteAddress.ucAddress, p_ble_evt->evt.gap_evt.params.connected.peer_addr.addr, BLE_GAP_ADDR_LEN );
-
+            
+            configPRINTF(("Connected, initial conn params min: %d max: %d, latency %d timeout: %d\n",  p_ble_evt->evt.gap_evt.params.connected.conn_params.min_conn_interval,
+                                                                       p_ble_evt->evt.gap_evt.params.connected.conn_params.max_conn_interval,
+                                                                       p_ble_evt->evt.gap_evt.params.connected.conn_params.slave_latency,
+                                                                       p_ble_evt->evt.gap_evt.params.connected.conn_params.conn_sup_timeout));
             if( ( xErrCode == NRF_SUCCESS ) && bGattInitialized )
             {
                 xErrCode = nrf_ble_gatt_att_mtu_periph_set( xGattHandler, xProperties.ulMtu );
