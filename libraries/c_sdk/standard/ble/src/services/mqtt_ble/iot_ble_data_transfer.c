@@ -686,6 +686,7 @@ static void _RXLargeMesgCharCallback( IotBleAttributeEvent_t * pEventParam )
         if( ( pService != NULL ) &&
             ( pService->channel.isOpen ) )
         {
+            configPRINTF(("Received lot chunk len = %d\n", pEventParam->pParamWrite->length ));
             status = _resizeChannelBuffer( &pService->channel.lotBuffer, IOT_BLE_DATA_TRANSFER_RX_BUFFER_SIZE, pEventParam->pParamWrite->length );
 
             if( status == true )
@@ -724,6 +725,7 @@ static void _RXLargeMesgCharCallback( IotBleAttributeEvent_t * pEventParam )
             resp.pAttrData->pData = ( uint8_t * ) &status;
             resp.pAttrData->size = 1;
             IotBle_SendResponse( &resp, pEventParam->pParamWrite->connId, pEventParam->pParamWrite->transId );
+            configPRINTF(( "Send ACK for chunk len = %d\n", pEventParam->pParamWrite->length ));
         }
     }
 }
