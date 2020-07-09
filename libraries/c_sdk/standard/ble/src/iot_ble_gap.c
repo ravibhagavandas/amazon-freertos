@@ -360,7 +360,7 @@ void _connParameterUpdateCb( BTStatus_t xStatus,
 {
     if( xStatus == eBTStatusSuccess )
     {
-        configPRINTF(("Connection parameters negotiated successfully min: %d, max:%d, latency:%d, timeout:%d\n",
+        configPRINTF(("Connection parameters negotiated successfully min: %d, max:%d, latency:%d, interval %d, timeout:%d\n",
                             ulMinInterval,
                             ulMaxInterval,
                             ulLatency,

@@ -749,6 +749,8 @@ static void _RXMesgCharCallback( IotBleAttributeEvent_t * pEventParam )
     if( ( pEventParam->xEventType == eBLEWrite ) || ( pEventParam->xEventType == eBLEWriteNoResponse ) )
     {
         pService = _getServiceFromHandle( pEventParam->pParamWrite->attrHandle );
+        
+        configPRINTF(( "Received mesg len = %d\n", pEventParam->pParamWrite->length ));
 
         if( ( pService != NULL ) &&
             ( pService->channel.isOpen == true ) )
@@ -774,6 +776,7 @@ static void _RXMesgCharCallback( IotBleAttributeEvent_t * pEventParam )
             resp.pAttrData->pData = ( uint8_t * ) &status;
             resp.pAttrData->size = 1;
             IotBle_SendResponse( &resp, pEventParam->pParamWrite->connId, pEventParam->pParamWrite->transId );
+            configPRINTF(( "Send ACK for mesg len = %d\n", pEventParam->pParamWrite->length ));
         }
     }
 }
