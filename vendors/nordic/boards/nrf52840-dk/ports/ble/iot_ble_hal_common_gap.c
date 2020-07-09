@@ -344,6 +344,8 @@ void prvGAPeventHandler( ble_evt_t const * p_ble_evt,
         case BLE_GAP_EVT_DISCONNECTED:
 
             bIsConnected = false;
+            
+            configPRINTF(( "BLE Disconnected, reason = %d\n",  p_ble_evt->evt.gap_evt.params.disconnected.reason));
 
             /* Switch advertisement to connectable. */
             if( bIsAdvertising == true )
