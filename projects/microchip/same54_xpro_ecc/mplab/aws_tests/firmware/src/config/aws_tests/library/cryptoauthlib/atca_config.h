@@ -13,6 +13,10 @@
 /** Include Device Support Options */
 #define ATCA_ATECC608A_SUPPORT
 
+/** Define if cryptoauthlib is to use the maximum execution time method */
+#ifndef ATCA_NO_POLL
+#define ATCA_NO_POLL
+#endif
 
 /* Polling Configuration Options  */
 #ifndef ATCA_POLLING_INIT_TIME_MSEC

@@ -115,7 +115,7 @@
             </String>
           </Attributes>
         </File>
-        <File dnOrder="16" id="..//AMAZON-FREERTOS/DEMOS/INCLUDE/AWS_APPLICATION_VERSION.H">
+        <File dnOrder="16" id="..//AMAZON-FREERTOS/DEMOS/INCLUDE/AWS_APPLICATION_VERSION.H.FTL">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/demos/include</Value>
@@ -129,7 +129,7 @@
             </String>
           </Attributes>
         </File>
-        <File dnOrder="18" id="..//AMAZON-FREERTOS/DEMOS/INCLUDE/AWS_CLIENTCREDENTIAL.H">
+        <File dnOrder="18" id="..//AMAZON-FREERTOS/DEMOS/INCLUDE/AWS_CLIENTCREDENTIAL.H.FTL">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/demos/include</Value>
@@ -2983,9 +2983,6 @@
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/libraries/abstractions/pkcs11/mbedtls</Value>
             </String>
-            <Boolean dnOrder="1" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
           </Attributes>
         </File>
         <File dnOrder="5" id="..//AMAZON-FREERTOS/LIBRARIES/ABSTRACTIONS/PKCS11/MBEDTLS/THREADING_ALT.H">
@@ -3007,9 +3004,6 @@
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/libraries/abstractions/wifi/include</Value>
             </String>
-            <Boolean dnOrder="1" id="enabled">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
           </Attributes>
         </File>
         <File dnOrder="8" id="..//AMAZON-FREERTOS/LIBRARIES/FREERTOS_PLUS/STANDARD/FREERTOS_PLUS_TCP/INCLUDE/FREERTOSIPCONFIGDEFAULTS.H">
@@ -3227,9 +3221,6 @@
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/boards/same54_xpro/aws_demos/application_code</Value>
             </String>
-            <Boolean dnOrder="1" id="enabled">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
           </Attributes>
         </File>
         <File dnOrder="39" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/AWS_DEMOS/APPLICATION_CODE/ATCA_CERT_CHAIN.H">
@@ -3237,449 +3228,455 @@
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/boards/same54_xpro/aws_demos/application_code</Value>
             </String>
-            <Boolean dnOrder="1" id="enabled">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="40" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/AWS_DEMOS/CONFIG_FILES/AWS_DEMO_CONFIG.H">
+        <File dnOrder="40" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/AWS_DEMOS/CONFIG_FILES/AWS_BUFFERPOOL_CONFIG.H.FTL">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/boards/same54_xpro/aws_demos/config_files</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="41" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/AWS_DEMOS/CONFIG_FILES/AWS_GGD_CONFIG.H">
+        <File dnOrder="41" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/AWS_DEMOS/CONFIG_FILES/AWS_DEMO_CONFIG.H.FTL">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/boards/same54_xpro/aws_demos/config_files</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="42" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/AWS_DEMOS/CONFIG_FILES/AWS_IOT_NETWORK_CONFIG.H">
+        <File dnOrder="42" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/AWS_DEMOS/CONFIG_FILES/AWS_GGD_CONFIG.H.FTL">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/boards/same54_xpro/aws_demos/config_files</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="43" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/AWS_DEMOS/CONFIG_FILES/AWS_MQTT_CONFIG.H">
+        <File dnOrder="43" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/AWS_DEMOS/CONFIG_FILES/AWS_IOT_NETWORK_CONFIG.H">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/boards/same54_xpro/aws_demos/config_files</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="44" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/AWS_DEMOS/CONFIG_FILES/AWS_OTA_AGENT_CONFIG.H">
+        <File dnOrder="44" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/AWS_DEMOS/CONFIG_FILES/AWS_MQTT_CONFIG.H.FTL">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/boards/same54_xpro/aws_demos/config_files</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="45" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/AWS_DEMOS/CONFIG_FILES/AWS_SECURE_SOCKETS_CONFIG.H">
+        <File dnOrder="45" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/AWS_DEMOS/CONFIG_FILES/AWS_OTA_AGENT_CONFIG.H.FTL">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/boards/same54_xpro/aws_demos/config_files</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="46" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/AWS_DEMOS/CONFIG_FILES/AWS_SHADOW_CONFIG.H">
+        <File dnOrder="46" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/AWS_DEMOS/CONFIG_FILES/AWS_SECURE_SOCKETS_CONFIG.H.FTL">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/boards/same54_xpro/aws_demos/config_files</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="47" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/AWS_DEMOS/CONFIG_FILES/AWS_WIFI_CONFIG.H">
+        <File dnOrder="47" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/AWS_DEMOS/CONFIG_FILES/AWS_SHADOW_CONFIG.H.FTL">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/boards/same54_xpro/aws_demos/config_files</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="48" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/AWS_DEMOS/CONFIG_FILES/FREERTOSCONFIG.H">
+        <File dnOrder="48" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/AWS_DEMOS/CONFIG_FILES/AWS_WIFI_CONFIG.H">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/boards/same54_xpro/aws_demos/config_files</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="49" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/AWS_DEMOS/CONFIG_FILES/FREERTOSIPCONFIG.H">
+        <File dnOrder="49" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/AWS_DEMOS/CONFIG_FILES/FREERTOSCONFIG.H.FTL">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/boards/same54_xpro/aws_demos/config_files</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="50" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/AWS_DEMOS/CONFIG_FILES/IOT_CONFIG.H">
+        <File dnOrder="50" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/AWS_DEMOS/CONFIG_FILES/FREERTOSIPCONFIG.H.FTL">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/boards/same54_xpro/aws_demos/config_files</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="51" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/AWS_DEMOS/CONFIG_FILES/IOT_MQTT_AGENT_CONFIG.H">
+        <File dnOrder="51" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/AWS_DEMOS/CONFIG_FILES/IOT_CONFIG.H.FTL">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/boards/same54_xpro/aws_demos/config_files</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="52" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/AWS_DEMOS/CONFIG_FILES/IOT_PKCS11_CONFIG.H">
+        <File dnOrder="52" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/AWS_DEMOS/CONFIG_FILES/IOT_MQTT_AGENT_CONFIG.H.FTL">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/boards/same54_xpro/aws_demos/config_files</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="53" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/AWS_DEMOS/CONFIG_FILES/NETWORKCONFIG.H">
+        <File dnOrder="53" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/AWS_DEMOS/CONFIG_FILES/IOT_PKCS11_CONFIG.H.FTL">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/boards/same54_xpro/aws_demos/config_files</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="54" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/PORTS/OTA/AWS_OTA_PAL.C">
+        <File dnOrder="54" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/AWS_DEMOS/CONFIG_FILES/NETWORKCONFIG.H.FTL">
+          <Attributes dnOrder="0">
+            <String dnOrder="0" id="dest">
+              <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/boards/same54_xpro/aws_demos/config_files</Value>
+            </String>
+          </Attributes>
+        </File>
+        <File dnOrder="55" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/PORTS/OTA/AWS_OTA_PAL.C">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/boards/same54_xpro/ports/ota</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="55" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/PORTS/PKCS11/IOT_PKCS11_PAL.C">
-          <Attributes dnOrder="0">
-            <String dnOrder="0" id="dest">
-              <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/boards/same54_xpro/ports/pkcs11</Value>
-            </String>
-            <Boolean dnOrder="1" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="56" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/PORTS/PKCS11/IOT_PKCS11_SECURE_ELEMENT.C">
-          <Attributes dnOrder="0">
-            <String dnOrder="0" id="dest">
-              <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/boards/same54_xpro/ports/pkcs11</Value>
-            </String>
-            <Boolean dnOrder="1" id="enabled">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="57" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/PORTS/PKCS11/PKCS11_NVM.C">
+        <File dnOrder="56" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/PORTS/PKCS11/IOT_PKCS11_PAL.C">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/boards/same54_xpro/ports/pkcs11</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="58" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/PORTS/PKCS11/PKCS11_NVM.H">
+        <File dnOrder="57" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/PORTS/PKCS11/IOT_PKCS11_SECURE_ELEMENT.C">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/boards/same54_xpro/ports/pkcs11</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="59" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/PORTS/POSIX/FREERTOS_POSIX_PORTABLE.H">
+        <File dnOrder="58" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/PORTS/PKCS11/PKCS11_NVM.C">
+          <Attributes dnOrder="0">
+            <String dnOrder="0" id="dest">
+              <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/boards/same54_xpro/ports/pkcs11</Value>
+            </String>
+          </Attributes>
+        </File>
+        <File dnOrder="59" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/PORTS/PKCS11/PKCS11_NVM.H">
+          <Attributes dnOrder="0">
+            <String dnOrder="0" id="dest">
+              <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/boards/same54_xpro/ports/pkcs11</Value>
+            </String>
+          </Attributes>
+        </File>
+        <File dnOrder="60" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/PORTS/POSIX/FREERTOS_POSIX_PORTABLE.H">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/boards/same54_xpro/ports/posix</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="60" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/PORTS/WIFI/AWS_WIFI.C">
+        <File dnOrder="61" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/PORTS/WIFI/AWS_WIFI.C">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/boards/same54_xpro/ports/wifi</Value>
             </String>
-            <Boolean dnOrder="1" id="enabled">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="61" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/PORTS/WIFI/IOT_SECURE_SOCKETS.C">
+        <File dnOrder="62" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/BOARDS/SAME54_XPRO/PORTS/WIFI/IOT_SECURE_SOCKETS.C">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/boards/same54_xpro/ports/wifi</Value>
             </String>
-            <Boolean dnOrder="1" id="enabled">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="62" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/AFR.H">
+        <File dnOrder="63" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/AFR.H">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="63" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/SYSTEM/SYS_TIME_H2_ADAPTER.C">
+        <File dnOrder="64" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/SYSTEM/SYS_TIME_H2_ADAPTER.C">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr/system</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="64" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/SYSTEM/SYS_TIME_H2_ADAPTER.H">
+        <File dnOrder="65" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/SYSTEM/SYS_TIME_H2_ADAPTER.H">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr/system</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="65" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/SYSTEM_CONFIG.H">
+        <File dnOrder="66" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/SYSTEM_CONFIG.H">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="66" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/IPV4.H">
+        <File dnOrder="67" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/IPV4.H">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr/tcpip</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="67" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/IPV6.H">
+        <File dnOrder="68" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/IPV6.H">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr/tcpip</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="68" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/LLDP.H">
+        <File dnOrder="69" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/LLDP.H">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr/tcpip</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="69" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/COMMON/HELPERS.H">
+        <File dnOrder="70" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/COMMON/HELPERS.H">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr/tcpip/src/common</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="70" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/COMMON/SYS_FS_WRAPPER.H">
+        <File dnOrder="71" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/COMMON/SYS_FS_WRAPPER.H">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr/tcpip/src/common</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="71" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/HASH_FNV.C">
+        <File dnOrder="72" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/HASH_FNV.C">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr/tcpip/src</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="72" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/HASH_FNV.H">
+        <File dnOrder="73" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/HASH_FNV.H">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr/tcpip/src</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="73" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/HELPERS.C">
+        <File dnOrder="74" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/HELPERS.C">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr/tcpip/src</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="74" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/LINK_LIST.H">
+        <File dnOrder="75" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/LINK_LIST.H">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr/tcpip/src</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="75" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/LLDP_MANAGER.H">
+        <File dnOrder="76" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/LLDP_MANAGER.H">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr/tcpip/src</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="76" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/OAHASH.C">
+        <File dnOrder="77" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/OAHASH.C">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr/tcpip/src</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="77" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/OAHASH.H">
+        <File dnOrder="78" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/OAHASH.H">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr/tcpip/src</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="78" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/TCPIP_HEAP_ALLOC.C">
+        <File dnOrder="79" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/TCPIP_HEAP_ALLOC.C">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr/tcpip/src</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="79" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/TCPIP_HEAP_ALLOC.H">
+        <File dnOrder="80" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/TCPIP_HEAP_ALLOC.H">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr/tcpip/src</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="80" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/TCPIP_HEAP_EXTERNAL.C">
+        <File dnOrder="81" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/TCPIP_HEAP_EXTERNAL.C">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr/tcpip/src</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="81" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/TCPIP_HEAP_INTERNAL.C">
+        <File dnOrder="82" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/TCPIP_HEAP_INTERNAL.C">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr/tcpip/src</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="82" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/TCPIP_HELPERS.C">
+        <File dnOrder="83" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/TCPIP_HELPERS.C">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr/tcpip/src</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="83" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/TCPIP_HELPERS_PRIVATE.H">
+        <File dnOrder="84" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/TCPIP_HELPERS_PRIVATE.H">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr/tcpip/src</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="84" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/TCPIP_MANAGER_CONTROL.H">
+        <File dnOrder="85" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/TCPIP_MANAGER_CONTROL.H">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr/tcpip/src</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="85" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/TCPIP_MODULE_MANAGER.H">
+        <File dnOrder="86" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/TCPIP_MODULE_MANAGER.H">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr/tcpip/src</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="86" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/TCPIP_NOTIFY.C">
+        <File dnOrder="87" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/TCPIP_NOTIFY.C">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr/tcpip/src</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="87" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/TCPIP_NOTIFY.H">
+        <File dnOrder="88" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/TCPIP_NOTIFY.H">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr/tcpip/src</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="88" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/TCPIP_PACKET.C">
+        <File dnOrder="89" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/TCPIP_PACKET.C">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr/tcpip/src</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="89" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/TCPIP_PACKET.H">
+        <File dnOrder="90" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/TCPIP_PACKET.H">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr/tcpip/src</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="90" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/TCPIP_PRIVATE.H">
+        <File dnOrder="91" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/TCPIP_PRIVATE.H">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr/tcpip/src</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="91" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/TCPIP_TYPES.H">
+        <File dnOrder="92" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/SRC/TCPIP_TYPES.H">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr/tcpip/src</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="92" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/TCPIP.H">
+        <File dnOrder="93" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/TCPIP.H">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr/tcpip</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="93" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/TCPIP_COMMON_PORTS.H">
+        <File dnOrder="94" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/TCPIP_COMMON_PORTS.H">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr/tcpip</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="94" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/TCPIP_ETHERNET.H">
+        <File dnOrder="95" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/TCPIP_ETHERNET.H">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr/tcpip</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="95" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/TCPIP_HEAP.H">
+        <File dnOrder="96" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/TCPIP_HEAP.H">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr/tcpip</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="96" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/TCPIP_HELPERS.H">
+        <File dnOrder="97" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/TCPIP_HELPERS.H">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr/tcpip</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="97" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/TCPIP_MAC.H">
+        <File dnOrder="98" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/TCPIP_MAC.H">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr/tcpip</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="98" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/TCPIP_MAC_OBJECT.H">
+        <File dnOrder="99" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/TCPIP_MAC_OBJECT.H">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr/tcpip</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="99" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/TCPIP_MANAGER.H">
+        <File dnOrder="100" id="..//AMAZON-FREERTOS/VENDORS/MICROCHIP/HARMONY3/AFR/TCPIP/TCPIP_MANAGER.H">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">../../../../../../../../../../amazon-freertos/vendors/microchip/harmony3/afr/tcpip</Value>
             </String>
           </Attributes>
         </File>
-        <Combo dnOrder="100" id="H3_AWS_CLOUD_CONF">
+        <Setting dnOrder="101" id="AFR1_XC32_INCLUDE_DIRS0">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </Setting>
+        <Setting dnOrder="102" id="AFR1_XC32_INCLUDE_DIRS2">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Setting>
+        <Combo dnOrder="103" id="H3_AWS_CLOUD_CONF">
           <Values dnOrder="0">
             <User dnOrder="0" value="Ethernet Only"/>
           </Values>
         </Combo>
-        <Boolean dnOrder="101" id="HW_AWS_CLOUD_H3">
+        <Boolean dnOrder="104" id="HW_AWS_CLOUD_H3">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="AmazonHWInterface" value="true"/>
           </Values>
@@ -5866,88 +5863,102 @@
             <Dynamic dnOrder="0" id="AmazonHWInterface" value="true"/>
           </Values>
         </Boolean>
-        <String dnOrder="427" id="SYSTICK_PERIOD">
+        <Comment dnOrder="427" id="SYSTICK_COMMENT">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Comment>
+        <String dnOrder="428" id="SYSTICK_PERIOD">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x1d4c0"/>
           </Values>
         </String>
-        <Integer dnOrder="428" id="SYSTICK_PERIOD_US">
+        <Integer dnOrder="429" id="SYSTICK_PERIOD_US">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="1000"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="429" id="SysTick_INTERRUPT_ENABLE">
+        <Boolean dnOrder="430" id="SysTick_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="AmazonHWInterface" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="430" id="SysTick_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="431" id="SysTick_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="431" id="SysTick_INTERRUPT_HANDLER">
+        <String dnOrder="432" id="SysTick_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="AmazonHWInterface" value="xPortSysTickHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="432" id="SysTick_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="433" id="SysTick_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="AmazonHWInterface" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="433" id="TC0_CLOCK_FREQUENCY">
+        <Integer dnOrder="434" id="TC0_CLOCK_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="434" id="TC0_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="435" id="TC0_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="435" id="TC3_CLOCK_ENABLE">
+        <Boolean dnOrder="436" id="TC3_CLOCK_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc3" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="436" id="TC3_CLOCK_FREQUENCY">
+        <Integer dnOrder="437" id="TC3_CLOCK_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="60000000"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="437" id="TC3_INTERRUPT_ENABLE">
+        <Boolean dnOrder="438" id="TC3_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc3" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="438" id="TC3_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="439" id="TC3_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="439" id="TC3_INTERRUPT_HANDLER">
+        <String dnOrder="440" id="TC3_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc3" value="TC3_TimerInterruptHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="440" id="TC3_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="441" id="TC3_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc3" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="441" id="TRNG_CLOCK_ENABLE">
+        <Boolean dnOrder="442" id="TRNG_CLOCK_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="trng" value="true"/>
           </Values>
         </Boolean>
-        <Setting dnOrder="442" id="XC32_LINKER_PREPROC_MARCOS">
+        <Setting dnOrder="443" id="XC32_LINKER_PREPROC_MARCOS">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="value">
               <Value dnOrder="0"/>
             </String>
           </Attributes>
         </Setting>
+        <Boolean dnOrder="444" id="systickEnable">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </Boolean>
       </Symbols>
     </UniqueComponent>
     <UniqueComponent dnOrder="4" id="dfp"/>
@@ -5973,7 +5984,24 @@
         </DirectCapability>
       </Attachments>
     </UniqueComponent>
-    <UniqueComponent dnOrder="7" id="drvMiim"/>
+    <UniqueComponent dnOrder="7" id="drvMiim">
+      <Symbols dnOrder="0">
+        <Menu dnOrder="0" id="DRV_MIIM_RTOS_MENU">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Menu>
+        <File dnOrder="1" id="DRV_SDHC_SYS_RTOS_TASK">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+      </Symbols>
+    </UniqueComponent>
     <UniqueComponent dnOrder="8" id="eic">
       <Symbols dnOrder="0">
         <Hex dnOrder="0" id="EIC_ASYNCH">
@@ -6368,231 +6396,110 @@
         <File dnOrder="0" id="APP0_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">false</Value>
+              <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
         <File dnOrder="1" id="APP0_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="2" id="CONFIGURATION_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="3" id="DRIVER_COMMON">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="4" id="DRIVER_ROOT">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <Boolean dnOrder="5" id="ENABLE_APP_FILE">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="HarmonyCore" value="false"/>
-          </Values>
-        </Boolean>
-        <Boolean dnOrder="6" id="ENABLE_DRV_COMMON">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="sys_command" value="true"/>
-          </Values>
-        </Boolean>
-        <Boolean dnOrder="7" id="ENABLE_OSAL">
+        <Boolean dnOrder="2" id="ENABLE_APP_FILE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="HarmonyCore" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="8" id="ENABLE_SYS_CACHE">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="HarmonyCore" value="false"/>
-          </Values>
-        </Boolean>
-        <Boolean dnOrder="9" id="ENABLE_SYS_COMMON">
+        <Boolean dnOrder="3" id="ENABLE_DRV_COMMON">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sys_command" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="10" id="ENABLE_SYS_INT">
+        <Boolean dnOrder="4" id="ENABLE_OSAL">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="HarmonyCore" value="true"/>
           </Values>
         </Boolean>
-        <Menu dnOrder="11" id="GEN_APP_RTOS_TASK_CONF_MENU0">
+        <Boolean dnOrder="5" id="ENABLE_SYS_CACHE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="HarmonyCore" value="false"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="6" id="ENABLE_SYS_COMMON">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="sys_command" value="true"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="7" id="ENABLE_SYS_INT">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="HarmonyCore" value="true"/>
+          </Values>
+        </Boolean>
+        <Integer dnOrder="8" id="GEN_APP_RTOS_TASK_0_DELAY">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Integer>
+        <Boolean dnOrder="9" id="GEN_APP_RTOS_TASK_0_USE_DELAY">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="true"/>
+          </Values>
+        </Boolean>
+        <Menu dnOrder="10" id="GEN_APP_RTOS_TASK_CONF_MENU0">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Menu>
-        <Menu dnOrder="12" id="GEN_APP_TASK_MENU">
+        <Menu dnOrder="11" id="GEN_APP_TASK_MENU">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">false</Value>
+              <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Menu>
-        <File dnOrder="13" id="GEN_RTOS_APP_TASKS">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="14" id="GEN_RTOS_APP_TASKS_DEF">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="15" id="INT_DEF">
+        <File dnOrder="12" id="GEN_RTOS_APP_TASKS">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="16" id="INT_HEADER">
+        <File dnOrder="13" id="GEN_RTOS_APP_TASKS_DEF">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="17" id="INT_MAPPING">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="18" id="INT_SOURCE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="19" id="OSAL_DEFINITIONS_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="20" id="OSAL_FREERTOS_C">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="21" id="OSAL_FREERTOS_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="22" id="OSAL_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="23" id="OSAL_SYSDEF_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <Combo dnOrder="24" id="SELECT_RTOS">
+        <Combo dnOrder="14" id="SELECT_RTOS">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="HarmonyCore" value="FreeRTOS"/>
           </Values>
         </Combo>
-        <File dnOrder="25" id="SYSTEM_COMMON">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="26" id="SYSTEM_MODULE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="27" id="SYSTEM_ROOT">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="28" id="SYS_CACHE_DEF">
+        <File dnOrder="15" id="SYS_CACHE_DEF">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="29" id="SYS_CACHE_HEADER">
+        <File dnOrder="16" id="SYS_CACHE_HEADER">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="30" id="SYS_CACHE_SOURCE">
+        <File dnOrder="17" id="SYS_CACHE_SOURCE">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="31" id="SYS_DEBUG_DEF_HEADER">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="32" id="SYS_DEBUG_HEADER">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="33" id="TASKS_C">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="34" id="USER_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
@@ -6614,93 +6521,105 @@
             <Dynamic dnOrder="0" id="sercom2" value="255"/>
           </Values>
         </Hex>
-        <Integer dnOrder="1" id="I2CS_SDASETUP_TIME_REG_VALUE">
+        <Integer dnOrder="1" id="I2CS_SDASETUP_TIME_NS">
+          <Attributes dnOrder="0">
+            <Integer dnOrder="0" id="max">
+              <Value dnOrder="0">2050</Value>
+            </Integer>
+          </Attributes>
+        </Integer>
+        <Integer dnOrder="2" id="I2CS_SDASETUP_TIME_REG_VALUE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom2" value="1"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="2" id="I2CS_SDASETUP_TIME_SUPPORT">
+        <Boolean dnOrder="3" id="I2CS_SDASETUP_TIME_SUPPORT">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom2" value="true"/>
           </Values>
         </Boolean>
-        <Comment dnOrder="3" id="I2C_BAUD_ERROR_COMMENT">
+        <Comment dnOrder="4" id="I2C_BAUD_ERROR_COMMENT">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="text">
               <Value dnOrder="0">****&amp;#160;Achievable&amp;#160;I2C&amp;#160;Clock&amp;#160;Frequency&amp;#160;=&amp;#160;114068Hz</Value>
             </String>
           </Attributes>
         </Comment>
-        <String dnOrder="4" id="RECEIVE_DATA_REGISTER">
+        <String dnOrder="5" id="RECEIVE_DATA_REGISTER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom2" value="&amp;(SERCOM2_REGS-&gt;USART_INT.SERCOM_DATA)"/>
           </Values>
         </String>
-        <KeyValueSet dnOrder="5" id="SERCOM_MODE">
-          <Values dnOrder="0">
+        <KeyValueSet dnOrder="6" id="SERCOM_MODE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="readOnly">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
             <Dynamic dnOrder="0" id="sercom2" value="0"/>
           </Values>
         </KeyValueSet>
-        <File dnOrder="6" id="SERCOM_USART_COMMON_HEADER">
+        <File dnOrder="7" id="SERCOM_USART_COMMON_HEADER">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="7" id="SERCOM_USART_HEADER">
+        <File dnOrder="8" id="SERCOM_USART_HEADER">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="8" id="SERCOM_USART_SOURCE">
+        <File dnOrder="9" id="SERCOM_USART_SOURCE">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <Integer dnOrder="9" id="SPI_BAUD_REG_VALUE">
+        <Integer dnOrder="10" id="SPI_BAUD_REG_VALUE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom2" value="29"/>
           </Values>
         </Integer>
-        <String dnOrder="10" id="TRANSMIT_DATA_REGISTER">
+        <String dnOrder="11" id="TRANSMIT_DATA_REGISTER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom2" value="&amp;(SERCOM2_REGS-&gt;USART_INT.SERCOM_DATA)"/>
           </Values>
         </String>
-        <Integer dnOrder="11" id="USART_BAUD_VALUE">
+        <Integer dnOrder="12" id="USART_BAUD_VALUE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom2" value="63522"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="12" id="USART_INTERRUPT_MODE">
+        <Boolean dnOrder="13" id="USART_INTERRUPT_MODE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="stdio" value="false"/>
             <User dnOrder="1" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="13" id="USART_RING_BUFFER_ENABLE">
+        <Boolean dnOrder="14" id="USART_RING_BUFFER_ENABLE">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Boolean>
-        <KeyValueSet dnOrder="14" id="USART_RXPO">
+        <KeyValueSet dnOrder="15" id="USART_RXPO">
           <Values dnOrder="0">
             <User dnOrder="0" value="1"/>
           </Values>
         </KeyValueSet>
-        <Integer dnOrder="15" id="USART_SAMPLE_COUNT">
+        <Integer dnOrder="16" id="USART_SAMPLE_COUNT">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom2" value="16"/>
           </Values>
         </Integer>
-        <Integer dnOrder="16" id="USART_SAMPLE_RATE">
+        <Integer dnOrder="17" id="USART_SAMPLE_RATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom2" value="0"/>
           </Values>
@@ -6740,46 +6659,34 @@
             <Dynamic dnOrder="0" id="sercom6" value="255"/>
           </Values>
         </Hex>
-        <Integer dnOrder="1" id="I2CS_SDASETUP_TIME_NS">
-          <Attributes dnOrder="0">
-            <Integer dnOrder="0" id="max">
-              <Value dnOrder="0">2050</Value>
-            </Integer>
-          </Attributes>
-        </Integer>
-        <Integer dnOrder="2" id="I2CS_SDASETUP_TIME_REG_VALUE">
+        <Integer dnOrder="1" id="I2CS_SDASETUP_TIME_REG_VALUE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom6" value="1"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="3" id="I2CS_SDASETUP_TIME_SUPPORT">
+        <Boolean dnOrder="2" id="I2CS_SDASETUP_TIME_SUPPORT">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom6" value="true"/>
           </Values>
         </Boolean>
-        <String dnOrder="4" id="RECEIVE_DATA_REGISTER">
+        <String dnOrder="3" id="RECEIVE_DATA_REGISTER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom6" value="&amp;(SERCOM6_REGS-&gt;USART_INT.SERCOM_DATA)"/>
           </Values>
         </String>
-        <KeyValueSet dnOrder="5" id="SERCOM_MODE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="readOnly">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-          <Values dnOrder="1">
+        <KeyValueSet dnOrder="4" id="SERCOM_MODE">
+          <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom6" value="0"/>
           </Values>
         </KeyValueSet>
-        <File dnOrder="6" id="SERCOM_USART_COMMON_HEADER">
+        <File dnOrder="5" id="SERCOM_USART_COMMON_HEADER">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="7" id="SERCOM_USART_HEADER">
+        <File dnOrder="6" id="SERCOM_USART_HEADER">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
@@ -6789,7 +6696,7 @@
             </String>
           </Attributes>
         </File>
-        <File dnOrder="8" id="SERCOM_USART_SOURCE">
+        <File dnOrder="7" id="SERCOM_USART_SOURCE">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
@@ -6799,61 +6706,35 @@
             </String>
           </Attributes>
         </File>
-        <Integer dnOrder="9" id="SPI_BAUD_REG_VALUE">
+        <Integer dnOrder="8" id="SPI_BAUD_REG_VALUE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom6" value="29"/>
           </Values>
         </Integer>
-        <String dnOrder="10" id="TRANSMIT_DATA_REGISTER">
+        <String dnOrder="9" id="TRANSMIT_DATA_REGISTER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom6" value="&amp;(SERCOM6_REGS-&gt;USART_INT.SERCOM_DATA)"/>
           </Values>
         </String>
-        <Integer dnOrder="11" id="USART_BAUD_VALUE">
+        <Integer dnOrder="10" id="USART_BAUD_VALUE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom6" value="63522"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="12" id="USART_INTERRUPT_MODE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="readOnly">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </Boolean>
-        <Boolean dnOrder="13" id="USART_RING_BUFFER_ENABLE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="readOnly">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-          <Values dnOrder="1">
+        <Boolean dnOrder="11" id="USART_RING_BUFFER_ENABLE">
+          <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom6" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="14" id="USART_RX_RING_BUFFER_SIZE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </Integer>
-        <Integer dnOrder="15" id="USART_SAMPLE_COUNT">
+        <Integer dnOrder="12" id="USART_SAMPLE_COUNT">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom6" value="16"/>
           </Values>
         </Integer>
-        <Integer dnOrder="16" id="USART_SAMPLE_RATE">
+        <Integer dnOrder="13" id="USART_SAMPLE_RATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom6" value="0"/>
           </Values>
-        </Integer>
-        <Integer dnOrder="17" id="USART_TX_RING_BUFFER_SIZE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
         </Integer>
       </Symbols>
       <Attachments dnOrder="1">
@@ -6984,6 +6865,27 @@
                 </Boolean>
               </Attributes>
             </File>
+            <File dnOrder="7" id="SYS_CONSOLE_USB_CDC_SOURCE">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="enabled">
+                  <Value dnOrder="0">false</Value>
+                </Boolean>
+              </Attributes>
+            </File>
+            <File dnOrder="8" id="SYS_CONSOLE_USB_DEFINITIONS_HEADER">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="enabled">
+                  <Value dnOrder="0">false</Value>
+                </Boolean>
+              </Attributes>
+            </File>
+            <File dnOrder="9" id="SYS_CONSOLE_USB_HEADER">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="enabled">
+                  <Value dnOrder="0">false</Value>
+                </Boolean>
+              </Attributes>
+            </File>
           </Symbols>
           <Attachments dnOrder="1">
             <DirectDependency dnOrder="0" id="sys_console_UART_dependency">
@@ -7002,19 +6904,12 @@
     </GeneratorComponent>
     <UniqueComponent dnOrder="17" id="sys_time">
       <Symbols dnOrder="0">
-        <Combo dnOrder="0" id="SYS_TIME_OPERATING_MODE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </Combo>
-        <String dnOrder="1" id="SYS_TIME_PLIB">
+        <String dnOrder="0" id="SYS_TIME_PLIB">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sys_time" value="TC3"/>
           </Values>
         </String>
-        <String dnOrder="2" id="SYS_TIME_REMOTE_COMPONENT_ID">
+        <String dnOrder="1" id="SYS_TIME_REMOTE_COMPONENT_ID">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sys_time" value="tc3"/>
           </Values>
@@ -7056,12 +6951,7 @@
           </Values>
         </Boolean>
         <Boolean dnOrder="4" id="TC_TIMER_INTENSET_MC1">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-          <Values dnOrder="1">
+          <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc3" value="true"/>
           </Values>
         </Boolean>
@@ -7075,13 +6965,6 @@
             <Dynamic dnOrder="0" id="tc3" value="60000"/>
           </Values>
         </Long>
-        <Float dnOrder="7" id="TC_TIMER_TIME_MS">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-          </Attributes>
-        </Float>
       </Symbols>
       <Attachments dnOrder="1">
         <DirectCapability dnOrder="0" id="TC3_TMR">
@@ -7102,22 +6985,22 @@
     <GraphSettings canvasHeight="900" canvasWidth="1000" dnOrder="0"/>
     <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
-        <ElementPosition dnOrder="0" id="AmazonFreeRTOS" x="299" y="425"/>
-        <ElementPosition dnOrder="1" id="AmazonHWInterface" x="97" y="335"/>
+        <ElementPosition dnOrder="0" id="AmazonFreeRTOS" x="441" y="391"/>
+        <ElementPosition dnOrder="1" id="AmazonHWInterface" x="210" y="348"/>
         <ElementPosition dnOrder="2" id="HarmonyCore" x="1060" y="20"/>
         <ElementPosition dnOrder="3" id="cmsis" x="660" y="20"/>
         <ElementPosition dnOrder="4" id="core" x="74" y="41"/>
         <ElementPosition dnOrder="5" id="dfp" x="340" y="20"/>
-        <ElementPosition dnOrder="6" id="drvExtPhyKsz8091" x="710" y="160"/>
-        <ElementPosition dnOrder="7" id="drvGmac" x="370" y="140"/>
+        <ElementPosition dnOrder="6" id="drvExtPhyKsz8091" x="36" y="518"/>
+        <ElementPosition dnOrder="7" id="drvGmac" x="54" y="329"/>
         <ElementPosition dnOrder="8" id="drvMiim" x="30" y="160"/>
         <ElementPosition dnOrder="9" id="eic" x="30" y="438"/>
         <ElementPosition dnOrder="10" id="evsys" x="180" y="20"/>
         <ElementPosition dnOrder="11" id="nvmctrl" x="529" y="17"/>
         <ElementPosition dnOrder="12" id="sercom2" x="25" y="218"/>
-        <ElementPosition dnOrder="13" id="sercom6" x="896" y="61"/>
+        <ElementPosition dnOrder="13" id="sercom6" x="360" y="178"/>
         <ElementPosition dnOrder="14" id="stdio" x="209" y="235"/>
-        <ElementPosition dnOrder="15" id="sys_command" x="304" y="231"/>
+        <ElementPosition dnOrder="15" id="sys_command" x="744" y="171"/>
         <ElementPosition dnOrder="16" id="sys_console" x="514" y="108"/>
         <ElementPosition dnOrder="17" id="sys_time" x="205" y="81"/>
         <ElementPosition dnOrder="18" id="tc3" x="30" y="80"/>

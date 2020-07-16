@@ -71,6 +71,9 @@
 #define mqttconfigKEEP_ALIVE_TIMEOUT_TICKS            ( 5000 )
 
 /**
+ * @brief The maximum time in ticks for which the MQTT task is permitted to block.
+ *
+ * The MQTT task blocks until the user initiates any action or until it receives
  * any data from the broker. This macro controls the maximum time the MQTT task can
  * block. It should be set to a low number for the platforms which do not have any
  * mechanism to wake up the MQTT task whenever data is received on a connected socket.

@@ -60,10 +60,6 @@ void GPIO_Initialize ( void )
     /* PORTA Initialization */
 
     /* PORTB Initialization */
-    ODCBSET = 0x380; /* Open Drain Enable */
-    LATB = 0x380; /* Initial Latch Value */
-    TRISBCLR = 0x380; /* Direction Control */
-    ANSELBCLR = 0x380; /* Digital Mode Enable */
 
     /* PORTC Initialization */
     ANSELCCLR = 0x12; /* Digital Mode Enable */
@@ -80,15 +76,9 @@ void GPIO_Initialize ( void )
     ANSELHCLR = 0x30; /* Digital Mode Enable */
 
     /* PORTJ Initialization */
-    ODCJSET = 0x88; /* Open Drain Enable */
-    LATJ = 0x88; /* Initial Latch Value */
-    TRISJCLR = 0x88; /* Direction Control */
     ANSELJCLR = 0xb00; /* Digital Mode Enable */
 
     /* PORTK Initialization */
-    ODCKSET = 0x80; /* Open Drain Enable */
-    LATK = 0x80; /* Initial Latch Value */
-    TRISKCLR = 0x80; /* Direction Control */
 
 
     /* Unlock system for PPS configuration */

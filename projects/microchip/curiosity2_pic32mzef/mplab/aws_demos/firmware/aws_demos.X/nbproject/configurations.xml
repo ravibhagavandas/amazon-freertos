@@ -830,6 +830,7 @@
               <logicalFolder name="f1" displayName="curiosity2_pic32mzef" projectFiles="true">
                 <logicalFolder name="f1" displayName="aws_demos" projectFiles="true">
                   <logicalFolder name="f1" displayName="config_files" projectFiles="true">
+                    <itemPath>../../../../../../../vendors/microchip/boards/curiosity2_pic32mzef/aws_demos/config_files/aws_bufferpool_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/curiosity2_pic32mzef/aws_demos/config_files/aws_demo_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/curiosity2_pic32mzef/aws_demos/config_files/aws_ggd_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/curiosity2_pic32mzef/aws_demos/config_files/aws_iot_network_config.h</itemPath>
@@ -885,6 +886,7 @@
                     <itemPath>../../../../../../../vendors/microchip/harmony3/afr/tcpip/src/tcpip_heap_external.c</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/harmony3/afr/tcpip/src/tcpip_heap_internal.c</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/harmony3/afr/tcpip/src/tcpip_helpers.c</itemPath>
+                    <itemPath>../../../../../../../vendors/microchip/harmony3/afr/tcpip/src/tcpip_helper_c32.S</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/harmony3/afr/tcpip/src/tcpip_helpers_private.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/harmony3/afr/tcpip/src/tcpip_manager_control.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/harmony3/afr/tcpip/src/tcpip_module_manager.h</itemPath>
@@ -1012,6 +1014,7 @@
                    projectFiles="false">
       <itemPath>Makefile</itemPath>
       <itemPath>../src/config/aws_demos/harmony.prj</itemPath>
+      <itemPath>../src/config/aws_demos/aws_demos.xml</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
@@ -1029,7 +1032,7 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>pkob4hybrid</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.40</languageToolchainVersion>
+        <languageToolchainVersion>2.41</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
@@ -1092,7 +1095,7 @@
         <property key="place-data-into-section" value="false"/>
         <property key="post-instruction-scheduling" value="default"/>
         <property key="pre-instruction-scheduling" value="default"/>
-        <property key="preprocessor-macros" value="PIC32_USE_ETHERNET;__free_rtos__"/>
+        <property key="preprocessor-macros" value=";PIC32_USE_ETHERNET;__free_rtos__"/>
         <property key="strict-ansi" value="false"/>
         <property key="support-ansi" value="false"/>
         <property key="toplevel-reordering" value=""/>

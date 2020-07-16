@@ -49,13 +49,12 @@
 
 /* Demo application includes. */
 #include "aws_demo_config.h"
-#include "aws_demo.h"
 #include "iot_logging_task.h"
 #include "iot_wifi.h"
 /* Application version info. */
 #include "aws_application_version.h"
 #include "iot_wifi.h"
-#include "amazon-freertos/demos/include/aws_demo.h"
+
 
 /* Sleep on this platform */
 #define Sleep( nMs )    vTaskDelay( pdMS_TO_TICKS( nMs ) );

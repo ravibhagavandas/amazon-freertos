@@ -50,6 +50,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include "peripheral/nvmctrl/plib_nvmctrl.h"
+#include "afr.h"
 #include "peripheral/tc/plib_tc3.h"
 #include "system/time/sys_time.h"
 #include "peripheral/trng/plib_trng.h"
@@ -65,7 +66,6 @@
 #include "peripheral/clock/plib_clock.h"
 #include "peripheral/nvic/plib_nvic.h"
 #include "peripheral/eic/plib_eic.h"
-#include "afr.h"
 #include "system/console/sys_console.h"
 #include "system/console/src/sys_console_uart_definitions.h"
 #include "app.h"

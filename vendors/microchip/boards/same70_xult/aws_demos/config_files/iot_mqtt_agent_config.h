@@ -1,6 +1,6 @@
 /*
- * Amazon FreeRTOS V1.4.8
- * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS V1.1.4
+ * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -93,12 +93,12 @@
 /**
  * @brief Maximum number of MQTT clients that can exist simultaneously.
  */
-#define mqttconfigMAX_BROKERS                  ( 4 )
+#define mqttconfigMAX_BROKERS            ( 4 )
 
 /**
  * @brief Maximum number of parallel operations per client.
  */
-#define mqttconfigMAX_PARALLEL_OPS       (5)
+#define mqttconfigMAX_PARALLEL_OPS       ( 5 )
 
 /**
  * @brief Time in milliseconds after which the TCP send operation should timeout.

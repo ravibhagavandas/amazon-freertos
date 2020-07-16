@@ -530,7 +530,7 @@ int32_t SOCKETS_Recv( Socket_t xSocket,
 
             (xSocketCntx[Socket].waitingTask)[RECV_SEM] = xTaskGetCurrentTaskHandle();
             
-            xTaskNotifyWait( WDRV_MAC_EVENT_SOCKET_RECV, WDRV_MAC_EVENT_SOCKET_RECV, &evBits, xSocketCntx[Socket].socketRecvTO);
+            xTaskNotifyWait( WDRV_MAC_EVENT_SOCKET_RECV, WDRV_MAC_EVENT_SOCKET_RECV, &evBits, ~0);
 
             if( ( evBits & WDRV_MAC_EVENT_SOCKET_RECV ) == 0 )
             {

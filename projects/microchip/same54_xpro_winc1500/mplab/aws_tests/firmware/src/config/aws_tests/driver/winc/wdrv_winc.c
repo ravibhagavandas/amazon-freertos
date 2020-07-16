@@ -62,11 +62,7 @@
 #ifdef WDRV_WINC_ENABLE_BLE
 #include "platform.h"
 #endif
-#include "m2m_types.h"
 
-uint32_t *get_winc_buffer();
-extern void eccProcessREQ(tstrEccReqInfo *ecc_request);
-extern size_t winc_certs_get_total_files_size(const tstrTlsSrvSecHdr* header);
 // *****************************************************************************
 // *****************************************************************************
 // Section: Global Data
@@ -769,6 +765,7 @@ static void _WDRV_WINC_SSLCallback(uint8_t msgType, void *pMsgContent)
                         pDcpt->pfSSLReqECCCB((DRV_HANDLE)pDcpt, info, &ecdhReqInfo);
                         break;
                     }        
+
                     case ECC_REQ_SIGN_VERIFY:
                     {
                         WDRV_WINC_ECDSA_VERIFY_REQ_INFO ecdsaVerifyReqInfo;
@@ -776,6 +773,7 @@ static void _WDRV_WINC_SSLCallback(uint8_t msgType, void *pMsgContent)
                         pDcpt->pfSSLReqECCCB((DRV_HANDLE)pDcpt, info, &ecdsaVerifyReqInfo);
                         break;
                     }
+
                     case ECC_REQ_SIGN_GEN:
                     {
                         WDRV_WINC_ECDSA_SIGN_REQ_INFO ecdsaSignReqInfo;
@@ -784,11 +782,16 @@ static void _WDRV_WINC_SSLCallback(uint8_t msgType, void *pMsgContent)
                         break;
                         
                     }
+
+		    default:
+                    {
+                        break;
+                    }
                 }
                                         
             }
-             break;
-         }
+            break;
+        }
 
         default:
         {
@@ -1148,7 +1151,7 @@ void WDRV_WINC_Tasks(SYS_MODULE_OBJ object)
 
             WDRV_DBG_INFORM_PRINT("WINC: Initializing...\r\n");
             
-            if(OSAL_RESULT_TRUE != OSAL_MUTEX_Create(&pDcpt->eventProcessMutex))
+            if (OSAL_RESULT_TRUE != OSAL_MUTEX_Create(&pDcpt->eventProcessMutex))
             {
                 WDRV_DBG_ERROR_PRINT("eventProcessMutex create failed\r\n");
                 pDcpt->sysStat = SYS_STATUS_ERROR;

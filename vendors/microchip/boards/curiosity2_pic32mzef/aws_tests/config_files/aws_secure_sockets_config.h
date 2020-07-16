@@ -36,6 +36,7 @@
  *
  * Valid values are pdLITTLE_ENDIAN and pdBIG_ENDIAN.
  */
+
 #define socketsconfigBYTE_ORDER              pdLITTLE_ENDIAN
 
 /**

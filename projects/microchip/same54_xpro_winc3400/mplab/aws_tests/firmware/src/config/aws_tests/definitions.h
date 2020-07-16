@@ -50,6 +50,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include "peripheral/nvmctrl/plib_nvmctrl.h"
+#include "afr.h"
 #include "peripheral/tc/plib_tc3.h"
 #include "system/time/sys_time.h"
 #include "peripheral/trng/plib_trng.h"
@@ -62,9 +63,8 @@
 #include "peripheral/sercom/usart/plib_sercom2_usart.h"
 #include "peripheral/evsys/plib_evsys.h"
 #include "driver/winc/include/wdrv_winc_api.h"
-#include "system/command/sys_command.h"
 #include "peripheral/sercom/i2c_master/plib_sercom7_i2c_master.h"
-#include "afr.h"
+#include "system/command/sys_command.h"
 #include "peripheral/sercom/usart/plib_sercom6_usart.h"
 #include "peripheral/port/plib_port.h"
 #include "peripheral/clock/plib_clock.h"

@@ -895,6 +895,7 @@
               <logicalFolder name="f1" displayName="same70_xult" projectFiles="true">
                 <logicalFolder name="f1" displayName="aws_demos" projectFiles="true">
                   <logicalFolder name="f1" displayName="config_files" projectFiles="true">
+                    <itemPath>../../../../../../../vendors/microchip/boards/same70_xult/aws_demos/config_files/aws_bufferpool_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/same70_xult/aws_demos/config_files/aws_demo_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/same70_xult/aws_demos/config_files/aws_ggd_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/same70_xult/aws_demos/config_files/aws_iot_network_config.h</itemPath>
@@ -914,6 +915,7 @@
                 <logicalFolder name="f2" displayName="ports" projectFiles="true">
                   <logicalFolder name="f1" displayName="ota" projectFiles="true">
                     <itemPath>../../../../../../../vendors/microchip/boards/same70_xult/ports/ota/aws_ota_pal.c</itemPath>
+                    <itemPath>../../../../../../../vendors/microchip/boards/same70_xult/ports/ota/aws_flash_config.h</itemPath>
                   </logicalFolder>
                   <logicalFolder name="f2" displayName="pkcs11" projectFiles="true">
                     <itemPath>../../../../../../../vendors/microchip/boards/same70_xult/ports/pkcs11/iot_pkcs11_pal.c</itemPath>
@@ -1098,12 +1100,12 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>EdbgTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.40</languageToolchainVersion>
+        <languageToolchainVersion>2.41</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAME70_DFP" vendor="Microchip" version="4.1.50"/>
         <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
+        <pack name="SAME70_DFP" vendor="Microchip" version="4.1.50"/>
       </packs>
       <compileType>
         <linkerTool>

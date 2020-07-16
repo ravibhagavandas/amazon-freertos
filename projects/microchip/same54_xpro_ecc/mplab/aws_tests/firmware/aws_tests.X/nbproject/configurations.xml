@@ -990,7 +990,6 @@
                     <itemPath>../../../../../../../vendors/microchip/boards/same54_xpro/aws_tests/config_files/aws_test_runner_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/same54_xpro/aws_tests/config_files/aws_test_tcp_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/same54_xpro/aws_tests/config_files/aws_test_wifi_config.h</itemPath>
-                    <itemPath>../../../../../../../vendors/microchip/boards/same54_xpro/aws_tests/config_files/aws_wifi_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/same54_xpro/aws_tests/config_files/FreeRTOSConfig.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/same54_xpro/aws_tests/config_files/FreeRTOSIPConfig.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/same54_xpro/aws_tests/config_files/iot_config.h</itemPath>
@@ -1329,14 +1328,14 @@
         <targetDevice>ATSAME54P20A</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>EdbgTool</platformTool>
+        <platformTool>noID</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.40</languageToolchainVersion>
+        <languageToolchainVersion>2.41</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
         <pack name="SAME54_DFP" vendor="Microchip" version="3.1.43"/>
+        <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
       </packs>
       <compileType>
         <linkerTool>
@@ -1405,7 +1404,7 @@
         <property key="post-instruction-scheduling" value="default"/>
         <property key="pre-instruction-scheduling" value="default"/>
         <property key="preprocessor-macros"
-                  value="PIC32_USE_ECC;PIC32_USE_ETHERNET;UNITY_INCLUDE_CONFIG_H;AMAZON_FREERTOS_ENABLE_UNIT_TESTS;__free_rtos__"/>
+                  value=";UNITY_INCLUDE_CONFIG_H;AMAZON_FREERTOS_ENABLE_UNIT_TESTS;PIC32_USE_ECC;PIC32_USE_ETHERNET;__free_rtos__"/>
         <property key="strict-ansi" value="false"/>
         <property key="support-ansi" value="false"/>
         <property key="toplevel-reordering" value=""/>

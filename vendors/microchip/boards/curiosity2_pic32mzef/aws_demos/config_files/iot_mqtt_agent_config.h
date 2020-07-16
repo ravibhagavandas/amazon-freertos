@@ -93,7 +93,7 @@
 /**
  * @brief Maximum number of MQTT clients that can exist simultaneously.
  */
-#define mqttconfigMAX_BROKERS                  ( 4 )
+#define mqttconfigMAX_BROKERS            ( 4 )
 
 /**
  * @brief Maximum number of parallel operations per client.

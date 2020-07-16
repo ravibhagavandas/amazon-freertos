@@ -49,6 +49,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include "afr.h"
 #include "bsp/bsp.h"
 #include "peripheral/nvm/plib_nvm.h"
 #include "system/time/sys_time.h"
@@ -64,7 +65,6 @@
 #include "peripheral/gpio/plib_gpio.h"
 #include "peripheral/evic/plib_evic.h"
 #include "peripheral/i2c/plib_i2c1.h"
-#include "afr.h"
 #include "system/console/sys_console.h"
 #include "system/console/src/sys_console_uart_definitions.h"
 #include "app.h"

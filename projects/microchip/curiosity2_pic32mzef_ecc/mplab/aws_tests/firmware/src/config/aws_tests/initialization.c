@@ -247,8 +247,8 @@ void SYS_Initialize ( void* data )
     CLK_Initialize();
     
     /* Configure Prefetch, Wait States and ECC */
-    PRECONbits.PREFEN = 0;
-    PRECONbits.PFMWS = 3;
+    PRECONbits.PREFEN = 3;
+    PRECONbits.PFMWS = 2;
     CFGCONbits.ECCCON = 3;
 
 
@@ -272,14 +272,13 @@ void SYS_Initialize ( void* data )
     sysObj.drvMiim = DRV_MIIM_Initialize( DRV_MIIM_INDEX_0, (const SYS_MODULE_INIT *) &drvMiimInitData );
 
 
-    sysObj.sysTime = SYS_TIME_Initialize(SYS_TIME_INDEX_0, (SYS_MODULE_INIT *)&sysTimeInitData);
-    sysObj.sysConsole0 = SYS_CONSOLE_Initialize(SYS_CONSOLE_INDEX_0, (SYS_MODULE_INIT *)&sysConsole0Init);
-
     SYS_CMD_Initialize((SYS_MODULE_INIT*)&sysCmdInit);
 
     sysObj.sysDebug = SYS_DEBUG_Initialize(SYS_DEBUG_INDEX_0, (SYS_MODULE_INIT*)&debugInit);
 
 
+    sysObj.sysTime = SYS_TIME_Initialize(SYS_TIME_INDEX_0, (SYS_MODULE_INIT *)&sysTimeInitData);
+    sysObj.sysConsole0 = SYS_CONSOLE_Initialize(SYS_CONSOLE_INDEX_0, (SYS_MODULE_INIT *)&sysConsole0Init);
 
 
 
