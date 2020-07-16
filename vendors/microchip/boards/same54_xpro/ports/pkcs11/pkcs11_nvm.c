@@ -78,6 +78,7 @@ bool AWS_FlashPagesWrite(const uint32_t* ptrFlash, const uint32_t* pageData, int
 {
     bool bResult=true;
     uint32_t addr = 0;
+    uint8_t *pageDataAddr = pageData;
     while(NVMCTRL_IsBusy());
     for(int i=0;((i<nPages) && bResult);i++)
     {
@@ -116,22 +117,38 @@ bool AWS_FlashProgramBlock(const uint8_t* ptrFlash, const uint8_t* pData, uint32
         bResult = AWS_FlashPagesWrite(pAddr,pData,nBlocks);
         size2 = size2 % AWS_NVM_PAGE_SIZE;
     }
+    
     if(size2 > 0 && bResult)
     {
         memcpy(bMem, (const uint8_t *) (pData + nBlocks * AWS_NVM_PAGE_SIZE), size2);
         bResult = AWS_FlashPagesWrite((pAddr + nBlocks * AWS_NVM_PAGE_SIZE),bMem,1);
-        
         if(memcmp((ptrFlash + nBlocks * AWS_NVM_PAGE_SIZE), bMem, size2))
         {
             configPRINTF(("Last page write Result #3= %d, Rem Size = %d\r\n",bResult,size2));
-            //return false;
+            return false;
         }
     }
   
-    if(memcmp(ptrFlash, pData, size ))
-        return false;
+   if(memcmp(ptrFlash, pData, size ))
+       return false;
 
     return bResult;
+}
+
+bool AWS_Update_ImageFlags(uint8_t * ptrFlash, uint8_t * ptrFlash2, uint8_t *pData, int iSize)
+{
+    if(AWS_NVM_QuadWordWrite(ptrFlash, pData, iSize/AWS_QUAD_SIZE))
+    {
+#if 0
+        if(AWS_NVM_QuadWordWrite(ptrFlash2, pData, iSize/AWS_QUAD_SIZE))
+        {
+            
+            return true;
+        }
+#endif        
+        configPRINTF(("FATAL!!! memory is corrupted\r\n"));
+    }
+    return false;
 }
 
 bool AWS_NVM_QuadWordWrite(uint8_t * ptrFlash , uint8_t * pData,int nBlocks) 
@@ -147,4 +164,56 @@ bool AWS_NVM_QuadWordWrite(uint8_t * ptrFlash , uint8_t * pData,int nBlocks)
     if(memcmp(ptrFlash, pData, nBlocks * AWS_QUAD_SIZE ))
         return false;
     return bResult;
+}
+
+int mbedtls_hardware_poll( void * data,
+                           unsigned char * output,
+                           size_t len,
+                           size_t * olen )
+{
+
+ 
+
+    ((void) data);
+
+ 
+
+    union
+    {
+        uint64_t    v64;
+        uint8_t     v8[8];
+    }suint_64;
+
+ 
+
+    int n8Chunks = len / 8;
+    int nLeft = len % 8;
+
+ 
+
+    while(n8Chunks--)
+    {
+        suint_64.v64 = TRNG_ReadData();
+        suint_64.v64 = suint_64.v64 << 32;
+        suint_64.v64 |= TRNG_ReadData();
+        memcpy(output, suint_64.v8, sizeof(suint_64.v8));
+        output += sizeof(suint_64.v8);
+    }
+
+ 
+
+    if(nLeft)
+    {
+        suint_64.v64 = TRNG_ReadData();
+        suint_64.v64 = suint_64.v64 << 32;
+        suint_64.v64 |= TRNG_ReadData();
+        memcpy(output, suint_64.v8, nLeft);
+    }
+
+ 
+
+
+  *olen = len;
+  
+  return 0;
 }

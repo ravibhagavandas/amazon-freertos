@@ -52,7 +52,7 @@
 #define configISR_STACK_SIZE                       (512)
 #define configSUPPORT_DYNAMIC_ALLOCATION           1
 #define configSUPPORT_STATIC_ALLOCATION            1
-#define configTOTAL_HEAP_SIZE                      ( ( size_t ) 220000)
+#define configTOTAL_HEAP_SIZE                      ( ( size_t ) 170000)
 #define configMAX_TASK_NAME_LEN                    (16 )
 #define configUSE_16_BIT_TICKS                     0 
 #define configIDLE_SHOULD_YIELD                    1 
@@ -146,7 +146,7 @@ extern void vAssertCalled( const char * pcFile,
 
 /* Sets the length of the buffers into which logging messages are written - so
  * also defines the maximum length of each log message. */
-    #define configLOGGING_MAX_MESSAGE_LENGTH            128
+    #define configLOGGING_MAX_MESSAGE_LENGTH            512
 
 /* Set to 1 to prepend each log message with a message number, the task name,
  * and a time stamp. */

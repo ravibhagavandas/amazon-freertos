@@ -27,11 +27,11 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 PROJECTNAME=aws_demos.X
 
 # Active Configuration
-DEFAULTCONF=same70_xult_nvm
+DEFAULTCONF=aws_demos
 CONF=${DEFAULTCONF}
 
 # All Configurations
-ALLCONFS=same70_xult_nvm 
+ALLCONFS=aws_demos 
 
 
 # build
@@ -45,13 +45,13 @@ ALLCONFS=same70_xult_nvm
 
 # clobber
 .clobber-impl: .clobber-pre .depcheck-impl
-	    ${MAKE} SUBPROJECTS=${SUBPROJECTS} CONF=same70_xult_nvm clean
+	    ${MAKE} SUBPROJECTS=${SUBPROJECTS} CONF=aws_demos clean
 
 
 
 # all
 .all-impl: .all-pre .depcheck-impl
-	    ${MAKE} SUBPROJECTS=${SUBPROJECTS} CONF=same70_xult_nvm build
+	    ${MAKE} SUBPROJECTS=${SUBPROJECTS} CONF=aws_demos build
 
 
 

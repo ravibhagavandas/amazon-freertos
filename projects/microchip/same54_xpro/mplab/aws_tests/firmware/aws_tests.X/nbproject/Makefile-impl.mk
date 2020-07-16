@@ -27,11 +27,11 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 PROJECTNAME=aws_tests.X
 
 # Active Configuration
-DEFAULTCONF=same54_xpro_nvm
+DEFAULTCONF=aws_tests
 CONF=${DEFAULTCONF}
 
 # All Configurations
-ALLCONFS=same54_xpro_nvm 
+ALLCONFS=aws_tests 
 
 
 # build
@@ -45,13 +45,13 @@ ALLCONFS=same54_xpro_nvm
 
 # clobber
 .clobber-impl: .clobber-pre .depcheck-impl
-	    ${MAKE} SUBPROJECTS=${SUBPROJECTS} CONF=same54_xpro_nvm clean
+	    ${MAKE} SUBPROJECTS=${SUBPROJECTS} CONF=aws_tests clean
 
 
 
 # all
 .all-impl: .all-pre .depcheck-impl
-	    ${MAKE} SUBPROJECTS=${SUBPROJECTS} CONF=same54_xpro_nvm build
+	    ${MAKE} SUBPROJECTS=${SUBPROJECTS} CONF=aws_tests build
 
 
 

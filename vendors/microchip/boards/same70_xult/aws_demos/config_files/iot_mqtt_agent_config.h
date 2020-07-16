@@ -1,6 +1,6 @@
 /*
- * Amazon FreeRTOS V1.4.8
- * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS V1.1.4
+ * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -68,7 +68,7 @@
  * If PINGRESP is not received within this much time after sending PINGREQ,
  * the client assumes that the PINGREQ timed out.
  */
-#define mqttconfigKEEP_ALIVE_TIMEOUT_TICKS            ( 1000 )
+#define mqttconfigKEEP_ALIVE_TIMEOUT_TICKS            ( 5000 )
 
 /**
  * @brief The maximum time in ticks for which the MQTT task is permitted to block.
@@ -93,7 +93,7 @@
 /**
  * @brief Maximum number of MQTT clients that can exist simultaneously.
  */
-#define mqttconfigMAX_BROKERS            ( 2 )
+#define mqttconfigMAX_BROKERS            ( 4 )
 
 /**
  * @brief Maximum number of parallel operations per client.
@@ -104,5 +104,15 @@
  * @brief Time in milliseconds after which the TCP send operation should timeout.
  */
 #define mqttconfigTCP_SEND_TIMEOUT_MS    ( 2000 )
+
+/**
+ * @brief Length of the buffer used to receive data.
+ */
+#define mqttconfigRX_BUFFER_SIZE               ( 1024 + 128 )
+
+/**
+ * @brief The maximum time in ticks for which the MQTT task is permitted to block.
+ */
+#define mqttconfigMQTT_TASK_MAX_BLOCK_TICKS    ( ~( ( uint32_t ) 0 ) )
 
 #endif /* _AWS_MQTT_AGENT_CONFIG_H_ */

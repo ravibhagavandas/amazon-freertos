@@ -1,6 +1,6 @@
 /*
- * Amazon FreeRTOS V1.4.7
- * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS V1.4.7
+ * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -74,6 +74,8 @@ const AppVersion32_t xAppFirmwareVersion =
 #define mainREQUIRED_WIFI_FIRMWARE_WICED_MINOR_VERSION    ( 5 )
 #define mainREQUIRED_WIFI_FIRMWARE_WICED_PATCH_VERSION    ( 2 )
 #define mainREQUIRED_WIFI_FIRMWARE_INVENTEK_VERSION       ( 5 )
+#define mainREQUIRED_WIFI_FIRMWARE_DESCRIPTOR_STRING      ( "STM" )
+
 /*-----------------------------------------------------------*/
 
 void vApplicationDaemonTaskStartupHook( void );
@@ -673,6 +675,7 @@ static void prvInitializeHeap( void )
     {
         int32_t lWicedMajorVersion = 0, lWicedMinorVersion = 0, lWicedPatchVersion = 0, lInventekVersion = 0, lParsedFields = 0;
         uint8_t ucFirmwareVersion[ ES_WIFI_FW_REV_SIZE ];
+
         BaseType_t xNeedsUpdate = pdFALSE;
 
         if( WIFI_GetFirmwareVersion( &( ucFirmwareVersion[ 0 ] ) ) == eWiFiSuccess )
@@ -709,6 +712,10 @@ static void prvInitializeHeap( void )
                          ( lWicedMinorVersion == mainREQUIRED_WIFI_FIRMWARE_WICED_MINOR_VERSION ) &&
                          ( lWicedPatchVersion == mainREQUIRED_WIFI_FIRMWARE_WICED_PATCH_VERSION ) &&
                          ( lInventekVersion < mainREQUIRED_WIFI_FIRMWARE_INVENTEK_VERSION ) )
+                {
+                    xNeedsUpdate = pdTRUE;
+                }
+                else if( NULL == strstr( ucFirmwareVersion, mainREQUIRED_WIFI_FIRMWARE_DESCRIPTOR_STRING ) )
                 {
                     xNeedsUpdate = pdTRUE;
                 }

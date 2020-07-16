@@ -1,6 +1,6 @@
 /*
- * Amazon FreeRTOS PKCS #11 PAL for LPC54018 IoT Module V1.0.3
- * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS PKCS #11 PAL for LPC54018 IoT Module V1.0.3
+ * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -176,12 +176,17 @@ CK_OBJECT_HANDLE PKCS11_PAL_FindObject( uint8_t * pLabel,
 {
     CK_OBJECT_HANDLE xHandle = eInvalidHandle;
     char * pcFileName = NULL;
+    uint8_t * pFile = NULL;
+    size_t xFileLength = 0;
 
     /* Translate from the PKCS#11 label to local storage file name. */
     prvLabelToFilenameHandle( pLabel, &pcFileName, &xHandle );
 
-    /*TODO: check if file actually there.
-     * Note: g_cert_files only seems to check if the entry in the array is present */
+    /* Check if the file exists. */
+    if( pdFALSE == mflash_read_file( pcFileName, &pFile, &xFileLength ) )
+    {
+        xHandle = eInvalidHandle;
+    }
 
     return xHandle;
 }
@@ -292,8 +297,8 @@ extern CK_RV prvMbedTLS_Initialize( void );
     #error LPC54018 requires alternate C_Initialization
 #endif
 
-CK_DEFINE_FUNCTION( CK_RV, C_Initialize )( CK_VOID_PTR pvInitArgs )
-{   /*lint !e9072 It's OK to have different parameter name. */
+CK_DECLARE_FUNCTION( CK_RV, C_Initialize )( CK_VOID_PTR pvInitArgs )
+{ /*lint !e9072 It's OK to have different parameter name. */
     ( void ) ( pvInitArgs );
 
     CK_RV xResult = CKR_OK;

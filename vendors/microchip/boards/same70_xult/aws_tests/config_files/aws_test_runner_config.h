@@ -32,6 +32,8 @@
 
 /* Unsupported tests. */
 #define testrunnerFULL_OTA_CBOR_ENABLED    testrunnerUNSUPPORTED
+#define testrunnerFULL_BLE_ENABLED         testrunnerUNSUPPORTED
+#define testrunnerFULL_BLE_END_TO_END_TEST_ENABLED    testrunnerUNSUPPORTED
 
 /* Supported tests. 0 = Disabled, 1 = Enabled */
 
@@ -41,25 +43,31 @@
 #endif
 
 /* clang-format off */
-#define testrunnerFULL_CBOR_ENABLED                0
-#define testrunnerFULL_CRYPTO_ENABLED              0
-#define testrunnerFULL_DEFENDER_ENABLED            0
-#define testrunnerFULL_GGD_ENABLED                 0
-#define testrunnerFULL_GGD_HELPER_ENABLED          0
-#define testrunnerFULL_MEMORYLEAK_ENABLED          0
-#define testrunnerFULL_MQTT_AGENT_ENABLED          0
-#define testrunnerFULL_MQTT_ALPN_ENABLED           0
-#define testrunnerFULL_MQTT_ENABLED                0
-#define testrunnerFULL_MQTT_STRESS_TEST_ENABLED    0
-#define testrunnerFULL_SHADOWv4_ENABLED            0
-#define testrunnerFULL_MQTTv4_ENABLED              0
-#define testrunnerFULL_PKCS11_ENABLED              0
-#define testrunnerFULL_POSIX_ENABLED               0
-#define testrunnerFULL_SHADOW_ENABLED              0
-#define testrunnerFULL_TCP_ENABLED                 1
-#define testrunnerFULL_TLS_ENABLED                 0
-#define testrunnerFULL_OTA_AGENT_ENABLED           0
-#define testrunnerFULL_OTA_PAL_ENABLED             0
-#define testrunnerFULL_HTTPS_CLIENT_ENABLED        0
+#define testrunnerFULL_TASKPOOL_ENABLED               0
+#define testrunnerFULL_CRYPTO_ENABLED                 0
+#define testrunnerFULL_FREERTOS_TCP_ENABLED           0
+#define testrunnerFULL_DEFENDER_ENABLED               0
+#define testrunnerFULL_GGD_ENABLED                    0
+#define testrunnerFULL_GGD_HELPER_ENABLED             0
+#define testrunnerFULL_MQTT_AGENT_ENABLED             0
+#define testrunnerFULL_MQTT_ALPN_ENABLED              0
+#define testrunnerFULL_MQTT_STRESS_TEST_ENABLED       0
+#define testrunnerFULL_MQTTv4_ENABLED                 0
+#define testrunnerFULL_PKCS11_ENABLED                 0
+#define testrunnerFULL_POSIX_ENABLED                  0
+#define testrunnerFULL_SHADOW_ENABLED                 0
+#define testrunnerFULL_SHADOWv4_ENABLED               0
+#define testrunnerFULL_TCP_ENABLED                    1
+#define testrunnerFULL_TLS_ENABLED                    0
+#define testrunnerFULL_MEMORYLEAK_ENABLED             0
+#define testrunnerFULL_OTA_CBOR_ENABLED               0
+#define testrunnerFULL_OTA_AGENT_ENABLED              0
+#define testrunnerFULL_OTA_PAL_ENABLED                0
+#define testrunnerFULL_SERIALIZER_ENABLED             0
+#define testrunnerUTIL_PLATFORM_CLOCK_ENABLED         0
+#define testrunnerUTIL_PLATFORM_THREADS_ENABLED       0
+
+/* On systems using FreeRTOS+TCP (such as this one) the TCP segments must be
+ * cleaned up before running the memory leak check. */
 
 #endif /* AWS_TEST_RUNNER_CONFIG_H */

@@ -52,11 +52,10 @@ THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 #ifndef __TCPIP_MAC_H_
 #define __TCPIP_MAC_H_
 #include <stdint.h>
+#include <stddef.h>
 #include <stdbool.h>
-
-#include "tcpip_ethernet.h"
+#include "system/system_module.h"
 #include "driver/driver_common.h"
-#include "driver/ethphy/drv_ethphy.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -153,9 +152,9 @@ typedef enum
     TCPIP_MODULE_MAC_MRF24WN        = 0x1060,
     TCPIP_MODULE_MAC_MRF24WN_0      = 0x1060,   // alternate numbered name
 
-    // External WINC1500 Wi-Fi MAC: room for 16 WINC1500 devices
-    TCPIP_MODULE_MAC_WINC1500       = 0x1070,
-    TCPIP_MODULE_MAC_WINC1500_0     = 0x1070,   // alternate numbered name
+    // External WINC Wi-Fi MAC: room for 16 WINC devices
+    TCPIP_MODULE_MAC_WINC			= 0x1070,
+    TCPIP_MODULE_MAC_WINC_0			= 0x1070,   // alternate numbered name
 
     // External WILC1000 Wi-Fi MAC: room for 16 WILC1000 devices
     TCPIP_MODULE_MAC_WILC1000       = 0x1080,
@@ -165,31 +164,18 @@ typedef enum
     TCPIP_MODULE_MAC_PIC32WK        = 0x1090,
     TCPIP_MODULE_MAC_PIC32WK_0      = 0x1090,   // alternate numbered name
 
+    // Internal/Embedded PIC32MZW1 Wi-Fi MAC: room for 16 PIC32MZW1 devices
+    TCPIP_MODULE_MAC_PIC32MZW1      = 0x10A0,
+    TCPIP_MODULE_MAC_PIC32MZW1_0    = 0x10A0,   // alternate numbered name
+
+    // Internal/Embedded EMAC of SAM9x60:
+    TCPIP_MODULE_MAC_SAM9X60        = 0x1100,   // instance base
+    TCPIP_MODULE_MAC_SAM9X60_0      = 0x1100,   // first mac instance
+    TCPIP_MODULE_MAC_SAM9X60_1      = 0x1101,   // second mac instance
+
     // External, non MCHP, MAC modules
     TCPIP_MODULE_MAC_EXTERNAL       = 0x4000,
 }TCPIP_MODULE_MAC_ID;
-
-// *****************************************************************************
-typedef struct
-{
-    void*   reserved;
-}TCPIP_MODULE_MAC_MRF24WN_CONFIG;
-
-typedef struct
-{
-    void*   reserved;
-}TCPIP_MODULE_MAC_WINC1500_CONFIG;
-
-typedef struct
-{
-    void*   reserved;
-}TCPIP_MODULE_MAC_WILC1000_CONFIG;
-
-typedef struct
-{
-    void*   reserved;
-}TCPIP_MODULE_MAC_PIC32WK_CONFIG;
-
 
 // *****************************************************************************
 /*  MAC Handle
@@ -236,7 +222,8 @@ typedef enum
     /* Segment carrying user payload */
     /* Higher level protocols (TCP, UDP, etc.) may use it */
     TCPIP_MAC_SEG_FLAG_USER_PAYLOAD     = 0x0008, 
-
+    /*  Ack is required and has not been performed */
+    TCPIP_MAC_SEG_FLAG_ACK_REQUIRED     = 0x0010,
     /*  User available segment flags. */
     TCPIP_MAC_SEG_FLAG_USER             = 0x0100, 
 
@@ -321,7 +308,7 @@ typedef struct _tag_MAC_DATA_SEGMENT
     uint8_t                  segClientData[4];
 
     /*  Additional client segment payload; Ignored by the MAC driver. */
-    uint8_t                  segClientLoad[0];
+    /*  uint8_t                  segClientLoad[]; */
 }TCPIP_MAC_DATA_SEGMENT;
 
 
@@ -603,6 +590,8 @@ typedef enum
     /* TX: Packet was rejected by the IP layer */
     TCPIP_MAC_PKT_ACK_IP_REJECT_ERR     = -18,  
 
+    /* RX: packet was dropped because it was processed externally */
+    TCPIP_MAC_PKT_ACK_EXTERN           = -19,
 }TCPIP_MAC_PKT_ACK_RES;
 
 
@@ -847,7 +836,7 @@ struct _tag_TCPIP_MAC_PACKET
 
     /* Additional client packet payload, variable packet data.
        Ignored by the MAC driver. */
-    uint32_t                        pktClientLoad[0];
+    uint32_t                        pktClientLoad[];
 };
 
 
@@ -1117,7 +1106,37 @@ typedef enum
 
 }TCPIP_MAC_SYNCH_REQUEST;
 
+// *****************************************************************************
+/* TCP/IP MAC Checksum calculation offloading
 
+  Summary:
+    Defines the possible MAC checksum offloading capabilities.
+
+  Description:
+    Lists different TCP/IP layer checksum calculation supported by MAC
+    
+  Remarks:
+    Multiple values can be OR-ed together
+
+*/
+typedef enum
+{
+    /* No IP/TCP/UDP Checksum calculation by MAC driver */
+    TCPIP_MAC_CHECKSUM_NONE     = 0x00,
+            
+    /* TCP Checksum calculation by MAC driver */        
+    TCPIP_MAC_CHECKSUM_TCP      = 0x01,
+            
+    /* UDP Checksum calculation by MAC driver */        
+    TCPIP_MAC_CHECKSUM_UDP      = 0x02,
+            
+    /* IPv4 Checksum calculation by MAC driver */        
+    TCPIP_MAC_CHECKSUM_IPV4      = 0x04,            
+            
+    /* IPv6 Checksum calculation by MAC driver */        
+    TCPIP_MAC_CHECKSUM_IPV6      = 0x08,             
+            
+}TCPIP_MAC_CHECKSUM_OFFLOAD_FLAGS;
 
 // *****************************************************************************
 /*  Handle to a heap
@@ -1619,6 +1638,11 @@ typedef struct
 
     /* MAC link MTU size */
     TCPIP_MAC_LINK_MTU      linkMtu;
+	
+	/* Rx Checksum offload Enable */
+    TCPIP_MAC_CHECKSUM_OFFLOAD_FLAGS    checksumOffloadRx;
+    /* Tx Checksum offload Enable */
+    TCPIP_MAC_CHECKSUM_OFFLOAD_FLAGS    checksumOffloadTx;
     
 }TCPIP_MAC_PARAMETERS;
 
@@ -1641,26 +1665,26 @@ typedef struct
 typedef struct
 {
     /*  number of OK RX packets */
-    int                 nRxOkPackets;
+    int     nRxOkPackets;
 
     /*  number of unacknowledged pending RX buffers in the driver queues. */
     /*  If each incoming packet fits within a RX buffer (the RX buffer is large enough) */
     /*  than this corresponds to the number of unacknowledged pending RX packets. */
     /*  Otherwise the number of packets is less than the pending buffers. */
-    int                 nRxPendBuffers;
+    int     nRxPendBuffers;
 
     /*  number of currently scheduled RX buffers in the driver queues. */
     /* These are available buffers, ready to receive data */
-    int                 nRxSchedBuffers;
+    int     nRxSchedBuffers;
 
     /*  number of RX packets with errors */
-    int                 nRxErrorPackets;
+    int     nRxErrorPackets;
 
     /*  number of RX fragmentation errors */
-    int                 nRxFragmentErrors;
+    int     nRxFragmentErrors;
 	
     /*  number of occurences of 'RX Buffer Not Available' */
-    int                 nRxBuffNotAvailable;
+    int    nRxBuffNotAvailable;
 
 }TCPIP_MAC_RX_STATISTICS;
 
@@ -1682,19 +1706,19 @@ typedef struct
 typedef struct
 {
     /*  number of OK transmitted packets */
-    int                 nTxOkPackets;
+    int     nTxOkPackets;
 
     /*  number of unacknowledged pending TX buffers in the driver queues. */
     /*  This is equal with pending TX packets when each packet */
     /*  is contained within a TX buffer. */
-    int                 nTxPendBuffers;
+    int     nTxPendBuffers;
 
     /*  number of packets that could not be transmitted */
-    int                 nTxErrorPackets;
+    int     nTxErrorPackets;
 
     /*  number of times the TX queue was full */
     /*  this may signal that the number of TX descriptors is too small */
-    int                 nTxQueueFull;
+    int     nTxQueueFull;
 
 }TCPIP_MAC_TX_STATISTICS;
 

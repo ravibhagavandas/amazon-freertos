@@ -1,6 +1,6 @@
 /*
- * Amazon FreeRTOS POSIX V1.1.1
- * Copyright (C) 2019 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS POSIX V1.1.3
+ * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -73,6 +73,7 @@
 #if !defined( posixconfigENABLE_TIMESPEC ) || ( posixconfigENABLE_TIMESPEC == 1 )
 
 /**
+ * @ingroup posix_datatypes_paramstructs
  * @brief represents an elapsed time
  */
     struct timespec
@@ -85,6 +86,7 @@
 #if !defined( posixconfigENABLE_ITIMERSPEC ) || ( posixconfigENABLE_ITIMERSPEC == 1 )
 
 /**
+ * @ingroup posix_datatypes_paramstructs
  * @brief timer
  */
     struct itimerspec

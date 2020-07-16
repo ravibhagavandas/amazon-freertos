@@ -1,6 +1,6 @@
 /*
- * Amazon FreeRTOS MQTT V2.1.0
- * Copyright (C) 2018 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS MQTT V2.1.1
+ * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -32,7 +32,7 @@
 #include <stdio.h>
 #include <string.h>
 
-/* Amazon FreeRTOS includes. */
+/* FreeRTOS Includes. */
 #include "FreeRTOS.h"
 #include "semphr.h"
 #include "iot_mqtt_agent.h"
@@ -125,13 +125,13 @@
 
 
 /* Default connection parameters. */
-static const MQTTAgentConnectParams_t xDefaultConnectParameters =
+MQTTAgentConnectParams_t xDefaultConnectParameters =
 {
     clientcredentialMQTT_BROKER_ENDPOINT,
     mqttagentREQUIRE_TLS,
     pdFALSE,
     clientcredentialMQTT_BROKER_PORT,
-    ( const uint8_t * ) clientcredentialIOT_THING_NAME,
+    NULL,
     0,
     pdTRUE,
     NULL,
@@ -341,16 +341,19 @@ TEST_GROUP( Full_MQTT_Agent_Stress_Tests );
  */
 TEST_SETUP( Full_MQTT_Agent )
 {
+    xDefaultConnectParameters.pucClientId = ( uint8_t * ) clientcredentialIOT_THING_NAME;
     TEST_ASSERT_EQUAL( true, IotSdk_Init() );
     TEST_ASSERT_EQUAL( IOT_MQTT_SUCCESS, IotMqtt_Init() );
 }
 TEST_SETUP( Full_MQTT_Agent_Stress_Tests )
 {
+    xDefaultConnectParameters.pucClientId = ( uint8_t * ) clientcredentialIOT_THING_NAME;
     TEST_ASSERT_EQUAL( true, IotSdk_Init() );
     TEST_ASSERT_EQUAL( IOT_MQTT_SUCCESS, IotMqtt_Init() );
 }
 TEST_SETUP( Full_MQTT_Agent_ALPN )
 {
+    xDefaultConnectParameters.pucClientId = ( uint8_t * ) clientcredentialIOT_THING_NAME;
     TEST_ASSERT_EQUAL( true, IotSdk_Init() );
     TEST_ASSERT_EQUAL( IOT_MQTT_SUCCESS, IotMqtt_Init() );
 }
@@ -478,7 +481,7 @@ TEST( Full_MQTT_Agent_ALPN, MQTT_Agent_SubscribePublishAlpn )
  * high and low priorities.
  *
  * At the end of the test, Tasks do not self delete. They get suspended. The main test function will first wait for every
- * task to complete through Amazon FreeRTOS synchronization mechanism then it will delete all the created tasks.
+ * task to complete through FreeRTOS synchronization mechanism then it will delete all the created tasks.
  *
  * For simplicity sake, memory is not allocated in the Receive or Transmit tasks. The allocation is centralized in one place, the main task.
  */

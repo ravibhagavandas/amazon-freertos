@@ -29,7 +29,7 @@
 #include <string.h>
 #include <sys/kmem.h>
 
-#include "aws_ota_types.h"
+#include "stdbool.h"
 #include "pkcs11_nvm.h"
 
 #include "peripheral/nvm/plib_nvm.h"
@@ -106,7 +106,7 @@ void AWS_UpperBootPage4ProtectionEnable(void)
 }
 
 
-bool_t AWS_FlashProgramBlock(const uint8_t* address, const uint8_t* pData, uint32_t size)
+bool AWS_FlashProgramBlock(const uint8_t* address, const uint8_t* pData, uint32_t size)
 {
     uint32_t quad_buff[AWS_NVM_QUAD_SIZE / sizeof(uint32_t)];
 
@@ -117,7 +117,7 @@ bool_t AWS_FlashProgramBlock(const uint8_t* address, const uint8_t* pData, uint3
 
     uint32_t n_quads = (end_quad - start_quad ) / AWS_NVM_QUAD_SIZE;
 
-    bool_t flash_fault = false;
+    bool flash_fault = false;
 
     while(n_quads)
     {
@@ -254,3 +254,48 @@ bool AWS_NVM_QuadWordWrite(uint32_t * address,
      }
     return bResult;
 }
+
+int mbedtls_hardware_poll( void * data,
+                           unsigned char * output,
+                           size_t len,
+                           size_t * olen )
+{
+
+    ((void) data);
+
+    union
+    {
+        uint64_t    v64;
+        uint8_t     v8[8];
+    }suint_64;
+
+    int n8Chunks = len / 8;
+    int nLeft = len % 8;
+
+    while(n8Chunks--)
+    {
+        suint_64.v64 = RNG_NumGen1Get();
+        suint_64.v64 = suint_64.v64 << 32;
+        suint_64.v64 |= RNG_NumGen2Get();
+        memcpy(output, suint_64.v8, sizeof(suint_64.v8));
+        output += sizeof(suint_64.v8);
+    }
+
+    if(nLeft)
+    {
+        suint_64.v64 = RNG_NumGen1Get();
+        suint_64.v64 = suint_64.v64 << 32;
+        suint_64.v64 |= RNG_NumGen2Get();
+        memcpy(output, suint_64.v8, nLeft);
+    }
+
+
+  *olen = len;
+  
+  return 0;
+}
+
+
+
+
+

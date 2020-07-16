@@ -1,6 +1,6 @@
 /*
- * Amazon FreeRTOS BLE V2.0.0
- * Copyright (C) 2018 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS BLE V2.0.1
+ * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -55,6 +55,8 @@
 
 #if ( IOT_BLE_ADVERTISING_UUID_SIZE == 2 )
     #define BT_ADV_UUID_TYPE    eBTuuidType16
+#elif ( IOT_BLE_ADVERTISING_UUID_SIZE == 4 )
+    #define BT_ADV_UUID_TYPE    eBTuuidType32
 #else
     #define BT_ADV_UUID_TYPE    eBTuuidType128
 #endif
@@ -69,6 +71,15 @@ static const BTUuid_t _serverUUID =
     .ucType   = eBTuuidType128,
     .uu.uu128 = IOT_BLE_SERVER_UUID
 };
+
+
+/**
+ * @brief Contains parameters to be set in the scan response data.
+ *
+ * Note that total available data size in scan response
+ * is 31 bytes. Parameters are chosen below such that overall size
+ * does not exceed 31 bytes.
+ */
 static IotBleAdvertisementParams_t _scanRespParams =
 {
     .includeTxPower    = true,
@@ -88,6 +99,14 @@ static IotBleAdvertisementParams_t _scanRespParams =
     .pUUID1            = NULL,
     .pUUID2            = NULL
 };
+
+/**
+ * @brief Contains parameters to be set in the advertisement data.
+ *
+ * Note that total available data size in advertisement
+ * is 31 bytes. Parameters are chosen below such that overall size
+ * does not exceed 31 bytes.
+ */
 
 static IotBleAdvertisementParams_t _advParams =
 {
@@ -164,12 +183,9 @@ static void _registerBleAdapterCb( BTStatus_t status,
                                    uint8_t adapter_if,
                                    BTUuid_t * pAppUuid );
 static void _advStatusCb( BTStatus_t status,
-                          uint32_t serverIf,
+                          uint8_t adapterIf,
                           bool bStart );
 static void _setAdvDataCb( BTStatus_t status );
-static void _bondedCb( BTStatus_t status,
-                       BTBdaddr_t * pRemoteBdAddr,
-                       bool isBonded );
 
 static const BTCallbacks_t _BTManagerCb =
 {
@@ -178,7 +194,6 @@ static const BTCallbacks_t _BTManagerCb =
     .pxRemoteDevicePropertiesCb = NULL,
     .pxSspRequestCb             = _sspRequestCb,
     .pxPairingStateChangedCb    = _pairingStateChangedCb,
-    .pxBondedCb                 = _bondedCb,
     .pxDutModeRecvCb            = NULL,
     .pxleTestModeCb             = NULL,
     .pxEnergyInfoCb             = NULL,
@@ -219,6 +234,7 @@ static const BTBleAdapterCallbacks_t _BTBleAdapterCb =
 
 void _deviceStateChangedCb( BTState_t state )
 {
+    IotSemaphore_Post( &_BTInterface.callbackSemaphore );
 }
 
 /*-----------------------------------------------------------*/
@@ -277,7 +293,7 @@ void _pairingStateChangedCb( BTStatus_t status,
     IotContainers_ForEach( &_BTInterface.subscrEventListHead[ eBLEPairingStateChanged ], pEventListIndex )
     {
         pEventIndex = IotLink_Container( _bleSubscrEventListElement_t, pEventListIndex, eventList );
-        pEventIndex->subscribedEventCb.pGAPPairingStateChangedCb( status, pRemoteBdAddr, securityLevel, reason );
+        pEventIndex->subscribedEventCb.pGAPPairingStateChangedCb( status, pRemoteBdAddr, state, securityLevel, reason );
     }
 
     IotMutex_Unlock( &_BTInterface.threadSafetyMutex );
@@ -298,9 +314,11 @@ void _registerBleAdapterCb( BTStatus_t status,
 /*-----------------------------------------------------------*/
 
 void _advStatusCb( BTStatus_t status,
-                   uint32_t serverIf,
+                   uint8_t adapterIf,
                    bool bStart )
 {
+    ( void ) adapterIf;
+
     _BTInterface.cbStatus = status;
 
     if( bStart == true )
@@ -332,28 +350,6 @@ void _setAdvDataCb( BTStatus_t status )
     _BTInterface.cbStatus = status;
     IotSemaphore_Post( &_BTInterface.callbackSemaphore );
 }
-
-
-/*-----------------------------------------------------------*/
-
-void _bondedCb( BTStatus_t status,
-                BTBdaddr_t * pRemoteBdAddr,
-                bool isBonded )
-{
-    IotLink_t * pEventListIndex;
-    _bleSubscrEventListElement_t * pEventIndex;
-
-    IotMutex_Lock( &_BTInterface.threadSafetyMutex );
-    /* Get the event associated to the callback */
-    IotContainers_ForEach( &_BTInterface.subscrEventListHead[ eBLEBonded ], pEventListIndex )
-    {
-        pEventIndex = IotLink_Container( _bleSubscrEventListElement_t, pEventListIndex, eventList );
-        pEventIndex->subscribedEventCb.pBondedCb( status, pRemoteBdAddr, isBonded );
-    }
-
-    IotMutex_Unlock( &_BTInterface.threadSafetyMutex );
-}
-
 
 /*-----------------------------------------------------------*/
 
@@ -389,7 +385,7 @@ BTStatus_t _startAllServices()
 BTStatus_t _setAdvData( IotBleAdvertisementParams_t * pAdvParams )
 {
     BTStatus_t status = eBTStatusSuccess;
-    BTGattAdvertismentParams_t pParams;
+    BTGattAdvertismentParams_t pParams = { 0 };
     size_t countService = 0;
     BTUuid_t pServiceUuide[ _BLE_MAX_UUID_PER_ADV_MESSAGE ];
 
@@ -404,6 +400,7 @@ BTStatus_t _setAdvData( IotBleAdvertisementParams_t * pAdvParams )
 
     pParams.xAddrType = BTAddrTypePublic;
     pParams.ucChannelMap = 0;
+    pParams.usTimeout = 0; /* Set to 0 to disable the advertisement duration. */
     pParams.ucPrimaryAdvertisingPhy = 0;
     pParams.ucSecondaryAdvertisingPhy = 0;
 
@@ -471,10 +468,22 @@ BTStatus_t IotBle_ConnParameterUpdateRequest( const BTBdaddr_t * pBdAddr,
 
 BTStatus_t IotBle_On( void )
 {
+    BTStatus_t status = eBTStatusSuccess;
+
     /* Currently Disabled due to a bug with ESP32 : https://github.com/espressif/esp-idf/issues/2070 */
 
-    /* _BTInterface.p_BTInterface->pxEnable(0); */
-    return eBTStatusSuccess;
+    status = _BTInterface.pBTInterface->pxEnable( 0 );
+
+    if( status == eBTStatusSuccess )
+    {
+        IotSemaphore_Wait( &_BTInterface.callbackSemaphore );
+    }
+    else
+    {
+        IotLogError( "Could not enable the stack." );
+    }
+
+    return status;
 }
 
 /*-----------------------------------------------------------*/
@@ -508,9 +517,15 @@ BTStatus_t IotBle_Off( void )
 
             if( pConnInfo != NULL )
             {
-                ( void ) _BTInterface.pBTLeAdapterInterface->pxDisconnect( _BTInterface.adapterIf,
+                status = _BTInterface.pBTLeAdapterInterface->pxDisconnect( _BTInterface.adapterIf,
                                                                            &bdAddr,
                                                                            connId );
+
+                if( status != eBTStatusSuccess )
+                {
+                    IotLogError( "Failed disconnect with Bluetooth status = %u", status );
+                    break;
+                }
             }
         } while( pConnInfo != NULL );
     }
@@ -580,7 +595,12 @@ BTStatus_t IotBle_Init( void )
 
     if( ( _BTInterface.pBTLeAdapterInterface != NULL ) && ( status == eBTStatusSuccess ) )
     {
-        status = _BTInterface.pBTLeAdapterInterface->pxBleAdapterInit( &_BTBleAdapterCb );
+        status = IotBle_On();
+
+        if( status == eBTStatusSuccess )
+        {
+            status = _BTInterface.pBTLeAdapterInterface->pxBleAdapterInit( &_BTBleAdapterCb );
+        }
     }
     else
     {

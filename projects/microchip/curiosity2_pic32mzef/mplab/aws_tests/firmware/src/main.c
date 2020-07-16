@@ -171,7 +171,8 @@ void vApplicationIPNetworkEventHook( eIPCallbackEvent_t eNetworkEvent )
             /* A simple example to demonstrate key and certificate provisioning in
              * microcontroller flash using PKCS#11 interface. This should be replaced
              * by production ready key provisioning mechanism. */
-            vDevModeKeyProvisioning();
+            vTaskDelay(3000);
+			vDevModeKeyProvisioning();
             
             /* If the network has just come up...*/
             xTaskCreate( TEST_RUNNER_RunTests_task,

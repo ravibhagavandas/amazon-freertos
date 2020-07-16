@@ -1,6 +1,6 @@
 /*
- * Amazon FreeRTOS OTA V1.0.3
- * Copyright (C) 2018 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS OTA V1.1.1
+ * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -24,15 +24,15 @@
  */
 
 /**
- * @file aws_ota_agent.h
+ * @file aws_iot_ota_agent.h
  * @brief OTA Agent Interface
  */
 
-#ifndef _AWS_OTA_AGENT_H_
-#define _AWS_OTA_AGENT_H_
+#ifndef _AWS_IOT_OTA_AGENT_H_
+#define _AWS_IOT_OTA_AGENT_H_
 
 /* Type definitions for OTA Agent */
-#include "aws_ota_types.h"
+#include "aws_iot_ota_types.h"
 
 /* Includes required by the FreeRTOS timers structure. */
 #include "FreeRTOS.h"
@@ -83,17 +83,44 @@ extern const char cOTA_JSON_FileSignatureKey[ OTA_FILE_SIG_KEY_STR_MAX_LENGTH ];
  */
 typedef enum
 {
-    eOTA_AgentState_Unknown = -1,     /*!< The OTA agent state is not yet known. */
-    eOTA_AgentState_NotReady = 0,     /*!< The OTA agent task is not running. */
-    eOTA_AgentState_Ready = 1,        /*!< The OTA agent task is running and ready to transfer. */
-    eOTA_AgentState_Active = 2,       /*!< The OTA agent is actively receiving an update. */
-    eOTA_AgentState_ShuttingDown = 3, /*!< The OTA agent task is performing shut down activities. */
-    eOTA_NumAgentStates = 4
+    eOTA_AgentState_NoTransition = -1,
+    eOTA_AgentState_Init = 0,
+    eOTA_AgentState_Ready,
+    eOTA_AgentState_RequestingJob,
+    eOTA_AgentState_WaitingForJob,
+    eOTA_AgentState_CreatingFile,
+    eOTA_AgentState_RequestingFileBlock,
+    eOTA_AgentState_WaitingForFileBlock,
+    eOTA_AgentState_ClosingFile,
+    eOTA_AgentState_ShuttingDown,
+    eOTA_AgentState_Stopped,
+    eOTA_AgentState_All
 } OTA_State_t;
+
+/**
+ * @brief OTA Agent Events.
+ *
+ * The events sent to OTA agent.
+ */
+typedef enum
+{
+    eOTA_AgentEvent_Start = 0,
+    eOTA_AgentEvent_StartSelfTest,
+    eOTA_AgentEvent_RequestJobDocument,
+    eOTA_AgentEvent_ReceivedJobDocument,
+    eOTA_AgentEvent_CreateFile,
+    eOTA_AgentEvent_RequestFileBlock,
+    eOTA_AgentEvent_ReceivedFileBlock,
+    eOTA_AgentEvent_RequestTimer,
+    eOTA_AgentEvent_CloseFile,
+    eOTA_AgentEvent_UserAbort,
+    eOTA_AgentEvent_Shutdown,
+    eOTA_AgentEvent_Max
+} OTA_Event_t;
 
 /* A composite cryptographic signature structure able to hold our largest supported signature. */
 
-#define kOTA_MaxSignatureSize    256            /* Max bytes supported for a file signature (2048 bit RSA is 256 bytes). */
+#define kOTA_MaxSignatureSize    256        /* Max bytes supported for a file signature (2048 bit RSA is 256 bytes). */
 
 typedef struct
 {
@@ -106,11 +133,10 @@ typedef struct
  */
 typedef uint32_t OTA_Err_t;
 
-/**
- * @defgroup OTA Error code operation helpers.
- * @brief Helper constants for extracting the error code from the OTA error returned.
+/*
+ * OTA Error code helper constant for extracting the error code from the OTA error returned.
  *
- * The OTA error codes consist of an agent code in the upper 8 bits of a 32 bit word and sometimes
+ * OTA error codes consist of an agent code in the upper 8 bits of a 32 bit word and sometimes
  * merged with a platform specific code in the lower 24 bits. You must refer to the platform PAL
  * layer in use to determine the meaning of the lower 24 bits.
  */
@@ -118,11 +144,10 @@ typedef uint32_t OTA_Err_t;
 #define kOTA_Main_ErrMask                0xff000000UL /*!< Mask out all but the OTA Agent error code (high 8 bits). */
 #define kOTA_MainErrShiftDownBits        24U          /*!< The OTA Agent error code is the highest 8 bits of the word. */
 
-/**
- * @defgroup OTA Agent error codes.
- * @brief Error codes returned by OTA agent API.
+/*
+ * OTA Agent error codes returned by OTA agent API.
  *
- * @note OTA agent error codes are in the upper 8 bits of the 32 bit OTA error word, OTA_Err_t.
+ * OTA agent error codes are in the upper 8 bits of the 32 bit OTA error word, OTA_Err_t.
  */
 #define kOTA_Err_Panic                   0xfe000000UL     /*!< Unrecoverable FW error. Probably should log error and reboot. */
 #define kOTA_Err_Uninitialized           0xff000000UL     /*!< The error code has not yet been set by a logic path. */
@@ -138,6 +163,8 @@ typedef uint32_t OTA_Err_t;
 #define kOTA_Err_BadImageState           0x09000000UL     /*!< The specified OTA image state was out of range. */
 #define kOTA_Err_NoActiveJob             0x0a000000UL     /*!< Attempt to set final image state without an active job. */
 #define kOTA_Err_NoFreeContext           0x0b000000UL     /*!< There wasn't an OTA file context available for processing. */
+#define kOTA_Err_HTTPInitFailed          0x0c000000UL     /*!< Error initializing the HTTP connection. */
+#define kOTA_Err_HTTPRequestFailed       0x0d000000UL     /*!< Error sending the HTTP request. */
 #define kOTA_Err_FileAbort               0x10000000UL     /*!< Error in low level file abort. */
 #define kOTA_Err_FileClose               0x11000000UL     /*!< Error in low level file close. */
 #define kOTA_Err_RxFileCreateFailed      0x12000000UL     /*!< The PAL failed to create the OTA receive file. */
@@ -154,6 +181,9 @@ typedef uint32_t OTA_Err_t;
 #define kOTA_Err_UserAbort               0x28000000UL     /*!< User aborted the active OTA. */
 #define kOTA_Err_ResetNotSupported       0x29000000UL     /*!< We tried to reset the device but the device doesn't support it. */
 #define kOTA_Err_TopicTooLarge           0x2a000000UL     /*!< Attempt to build a topic string larger than the supplied buffer. */
+#define kOTA_Err_SelfTestTimerFailed     0x2b000000UL     /*!< Attempt to start self-test timer faield. */
+#define kOTA_Err_EventQueueSendFailed    0x2c000000UL     /*!< Posting event message to the event queue failed. */
+#define kOTA_Err_InvalidDataProtocol     0x2d000000UL     /*!< Job does not have a valid protocol for data transfer. */
 
 /**
  * @brief OTA Job callback events.
@@ -217,27 +247,40 @@ typedef struct
     uint8_t * pucFilePath; /*!< Local file pathname. */
     union
     {
-        int32_t lFileHandle;     /*!< Device internal file pointer or handle.
-                                  * File type is handle after file is open for write. */
+        int32_t lFileHandle;    /*!< Device internal file pointer or handle.
+                                 * File type is handle after file is open for write. */
         #if WIN32
-            FILE * pxFile;       /*!< File type is stdio FILE structure after file is open for write. */
+            FILE * pxFile;      /*!< File type is stdio FILE structure after file is open for write. */
         #endif
-        uint8_t * pucFile;       /*!< File type is RAM/Flash image pointer after file is open for write. */
+        uint8_t * pucFile;      /*!< File type is RAM/Flash image pointer after file is open for write. */
     };
-    TimerHandle_t xRequestTimer; /*!< The request timer associated with this OTA context. */
-    uint32_t ulFileSize;         /*!< The size of the file in bytes. */
-    uint32_t ulBlocksRemaining;  /*!< How many blocks remain to be received (a code optimization). */
-    uint32_t ulFileAttributes;   /*!< Flags specific to the file being received (e.g. secure, bundle, archive). */
-    uint32_t ulServerFileID;     /*!< The file is referenced by this numeric ID in the OTA job. */
-    uint32_t ulRequestMomentum;  /*!< The number of stream requests published before a response was received. */
-    uint8_t * pucJobName;        /*!< The job name associated with this file from the job service. */
-    uint8_t * pucStreamName;     /*!< The stream associated with this file from the OTA service. */
-    Sig256_t * pxSignature;      /*!< Pointer to the file's signature structure. */
-    uint8_t * pucRxBlockBitmap;  /*!< Bitmap of blocks received (for de-duping and missing block request). */
-    uint8_t * pucCertFilepath;   /*!< Pathname of the certificate file used to validate the receive file. */
-    uint32_t ulUpdaterVersion;   /*!< Used by OTA self-test detection, the version of FW that did the update. */
-    bool_t xIsInSelfTest;        /*!< True if the job is in self test mode. */
+    uint32_t ulFileSize;        /*!< The size of the file in bytes. */
+    uint32_t ulBlocksRemaining; /*!< How many blocks remain to be received (a code optimization). */
+    uint32_t ulFileAttributes;  /*!< Flags specific to the file being received (e.g. secure, bundle, archive). */
+    uint32_t ulServerFileID;    /*!< The file is referenced by this numeric ID in the OTA job. */
+    uint8_t * pucJobName;       /*!< The job name associated with this file from the job service. */
+    uint8_t * pucStreamName;    /*!< The stream associated with this file from the OTA service. */
+    Sig256_t * pxSignature;     /*!< Pointer to the file's signature structure. */
+    uint8_t * pucRxBlockBitmap; /*!< Bitmap of blocks received (for de-duping and missing block request). */
+    uint8_t * pucCertFilepath;  /*!< Pathname of the certificate file used to validate the receive file. */
+    uint8_t * pucUpdateUrlPath; /*!< Url for the file. */
+    uint8_t * pucAuthScheme;    /*!< Authorization scheme. */
+    uint32_t ulUpdaterVersion;  /*!< Used by OTA self-test detection, the version of FW that did the update. */
+    bool_t xIsInSelfTest;       /*!< True if the job is in self test mode. */
+    uint8_t * pucProtocols;     /*!< Authorization scheme. */
 } OTA_FileContext_t;
+
+/**
+ * @brief OTA Connection context.
+ *
+ * Connection information that user provides to initialize control and data transfer for OTA.
+ */
+typedef struct
+{
+    void * pvControlClient;
+    const void * pxNetworkInterface;
+    void * pvNetworkCredentials;
+} OTA_ConnectionContext_t;
 
 
 /**
@@ -271,6 +314,154 @@ typedef struct
  */
 typedef void (* pxOTACompleteCallback_t)( OTA_JobEvent_t eEvent );
 
+
+
+typedef enum
+{
+    eOTA_PAL_ImageState_Unknown = 0,
+    eOTA_PAL_ImageState_PendingCommit,
+    eOTA_PAL_ImageState_Valid,
+    eOTA_PAL_ImageState_Invalid,
+} OTA_PAL_ImageState_t;
+
+
+
+/* OTA job document parser error codes. */
+
+typedef enum
+{
+    eOTA_JobParseErr_Unknown = -1,        /* The error code has not yet been set by a logic path. */
+    eOTA_JobParseErr_None = 0,            /* Signifies no error has occurred. */
+    eOTA_JobParseErr_BusyWithExistingJob, /* We're busy with a job but received a new job document. */
+    eOTA_JobParseErr_NullJob,             /* A null job was reported (no job ID). */
+    eOTA_JobParseErr_UpdateCurrentJob,    /* We're already busy with the reported job ID. */
+    eOTA_JobParseErr_ZeroFileSize,        /* Job document specified a zero sized file. This is not allowed. */
+    eOTA_JobParseErr_NonConformingJobDoc, /* The job document failed to fulfill the model requirements. */
+    eOTA_JobParseErr_BadModelInitParams,  /* There was an invalid initialization parameter used in the document model. */
+    eOTA_JobParseErr_NoContextAvailable   /* There wasn't an OTA context available. */
+} OTA_JobParseErr_t;
+
+/**
+ * @brief OTA abort callback function typedef.
+ *
+ * The user may register a callback function when initializing the OTA Agent. This
+ * callback is used to override the behavior of how a job is aborted.
+ *
+ * @param[in] C File context of the job being aborted
+ */
+typedef OTA_Err_t (* pxOTAPALAbortCallback_t)( OTA_FileContext_t * const C );
+
+
+/**
+ * @brief OTA new image received callback function typedef.
+ *
+ * The user may register a callback function when initializing the OTA Agent. This
+ * callback is used to override the behavior of what happens when a new image is
+ * activated.
+ *
+ * @param[in] ulServerFileID File ID of the image received
+ */
+typedef OTA_Err_t (* pxOTAPALActivateNewImageCallback_t)( uint32_t ulServerFileID );
+
+/**
+ * @brief OTA close file callback function typedef.
+ *
+ * The user may register a callback function when initializing the OTA Agent. This
+ * callback is used to override the behavior of what happens when a file is closed.
+ *
+ * @param[in] C File context of the job being aborted
+ */
+typedef OTA_Err_t (* pxOTAPALCloseFileCallback_t)( OTA_FileContext_t * const C );
+
+
+/**
+ * @brief OTA create file to store received data callback function typedef.
+ *
+ * The user may register a callback function when initializing the OTA Agent. This
+ * callback is used to override the behavior of how a new file is created.
+ *
+ * @param[in] C File context of the job being aborted
+ */
+typedef OTA_Err_t (* pxOTAPALCreateFileForRxCallback_t)( OTA_FileContext_t * const C );
+
+
+/**
+ * @brief OTA Get Platform Image State callback function typedef.
+ *
+ * The user may register a callback function when initializing the OTA Agent. This
+ * callback is used to override the behavior of returning the platform image state
+ *
+ * @param[in] ulServerFileID File ID of the image received
+ */
+typedef OTA_PAL_ImageState_t (* pxOTAPALGetPlatformImageStateCallback_t)( uint32_t ulServerFileID );
+
+/**
+ * @brief OTA Reset Device callback function typedef.
+ *
+ * The user may register a callback function when initializing the OTA Agent. This
+ * callback is used to override the behavior of what happens when the OTA agent resets the device.
+ *
+ * @param[in] ulServerFileID File ID of the image received
+ */
+typedef OTA_Err_t (* pxOTAPALResetDeviceCallback_t)( uint32_t ulServerFileID );
+
+/**
+ * @brief OTA Set Platform Image State callback function typedef.
+ *
+ * The user may register a callback function when initializing the OTA Agent. This
+ * callback is used to override the behavior of how a platform image state is stored
+ *
+ * @param[in] ulServerFileID File ID of the image received
+ * @param[in] eState Platform Image State to be state
+ */
+typedef OTA_Err_t (* pxOTAPALSetPlatformImageStateCallback_t)( uint32_t ulServerFileID,
+                                                               OTA_ImageState_t eState );
+
+/**
+ * @brief OTA Write Block callback function typedef.
+ *
+ * The user may register a callback function when initializing the OTA Agent. This
+ * callback is used to override the behavior of how a block is written to a file.
+ *
+ * @param[in] C File context of the job being aborted
+ * @param[in] iOffset Offset into the file to write the data
+ * @param[in] pacData Data to be written at the offset
+ * @param[in] iBlocksize Block size of the data to be written
+ */
+typedef int16_t (* pxOTAPALWriteBlockCallback_t)( OTA_FileContext_t * const C,
+                                                  uint32_t iOffset,
+                                                  uint8_t * const pacData,
+                                                  uint32_t iBlockSize );
+
+/**
+ * @brief Custom Job callback function typedef.
+ *
+ * The user may register a callback function when initializing the OTA Agent. This
+ * callback will be called when the OTA agent cannot parse a job document.
+ *
+ * @param[in] pcJSON Pointer to the json document received by the OTA agent
+ * @param[in] ulMsgLen Length of the json document received by the agent
+ */
+typedef OTA_JobParseErr_t (* pxOTACustomJobCallback_t)( const char * pcJSON,
+                                                        uint32_t ulMsgLen );
+
+/* OTA PAL callback structure */
+typedef struct
+{
+    pxOTAPALAbortCallback_t xAbort;                                 /* OTA Abort callback pointer */
+    pxOTAPALActivateNewImageCallback_t xActivateNewImage;           /* OTA Activate New Image callback pointer */
+    pxOTAPALCloseFileCallback_t xCloseFile;                         /* OTA Close File callback pointer */
+    pxOTAPALCreateFileForRxCallback_t xCreateFileForRx;             /* OTA Create File for Receive callback pointer */
+    pxOTAPALGetPlatformImageStateCallback_t xGetPlatformImageState; /* OTA Get Platform Image State callback pointer */
+    pxOTAPALResetDeviceCallback_t xResetDevice;                     /* OTA Reset Device callback pointer */
+    pxOTAPALSetPlatformImageStateCallback_t xSetPlatformImageState; /* OTA Set Platform Image State callback pointer */
+    pxOTAPALWriteBlockCallback_t xWriteBlock;                       /* OTA Write Block callback pointer */
+    pxOTACompleteCallback_t xCompleteCallback;                      /* OTA Job Completed callback pointer */
+    pxOTACustomJobCallback_t xCustomJobCallback;                    /* OTA Custom Job callback pointer */
+} OTA_PAL_Callbacks_t;
+
+
+
 /*---------------------------------------------------------------------------*/
 /*								Public API									 */
 /*---------------------------------------------------------------------------*/
@@ -279,7 +470,7 @@ typedef void (* pxOTACompleteCallback_t)( OTA_JobEvent_t eEvent );
  * @brief OTA Agent initialization function.
  *
  * Initialize the OTA engine by starting the OTA Agent ("OTA Task") in the system. This function must
- * be called with the MQTT messaging client context before calling OTA_CheckForUpdate(). Only one
+ * be called with the connection client context before calling OTA_CheckForUpdate(). Only one
  * OTA Agent may exist.
  *
  * @param[in] pvClient The messaging protocol client context (e.g. an MQTT context).
@@ -298,6 +489,33 @@ OTA_State_t OTA_AgentInit( void * pvClient,
                            const uint8_t * pucThingName,
                            pxOTACompleteCallback_t xFunc,
                            TickType_t xTicksToWait );
+
+
+/**
+ * @brief Internal OTA Agent initialization function.
+ *
+ * Initialize the OTA engine by starting the OTA Agent ("OTA Task") in the system. This function must
+ * be called with the MQTT messaging client context before calling OTA_CheckForUpdate(). Only one
+ * OTA Agent may exist.
+ *
+ * @param[in] pvClient The messaging protocol client context (e.g. an MQTT context).
+ * @param[in] pucThingName A pointer to a C string holding the Thing name.
+ * @param[in] xCallbacks Static callback structure for various OTA events. This function will have
+ * input of the state of the OTA image after download and during self-test.
+ * @param[in] xTicksToWait The number of ticks to wait until the OTA Task signals that it is ready.
+ * If this is set to zero, then the function will return immediately after creating the OTA task but
+ * the OTA task may not be ready to operate yet. The state may be queried with OTA_GetAgentState().
+ *
+ * @return The state of the OTA Agent upon return from the OTA_State_t enum.
+ * If the agent was successfully initialized and ready to operate, the state will be
+ * eOTA_AgentState_Ready. Otherwise, it will be one of the other OTA_State_t enum values.
+ */
+OTA_State_t OTA_AgentInit_internal( void * pvClient,
+                                    const uint8_t * pucThingName,
+                                    OTA_PAL_Callbacks_t * xCallbacks,
+                                    TickType_t xTicksToWait );
+
+
 
 /**
  * @brief Signal to the OTA Agent to shut down.
@@ -358,7 +576,7 @@ OTA_Err_t OTA_SetImageState( OTA_ImageState_t eState );
  */
 OTA_ImageState_t OTA_GetImageState( void );
 
-/* @brief Request for the next available OTA job from the job service via MQTT.
+/* @brief Request for the next available OTA job from the job service.
  *
  * @return kOTA_Err_None if successful, otherwise an error code prefixed with 'kOTA_Err_' from the
  * list above.
@@ -410,4 +628,4 @@ uint32_t OTA_GetPacketsProcessed( void );
  */
 uint32_t OTA_GetPacketsDropped( void );
 
-#endif /* ifndef _AWS_OTA_AGENT_H_ */
+#endif /* ifndef _AWS_IOT_OTA_AGENT_H_ */

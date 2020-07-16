@@ -32,16 +32,18 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "device.h"
+#include "peripheral/nvmctrl/plib_nvmctrl.h"
 
 #define AWS_NVM_ROW_SIZE            (2 * 1024)
 #define AWS_NVM_PAGE_SIZE           (512)
 #define AWS_NVM_BLOCK_SIZE           (8192)
-#define AWS_NVM_FLASH_SIZE          (FLASH_SIZE/2) ///SHAN: Needs fix
-#define AWS_NVM_FLASH_START_ADDRESS (FLASH_ADDR) // SHAN: Needs fix
+#define AWS_NVM_FLASH_SIZE          (NVMCTRL_FLASH_SIZE/2) // Size of each bank
+#define AWS_NVM_FLASH_START_ADDRESS (NVMCTRL_FLASH_START_ADDRESS)
 #define AWS_NVM_ERASE_PAGES_MAX     (32)    // max number of pages that could be erased once
 #define AWS_NVM_ERASE_PAGES_MIN     (16)    // min number of pages that could be erased once
 #define AWS_NVM_LOCK_REGION_PAGES   (32)    // number of pages in a lock region
 #define AWS_QUAD_SIZE               (16)
+#define AWS_NVM_BOOTLOADER_SIZE     (0x10000)
 
 // erases the boot upper page 4
 bool AWS_FlashRegionProtect(int regionNo, uint32_t regionSize, const void* flashAddress, bool enable);
@@ -64,6 +66,7 @@ bool AWS_FlashProgramBlock(const uint8_t* ptrFlash, const uint8_t* pData, uint32
 
 // returns true if the upper boot page 4 is write protected
 bool AWS_FlashRegionLock(const uint32_t* ptrFlash);
+bool AWS_FlashRegionUnlock(const uint32_t* ptrFlash);
 
 
 #endif // _PKCS11_NVM_H_

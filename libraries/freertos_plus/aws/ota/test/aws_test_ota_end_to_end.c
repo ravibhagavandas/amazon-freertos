@@ -1,6 +1,6 @@
 /*
- * Amazon FreeRTOS OTA V1.0.3
- * Copyright (C) 2018 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS OTA V1.1.1
+ * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -38,7 +38,7 @@
 /* Platform layer includes. */
 #include "platform/iot_clock.h"
 #include "platform/iot_threads.h"
-/* Amazon FreeRTOS OTA agent includes. */
+/* FreeRTOS OTA agent includes. */
 #include "aws_iot_ota_agent.h"
 
 /* Test network header include. */
@@ -121,12 +121,18 @@ static void App_OTACompleteCallback( OTA_JobEvent_t eEvent )
     }
 }
 
-static const char * pcStateStr[ eOTA_NumAgentStates ] =
+static const char * pcStateStr[ eOTA_AgentState_All ] =
 {
-    "Not Ready",
+    "Init",
     "Ready",
-    "Active",
-    "Shutting down"
+    "RequestingJob",
+    "WaitingForJob",
+    "CreatingFile",
+    "RequestingFileBlock",
+    "WaitingForFileBlock",
+    "ClosingFile",
+    "ShuttingDown",
+    "Stopped"
 };
 
 void vOTAUpdateTestTask( void * pvParameters )
@@ -179,12 +185,12 @@ void vOTAUpdateTestTask( void * pvParameters )
         {
             eState = OTA_AgentInit( mqttConnection, ( const uint8_t * ) ( clientcredentialIOT_THING_NAME ), App_OTACompleteCallback, ( TickType_t ) ~0 );
 
-            if( eState == eOTA_AgentState_NotReady )
+            if( eState == eOTA_AgentState_Stopped )
             {
                 configPRINTF( ( "Failed to start the OTA Agent\n" ) );
             }
 
-            while( ( eState = OTA_GetAgentState() ) != eOTA_AgentState_NotReady )
+            while( ( eState = OTA_GetAgentState() ) != eOTA_AgentState_Stopped )
             {
                 /* Wait forever for OTA traffic but allow other tasks to run and output statistics only once per second. */
                 vTaskDelay( ONE_SECOND_DELAY_IN_TICKS );

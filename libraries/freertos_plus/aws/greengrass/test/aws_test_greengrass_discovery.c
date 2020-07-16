@@ -1,6 +1,6 @@
 /*
- * Amazon FreeRTOS Greengrass V1.0.5
- * Copyright (C) 2018 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS Greengrass V2.0.1
+ * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -47,6 +47,7 @@
 #define ggdTestJSON_PORT_ADDRESS_1         1234
 #define ggdTestJSON_PORT_ADDRESS_3         4321
 #define ggdTestLOOP_NUMBER                 10
+#define ggdTestMAX_REQUEST_LOOP_COUNT      3
 
 #define ggdJSON_FILE_GROUPID               "GGGroupId"
 #define ggdJSON_FILE_THING_ARN             "thingArn"
@@ -63,6 +64,12 @@ static const char cMY_CORE_ARN[] = "myGreenGrassCoreArn";
 
 static jsmntok_t pxTok[ ggdTestJSON_MAX_TOKENS ];
 static Socket_t xSocket;
+
+/* Helper function to call GGD_JSONRequestGetFile() in a loop. */
+static BaseType_t prvGGD_JSONRequestGetFileLoop( uint32_t ulBufferSize,
+                                                 uint32_t * pulByteRead,
+                                                 BaseType_t * pxJSONFileRetrieveCompleted,
+                                                 uint32_t ulJSONFileSize );
 
 TEST_GROUP( Full_GGD );
 
@@ -102,6 +109,28 @@ TEST_GROUP_RUNNER( Full_GGD )
     RUN_TEST_CASE( Full_GGD, GetGGCIPandCertificate );
 }
 
+static BaseType_t prvGGD_JSONRequestGetFileLoop( uint32_t ulBufferSize,
+                                                 uint32_t * pulByteRead,
+                                                 BaseType_t * pxJSONFileRetrieveCompleted,
+                                                 uint32_t ulJSONFileSize )
+{
+    BaseType_t xStatus = pdPASS;
+    /* Limit loop count to avoid any chance of infinite loops. */
+    uint32_t ulRequestLoopCounter = 0;
+
+    do
+    {
+        xStatus = GGD_JSONRequestGetFile( &xSocket,
+                                          &cBuffer[ *pulByteRead ],
+                                          ulBufferSize - *pulByteRead,
+                                          pulByteRead,
+                                          pxJSONFileRetrieveCompleted,
+                                          ulJSONFileSize );
+    } while( ( xStatus == pdPASS ) && ( *pxJSONFileRetrieveCompleted != pdTRUE ) && ( ulBufferSize > *pulByteRead ) && ( ++ulRequestLoopCounter < ggdTestMAX_REQUEST_LOOP_COUNT ) );
+
+    return xStatus;
+}
+
 TEST( Full_GGD, JSONRequestAbort )
 {
     /** @brief check for stability for all meaningfull values of socket.
@@ -115,7 +144,10 @@ TEST( Full_GGD, JSONRequestAbort )
         xSocket = SOCKETS_INVALID_SOCKET;
         GGD_JSONRequestAbort( &xSocket );
 
-        GGD_JSONRequestStart( &xSocket );
+        GGD_JSONRequestStart( clientcredentialMQTT_BROKER_ENDPOINT,
+                              clientcredentialGREENGRASS_DISCOVERY_PORT,
+                              clientcredentialIOT_THING_NAME,
+                              &xSocket );
         GGD_JSONRequestAbort( &xSocket );
     }
     else
@@ -177,7 +209,10 @@ TEST( Full_GGD, GetGGCIPandCertificate )
          */
         for( i = 0; i < ggdTestLOOP_NUMBER; i++ )
         {
-            xStatus = GGD_GetGGCIPandCertificate( cBuffer, /*lint !e971 can use char without signed/unsigned. */
+            xStatus = GGD_GetGGCIPandCertificate( clientcredentialMQTT_BROKER_ENDPOINT,
+                                                  clientcredentialGREENGRASS_DISCOVERY_PORT,
+                                                  clientcredentialIOT_THING_NAME,
+                                                  cBuffer, /*lint !e971 can use char without signed/unsigned. */
                                                   ulBufferSize,
                                                   &xHostAddressData );
 
@@ -192,7 +227,10 @@ TEST( Full_GGD, GetGGCIPandCertificate )
         /** @brief Check fail is returned if provided buffer is too small
          *  @{
          */
-        xStatus = GGD_GetGGCIPandCertificate( cBuffer, /*lint !e971 can use char without signed/unsigned. */
+        xStatus = GGD_GetGGCIPandCertificate( clientcredentialMQTT_BROKER_ENDPOINT,
+                                              clientcredentialGREENGRASS_DISCOVERY_PORT,
+                                              clientcredentialIOT_THING_NAME,
+                                              cBuffer, /*lint !e971 can use char without signed/unsigned. */
                                               xHostAddressData.ulCertificateSize - 1,
                                               &xHostAddressData );
         TEST_ASSERT_EQUAL_INT32_MESSAGE( pdFAIL, xStatus, "GGD_GetGGCIPandCertificate() passed when the input buffer was too small." );
@@ -209,7 +247,10 @@ TEST( Full_GGD, GetGGCIPandCertificate )
      */
     if( TEST_PROTECT() )
     {
-        xStatus = GGD_GetGGCIPandCertificate( NULL,
+        xStatus = GGD_GetGGCIPandCertificate( clientcredentialMQTT_BROKER_ENDPOINT,
+                                              clientcredentialGREENGRASS_DISCOVERY_PORT,
+                                              clientcredentialIOT_THING_NAME,
+                                              NULL,
                                               ulBufferSize,
                                               &xHostAddressData );
         TEST_FAIL();
@@ -217,9 +258,34 @@ TEST( Full_GGD, GetGGCIPandCertificate )
 
     if( TEST_PROTECT() )
     {
-        xStatus = GGD_GetGGCIPandCertificate( cBuffer,
+        xStatus = GGD_GetGGCIPandCertificate( clientcredentialMQTT_BROKER_ENDPOINT,
+                                              clientcredentialGREENGRASS_DISCOVERY_PORT,
+                                              clientcredentialIOT_THING_NAME,
+                                              cBuffer,
                                               ulBufferSize,
                                               NULL );
+        TEST_FAIL();
+    }
+
+    if( TEST_PROTECT() )
+    {
+        xStatus = GGD_GetGGCIPandCertificate( NULL,
+                                              clientcredentialGREENGRASS_DISCOVERY_PORT,
+                                              clientcredentialIOT_THING_NAME,
+                                              cBuffer,
+                                              ulBufferSize,
+                                              &xHostAddressData );
+        TEST_FAIL();
+    }
+
+    if( TEST_PROTECT() )
+    {
+        xStatus = GGD_GetGGCIPandCertificate( clientcredentialMQTT_BROKER_ENDPOINT,
+                                              clientcredentialGREENGRASS_DISCOVERY_PORT,
+                                              NULL,
+                                              cBuffer,
+                                              ulBufferSize,
+                                              &xHostAddressData );
         TEST_FAIL();
     }
 
@@ -268,7 +334,10 @@ TEST( Full_GGD, GetIPandCertificateFromJSON )
         TEST_ASSERT_EQUAL_INT32( strlen( cCERTIFICATE ) + 1, xHostAddressData.ulCertificateSize );
 
         xAutoSearchFlag = pdTRUE;
-        xStatus = GGD_JSONRequestStart( &xSocket );
+        xStatus = GGD_JSONRequestStart( clientcredentialMQTT_BROKER_ENDPOINT,
+                                        clientcredentialGREENGRASS_DISCOVERY_PORT,
+                                        clientcredentialIOT_THING_NAME,
+                                        &xSocket );
 
         if( xStatus == pdPASS )
         {
@@ -278,12 +347,10 @@ TEST( Full_GGD, GetIPandCertificateFromJSON )
         if( xStatus == pdPASS )
         {
             ulByteRead = 0;
-            xStatus = GGD_JSONRequestGetFile( &xSocket,
-                                              cBuffer,
-                                              ulBufferSize,
-                                              &ulByteRead,
-                                              &xJSONFileRetrieveCompleted,
-                                              ulJSONFileSize );
+            xStatus = prvGGD_JSONRequestGetFileLoop( ulBufferSize,
+                                                     &ulByteRead,
+                                                     &xJSONFileRetrieveCompleted,
+                                                     ulJSONFileSize );
         }
 
         TEST_ASSERT_EQUAL_INT32( pdPASS, xStatus );
@@ -880,7 +947,10 @@ TEST( Full_GGD, JSONRequestGetFile )
         /** @brief Check return status and value in ideal case.
          *  @{
          */
-        xStatus = GGD_JSONRequestStart( &xSocket );
+        xStatus = GGD_JSONRequestStart( clientcredentialMQTT_BROKER_ENDPOINT,
+                                        clientcredentialGREENGRASS_DISCOVERY_PORT,
+                                        clientcredentialIOT_THING_NAME,
+                                        &xSocket );
 
         if( xStatus == pdPASS )
         {
@@ -890,12 +960,10 @@ TEST( Full_GGD, JSONRequestGetFile )
         if( xStatus == pdPASS )
         {
             ulByteRead = 0;
-            xStatus = GGD_JSONRequestGetFile( &xSocket,
-                                              cBuffer,
-                                              ulBufferSize,
-                                              &ulByteRead,
-                                              &xJSONFileRetrieveCompleted,
-                                              ulJSONFileSize );
+            xStatus = prvGGD_JSONRequestGetFileLoop( ulBufferSize,
+                                                     &ulByteRead,
+                                                     &xJSONFileRetrieveCompleted,
+                                                     ulJSONFileSize );
         }
 
         TEST_ASSERT_EQUAL_INT32( SOCKETS_INVALID_SOCKET, xSocket );
@@ -905,10 +973,13 @@ TEST( Full_GGD, JSONRequestGetFile )
 
         /** @}*/
 
-        /** @brief Retrieve the JSON file in two separate chunks.
+        /** @brief Retrieve the JSON file in separate chunks.
          *  @{
          */
-        xStatus = GGD_JSONRequestStart( &xSocket );
+        xStatus = GGD_JSONRequestStart( clientcredentialMQTT_BROKER_ENDPOINT,
+                                        clientcredentialGREENGRASS_DISCOVERY_PORT,
+                                        clientcredentialIOT_THING_NAME,
+                                        &xSocket );
 
         if( xStatus == pdPASS )
         {
@@ -929,12 +1000,10 @@ TEST( Full_GGD, JSONRequestGetFile )
             TEST_ASSERT_EQUAL_INT32( pdPASS, xStatus );
             TEST_ASSERT_EQUAL_INT32( pdFALSE, xJSONFileRetrieveCompleted ); /* Not yet retrieved - only half of it. */
 
-            xStatus = GGD_JSONRequestGetFile( &xSocket,
-                                              &cBuffer[ ulByteRead ],
-                                              ulBufferSize - ( ulJSONFileSize / 2 ),
-                                              &ulByteRead,
-                                              &xJSONFileRetrieveCompleted,
-                                              ulJSONFileSize );
+            xStatus = prvGGD_JSONRequestGetFileLoop( ulBufferSize,
+                                                     &ulByteRead,
+                                                     &xJSONFileRetrieveCompleted,
+                                                     ulJSONFileSize );
         }
 
         TEST_ASSERT_EQUAL_INT32_MESSAGE( pdPASS, xStatus, "GGD_JSONRequestGetFile() failed to return pdPASS." );
@@ -945,7 +1014,10 @@ TEST( Full_GGD, JSONRequestGetFile )
         /** @brief Check fail if we receive more bytes than expected.
          *  @{
          */
-        xStatus = GGD_JSONRequestStart( &xSocket );
+        xStatus = GGD_JSONRequestStart( clientcredentialMQTT_BROKER_ENDPOINT,
+                                        clientcredentialGREENGRASS_DISCOVERY_PORT,
+                                        clientcredentialIOT_THING_NAME,
+                                        &xSocket );
 
         if( xStatus == pdPASS )
         {
@@ -955,12 +1027,10 @@ TEST( Full_GGD, JSONRequestGetFile )
         if( xStatus == pdPASS )
         {
             ulByteRead = 0;
-            xStatus = GGD_JSONRequestGetFile( &xSocket,
-                                              cBuffer,
-                                              ulBufferSize,
-                                              &ulByteRead,
-                                              &xJSONFileRetrieveCompleted,
-                                              ulJSONFileSize - 1 ); /* Remove one byte to the expected JSON file size. */
+            xStatus = prvGGD_JSONRequestGetFileLoop( ulBufferSize,
+                                                     &ulByteRead,
+                                                     &xJSONFileRetrieveCompleted,
+                                                     ulJSONFileSize - 1 ); /* Remove one byte from the expected JSON file size. */
         }
 
         TEST_ASSERT_EQUAL_INT32( pdFAIL, xStatus );
@@ -1024,7 +1094,10 @@ TEST( Full_GGD, JSONRequestGetSize )
         /** @brief Check return status and value in ideal case
          *  @{
          */
-        xStatus = GGD_JSONRequestStart( &xSocket );
+        xStatus = GGD_JSONRequestStart( clientcredentialMQTT_BROKER_ENDPOINT,
+                                        clientcredentialGREENGRASS_DISCOVERY_PORT,
+                                        clientcredentialIOT_THING_NAME,
+                                        &xSocket );
         TEST_ASSERT_EQUAL_INT32( pdPASS, xStatus );
 
         xStatus = GGD_JSONRequestGetSize( &xSocket, &ulJSONFileSize );
@@ -1060,7 +1133,10 @@ TEST( Full_GGD, JSONRequestStart )
         /** @brief Check return status and value in ideal case
          *  @{
          */
-        xStatus = GGD_JSONRequestStart( &xSocket );
+        xStatus = GGD_JSONRequestStart( clientcredentialMQTT_BROKER_ENDPOINT,
+                                        clientcredentialGREENGRASS_DISCOVERY_PORT,
+                                        clientcredentialIOT_THING_NAME,
+                                        &xSocket );
         TEST_ASSERT_EQUAL_INT32( pdPASS, xStatus );
         GGD_SecureConnect_Disconnect( &xSocket );
         /** @}*/
@@ -1075,7 +1151,19 @@ TEST( Full_GGD, JSONRequestStart )
      */
     if( TEST_PROTECT() )
     {
-        xStatus = GGD_JSONRequestStart( NULL );
+        xStatus = GGD_JSONRequestStart( clientcredentialMQTT_BROKER_ENDPOINT,
+                                        clientcredentialGREENGRASS_DISCOVERY_PORT,
+                                        clientcredentialIOT_THING_NAME,
+                                        NULL );
+        TEST_FAIL();
+    }
+
+    if( TEST_PROTECT() )
+    {
+        xStatus = GGD_JSONRequestStart( NULL,
+                                        clientcredentialGREENGRASS_DISCOVERY_PORT,
+                                        NULL,
+                                        &xSocket );
         TEST_FAIL();
     }
 

@@ -13,7 +13,7 @@ else()
 endif()
 
 # -------------------------------------------------------------------------------------------------
-# Amazon FreeRTOS Console metadata
+# FreeRTOS Console metadata
 # -------------------------------------------------------------------------------------------------
 
 afr_set_board_metadata(ID "Renesas-RX65N-RSK")
@@ -29,6 +29,7 @@ afr_set_board_metadata(SUPPORTED_IDE "E2Studio")
 afr_set_board_metadata(RECOMMENDED_IDE "E2Studio")
 afr_set_board_metadata(IDE_E2Studio_NAME "e2 studio")
 afr_set_board_metadata(IDE_E2Studio_COMPILER "CCRX")
+afr_set_board_metadata(KEY_IMPORT_PROVISIONING "TRUE")
 
 afr_set_board_metadata(IDE_E2Studio_PROJECT_LOCATION "${AFR_ROOT_DIR}/projects/renesas/rx65n-rsk/e2studio/aws_demos")
 afr_set_board_metadata(AWS_DEMOS_CONFIG_FILES_LOCATION "${CMAKE_CURRENT_LIST_DIR}/aws_demos/config_files")
@@ -79,7 +80,7 @@ target_link_options(
 )
 
 # -------------------------------------------------------------------------------------------------
-# Amazon FreeRTOS portable layers
+# FreeRTOS portable layers
 # -------------------------------------------------------------------------------------------------
 
 afr_glob_src(afr_common_src DIRECTORY "${renesas_dir}/amazon_freertos_common")
@@ -239,29 +240,27 @@ target_link_libraries(
 )
 
 # -------------------------------------------------------------------------------------------------
-# Amazon FreeRTOS demos and tests
+# FreeRTOS demos and tests
 # -------------------------------------------------------------------------------------------------
 set(CMAKE_EXECUTABLE_SUFFIX "abs")
 
 afr_glob_src(board_code_src DIRECTORY "${rx65nrsk_aws_dir}/application_code/renesas_code")
 afr_glob_src(config_files_src DIRECTORY "${rx65nrsk_aws_dir}/config_files")
 
-# TODO, remove network manager src.
-afr_glob_src(network_manager_src DIRECTORY "${AFR_DEMOS_DIR}/network_manager")
-
-add_executable(${exe_target}
-    ${board_code_src}
-    ${config_files_src}
-    "${rx65nrsk_aws_dir}/application_code/main.c"
-    $<$<NOT:${AFR_IS_TESTING}>:${network_manager_src}>
-)
-
-target_link_libraries(
-    ${exe_target}
-    PRIVATE
-        AFR::freertos_plus_tcp
-        AFR::utils
-)
+# Do not add demos or tests if they're turned off.
+if(AFR_ENABLE_DEMOS OR AFR_ENABLE_TESTS)
+    add_executable(${exe_target}
+        ${board_code_src}
+        ${config_files_src}
+        "${rx65nrsk_aws_dir}/application_code/main.c"
+    )
+    target_link_libraries(
+        ${exe_target}
+        PRIVATE
+            AFR::freertos_plus_tcp
+            AFR::utils
+    )
+endif()
 
 if(NOT AFR_METADATA_MODE)
     message(FATAL_ERROR "CMake support for nxp is not complete yet.")

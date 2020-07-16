@@ -1,6 +1,6 @@
 /*
-Amazon FreeRTOS
-Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+FreeRTOS
+Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -152,8 +152,9 @@ void vApplicationDaemonTaskStartupHook( void )
         /* We should wait for the network to be up before we run any tests. */
         while( FreeRTOS_IsNetworkUp() == pdFALSE )
         {
-            vTaskDelay(3000);
+            vTaskDelay(300);
         }
+        FreeRTOS_printf( ( "The network is up and running\n" ) );
 
         /* Provision the device with AWS certificate and private key. */
         vDevModeKeyProvisioning();

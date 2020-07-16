@@ -5,110 +5,110 @@
                    displayName="Header Files"
                    projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
-        <logicalFolder name="f1" displayName="same70_xult_nvm" projectFiles="true">
+        <logicalFolder name="f1" displayName="aws_tests" projectFiles="true">
           <logicalFolder name="f1" displayName="driver" projectFiles="true">
             <logicalFolder name="f3" displayName="ethphy" projectFiles="true">
               <logicalFolder name="f1" displayName="src" projectFiles="true">
                 <logicalFolder name="f1" displayName="dynamic" projectFiles="true">
-                  <itemPath>../src/config/same70_xult_nvm/driver/ethphy/src/dynamic/drv_extphy_regs.h</itemPath>
-                  <itemPath>../src/config/same70_xult_nvm/driver/ethphy/src/dynamic/drv_extphy_smsc8740.h</itemPath>
+                  <itemPath>../src/config/aws_tests/driver/ethphy/src/dynamic/drv_extphy_regs.h</itemPath>
+                  <itemPath>../src/config/aws_tests/driver/ethphy/src/dynamic/drv_extphy_smsc8740.h</itemPath>
                 </logicalFolder>
-                <itemPath>../src/config/same70_xult_nvm/driver/ethphy/src/drv_ethphy_local.h</itemPath>
+                <itemPath>../src/config/aws_tests/driver/ethphy/src/drv_ethphy_local.h</itemPath>
               </logicalFolder>
-              <itemPath>../src/config/same70_xult_nvm/driver/ethphy/drv_ethphy.h</itemPath>
+              <itemPath>../src/config/aws_tests/driver/ethphy/drv_ethphy.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f1" displayName="gmac" projectFiles="true">
               <logicalFolder name="f1" displayName="src" projectFiles="true">
                 <logicalFolder name="f1" displayName="dynamic" projectFiles="true">
-                  <itemPath>../src/config/same70_xult_nvm/driver/gmac/src/dynamic/_gmac_dcpt_lists.h</itemPath>
-                  <itemPath>../src/config/same70_xult_nvm/driver/gmac/src/dynamic/drv_gmac_lib.h</itemPath>
+                  <itemPath>../src/config/aws_tests/driver/gmac/src/dynamic/_gmac_dcpt_lists.h</itemPath>
+                  <itemPath>../src/config/aws_tests/driver/gmac/src/dynamic/drv_gmac_lib.h</itemPath>
                 </logicalFolder>
-                <itemPath>../src/config/same70_xult_nvm/driver/gmac/src/drv_gmac_local.h</itemPath>
+                <itemPath>../src/config/aws_tests/driver/gmac/src/drv_gmac_local.h</itemPath>
               </logicalFolder>
-              <itemPath>../src/config/same70_xult_nvm/driver/gmac/drv_gmac.h</itemPath>
+              <itemPath>../src/config/aws_tests/driver/gmac/drv_gmac.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="miim" projectFiles="true">
               <logicalFolder name="f1" displayName="src" projectFiles="true">
                 <logicalFolder name="f1" displayName="dynamic" projectFiles="true">
-                  <itemPath>../src/config/same70_xult_nvm/driver/miim/src/dynamic/drv_miim_mapping.h</itemPath>
+                  <itemPath>../src/config/aws_tests/driver/miim/src/dynamic/drv_miim_mapping.h</itemPath>
                 </logicalFolder>
-                <itemPath>../src/config/same70_xult_nvm/driver/miim/src/drv_miim_local.h</itemPath>
+                <itemPath>../src/config/aws_tests/driver/miim/src/drv_miim_local.h</itemPath>
               </logicalFolder>
-              <itemPath>../src/config/same70_xult_nvm/driver/miim/drv_miim.h</itemPath>
+              <itemPath>../src/config/aws_tests/driver/miim/drv_miim.h</itemPath>
             </logicalFolder>
-            <itemPath>../src/config/same70_xult_nvm/driver/driver.h</itemPath>
-            <itemPath>../src/config/same70_xult_nvm/driver/driver_common.h</itemPath>
+            <itemPath>../src/config/aws_tests/driver/driver.h</itemPath>
+            <itemPath>../src/config/aws_tests/driver/driver_common.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f3" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f1" displayName="clk" projectFiles="true">
-              <itemPath>../src/config/same70_xult_nvm/peripheral/clk/plib_clk.h</itemPath>
+              <itemPath>../src/config/aws_tests/peripheral/clk/plib_clk.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f5" displayName="efc" projectFiles="true">
-              <itemPath>../src/config/same70_xult_nvm/peripheral/efc/plib_efc.h</itemPath>
+              <itemPath>../src/config/aws_tests/peripheral/efc/plib_efc.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f4" displayName="mpu" projectFiles="true">
-              <itemPath>../src/config/same70_xult_nvm/peripheral/mpu/plib_mpu.h</itemPath>
-              <itemPath>../src/config/same70_xult_nvm/peripheral/mpu/plib_mpu_local.h</itemPath>
+              <itemPath>../src/config/aws_tests/peripheral/mpu/plib_mpu.h</itemPath>
+              <itemPath>../src/config/aws_tests/peripheral/mpu/plib_mpu_local.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="nvic" projectFiles="true">
-              <itemPath>../src/config/same70_xult_nvm/peripheral/nvic/plib_nvic.h</itemPath>
+              <itemPath>../src/config/aws_tests/peripheral/nvic/plib_nvic.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="pio" projectFiles="true">
-              <itemPath>../src/config/same70_xult_nvm/peripheral/pio/plib_pio.h</itemPath>
+              <itemPath>../src/config/aws_tests/peripheral/pio/plib_pio.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f6" displayName="tc" projectFiles="true">
-              <itemPath>../src/config/same70_xult_nvm/peripheral/tc/plib_tc0.h</itemPath>
-              <itemPath>../src/config/same70_xult_nvm/peripheral/tc/plib_tc_common.h</itemPath>
+              <itemPath>../src/config/aws_tests/peripheral/tc/plib_tc0.h</itemPath>
+              <itemPath>../src/config/aws_tests/peripheral/tc/plib_tc_common.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f8" displayName="trng" projectFiles="true">
-              <itemPath>../src/config/same70_xult_nvm/peripheral/trng/plib_trng.h</itemPath>
+              <itemPath>../src/config/aws_tests/peripheral/trng/plib_trng.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f7" displayName="uart" projectFiles="true">
-              <itemPath>../src/config/same70_xult_nvm/peripheral/uart/plib_uart_common.h</itemPath>
-              <itemPath>../src/config/same70_xult_nvm/peripheral/uart/plib_uart4.h</itemPath>
+              <itemPath>../src/config/aws_tests/peripheral/uart/plib_uart_common.h</itemPath>
+              <itemPath>../src/config/aws_tests/peripheral/uart/plib_uart4.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f9" displayName="usart" projectFiles="true">
-              <itemPath>../src/config/same70_xult_nvm/peripheral/usart/plib_usart_common.h</itemPath>
-              <itemPath>../src/config/same70_xult_nvm/peripheral/usart/plib_usart1.h</itemPath>
+              <itemPath>../src/config/aws_tests/peripheral/usart/plib_usart_common.h</itemPath>
+              <itemPath>../src/config/aws_tests/peripheral/usart/plib_usart1.h</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f2" displayName="system" projectFiles="true">
-            <logicalFolder name="f6" displayName="cache" projectFiles="true">
-              <itemPath>../src/config/same70_xult_nvm/system/cache/sys_cache.h</itemPath>
+            <logicalFolder name="f5" displayName="cache" projectFiles="true">
+              <itemPath>../src/config/aws_tests/system/cache/sys_cache.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f1" displayName="command" projectFiles="true">
-              <itemPath>../src/config/same70_xult_nvm/system/command/sys_command.h</itemPath>
+              <itemPath>../src/config/aws_tests/system/command/sys_command.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f4" displayName="console" projectFiles="true">
-              <itemPath>../src/config/same70_xult_nvm/system/console/sys_console.h</itemPath>
+            <logicalFolder name="f3" displayName="console" projectFiles="true">
+              <itemPath>../src/config/aws_tests/system/console/sys_console.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="debug" projectFiles="true">
-              <itemPath>../src/config/same70_xult_nvm/system/debug/sys_debug.h</itemPath>
+            <logicalFolder name="f6" displayName="debug" projectFiles="true">
+              <itemPath>../src/config/aws_tests/system/debug/sys_debug.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f5" displayName="int" projectFiles="true">
-              <itemPath>../src/config/same70_xult_nvm/system/int/sys_int.h</itemPath>
-              <itemPath>../src/config/same70_xult_nvm/system/int/sys_int_mapping.h</itemPath>
+            <logicalFolder name="f4" displayName="int" projectFiles="true">
+              <itemPath>../src/config/aws_tests/system/int/sys_int.h</itemPath>
+              <itemPath>../src/config/aws_tests/system/int/sys_int_mapping.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f3" displayName="time" projectFiles="true">
-              <itemPath>../src/config/same70_xult_nvm/system/time/sys_time.h</itemPath>
-              <itemPath>../src/config/same70_xult_nvm/system/time/sys_time_definitions.h</itemPath>
-              <itemPath>../src/config/same70_xult_nvm/system/time/src/sys_time_local.h</itemPath>
+            <logicalFolder name="f2" displayName="time" projectFiles="true">
+              <itemPath>../src/config/aws_tests/system/time/sys_time.h</itemPath>
+              <itemPath>../src/config/aws_tests/system/time/sys_time_definitions.h</itemPath>
+              <itemPath>../src/config/aws_tests/system/time/src/sys_time_local.h</itemPath>
             </logicalFolder>
-            <itemPath>../src/config/same70_xult_nvm/system/system.h</itemPath>
-            <itemPath>../src/config/same70_xult_nvm/system/system_common.h</itemPath>
-            <itemPath>../src/config/same70_xult_nvm/system/system_module.h</itemPath>
+            <itemPath>../src/config/aws_tests/system/system.h</itemPath>
+            <itemPath>../src/config/aws_tests/system/system_common.h</itemPath>
+            <itemPath>../src/config/aws_tests/system/system_module.h</itemPath>
           </logicalFolder>
-          <itemPath>../src/config/same70_xult_nvm/device_cache.h</itemPath>
-          <itemPath>../src/config/same70_xult_nvm/toolchain_specifics.h</itemPath>
-          <itemPath>../src/config/same70_xult_nvm/definitions.h</itemPath>
-          <itemPath>../src/config/same70_xult_nvm/user.h</itemPath>
-          <itemPath>../src/config/same70_xult_nvm/configuration.h</itemPath>
+          <itemPath>../src/config/aws_tests/device_cache.h</itemPath>
+          <itemPath>../src/config/aws_tests/toolchain_specifics.h</itemPath>
+          <itemPath>../src/config/aws_tests/definitions.h</itemPath>
+          <itemPath>../src/config/aws_tests/user.h</itemPath>
+          <itemPath>../src/config/aws_tests/configuration.h</itemPath>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="f3" displayName="osal" projectFiles="true">
-        <itemPath>../src/config/same70_xult_nvm/osal/osal.h</itemPath>
-        <itemPath>../src/config/same70_xult_nvm/osal/osal_definitions.h</itemPath>
-        <itemPath>../src/config/same70_xult_nvm/osal/osal_freertos.h</itemPath>
+        <itemPath>../src/config/aws_tests/osal/osal.h</itemPath>
+        <itemPath>../src/config/aws_tests/osal/osal_definitions.h</itemPath>
+        <itemPath>../src/config/aws_tests/osal/osal_freertos.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="packs" projectFiles="true">
         <logicalFolder name="f1" displayName="ATSAME70Q21B_DFP" projectFiles="true">
@@ -195,24 +195,11 @@
               <itemPath>../../../../../../../demos/dev_mode_key_provisioning/src/aws_dev_mode_key_provisioning.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f2" displayName="include" projectFiles="true">
-            <itemPath>../../../../../../../demos/include/aws_application_version.h</itemPath>
-            <itemPath>../../../../../../../demos/include/aws_ble_gatt_server_demo.h</itemPath>
-            <itemPath>../../../../../../../demos/include/aws_clientcredential.h</itemPath>
-            <itemPath>../../../../../../../demos/include/aws_clientcredential_keys.h</itemPath>
-            <itemPath>../../../../../../../demos/include/aws_demo.h</itemPath>
-            <itemPath>../../../../../../../demos/include/aws_iot_demo_network.h</itemPath>
-            <itemPath>../../../../../../../demos/include/aws_ota_codesigner_certificate.h</itemPath>
-            <itemPath>../../../../../../../demos/include/aws_wifi_connect_task.h</itemPath>
-            <itemPath>../../../../../../../demos/include/iot_ble_numericComparison.h</itemPath>
-            <itemPath>../../../../../../../demos/include/iot_config_common.h</itemPath>
-            <itemPath>../../../../../../../demos/include/iot_demo_logging.h</itemPath>
-            <itemPath>../../../../../../../demos/include/iot_demo_runner.h</itemPath>
-          </logicalFolder>
         </logicalFolder>
         <logicalFolder name="f2" displayName="freertos_kernel" projectFiles="true">
           <logicalFolder name="f1" displayName="include" projectFiles="true">
             <itemPath>../../../../../../../freertos_kernel/include/atomic.h</itemPath>
+            <itemPath>../../../../../../../freertos_kernel/include/croutine.h</itemPath>
             <itemPath>../../../../../../../freertos_kernel/include/deprecated_definitions.h</itemPath>
             <itemPath>../../../../../../../freertos_kernel/include/event_groups.h</itemPath>
             <itemPath>../../../../../../../freertos_kernel/include/FreeRTOS.h</itemPath>
@@ -224,7 +211,9 @@
             <itemPath>../../../../../../../freertos_kernel/include/projdefs.h</itemPath>
             <itemPath>../../../../../../../freertos_kernel/include/queue.h</itemPath>
             <itemPath>../../../../../../../freertos_kernel/include/semphr.h</itemPath>
+            <itemPath>../../../../../../../freertos_kernel/include/StackMacros.h</itemPath>
             <itemPath>../../../../../../../freertos_kernel/include/stack_macros.h</itemPath>
+            <itemPath>../../../../../../../freertos_kernel/include/stdint.readme</itemPath>
             <itemPath>../../../../../../../freertos_kernel/include/stream_buffer.h</itemPath>
             <itemPath>../../../../../../../freertos_kernel/include/task.h</itemPath>
             <itemPath>../../../../../../../freertos_kernel/include/timers.h</itemPath>
@@ -243,6 +232,7 @@
               <itemPath>../../../../../../../freertos_kernel/portable/MemMang/heap_4.c</itemPath>
             </logicalFolder>
           </logicalFolder>
+          <itemPath>../../../../../../../freertos_kernel/croutine.c</itemPath>
           <itemPath>../../../../../../../freertos_kernel/event_groups.c</itemPath>
           <itemPath>../../../../../../../freertos_kernel/list.c</itemPath>
           <itemPath>../../../../../../../freertos_kernel/queue.c</itemPath>
@@ -252,10 +242,9 @@
         </logicalFolder>
         <logicalFolder name="f3" displayName="libraries" projectFiles="true">
           <logicalFolder name="f1" displayName="3rdparty" projectFiles="true">
-            <logicalFolder name="f1" displayName="http-parser" projectFiles="true">
-              <itemPath>../../../../../../../libraries/3rdparty/http-parser/http_parser.c</itemPath>
-              <itemPath>../../../../../../../libraries/3rdparty/http-parser/http_parser.h</itemPath>
-              <itemPath>../../../../../../../libraries/3rdparty/http-parser/LICENSE-MIT</itemPath>
+            <logicalFolder name="f1" displayName="http_parser" projectFiles="true">
+              <itemPath>../../../../../../../libraries/3rdparty/http_parser/http_parser.c</itemPath>
+              <itemPath>../../../../../../../libraries/3rdparty/http_parser/http_parser.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="jsmn" projectFiles="true">
               <itemPath>../../../../../../../libraries/3rdparty/jsmn/jsmn.c</itemPath>
@@ -414,7 +403,6 @@
               <logicalFolder name="f3" displayName="utils" projectFiles="true">
                 <itemPath>../../../../../../../libraries/3rdparty/mbedtls/utils/mbedtls_utils.c</itemPath>
               </logicalFolder>
-              <itemPath>../../../../../../../libraries/3rdparty/mbedtls/LICENSE</itemPath>
             </logicalFolder>
             <logicalFolder name="f4" displayName="pkcs11" projectFiles="true">
               <itemPath>../../../../../../../libraries/3rdparty/pkcs11/pkcs11.h</itemPath>
@@ -433,8 +421,6 @@
               <itemPath>../../../../../../../libraries/3rdparty/tinycbor/cborpretty_stdio.c</itemPath>
               <itemPath>../../../../../../../libraries/3rdparty/tinycbor/cborvalidation.c</itemPath>
               <itemPath>../../../../../../../libraries/3rdparty/tinycbor/compilersupport_p.h</itemPath>
-              <itemPath>../../../../../../../libraries/3rdparty/tinycbor/LICENSE</itemPath>
-              <itemPath>../../../../../../../libraries/3rdparty/tinycbor/README.md</itemPath>
               <itemPath>../../../../../../../libraries/3rdparty/tinycbor/tinycbor-version.h</itemPath>
               <itemPath>../../../../../../../libraries/3rdparty/tinycbor/utf8_p.h</itemPath>
             </logicalFolder>
@@ -480,6 +466,10 @@
                   <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/lib/source/utils.c</itemPath>
                 </logicalFolder>
               </logicalFolder>
+              <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/AUTHORS</itemPath>
+              <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/config.mk</itemPath>
+              <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/README</itemPath>
+              <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/VERSION</itemPath>
             </logicalFolder>
             <logicalFolder name="f7" displayName="unity" projectFiles="true">
               <logicalFolder name="f1" displayName="extras" projectFiles="true">
@@ -508,13 +498,12 @@
                 <itemPath>../../../../../../../libraries/abstractions/pkcs11/include/iot_pkcs11_pal.h</itemPath>
               </logicalFolder>
               <logicalFolder name="f2" displayName="mbedtls" projectFiles="true">
-                <itemPath>../../../../../../../libraries/abstractions/pkcs11/mbedtls/iot_pkcs11_mbedtls.c</itemPath>
                 <itemPath>../../../../../../../libraries/abstractions/pkcs11/mbedtls/threading_alt.h</itemPath>
+                <itemPath>../../../../../../../libraries/abstractions/pkcs11/mbedtls/iot_pkcs11_mbedtls.c</itemPath>
               </logicalFolder>
               <logicalFolder name="f3" displayName="test" projectFiles="true">
                 <itemPath>../../../../../../../libraries/abstractions/pkcs11/test/iot_test_pkcs11.c</itemPath>
               </logicalFolder>
-              <itemPath>../../../../../../../libraries/abstractions/pkcs11/ReadMe.md</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="platform" projectFiles="true">
               <logicalFolder name="f1" displayName="freertos" projectFiles="true">
@@ -566,16 +555,24 @@
               </logicalFolder>
             </logicalFolder>
             <logicalFolder name="f4" displayName="secure_sockets" projectFiles="true">
-              <logicalFolder name="f1" displayName="freertos_plus_tcp" projectFiles="true">
+              <logicalFolder name="f3" displayName="freertos_plus_tcp" projectFiles="true">
                 <itemPath>../../../../../../../libraries/abstractions/secure_sockets/freertos_plus_tcp/iot_secure_sockets.c</itemPath>
               </logicalFolder>
-              <logicalFolder name="f2" displayName="include" projectFiles="true">
+              <logicalFolder name="f1" displayName="include" projectFiles="true">
                 <itemPath>../../../../../../../libraries/abstractions/secure_sockets/include/iot_secure_sockets.h</itemPath>
                 <itemPath>../../../../../../../libraries/abstractions/secure_sockets/include/iot_secure_sockets_config_defaults.h</itemPath>
                 <itemPath>../../../../../../../libraries/abstractions/secure_sockets/include/iot_secure_sockets_wrapper_metrics.h</itemPath>
               </logicalFolder>
-              <logicalFolder name="f3" displayName="test" projectFiles="true">
+              <logicalFolder name="f2" displayName="test" projectFiles="true">
                 <itemPath>../../../../../../../libraries/abstractions/secure_sockets/test/iot_test_tcp.c</itemPath>
+              </logicalFolder>
+            </logicalFolder>
+            <logicalFolder name="f5" displayName="wifi" projectFiles="true">
+              <logicalFolder name="f1" displayName="include" projectFiles="true">
+                <itemPath>../../../../../../../libraries/abstractions/wifi/include/iot_wifi.h</itemPath>
+              </logicalFolder>
+              <logicalFolder name="f2" displayName="test" projectFiles="true">
+                <itemPath>../../../../../../../libraries/abstractions/wifi/test/iot_test_wifi.c</itemPath>
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
@@ -719,10 +716,10 @@
                   <itemPath>../../../../../../../libraries/c_sdk/standard/mqtt/src/iot_mqtt_api.c</itemPath>
                   <itemPath>../../../../../../../libraries/c_sdk/standard/mqtt/src/iot_mqtt_network.c</itemPath>
                   <itemPath>../../../../../../../libraries/c_sdk/standard/mqtt/src/iot_mqtt_operation.c</itemPath>
+                  <itemPath>../../../../../../../libraries/c_sdk/standard/mqtt/src/iot_mqtt_serialize.c</itemPath>
                   <itemPath>../../../../../../../libraries/c_sdk/standard/mqtt/src/iot_mqtt_static_memory.c</itemPath>
                   <itemPath>../../../../../../../libraries/c_sdk/standard/mqtt/src/iot_mqtt_subscription.c</itemPath>
                   <itemPath>../../../../../../../libraries/c_sdk/standard/mqtt/src/iot_mqtt_validate.c</itemPath>
-                  <itemPath>../../../../../../../libraries/c_sdk/standard/mqtt/src/iot_mqtt_serialize.c</itemPath>
                 </logicalFolder>
                 <logicalFolder name="f3" displayName="test" projectFiles="true">
                   <logicalFolder name="f1" displayName="system" projectFiles="true">
@@ -757,8 +754,8 @@
                 </logicalFolder>
                 <logicalFolder name="f3" displayName="test" projectFiles="true">
                   <itemPath>../../../../../../../libraries/c_sdk/standard/serializer/test/iot_tests_deserializer_json.c</itemPath>
-                  <itemPath>../../../../../../../libraries/c_sdk/standard/serializer/test/iot_tests_serializer_cbor.c</itemPath>
                   <itemPath>../../../../../../../libraries/c_sdk/standard/serializer/test/iot_tests_serializer_json.c</itemPath>
+                  <itemPath>../../../../../../../libraries/c_sdk/standard/serializer/test/iot_tests_serializer_cbor.c</itemPath>
                 </logicalFolder>
               </logicalFolder>
             </logicalFolder>
@@ -785,22 +782,8 @@
               <logicalFolder name="f2" displayName="ota" projectFiles="true">
                 <logicalFolder name="f1" displayName="include" projectFiles="true">
                   <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/include/aws_iot_ota_agent.h</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/include/aws_ota_agent.h</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/include/aws_ota_types.h</itemPath>
+                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/include/aws_iot_ota_types.h</itemPath>
                 </logicalFolder>
-                <logicalFolder name="f2" displayName="src" projectFiles="true">
-                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/aws_iot_ota_agent.c</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/aws_ota_agent_internal.h</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/aws_ota_cbor.c</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/aws_ota_cbor.h</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/aws_ota_cbor_internal.h</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/aws_ota_pal.h</itemPath>
-                </logicalFolder>
-                <logicalFolder name="f3" displayName="test" projectFiles="true">
-                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/test/aws_test_ota_agent.c</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/test/aws_test_ota_pal.c</itemPath>
-                </logicalFolder>
-                <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/README.md</itemPath>
               </logicalFolder>
             </logicalFolder>
             <logicalFolder name="f2" displayName="standard" projectFiles="true">
@@ -819,7 +802,6 @@
                 <logicalFolder name="f1" displayName="doc" projectFiles="true">
                   <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_posix/doc/Doxyfile</itemPath>
                   <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_posix/doc/DoxygenLayout.xml</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_posix/doc/mainpage.txt</itemPath>
                 </logicalFolder>
                 <logicalFolder name="f2" displayName="include" projectFiles="true">
                   <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_posix/include/FreeRTOS_POSIX.h</itemPath>
@@ -893,6 +875,7 @@
                   <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/FreeRTOS_TCP_IP.c</itemPath>
                   <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/FreeRTOS_TCP_WIN.c</itemPath>
                   <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/FreeRTOS_UDP_IP.c</itemPath>
+                  <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/ReadMe.url</itemPath>
                 </logicalFolder>
                 <logicalFolder name="f3" displayName="test" projectFiles="true">
                   <itemPath>../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/test/iot_freertos_tcp_test_access_declare.h</itemPath>
@@ -961,7 +944,6 @@
               <logicalFolder name="f1" displayName="same70_xult" projectFiles="true">
                 <logicalFolder name="f1" displayName="aws_tests" projectFiles="true">
                   <logicalFolder name="f1" displayName="config_files" projectFiles="true">
-                    <itemPath>../../../../../../../vendors/microchip/boards/same70_xult/aws_tests/config_files/aws_bufferpool_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/same70_xult/aws_tests/config_files/aws_demo_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/same70_xult/aws_tests/config_files/aws_ggd_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/same70_xult/aws_tests/config_files/aws_iot_network_config.h</itemPath>
@@ -973,7 +955,6 @@
                     <itemPath>../../../../../../../vendors/microchip/boards/same70_xult/aws_tests/config_files/aws_test_runner_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/same70_xult/aws_tests/config_files/aws_test_tcp_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/same70_xult/aws_tests/config_files/aws_test_wifi_config.h</itemPath>
-                    <itemPath>../../../../../../../vendors/microchip/boards/same70_xult/aws_tests/config_files/aws_wifi_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/same70_xult/aws_tests/config_files/FreeRTOSConfig.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/same70_xult/aws_tests/config_files/FreeRTOSIPConfig.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/same70_xult/aws_tests/config_files/iot_config.h</itemPath>
@@ -981,13 +962,11 @@
                     <itemPath>../../../../../../../vendors/microchip/boards/same70_xult/aws_tests/config_files/iot_pkcs11_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/same70_xult/aws_tests/config_files/iot_test_pkcs11_config.h</itemPath>
                     <itemPath>../../../../../../../vendors/microchip/boards/same70_xult/aws_tests/config_files/NetworkConfig.h</itemPath>
-                    <itemPath>../../../../../../../vendors/microchip/boards/same70_xult/aws_tests/config_files/unity_config.h</itemPath>
                   </logicalFolder>
                 </logicalFolder>
                 <logicalFolder name="f2" displayName="ports" projectFiles="true">
                   <logicalFolder name="f1" displayName="ota" projectFiles="true">
                     <itemPath>../../../../../../../vendors/microchip/boards/same70_xult/ports/ota/aws_ota_pal.c</itemPath>
-                    <itemPath>../../../../../../../vendors/microchip/boards/same70_xult/ports/ota/aws_flash_config.h</itemPath>
                   </logicalFolder>
                   <logicalFolder name="f2" displayName="pkcs11" projectFiles="true">
                     <itemPath>../../../../../../../vendors/microchip/boards/same70_xult/ports/pkcs11/iot_pkcs11_pal.c</itemPath>
@@ -1054,99 +1033,99 @@
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="f1" displayName="config" projectFiles="true">
-        <logicalFolder name="f1" displayName="same70_xult_nvm" projectFiles="true">
+        <logicalFolder name="f1" displayName="aws_tests" projectFiles="true">
           <logicalFolder name="f1" displayName="driver" projectFiles="true">
             <logicalFolder name="f3" displayName="ethphy" projectFiles="true">
               <logicalFolder name="f1" displayName="src" projectFiles="true">
                 <logicalFolder name="f1" displayName="dynamic" projectFiles="true">
-                  <itemPath>../src/config/same70_xult_nvm/driver/ethphy/src/dynamic/drv_ethphy.c</itemPath>
-                  <itemPath>../src/config/same70_xult_nvm/driver/ethphy/src/dynamic/drv_extphy_smsc8740.c</itemPath>
+                  <itemPath>../src/config/aws_tests/driver/ethphy/src/dynamic/drv_ethphy.c</itemPath>
+                  <itemPath>../src/config/aws_tests/driver/ethphy/src/dynamic/drv_extphy_smsc8740.c</itemPath>
                 </logicalFolder>
               </logicalFolder>
             </logicalFolder>
             <logicalFolder name="f1" displayName="gmac" projectFiles="true">
               <logicalFolder name="f1" displayName="src" projectFiles="true">
                 <logicalFolder name="f1" displayName="dynamic" projectFiles="true">
-                  <itemPath>../src/config/same70_xult_nvm/driver/gmac/src/dynamic/drv_gmac.c</itemPath>
-                  <itemPath>../src/config/same70_xult_nvm/driver/gmac/src/dynamic/drv_gmac_lib_samE7x_V7x.c</itemPath>
+                  <itemPath>../src/config/aws_tests/driver/gmac/src/dynamic/drv_gmac.c</itemPath>
+                  <itemPath>../src/config/aws_tests/driver/gmac/src/dynamic/drv_gmac_lib_samE7x_V7x.c</itemPath>
                 </logicalFolder>
               </logicalFolder>
             </logicalFolder>
             <logicalFolder name="f2" displayName="miim" projectFiles="true">
               <logicalFolder name="f1" displayName="src" projectFiles="true">
                 <logicalFolder name="f1" displayName="dynamic" projectFiles="true">
-                  <itemPath>../src/config/same70_xult_nvm/driver/miim/src/dynamic/drv_miim.c</itemPath>
+                  <itemPath>../src/config/aws_tests/driver/miim/src/dynamic/drv_miim.c</itemPath>
                 </logicalFolder>
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f4" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f1" displayName="clk" projectFiles="true">
-              <itemPath>../src/config/same70_xult_nvm/peripheral/clk/plib_clk.c</itemPath>
+              <itemPath>../src/config/aws_tests/peripheral/clk/plib_clk.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f5" displayName="efc" projectFiles="true">
-              <itemPath>../src/config/same70_xult_nvm/peripheral/efc/plib_efc.c</itemPath>
+              <itemPath>../src/config/aws_tests/peripheral/efc/plib_efc.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f4" displayName="mpu" projectFiles="true">
-              <itemPath>../src/config/same70_xult_nvm/peripheral/mpu/plib_mpu.c</itemPath>
+              <itemPath>../src/config/aws_tests/peripheral/mpu/plib_mpu.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="nvic" projectFiles="true">
-              <itemPath>../src/config/same70_xult_nvm/peripheral/nvic/plib_nvic.c</itemPath>
+              <itemPath>../src/config/aws_tests/peripheral/nvic/plib_nvic.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="pio" projectFiles="true">
-              <itemPath>../src/config/same70_xult_nvm/peripheral/pio/plib_pio.c</itemPath>
+              <itemPath>../src/config/aws_tests/peripheral/pio/plib_pio.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f6" displayName="tc" projectFiles="true">
-              <itemPath>../src/config/same70_xult_nvm/peripheral/tc/plib_tc0.c</itemPath>
+              <itemPath>../src/config/aws_tests/peripheral/tc/plib_tc0.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f8" displayName="trng" projectFiles="true">
-              <itemPath>../src/config/same70_xult_nvm/peripheral/trng/plib_trng.c</itemPath>
+              <itemPath>../src/config/aws_tests/peripheral/trng/plib_trng.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f7" displayName="uart" projectFiles="true">
-              <itemPath>../src/config/same70_xult_nvm/peripheral/uart/plib_uart4.c</itemPath>
+              <itemPath>../src/config/aws_tests/peripheral/uart/plib_uart4.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f9" displayName="usart" projectFiles="true">
-              <itemPath>../src/config/same70_xult_nvm/peripheral/usart/plib_usart1.c</itemPath>
+              <itemPath>../src/config/aws_tests/peripheral/usart/plib_usart1.c</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f3" displayName="stdio" projectFiles="true">
-            <itemPath>../src/config/same70_xult_nvm/stdio/xc32_monitor.c</itemPath>
+            <itemPath>../src/config/aws_tests/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f2" displayName="system" projectFiles="true">
             <logicalFolder name="f6" displayName="cache" projectFiles="true">
-              <itemPath>../src/config/same70_xult_nvm/system/cache/sys_cache.c</itemPath>
+              <itemPath>../src/config/aws_tests/system/cache/sys_cache.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f1" displayName="command" projectFiles="true">
-              <itemPath>../src/config/same70_xult_nvm/system/command/src/sys_command.c</itemPath>
+              <itemPath>../src/config/aws_tests/system/command/src/sys_command.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f4" displayName="console" projectFiles="true">
-              <itemPath>../src/config/same70_xult_nvm/system/console/src/sys_console_local.h</itemPath>
-              <itemPath>../src/config/same70_xult_nvm/system/console/src/sys_console.c</itemPath>
-              <itemPath>../src/config/same70_xult_nvm/system/console/src/sys_console_uart.h</itemPath>
-              <itemPath>../src/config/same70_xult_nvm/system/console/src/sys_console_uart_definitions.h</itemPath>
-              <itemPath>../src/config/same70_xult_nvm/system/console/src/sys_console_uart.c</itemPath>
+              <itemPath>../src/config/aws_tests/system/console/src/sys_console.c</itemPath>
+              <itemPath>../src/config/aws_tests/system/console/src/sys_console_local.h</itemPath>
+              <itemPath>../src/config/aws_tests/system/console/src/sys_console_uart.h</itemPath>
+              <itemPath>../src/config/aws_tests/system/console/src/sys_console_uart_definitions.h</itemPath>
+              <itemPath>../src/config/aws_tests/system/console/src/sys_console_uart.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="debug" projectFiles="true">
-              <itemPath>../src/config/same70_xult_nvm/system/debug/src/sys_debug_local.h</itemPath>
-              <itemPath>../src/config/same70_xult_nvm/system/debug/src/sys_debug.c</itemPath>
+              <itemPath>../src/config/aws_tests/system/debug/src/sys_debug_local.h</itemPath>
+              <itemPath>../src/config/aws_tests/system/debug/src/sys_debug.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f5" displayName="int" projectFiles="true">
-              <itemPath>../src/config/same70_xult_nvm/system/int/src/sys_int.c</itemPath>
+              <itemPath>../src/config/aws_tests/system/int/src/sys_int.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="time" projectFiles="true">
-              <itemPath>../src/config/same70_xult_nvm/system/time/src/sys_time.c</itemPath>
+              <itemPath>../src/config/aws_tests/system/time/src/sys_time.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <itemPath>../src/config/same70_xult_nvm/initialization.c</itemPath>
-          <itemPath>../src/config/same70_xult_nvm/interrupts.c</itemPath>
-          <itemPath>../src/config/same70_xult_nvm/exceptions.c</itemPath>
-          <itemPath>../src/config/same70_xult_nvm/startup_xc32.c</itemPath>
-          <itemPath>../src/config/same70_xult_nvm/libc_syscalls.c</itemPath>
-          <itemPath>../src/config/same70_xult_nvm/tasks.c</itemPath>
+          <itemPath>../src/config/aws_tests/initialization.c</itemPath>
+          <itemPath>../src/config/aws_tests/interrupts.c</itemPath>
+          <itemPath>../src/config/aws_tests/exceptions.c</itemPath>
+          <itemPath>../src/config/aws_tests/startup_xc32.c</itemPath>
+          <itemPath>../src/config/aws_tests/libc_syscalls.c</itemPath>
+          <itemPath>../src/config/aws_tests/tasks.c</itemPath>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="f3" displayName="osal" projectFiles="true">
-        <itemPath>../src/config/same70_xult_nvm/osal/osal_freertos.c</itemPath>
+        <itemPath>../src/config/aws_tests/osal/osal_freertos.c</itemPath>
       </logicalFolder>
       <itemPath>../src/main.c</itemPath>
       <itemPath>../src/app.c</itemPath>
@@ -1155,28 +1134,30 @@
                    displayName="Important Files"
                    projectFiles="false">
       <itemPath>Makefile</itemPath>
+      <itemPath>../src/config/aws_tests/harmony.prj</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
     <Elem>../src</Elem>
+    <Elem>../../../../../../../vendors/microchip/boards/same70_xult/aws_demos/linker_script</Elem>
     <Elem>../../../../../../../vendors/microchip/boards/same70_xult/aws_tests/linker_script</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
-    <conf name="same70_xult_nvm" type="2">
+    <conf name="aws_tests" type="2">
       <toolsSet>
         <developmentServer>localhost</developmentServer>
         <targetDevice>ATSAME70Q21B</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>EdbgTool</platformTool>
+        <platformTool>noID</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.30</languageToolchainVersion>
+        <languageToolchainVersion>2.41</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAME70_DFP" vendor="Microchip" version="4.1.50"/>
         <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
+        <pack name="SAME70_DFP" vendor="Microchip" version="4.1.50"/>
       </packs>
       <compileType>
         <linkerTool>
@@ -1211,8 +1192,8 @@
       <makeCustomizationType>
         <makeCustomizationPreStepEnabled>false</makeCustomizationPreStepEnabled>
         <makeCustomizationPreStep></makeCustomizationPreStep>
-        <makeCustomizationPostStepEnabled>false</makeCustomizationPostStepEnabled>
-        <makeCustomizationPostStep></makeCustomizationPostStep>
+        <makeCustomizationPostStepEnabled>true</makeCustomizationPostStepEnabled>
+        <makeCustomizationPostStep>${MP_CC_DIR}\xc32-objcopy -p -I ihex -O binary "${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.hex" "${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.bin"</makeCustomizationPostStep>
         <makeCustomizationPutChecksumInUserID>false</makeCustomizationPutChecksumInUserID>
         <makeCustomizationEnableLongLines>false</makeCustomizationEnableLongLines>
         <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>
@@ -1242,7 +1223,7 @@
         <property key="programoptions.preserveuserid" value="false"/>
       </AtmelIceTool>
       <C32>
-        <property key="additional-warnings" value="true"/>
+        <property key="additional-warnings" value="false"/>
         <property key="addresss-attribute-use" value="false"/>
         <property key="enable-app-io" value="false"/>
         <property key="enable-omit-frame-pointer" value="false"/>
@@ -1250,17 +1231,17 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../../../../../../../libraries/abstractions/wifi/include;../../../../../../../vendors/microchip/boards/curiosity_pic32mzef/ports/posix;../../../../../../../freertos_kernel/portable/GCC/ARM_CM7;../../../../../../../libraries/abstractions/wifi/include;../../../../../../../vendors/microchip/boards/curiosity_pic32mzef/ports/posix;../../../../../../../freertos_kernel/portable/GCC/ARM_CM7;../../../../../../../vendors/microchip/boards/same70_xult/ports/pkcs11;../../../../../../../vendors/microchip/boards/same70_xult/ports/posix;../../../../../../../vendors/microchip/harmony3/afr;../../../../../../../vendors/microchip/boards/same70_xult/aws_tests/config_files;../../../../../../../freertos_kernel/portable/GCC/ARM_CM7/r0p1;../../../../../../../vendors/microchip/harmony3/afr/tcpip/src/common;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/portable/NetworkInterface/same70;../../../../../../../freertos_kernel/include;../../../../../../../libraries/c_sdk/standard/common/include;../../../../../../../libraries/freertos_plus/standard/crypto/include;../../../../../../../libraries/freertos_plus/standard/tls/include;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/portable/Compiler/GCC;../../../../../../../libraries/abstractions/pkcs11/include;../../../../../../../tests/include;../../../../../../../libraries/c_sdk/standard/common/include/private;../../../../../../../libraries/abstractions/platform/include;../../../../../../../libraries/abstractions/platform/freertos/include;../../../../../../../libraries/abstractions/secure_sockets/include;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/test;../../../../../../../libraries/freertos_plus/standard/pkcs11/include;../../../../../../../libraries/freertos_plus/aws/ota/test;../../../../../../../libraries/freertos_plus/standard/utils/include;../../../../../../../demos/dev_mode_key_provisioning/include;../../../../../../../libraries/c_sdk/aws/defender/include;../../../../../../../libraries/c_sdk/standard/mqtt/test/access;../../../../../../../libraries/c_sdk/standard/mqtt/include;../../../../../../../libraries/c_sdk/standard/mqtt/src;../../../../../../../libraries/c_sdk/standard/serializer/include;../../../../../../../libraries/c_sdk/aws/shadow/include;../../../../../../../libraries/c_sdk/aws/shadow/src;../../../../../../../libraries/c_sdk/standard/https/test/access;../../../../../../../libraries/c_sdk/standard/https/include;../../../../../../../libraries/c_sdk/standard/https/src;../../../../../../../libraries/freertos_plus/aws/greengrass/test;../../../../../../../libraries/freertos_plus/aws/greengrass/include;../../../../../../../libraries/freertos_plus/aws/greengrass/src;../../../../../../../libraries/freertos_plus/aws/ota/src;../../../../../../../libraries/freertos_plus/aws/ota/include;../../../../../../../libraries/3rdparty/mbedtls/include;../../../../../../../libraries/abstractions/posix/include;../../../../../../../libraries/freertos_plus/standard/freertos_plus_posix/include;../../../../../../../libraries/c_sdk/aws/defender/src/private;../../../../../../../libraries/3rdparty/jsmn;../../../../../../../libraries/3rdparty/pkcs11;../../../../../../../libraries/3rdparty/tinycbor;../../../../../../../libraries/3rdparty/tinycrypt/asn1;../../../../../../../libraries/3rdparty/tinycrypt/lib/include;../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls;../../../../../../../libraries/abstractions/pkcs11/mbedtls;../../../../../../../libraries/3rdparty/unity/src;../../../../../../../libraries/3rdparty/unity/extras/fixture/src;../../../../../../../libraries/3rdparty/http-parser;../src;../src/config/same70_xult_nvm;../src/packs/ATSAME70Q21B_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/arm"/>
+                  value="../src;../src/config/aws_tests;../src/packs/ATSAME70Q21B_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../../../../../../../freertos_kernel/include;../../../../../../../libraries/c_sdk/standard/common/include;../../../../../../../libraries/freertos_plus/standard/crypto/include;../../../../../../../libraries/freertos_plus/standard/tls/include;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/portable/Compiler/GCC;../../../../../../../libraries/abstractions/pkcs11/include;../../../../../../../tests/include;../../../../../../../libraries/c_sdk/standard/common/include/private;../../../../../../../libraries/abstractions/platform/include;../../../../../../../libraries/abstractions/platform/freertos/include;../../../../../../../libraries/abstractions/secure_sockets/include;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/test;../../../../../../../libraries/freertos_plus/standard/pkcs11/include;../../../../../../../libraries/freertos_plus/aws/ota/test;../../../../../../../libraries/freertos_plus/standard/utils/include;../../../../../../../demos/dev_mode_key_provisioning/include;../../../../../../../libraries/c_sdk/aws/defender/include;../../../../../../../libraries/c_sdk/standard/mqtt/test/access;../../../../../../../libraries/c_sdk/standard/mqtt/include;../../../../../../../libraries/c_sdk/standard/mqtt/src;../../../../../../../libraries/c_sdk/standard/serializer/include;../../../../../../../libraries/c_sdk/aws/shadow/include;../../../../../../../libraries/c_sdk/aws/shadow/src;../../../../../../../libraries/c_sdk/standard/https/test/access;../../../../../../../libraries/c_sdk/standard/https/include;../../../../../../../libraries/c_sdk/standard/https/src;../../../../../../../libraries/freertos_plus/aws/greengrass/test;../../../../../../../libraries/freertos_plus/aws/greengrass/include;../../../../../../../libraries/freertos_plus/aws/greengrass/src;../../../../../../../libraries/freertos_plus/aws/ota/src;../../../../../../../libraries/freertos_plus/aws/ota/include;../../../../../../../libraries/3rdparty/mbedtls/include;../../../../../../../libraries/abstractions/posix/include;../../../../../../../libraries/freertos_plus/standard/freertos_plus_posix/include;../../../../../../../libraries/c_sdk/aws/defender/src/private;../../../../../../../libraries/3rdparty/jsmn;../../../../../../../libraries/3rdparty/pkcs11;../../../../../../../libraries/3rdparty/tinycbor;../../../../../../../libraries/3rdparty/tinycrypt/asn1;../../../../../../../libraries/3rdparty/tinycrypt/lib/include;../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls;../../../../../../../libraries/abstractions/pkcs11/mbedtls;../../../../../../../libraries/3rdparty/unity/src;../../../../../../../libraries/3rdparty/unity/extras/fixture/src;../../../../../../../libraries/3rdparty/http_parser;../../../../../../../vendors/microchip/boards/same70_xult/ports/pkcs11;../../../../../../../libraries/abstractions/wifi/include;../../../../../../../vendors/microchip/harmony3/afr;../../../../../../../vendors/microchip/boards/same70_xult/ports/wifi;../../../../../../../vendors/microchip/boards/same70_xult/ports/posix;../../../../../../../vendors/microchip/boards/same70_xult/aws_tests/config_files;../../../../../../../vendors/microchip/boards/same70_xult/aws_tests/application_code;../../../../../../../freertos_kernel/portable/GCC/ARM_CM7/r0p1;../../../../../../../vendors/microchip/harmony3/afr/tcpip/src/common;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/portable/NetworkInterface/same70"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
-        <property key="isolate-each-function" value="true"/>
+        <property key="isolate-each-function" value="false"/>
         <property key="make-warnings-into-errors" value="false"/>
         <property key="optimization-level" value="-O1"/>
-        <property key="place-data-into-section" value="true"/>
+        <property key="place-data-into-section" value="false"/>
         <property key="post-instruction-scheduling" value="default"/>
         <property key="pre-instruction-scheduling" value="default"/>
         <property key="preprocessor-macros"
-                  value="PIC32_USE_ETHERNET;UNITY_INCLUDE_CONFIG_H;AMAZON_FREERTOS_ENABLE_UNIT_TESTS;__free_rtos__"/>
+                  value="UNITY_INCLUDE_CONFIG_H;AMAZON_FREERTOS_ENABLE_UNIT_TESTS;PIC32_USE_ETHERNET;__free_rtos__"/>
         <property key="strict-ansi" value="false"/>
         <property key="support-ansi" value="false"/>
         <property key="toplevel-reordering" value=""/>
@@ -1331,7 +1312,7 @@
         <property key="report-memory-usage" value="false"/>
         <property key="serial-length" value=""/>
         <property key="serial-origin" value=""/>
-        <property key="stack-size" value="10000"/>
+        <property key="stack-size" value="512"/>
         <property key="symbol-stripping" value=""/>
         <property key="trace-symbols" value=""/>
         <property key="warn-section-align" value="false"/>
@@ -1372,6 +1353,7 @@
         <property key="mdtcm" value=""/>
         <property key="mitcm" value=""/>
         <property key="mstacktcm" value="false"/>
+        <property key="omit-pack-options" value="1"/>
         <property key="relaxed-math" value="false"/>
         <property key="save-temps" value="false"/>
         <property key="wpo-lto" value="false"/>
@@ -1379,11 +1361,13 @@
       <EdbgTool>
         <property key="AutoSelectMemRanges" value="auto"/>
         <property key="communication.activationmode" value="nohv"/>
-        <property key="communication.interface" value="jtag"/>
-        <property key="communication.speed" value="${communication.speed.default}"/>
+        <property key="communication.interface" value="swd"/>
+        <property key="communication.speed" value="2.000"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
         <property key="firmware.path"
                   value="Press to browse for a specific firmware version"/>
+        <property key="firmware.toolpack"
+                  value="Press to select which tool pack to use"/>
         <property key="firmware.update.action" value="firmware.update.use.latest"/>
         <property key="memories.aux" value="false"/>
         <property key="memories.bootflash" value="true"/>
@@ -1399,18 +1383,20 @@
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="400000-5fffff"/>
         <property key="poweroptions.powerenable" value="false"/>
-        <property key="programmerToGoFilePath"
-                  value="D:/AFR/amazon-freertos/projects/microchip/same70_xult/mplab/aws_tests/firmware/aws_tests.X/debug/same70_xult_nvm/aws_tests_ptg"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges"
                   value="${memories.dataflash.default}"/>
         <property key="programoptions.preserveeeprom" value="false"/>
         <property key="programoptions.preserveeeprom.ranges" value=""/>
-        <property key="programoptions.preserveprogram.ranges" value="0-2045ffff"/>
+        <property key="programoptions.preserveprogram.ranges" value=""/>
         <property key="programoptions.preserveprogramrange" value="false"/>
         <property key="programoptions.preserveuserid" value="false"/>
         <property key="programoptions.programuserotp" value="false"/>
+        <property key="toolpack.updateoptions"
+                  value="toolpack.updateoptions.uselatestoolpack"/>
+        <property key="toolpack.updateoptions.packversion"
+                  value="Press to select which tool pack to use"/>
         <property key="voltagevalue" value=""/>
       </EdbgTool>
       <PICkit3PlatformTool>

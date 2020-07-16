@@ -4,10 +4,10 @@
 # NOCDDL
 #
 CND_BASEDIR=`pwd`
-# same70_xult_nvm configuration
-CND_ARTIFACT_DIR_same70_xult_nvm=dist/same70_xult_nvm/production
-CND_ARTIFACT_NAME_same70_xult_nvm=aws_tests.X.production.hex
-CND_ARTIFACT_PATH_same70_xult_nvm=dist/same70_xult_nvm/production/aws_tests.X.production.hex
-CND_PACKAGE_DIR_same70_xult_nvm=${CND_DISTDIR}/same70_xult_nvm/package
-CND_PACKAGE_NAME_same70_xult_nvm=awstests.x.tar
-CND_PACKAGE_PATH_same70_xult_nvm=${CND_DISTDIR}/same70_xult_nvm/package/awstests.x.tar
+# aws_tests configuration
+CND_ARTIFACT_DIR_aws_tests=dist/aws_tests/production
+CND_ARTIFACT_NAME_aws_tests=aws_tests.X.production.hex
+CND_ARTIFACT_PATH_aws_tests=dist/aws_tests/production/aws_tests.X.production.hex
+CND_PACKAGE_DIR_aws_tests=${CND_DISTDIR}/aws_tests/package
+CND_PACKAGE_NAME_aws_tests=awstests.x.tar
+CND_PACKAGE_PATH_aws_tests=${CND_DISTDIR}/aws_tests/package/awstests.x.tar

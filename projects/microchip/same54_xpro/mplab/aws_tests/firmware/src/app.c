@@ -121,6 +121,8 @@ void APP_Tasks ( void )
 
             if (appInitialized)
             {
+			            prvWifiConnect();
+
 
                 appData.state = APP_STATE_SERVICE_TASKS;
             }

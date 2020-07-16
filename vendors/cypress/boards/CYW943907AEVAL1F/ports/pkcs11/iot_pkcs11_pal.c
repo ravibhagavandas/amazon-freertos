@@ -1,6 +1,6 @@
 /*
- * Amazon FreeRTOS PKCS #11 PAL for Cypress CYW943907AEVAL1F development kit V1.0.1
- * Copyright (C) 2019 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS PKCS #11 PAL for Cypress CYW943907AEVAL1F development kit V1.0.1
+ * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Copyright 2019, Cypress Semiconductor Corporation or a subsidiary of
  * Cypress Semiconductor Corporation. All Rights Reserved.
@@ -39,7 +39,7 @@
  * @brief Device specific helpers for PKCS11 Interface.
  */
 
-/* Amazon FreeRTOS Includes. */
+/* FreeRTOS Includes. */
 #include "iot_pkcs11.h"
 #include "iot_pkcs11_config.h"
 #include "FreeRTOS.h"
@@ -180,6 +180,12 @@ CK_OBJECT_HANDLE PKCS11_PAL_SaveObject( CK_ATTRIBUTE_PTR pxLabel,
     return xHandle;
 }
 
+
+CK_RV PKCS11_PAL_GetObjectValue( CK_OBJECT_HANDLE xHandle,
+    uint8_t ** ppucData,
+    uint32_t * pulDataSize,
+    CK_BBOOL * pIsPrivate );
+    
 /**
 * @brief Translates a PKCS #11 label into an object handle.
 *
@@ -198,9 +204,24 @@ CK_OBJECT_HANDLE PKCS11_PAL_FindObject( uint8_t * pLabel,
 {
     CK_OBJECT_HANDLE xHandle = eInvalidHandle;
     char * pcFileName = NULL;
+    uint8_t * pucData = NULL;
+    uint32_t xDataSize = 0;
+    CK_BBOOL xIsPrivate = CK_FALSE;
+    CK_RV xResult = CKR_OK;
 
     /* Translate from the PKCS#11 label to local storage file name. */
     prvLabelToFilenameHandle( pLabel, &pcFileName, &xHandle );
+
+    if (xHandle != CK_INVALID_HANDLE)
+    {
+        /* Attempt to read the object to see if something valid is there. */
+        xResult = PKCS11_PAL_GetObjectValue(xHandle, &pucData, &xDataSize, &xIsPrivate );
+
+        if (xResult != CK_INVALID_HANDLE)
+        {
+            xHandle = 0;
+        }
+    }
 
     return xHandle;
 }

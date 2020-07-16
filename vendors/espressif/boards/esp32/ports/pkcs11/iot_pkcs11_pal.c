@@ -1,7 +1,7 @@
 // Copyright 2018 Espressif Systems (Shanghai) PTE LTD
 //
-// Amazon FreeRTOS PKCS #11 PAL for ESP32-DevKitC ESP-WROVER-KIT V1.0.3
-// Copyright (C) 2018 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+// FreeRTOS PKCS #11 PAL for ESP32-DevKitC ESP-WROVER-KIT V1.0.3
+// Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -44,6 +44,7 @@ static const char *TAG = "PKCS11";
 #define pkcs11palFILE_NAME_CLIENT_CERTIFICATE    "P11_Cert"
 #define pkcs11palFILE_NAME_KEY                   "P11_Key"
 #define pkcs11palFILE_CODE_SIGN_PUBLIC_KEY       "P11_CSK"
+#define pkcs11palFILE_JITP_CERTIFICATE           "P11_JITP"
 
 enum eObjectHandles
 {
@@ -51,7 +52,8 @@ enum eObjectHandles
     eAwsDevicePrivateKey = 1,
     eAwsDevicePublicKey,
     eAwsDeviceCertificate,
-    eAwsCodeSigningKey
+    eAwsCodeSigningKey,
+    eAwsJITPCertificate
 };
 /*-----------------------------------------------------------*/
 
@@ -86,6 +88,7 @@ static void initialize_nvs_partition()
 
         esp_err_t ret = nvs_flash_secure_init_partition(NVS_PART_NAME, &cfg);
         if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+            ESP_LOGW(TAG, "Error initialising the NVS partition [%d]. Erasing the partition.", ret);
             ESP_ERROR_CHECK(nvs_flash_erase_partition(NVS_PART_NAME));
             ret = nvs_flash_secure_init_partition(NVS_PART_NAME, &cfg);
         }
@@ -94,6 +97,7 @@ static void initialize_nvs_partition()
 #endif // CONFIG_NVS_ENCRYPTION
         esp_err_t ret = nvs_flash_init_partition(NVS_PART_NAME);
         if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+            ESP_LOGW(TAG, "Error initialising the NVS partition [%d]. Erasing the partition.", ret);
             ESP_ERROR_CHECK(nvs_flash_erase_partition(NVS_PART_NAME));
             ret = nvs_flash_init_partition(NVS_PART_NAME);
         }
@@ -142,6 +146,13 @@ void prvLabelToFilenameHandle( uint8_t * pcLabel,
         {
             *pcFileName = pkcs11palFILE_CODE_SIGN_PUBLIC_KEY;
             *pHandle = eAwsCodeSigningKey;
+        }
+        else if( 0 == memcmp( pcLabel,
+                              pkcs11configLABEL_JITP_CERTIFICATE,
+                              strlen( (char*)pkcs11configLABEL_JITP_CERTIFICATE ) ) )
+        {
+            *pcFileName = pkcs11palFILE_JITP_CERTIFICATE;
+            *pHandle = eAwsJITPCertificate;
         }
         else
         {
@@ -298,6 +309,11 @@ CK_RV PKCS11_PAL_GetObjectValue( CK_OBJECT_HANDLE xHandle,
     else if( xHandle == eAwsCodeSigningKey )
     {
         pcFileName = pkcs11palFILE_CODE_SIGN_PUBLIC_KEY;
+        *pIsPrivate = CK_FALSE;
+    }
+    else if( xHandle == eAwsJITPCertificate )
+    {
+        pcFileName = pkcs11palFILE_JITP_CERTIFICATE;
         *pIsPrivate = CK_FALSE;
     }
     else

@@ -1,6 +1,6 @@
 /*
- * Amazon FreeRTOS V1.4.7
- * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS V1.4.7
+ * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -41,6 +41,8 @@
  *          CONFIG_BLE_NUMERIC_COMPARISON_DEMO_ENABLED
  *          CONFIG_HTTPS_SYNC_DOWNLOAD_DEMO_ENABLED
  *          CONFIG_HTTPS_ASYNC_DOWNLOAD_DEMO_ENABLED
+ *          CONFIG_HTTPS_SYNC_UPLOAD_DEMO_ENABLED
+ *          CONFIG_HTTPS_ASYNC_UPLOAD_DEMO_ENABLED
  *
  *  These defines are used in iot_demo_runner.h for demo selection */
 

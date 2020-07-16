@@ -103,17 +103,20 @@ typedef struct
                                         // pointer to the object here is intended to allow
                                         // multiple MAC objects of the same type
                                         // to share an unique const object table
-    void*               mac_data[0];    // specific MAC object data
+    void*               mac_data[];     // specific MAC object data
 }TCPIP_MAC_DCPT; 
     
 // supported MAC objects
 extern const TCPIP_MAC_OBJECT DRV_ETHMAC_PIC32MACObject;
 extern const TCPIP_MAC_OBJECT DRV_GMAC_Object;
+extern const TCPIP_MAC_OBJECT DRV_EMAC0_Object;
+extern const TCPIP_MAC_OBJECT DRV_EMAC1_Object;
 extern const TCPIP_MAC_OBJECT DRV_ENCX24J600_MACObject;
 extern const TCPIP_MAC_OBJECT WDRV_MRF24WN_MACObject;
-extern const TCPIP_MAC_OBJECT WDRV_WINC1500_MACObject;
+extern const TCPIP_MAC_OBJECT WDRV_WINC_MACObject;
 extern const TCPIP_MAC_OBJECT WDRV_WILC1000_MACObject;
 extern const TCPIP_MAC_OBJECT DRV_PIC32WK_MACObject;
+extern const TCPIP_MAC_OBJECT WDRV_PIC32MZW1_MACObject;
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus

@@ -1,6 +1,6 @@
 /*
- * Amazon FreeRTOS PKCS#11 V1.0.8
- * Copyright (C) 2019 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS PKCS#11 V1.0.8
+ * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -26,7 +26,7 @@
 /**
  * @file iot_pkcs11_softhsm.c
  * @brief Wrapper module for using https://github.com/opendnssec/SoftHSMv2 with
- * Amazon FreeRTOS. This file deviates from the FreeRTOS style standard for
+ * FreeRTOS. This file deviates from the FreeRTOS style standard for
  * some function names and data types in order to maintain compliance with
  * the PKCS #11 standard.
  */
@@ -51,7 +51,7 @@ typedef CK_RV ( * PFN_GET_FUNCTION_LIST )( CK_FUNCTION_LIST_PTR_PTR ppFunctionLi
  * Else, see <a href="https://tiny.amazon.com/wtscrttv">PKCS #11 specification</a>
  * for more information.
  */
-CK_DEFINE_FUNCTION( CK_RV, C_GetFunctionList )( CK_FUNCTION_LIST_PTR_PTR ppxFunctionList )
+CK_DECLARE_FUNCTION( CK_RV, C_GetFunctionList )( CK_FUNCTION_LIST_PTR_PTR ppxFunctionList )
 { /*lint !e9072 It's OK to have different parameter name. */
     CK_RV xResult = 0;
     HMODULE hModule = NULL;

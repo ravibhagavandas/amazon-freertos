@@ -32,6 +32,37 @@
 #define _AWS_OTA_AGENT_CONFIG_H_
 
 /**
+ * @brief The protocol selected for OTA control operations.
+ * This configuration parameter sets the default protocol for all the OTA control
+ * operations like requesting OTA job, updating the job status etc.
+ *
+ * Note - Only MQTT is supported at this time for control operations.
+ */
+#define configENABLED_CONTROL_PROTOCOL       ( OTA_CONTROL_OVER_MQTT )
+/**
+ * @brief The protocol selected for OTA data operations.
+ * This configuration parameter sets the protocols selected for the data operations
+ * like requesting file blocks from the service.
+ *
+ * Note - Both MQTT and HTTP are supported for data transfer. This configuration parameter
+ * can be set to the following -
+ * Enable data over MQTT - ( OTA_DATA_OVER_MQTT )
+ * Enable data over HTTP - ( OTA_DATA_OVER_HTTP)
+ * Enable data over both MQTT & HTTP ( OTA_DATA_OVER_MQTT | OTA_DATA_OVER_HTTP )
+ */
+#define configENABLED_DATA_PROTOCOLS         ( OTA_DATA_OVER_MQTT)
+ /**
+  * @brief The preferred protocol selected for OTA data operations.
+  *
+  * Primary data protocol will be the protocol used for downloading files if more than
+  * one protocol is selected while creating OTA job. Default primary data protocol is MQTT
+  * and the following update here switches to HTTP as primary.
+  *
+  * Note - use OTA_DATA_OVER_HTTP for HTTP as primary data protocol.
+  */
+#define configOTA_PRIMARY_DATA_PROTOCOL     ( OTA_DATA_OVER_MQTT)
+
+/**
  * @brief The number of words allocated to the stack for the OTA agent.
  */
 #define otaconfigSTACK_SIZE                     3584U
@@ -41,7 +72,7 @@
  *
  * 10 bits yields a data block size of 1KB.
  */
-#define otaconfigLOG2_FILE_BLOCK_SIZE           10UL
+#define otaconfigLOG2_FILE_BLOCK_SIZE           9UL
 
 /**
  * @brief Milliseconds to wait for the self test phase to succeed before we force reset.
@@ -59,7 +90,7 @@
 /**
  * @brief The OTA agent task priority. Normally it runs at a low priority.
  */
-#define otaconfigAGENT_PRIORITY                 tskIDLE_PRIORITY
+#define otaconfigAGENT_PRIORITY                 tskIDLE_PRIORITY + 1
 
 /**
  * @brief The maximum allowed length of the thing name used by the OTA agent.
@@ -84,5 +115,7 @@
  *  
  */
  #define otaconfigMAX_NUM_BLOCKS_REQUEST        128U
+#define otaconfigMAX_NUM_REQUEST_MOMENTUM       32U
+#define otaconfigMAX_NUM_OTA_DATA_BUFFERS       2U
  
 #endif /* _AWS_OTA_AGENT_CONFIG_H_ */

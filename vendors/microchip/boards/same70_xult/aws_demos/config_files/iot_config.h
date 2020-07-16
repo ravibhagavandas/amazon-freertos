@@ -24,6 +24,11 @@
 #ifndef IOT_CONFIG_H_
 #define IOT_CONFIG_H_
 
+/* How long the MQTT library will wait for PINGRESPs or PUBACKs. */
+#define IOT_MQTT_RESPONSE_WAIT_MS            ( 10000 ) 
+
+#define IOT_NETWORK_SOCKET_POLL_MS     ( 5000 ) 
+
 /* MQTT demo configuration. */
 #define IOT_DEMO_MQTT_PUBLISH_BURST_COUNT    ( 10 )
 #define IOT_DEMO_MQTT_PUBLISH_BURST_SIZE     ( 2 )
@@ -39,13 +44,14 @@
  * no logs will be printed. */
 #define IOT_LOG_LEVEL_GLOBAL                    IOT_LOG_INFO
 #define IOT_LOG_LEVEL_DEMO                      IOT_LOG_INFO
-#define IOT_LOG_LEVEL_PLATFORM                  IOT_LOG_NONE
+#define IOT_LOG_LEVEL_PLATFORM                  IOT_LOG_INFO
 #define IOT_LOG_LEVEL_NETWORK                   IOT_LOG_INFO
-#define IOT_LOG_LEVEL_TASKPOOL                  IOT_LOG_NONE
+#define IOT_LOG_LEVEL_TASKPOOL                  IOT_LOG_INFO
 #define IOT_LOG_LEVEL_MQTT                      IOT_LOG_INFO
 #define AWS_IOT_LOG_LEVEL_SHADOW                IOT_LOG_INFO
 #define AWS_IOT_LOG_LEVEL_DEFENDER              IOT_LOG_INFO
 
+#define IOT_THREAD_DEFAULT_STACK_SIZE    2048
 /* Platform thread priority. */
 #define IOT_THREAD_DEFAULT_PRIORITY      5
 

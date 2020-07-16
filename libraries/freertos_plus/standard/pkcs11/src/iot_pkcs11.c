@@ -1,6 +1,6 @@
 /*
- * Amazon FreeRTOS PKCS #11 V1.0.0
- * Copyright (C) 2018 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS PKCS #11 V1.0.3
+ * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -23,8 +23,8 @@
  * http://www.FreeRTOS.org
  */
 
-#include "iot_pkcs11.h"
 #include "iot_pkcs11_config.h"
+#include "iot_pkcs11.h"
 #include "FreeRTOS.h"
 
 /* C runtime includes. */
@@ -108,9 +108,12 @@ CK_RV prvOpenSession( CK_SESSION_HANDLE * pxSession,
 }
 
 /*-----------------------------------------------------------*/
+
 #ifdef CreateMutex
     #undef CreateMutex /* This is a workaround because CreateMutex is redefined to CreateMutexW in synchapi.h in windows. :/ */
 #endif
+
+/*-----------------------------------------------------------*/
 
 CK_RV xInitializePKCS11( void )
 {
@@ -135,6 +138,82 @@ CK_RV xInitializePKCS11( void )
 
     return xResult;
 }
+
+/*-----------------------------------------------------------*/
+
+/* Perform common token initialization as per the PKCS #11 standard. For
+ * compatibility reasons, this may include authentication with a static PIN. */
+CK_RV xInitializePkcs11Token( void )
+{
+    CK_RV xResult;
+
+    CK_FUNCTION_LIST_PTR pxFunctionList;
+    CK_SLOT_ID * pxSlotId = NULL;
+    CK_ULONG xSlotCount;
+    CK_FLAGS xTokenFlags = 0;
+    CK_TOKEN_INFO_PTR pxTokenInfo = NULL;
+
+    xResult = C_GetFunctionList( &pxFunctionList );
+
+    if( xResult == CKR_OK )
+    {
+        xResult = xInitializePKCS11();
+    }
+
+    if( ( xResult == CKR_OK ) || ( xResult == CKR_CRYPTOKI_ALREADY_INITIALIZED ) )
+    {
+        xResult = xGetSlotList( &pxSlotId, &xSlotCount );
+    }
+
+    if( ( xResult == CKR_OK ) &&
+        ( NULL != pxFunctionList->C_GetTokenInfo ) &&
+        ( NULL != pxFunctionList->C_InitToken ) )
+    {
+        /* Check if the token requires further initialization. */
+        pxTokenInfo = pvPortMalloc( sizeof( CK_TOKEN_INFO ) );
+
+        if( pxTokenInfo != NULL )
+        {
+            /* We will take the first slot available. If your application
+             * has multiple slots, insert logic for selecting an appropriate
+             * slot here.
+             */
+            xResult = pxFunctionList->C_GetTokenInfo( pxSlotId[ 0 ], pxTokenInfo );
+        }
+        else
+        {
+            xResult = CKR_HOST_MEMORY;
+        }
+
+        if( CKR_OK == xResult )
+        {
+            xTokenFlags = pxTokenInfo->flags;
+        }
+
+        if( ( CKR_OK == xResult ) && !( CKF_TOKEN_INITIALIZED & xTokenFlags ) )
+        {
+            /* Initialize the token if it is not already. */
+            xResult = pxFunctionList->C_InitToken( pxSlotId[ 0 ],
+                                                   ( CK_UTF8CHAR_PTR ) configPKCS11_DEFAULT_USER_PIN,
+                                                   sizeof( configPKCS11_DEFAULT_USER_PIN ) - 1,
+                                                   ( CK_UTF8CHAR_PTR ) "FreeRTOS" );
+        }
+    }
+
+    if( pxTokenInfo != NULL )
+    {
+        vPortFree( pxTokenInfo );
+    }
+
+    if( pxSlotId != NULL )
+    {
+        vPortFree( pxSlotId );
+    }
+
+    return xResult;
+}
+
+/*-----------------------------------------------------------*/
 
 CK_RV xInitializePkcs11Session( CK_SESSION_HANDLE * pxSession )
 {
@@ -231,33 +310,39 @@ CK_RV xFindObjectWithLabelAndClass( CK_SESSION_HANDLE xSession,
         xResult = CKR_ARGUMENTS_BAD;
     }
 
-    /* Get the certificate handle. */
-    if( 0 == xResult )
+    /* Initialize the FindObject state in the underlying PKCS #11 module based
+     * on the search template provided by the caller. */
+    if( CKR_OK == xResult )
     {
         xResult = pxFunctionList->C_FindObjectsInit( xSession, xTemplate, sizeof( xTemplate ) / sizeof( CK_ATTRIBUTE ) );
     }
 
-    if( 0 == xResult )
+    if( CKR_OK == xResult )
     {
         xFindInit = CK_TRUE;
+        /* Find the first matching object, if any. */
         xResult = pxFunctionList->C_FindObjects( xSession,
                                                  pxHandle,
                                                  1,
                                                  &ulCount );
     }
 
-    if( CK_TRUE == xFindInit )
+    if( ( CKR_OK == xResult ) && ( CK_TRUE == xFindInit ) )
     {
+        /* Indicate to the module that the we're done looking for the indicated
+         * type of object. */
         xResult = pxFunctionList->C_FindObjectsFinal( xSession );
     }
 
-    if( ulCount == 0 )
+    if( ( CKR_ARGUMENTS_BAD != xResult ) && ( ulCount == 0 ) )
     {
         *pxHandle = CK_INVALID_HANDLE;
     }
 
     return xResult;
 }
+
+/*-----------------------------------------------------------*/
 
 CK_RV vAppendSHA256AlgorithmIdentifierSequence( uint8_t * x32ByteHashedMessage,
                                                 uint8_t * x51ByteHashOidBuffer )
@@ -270,8 +355,11 @@ CK_RV vAppendSHA256AlgorithmIdentifierSequence( uint8_t * x32ByteHashedMessage,
         xResult = CKR_ARGUMENTS_BAD;
     }
 
-    memcpy( x51ByteHashOidBuffer, xOidSequence, sizeof( xOidSequence ) );
-    memcpy( &x51ByteHashOidBuffer[ sizeof( xOidSequence ) ], x32ByteHashedMessage, 32 );
+    if( xResult == CKR_OK )
+    {
+        memcpy( x51ByteHashOidBuffer, xOidSequence, sizeof( xOidSequence ) );
+        memcpy( &x51ByteHashOidBuffer[ sizeof( xOidSequence ) ], x32ByteHashedMessage, 32 );
+    }
 
     return xResult;
 }

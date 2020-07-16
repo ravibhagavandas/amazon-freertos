@@ -1,6 +1,6 @@
 /*
- * Amazon FreeRTOS V1.1.4
- * Copyright (C) 2018 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS V1.1.4
+ * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -44,19 +44,19 @@
  * both of those, the user PIN is assumed to be used herein for interoperability
  * purposes only, and not as a security feature.
  */
-#define configPKCS11_DEFAULT_USER_PIN    "0000"
+#define configPKCS11_DEFAULT_USER_PIN                      "0000"
 
 /**
  * @brief Maximum length (in characters) for a PKCS #11 CKA_LABEL
  * attribute.
  */
-#define pkcs11configMAX_LABEL_LENGTH     32
+#define pkcs11configMAX_LABEL_LENGTH                       32
 
 /**
  * @brief Maximum number of token objects that can be stored
  * by the PKCS #11 module.
  */
-#define pkcs11configMAX_NUM_OBJECTS      6
+#define pkcs11configMAX_NUM_OBJECTS                        6
 
 /**
  * @brief Set to 1 if a PAL destroy object is implemented.
@@ -127,5 +127,14 @@
  * @see aws_default_root_certificates.h
  */
 #define pkcs11configLABEL_ROOT_CERTIFICATE                 "Root Cert"
+
+/**
+ * @brief Disable ECDSA crypto algorithm (i.e. mechanism) support in this
+ * PKCS #11 module.
+ *
+ * Set this to 1 when the host doesn't support ECDSA for network authentication
+ * (e.g. in the TLS protocol implementation).
+ */
+#define pkcs11configSUPPRESS_ECDSA_MECHANISM               1
 
 #endif /* _AWS_PKCS11_CONFIG_H_ include guard. */

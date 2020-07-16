@@ -1,6 +1,6 @@
 /*
- * Amazon FreeRTOS POSIX V1.1.1
- * Copyright (C) 2019 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS POSIX V1.1.3
+ * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -42,6 +42,7 @@
 typedef void * mqd_t;
 
 /**
+ * @ingroup posix_datatypes_paramstructs
  * @brief Message queue attributes.
  */
 struct mq_attr

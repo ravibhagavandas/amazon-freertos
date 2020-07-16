@@ -1,6 +1,6 @@
 /*
- * Amazon FreeRTOS PKCS #11 V1.0.0
- * Copyright (C) 2018 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS PKCS #11 V1.0.3
+ * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -33,7 +33,7 @@
 #endif
 
 /**
- * @brief Amazon FreeRTOS PKCS#11 Interface.
+ * @brief FreeRTOS PKCS#11 Interface.
  * The following definitions are required by the PKCS#11 standard public
  * headers.
  */
@@ -44,6 +44,8 @@
     #define NULL_PTR    0
 #endif
 
+/* CK_DEFINE_FUNCTION is deprecated.  Implementations should use CK_DECLARE_FUNCTION
+ * instead when possible. */
 #define CK_DEFINE_FUNCTION( returnType, name )             returnType name
 #define CK_DECLARE_FUNCTION( returnType, name )            returnType name
 #define CK_DECLARE_FUNCTION_POINTER( returnType, name )    returnType( CK_PTR name )
@@ -60,6 +62,11 @@
  * by a 32-bit S value, and not ASN.1 encoded.
  */
 #define pkcs11ECDSA_P256_SIGNATURE_LENGTH    64
+
+/**
+ * @brief Key strength for elliptic-curve P-256.
+ */
+#define pkcs11ECDSA_P256_KEY_BITS            256
 
 /**
  * @brief Public exponent for RSA.
@@ -191,6 +198,14 @@ CK_RV xGetSlotList( CK_SLOT_ID ** ppxSlotId,
  *          Note that PKCS #11 error codes are positive.
  */
 CK_RV xInitializePkcs11Session( CK_SESSION_HANDLE * pxSession );
+
+/**
+ *  \brief Initializes a PKCS #11 module and token.
+ *
+ *  \return CKR_OK upon success.  PKCS #11 error code on failure.
+ *          Note that PKCS #11 error codes are positive.
+ */
+CK_RV xInitializePkcs11Token( void );
 
 /**
  * \brief Searches for an object with a matching label and class provided.

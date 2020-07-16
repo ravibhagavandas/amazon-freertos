@@ -23,12 +23,15 @@
  * http://www.FreeRTOS.org
  */
 
+
 #include <stddef.h>                     // Defines NULL
 #include <stdbool.h>                    // Defines true
 #include <stdlib.h>                     // Defines EXIT_FAILURE
+#include "iot_pkcs11_config.h"
+
 #include "definitions.h"                // SYS function prototypes
 
-
+#include "iot_network_types.h"
 /* Standard includes. */
 #include <time.h>
 
@@ -38,7 +41,6 @@
 #include "FreeRTOS_IP.h"
 #include "FreeRTOS_Sockets.h"
 #include "task.h"
-
 /* AWS System includes. */
 #include "aws_application_version.h"
 #include "iot_system_init.h"
@@ -47,22 +49,26 @@
 
 /* Demo application includes. */
 #include "aws_demo_config.h"
-#include "aws_demo.h"
 #include "iot_logging_task.h"
-
-
+#include "iot_wifi.h"
 /* Application version info. */
 #include "aws_application_version.h"
+#include "iot_wifi.h"
+
 
 /* Sleep on this platform */
 #define Sleep( nMs )    vTaskDelay( pdMS_TO_TICKS( nMs ) );
-
+/* Define a name that will be used for LLMNR and NBNS searches. Once running,
+ * you can "ping RTOSDemo" instead of pinging the IP address, which is useful when
+ * using DHCP. */
+#define mainHOST_NAME           "RTOSDemo"
 #define mainDEVICE_NICK_NAME                "Microchip_Demo"
 
 #define mainLOGGING_TASK_STACK_SIZE         ( configMINIMAL_STACK_SIZE * 5 )
 #define mainLOGGING_MESSAGE_QUEUE_LENGTH    ( 128 )
 
-
+void prvWifiConnect( void );
+extern void wifi_winc_crypto_init (void);	
 /**
  * @brief Application task startup hook.
  */
@@ -83,9 +89,10 @@ int main( void )
 {
     /* Perform any hardware initialization that does not require the RTOS to be
      * running.  */
+ 
     prvMiscInitialization();
-
     vApplicationIPInit();
+
     
 
     /* Start the scheduler.  Initialization that requires the OS to be running,
@@ -95,10 +102,55 @@ int main( void )
 
     return 0;
 }
+
+
+void prvWifiConnect( void )
+{
+}
+
+static void CLOCK_DeInitialize(void)
+{
+    // Enable DFLL
+    OSCCTRL_REGS->OSCCTRL_DFLLCTRLA = OSCCTRL_DFLLCTRLA_ENABLE_Msk ;
+
+
+    // Configure CPU to run from DFLL Clock
+    MCLK_REGS->MCLK_CPUDIV = MCLK_CPUDIV_DIV(0x01);
+
+    while((MCLK_REGS->MCLK_INTFLAG & MCLK_INTFLAG_CKRDY_Msk) != MCLK_INTFLAG_CKRDY_Msk)
+    {
+        /* Wait for the Main Clock to be Ready */
+    }
+    GCLK_REGS->GCLK_GENCTRL[0] = GCLK_GENCTRL_DIV(1) | GCLK_GENCTRL_SRC(6) | GCLK_GENCTRL_GENEN_Msk;
+
+    while((GCLK_REGS->GCLK_SYNCBUSY & GCLK_SYNCBUSY_GENCTRL_GCLK0) == GCLK_SYNCBUSY_GENCTRL_GCLK0)
+    {
+        /* wait for the Generator 0 synchronization */
+    }
+    
+    
+    /* Disable FDPLL0 */
+    OSCCTRL_REGS->DPLL[0].OSCCTRL_DPLLCTRLA &= (~OSCCTRL_DPLLCTRLA_ENABLE_Msk)   ;
+
+    while((OSCCTRL_REGS->DPLL[0].OSCCTRL_DPLLSYNCBUSY & OSCCTRL_DPLLSYNCBUSY_ENABLE_Msk) == OSCCTRL_DPLLSYNCBUSY_ENABLE_Msk )
+    {
+        /* Waiting for the DPLL enable synchronization */
+    }
+
+    /* Disable FDPLL1 */
+   OSCCTRL_REGS->DPLL[1].OSCCTRL_DPLLCTRLA &= (~OSCCTRL_DPLLCTRLA_ENABLE_Msk)   ;
+
+    while((OSCCTRL_REGS->DPLL[1].OSCCTRL_DPLLSYNCBUSY & OSCCTRL_DPLLSYNCBUSY_ENABLE_Msk) == OSCCTRL_DPLLSYNCBUSY_ENABLE_Msk )
+    {
+        /* Waiting for the DPLL enable synchronization */
+    }
+}
+
 /*-----------------------------------------------------------*/
 
 static void prvMiscInitialization( void )
 {
+    CLOCK_DeInitialize();
     /* Start logging task. */
     xLoggingTaskInitialize( mainLOGGING_TASK_STACK_SIZE,
                             tskIDLE_PRIORITY,
@@ -109,9 +161,9 @@ static void prvMiscInitialization( void )
 }
 /*-----------------------------------------------------------*/
 
-void vApplicationIPNetworkEventHook( eIPCallbackEvent_t eNetworkEvent )
+void vApplicationIPNetworkEventHook(eIPCallbackEvent_t eNetworkEvent )
 {
-    uint32_t ulIPAddress, ulNetMask, ulGatewayAddress, ulDNSServerAddress;
+        uint32_t ulIPAddress, ulNetMask, ulGatewayAddress, ulDNSServerAddress;
     char cBuffer[ 16 ];
     static BaseType_t xTasksAlreadyCreated = pdFALSE;
 
@@ -151,6 +203,9 @@ void vApplicationIPNetworkEventHook( eIPCallbackEvent_t eNetworkEvent )
         FreeRTOS_printf( ( "DNS Server Address: %s\r\n\r\n\r\n", cBuffer ) );
     }
 }
+
+
+  
 /*-----------------------------------------------------------*/
 
 void vAssertCalled( const char * pcFile,
@@ -231,6 +286,9 @@ void vApplicationIdleHook( void )
         /* do something in the idle task */
         xLastTimeCheck = xTimeNow;
     }
+    
+        
+
 
     /* This is just a trivial example of an idle hook.  It is called on each
      * cycle of the idle task if configUSE_IDLE_HOOK is set to 1 in
@@ -239,5 +297,4 @@ void vApplicationIdleHook( void )
     Sleep( ulMSToSleep );
 }
 /*-----------------------------------------------------------*/
-
 

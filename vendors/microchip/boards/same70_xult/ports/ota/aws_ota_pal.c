@@ -27,8 +27,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 /*lint -e9045 Ignore advisories about non-hidden definitions in header files. */
-
-#include "aws_ota_pal.h"
+#include "aws_iot_ota_pal.h"
 #include "iot_pkcs11.h"
 #include "pkcs11_nvm.h"
 #include "iot_crypto.h"

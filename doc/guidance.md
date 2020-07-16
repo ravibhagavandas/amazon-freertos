@@ -7,19 +7,20 @@ This is about how to use Doxygen to maintain the API documents. There are three 
 
 # Setup Doxygen
 
-[Doxygen Manual](http://www.stack.nl/~dimitri/doxygen/manual/index.html)
+[Doxygen Manual](http://www.doxygen.nl/manual/index.html)
 
-- download and install Doxygen
-- install graphviz
-	- on Mac, run `brew install graphviz`
-	- on Windows: https://graphviz.gitlab.io/_pages/Download/Download_windows.html
-		- Make sure that the directory location of "dot.exe" is added to the system PATH.
-- goto the root directory of "amazon-freertos" (this will be referenced as $ROOT_AFR_DIR)
-	- `cd $ROOT_AFR_DIR`
-- run Doxygen command to generate the documents 
-	- `doxygen doc/config/main`
-	- `doxygen doc/config/secure_sockets`
-- the entry doc is $ROOT_AFR_DIR/doc/output/main/html, open it with browser and verify it looks good
+- Download and install Doxygen
+- Install graphviz
+	- on macOS, run "brew install graphviz"
+	- on Linux, run "sudo apt install graphviz"
+- Go to the root directory of "amazon-freertos" (this will be referenced as $ROOT_AFR_DIR)
+	- cd $ROOT_AFR_DIR
+- Run generate_doc.sh to generate the documents. All warnings will go to $ROOT_AFR_DIR/doxygen_warnings.txt. 
+  ```
+  $ ./doc/generate_doc.sh .
+  ```
+  This script runs on macOS, Linux, and Windows Subsystem for Linux (WSL).
+- The entry document is $ROOT_AFR_DIR/doc/output/main/index.html, open it with a browser and verify that it looks good.
 
 # Add documents for a new library
 
@@ -51,7 +52,7 @@ PROJECT_NAME = "Foo"
 HTML_OUTPUT = foo
 
 # Generate Doxygen tag file for this library.
-GENERATE_TAGFILE = doc/tag/foo.tag
+GENERATE_TAGFILE = doc/output/foo.tag
 
 # Directories containing library source code.
 INPUT = [The source files path]
@@ -62,7 +63,7 @@ FILE_PATTERNS = *.h *.c *.txt
 EXAMPLE_PATH = [The source files path]
 
 # External tag files required by this library.
-TAGFILES = doc/tag/main.tag=../main \
+TAGFILES = doc/output/main.tag=../main \
 ```
 
 ## 2. A separate file to structure the documents
