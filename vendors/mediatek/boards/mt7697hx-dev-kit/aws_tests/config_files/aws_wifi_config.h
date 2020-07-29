@@ -45,6 +45,24 @@
  * @brief Max passphrase length
  */
 #define wificonfigMAX_PASSPHRASE_LEN          ( 32 )
+/**
+ * @brief Min PSK passphrase length
+ */
+#define wificonfigMIN_PASSPHRASE_LEN          ( 8 )
+
+/**
+ * @brief Max PSK passphrase length
+ */
+#define wificonfigMAX_PASSPHRASE_LEN          ( 64 )
+/**
+ * @brief Max WEP key number
+ */
+#define wificonfigMAX_WEPKEYS                 ( 4 )
+
+/**
+ * @brief Max WEP key length
+ */
+#define wificonfigMAX_WEPKEY_LEN              ( 26 )
 
 /**
  * @brief Soft Access point SSID
@@ -65,6 +83,15 @@
  * @brief WiFi semaphore timeout
  */
 #define wificonfigMAX_SEMAPHORE_WAIT_TIME_MS  ( 120000 )
+/**
+ * @brief WiFi event timeout (TODO: tune event timeout)
+ */
+#define wificonfigMAX_EVENT_WAIT_TIME_MS  ( 30000 )
+
+/**
+ * @brief WiFi semaphore timeout (must be longer than event timeout)
+ */
+#define wificonfigMAX_SEMAPHORE_WAIT_TIME_MS  ( 31000 )
 
 /**
  * @brief Soft Access point security
@@ -72,5 +99,10 @@
  * other values are - eWiFiSecurityOpen, eWiFiSecurityWEP, eWiFiSecurityWPA
  */
 #define wificonfigACCESS_POINT_SECURITY       ( eWiFiSecurityWPA2 )
+
+/**
+ * @brief Maximum SSID search count
+ */
+#define wificonfigMAX_SSID_SEARCH_COUNT       ( 10 )
 
 #endif /* _AWS_WIFI_CONFIG_H_ */
