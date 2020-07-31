@@ -67,8 +67,6 @@
 #define mainLOGGING_TASK_STACK_SIZE         ( configMINIMAL_STACK_SIZE * 5 )
 #define mainLOGGING_MESSAGE_QUEUE_LENGTH    ( 128 )
 
-ATCAIfaceCfg cfg_ateccx08a_i2c_default;
-extern ATCAIfaceCfg atecc608a_0_init_data;
 
 void prvWifiConnect( void );
 extern void wifi_winc_crypto_init (void);	
@@ -92,7 +90,6 @@ int main( void )
 {
     /* Perform any hardware initialization that does not require the RTOS to be
      * running.  */
-    cfg_ateccx08a_i2c_default=atecc608a_0_init_data;
  
     prvMiscInitialization();
 

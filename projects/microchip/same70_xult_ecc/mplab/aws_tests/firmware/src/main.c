@@ -54,8 +54,6 @@
 #include "cryptoauthlib.h"
 #include "iot_logging_task.h"
 #include "iot_wifi.h"
-ATCAIfaceCfg cfg_ateccx08a_i2c_default;
-extern ATCAIfaceCfg atecc608a_0_init_data;
 /* Application version info. */
 #include "aws_application_version.h"
 
@@ -150,8 +148,6 @@ int main( void )
 {
     /* Perform any hardware initialization that does not require the RTOS to be
      * running.  */
- 
-    cfg_ateccx08a_i2c_default=atecc608a_0_init_data;
     prvMiscInitialization();
 
     FreeRTOS_IPInit( ucIPAddress,

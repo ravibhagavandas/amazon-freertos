@@ -60,9 +60,6 @@
 extern void initialize_wifi();
 void prvWifiConnect( void );
 extern void wifi_winc_crypto_init (void);	
- ATCAIfaceCfg cfg_ateccx08a_i2c_default;
- extern ATCAIfaceCfg atecc608a_0_init_data;
-
 static void prvMiscInitialization( void );
 
 /* Sleep on this platform */
@@ -151,8 +148,6 @@ int main( void )
 {
     /* Perform any hardware initialization that does not require the RTOS to be
      * running.  */
-    cfg_ateccx08a_i2c_default=atecc608a_0_init_data;
- 
     prvMiscInitialization();
 
 

@@ -1036,7 +1036,7 @@
                   <itemPath>../src/config/aws_tests/library/cryptoauthlib/app/pkcs11/trust_pkcs11_config.c</itemPath>
                 </logicalFolder>
               </logicalFolder>
-              <logicalFolder name="f3" displayName="atcacert" projectFiles="true">
+              <logicalFolder name="f4" displayName="atcacert" projectFiles="true">
                 <itemPath>../src/config/aws_tests/library/cryptoauthlib/atcacert/atcacert.h</itemPath>
                 <itemPath>../src/config/aws_tests/library/cryptoauthlib/atcacert/atcacert_client.c</itemPath>
                 <itemPath>../src/config/aws_tests/library/cryptoauthlib/atcacert/atcacert_client.h</itemPath>
@@ -1053,7 +1053,7 @@
                 <itemPath>../src/config/aws_tests/library/cryptoauthlib/atcacert/atcacert_pem.c</itemPath>
                 <itemPath>../src/config/aws_tests/library/cryptoauthlib/atcacert/atcacert_pem.h</itemPath>
               </logicalFolder>
-              <logicalFolder name="f4" displayName="calib" projectFiles="true">
+              <logicalFolder name="f5" displayName="calib" projectFiles="true">
                 <itemPath>../src/config/aws_tests/library/cryptoauthlib/calib/calib_aes.c</itemPath>
                 <itemPath>../src/config/aws_tests/library/cryptoauthlib/calib/calib_aes_gcm.c</itemPath>
                 <itemPath>../src/config/aws_tests/library/cryptoauthlib/calib/calib_aes_gcm.h</itemPath>
@@ -1086,7 +1086,7 @@
                 <itemPath>../src/config/aws_tests/library/cryptoauthlib/calib/calib_verify.c</itemPath>
                 <itemPath>../src/config/aws_tests/library/cryptoauthlib/calib/calib_write.c</itemPath>
               </logicalFolder>
-              <logicalFolder name="f1" displayName="crypto" projectFiles="true">
+              <logicalFolder name="f2" displayName="crypto" projectFiles="true">
                 <logicalFolder name="f1" displayName="hashes" projectFiles="true">
                   <itemPath>../src/config/aws_tests/library/cryptoauthlib/crypto/hashes/sha1_routines.c</itemPath>
                   <itemPath>../src/config/aws_tests/library/cryptoauthlib/crypto/hashes/sha1_routines.h</itemPath>
@@ -1107,7 +1107,8 @@
                 <itemPath>../src/config/aws_tests/library/cryptoauthlib/crypto/atca_crypto_sw_sha2.c</itemPath>
                 <itemPath>../src/config/aws_tests/library/cryptoauthlib/crypto/atca_crypto_sw_sha2.h</itemPath>
               </logicalFolder>
-              <logicalFolder name="f6" displayName="hal" projectFiles="true">
+              <logicalFolder name="f1" displayName="hal" projectFiles="true">
+                <itemPath>../src/config/aws_tests/library/cryptoauthlib/hal/ATECC608_0.c</itemPath>
                 <itemPath>../src/config/aws_tests/library/cryptoauthlib/hal/atca_hal.c</itemPath>
                 <itemPath>../src/config/aws_tests/library/cryptoauthlib/hal/atca_hal.h</itemPath>
                 <itemPath>../src/config/aws_tests/library/cryptoauthlib/hal/atca_start_config.h</itemPath>
@@ -1116,13 +1117,12 @@
                 <itemPath>../src/config/aws_tests/library/cryptoauthlib/hal/hal_i2c_harmony.c</itemPath>
                 <itemPath>../src/config/aws_tests/library/cryptoauthlib/hal/hal_harmony_init.c</itemPath>
                 <itemPath>../src/config/aws_tests/library/cryptoauthlib/hal/hal_pic32_delay.c</itemPath>
-                <itemPath>../src/config/aws_tests/library/cryptoauthlib/hal/ATECC608A_0.c</itemPath>
               </logicalFolder>
-              <logicalFolder name="f5" displayName="host" projectFiles="true">
+              <logicalFolder name="f6" displayName="host" projectFiles="true">
                 <itemPath>../src/config/aws_tests/library/cryptoauthlib/host/atca_host.c</itemPath>
                 <itemPath>../src/config/aws_tests/library/cryptoauthlib/host/atca_host.h</itemPath>
               </logicalFolder>
-              <logicalFolder name="f2" displayName="jwt" projectFiles="true">
+              <logicalFolder name="f3" displayName="jwt" projectFiles="true">
                 <itemPath>../src/config/aws_tests/library/cryptoauthlib/jwt/atca_jwt.c</itemPath>
                 <itemPath>../src/config/aws_tests/library/cryptoauthlib/jwt/atca_jwt.h</itemPath>
               </logicalFolder>
@@ -1252,7 +1252,7 @@
         <targetDevice>PIC32MZ2048EFM144</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>noID</platformTool>
+        <platformTool></platformTool>
         <languageToolchain>XC32</languageToolchain>
         <languageToolchainVersion>2.41</languageToolchainVersion>
         <platform>3</platform>
@@ -1318,7 +1318,7 @@
         <property key="post-instruction-scheduling" value="default"/>
         <property key="pre-instruction-scheduling" value="default"/>
         <property key="preprocessor-macros"
-                  value="UNITY_INCLUDE_CONFIG_H;AMAZON_FREERTOS_ENABLE_UNIT_TESTS;PIC32_USE_ECC;PIC32_USE_ETHERNET;__free_rtos__"/>
+                  value=";UNITY_INCLUDE_CONFIG_H;AMAZON_FREERTOS_ENABLE_UNIT_TESTS;PIC32_USE_ECC;PIC32_USE_ETHERNET;__free_rtos__"/>
         <property key="strict-ansi" value="false"/>
         <property key="support-ansi" value="false"/>
         <property key="toplevel-reordering" value=""/>
