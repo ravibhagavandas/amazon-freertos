@@ -48,11 +48,6 @@
 #include "iot_test_wifi.h"
 #include "aws_test_wifi_config.h"
 
-/* Wifi ext related includes */
-#include "inet.h"
-#include "sockets.h"
-#include "aws_wifi_ext.h"
-
 /* Testing configurations defintions. */
 
 /* The number of times to retry a WiFi Connect if it fails. */
@@ -176,7 +171,7 @@
 static EventGroupHandle_t xExtWifiEventHandle;
 
 /* Define to test extended Wifi API */
-#define testwifiENABLE_EXT_WIFI_TESTS    1
+#define testwifiENABLE_EXT_WIFI_TESTS    0
 
 /* Maximum loop count waiting client connection */
 #define MAX_LOOP_COUNT 60
@@ -259,45 +254,74 @@ typedef struct
  * parameters. */
 static inline void prvSetClientNetworkParameters( WIFINetworkParams_t * pxClientNetworkParams )
 {
-    pxClientNetworkParams->pcSSID = clientcredentialWIFI_SSID;
-    pxClientNetworkParams->ucSSIDLength = sizeof( clientcredentialWIFI_SSID );
-    pxClientNetworkParams->pcPassword = clientcredentialWIFI_PASSWORD;
-    pxClientNetworkParams->ucPasswordLength =
-        sizeof( clientcredentialWIFI_PASSWORD );
+    const char *pcSSID = clientcredentialWIFI_SSID;
+    size_t xSSIDLength = strlen( pcSSID );
+    const char *pcPassword = clientcredentialWIFI_PASSWORD;
+    size_t xPasswordLength = strlen( pcPassword );
+    
+    memcpy( pxClientNetworkParams->ucSSID, pcSSID,  xSSIDLength );
+    pxClientNetworkParams->ucSSIDLength = xSSIDLength;
     pxClientNetworkParams->xSecurity = clientcredentialWIFI_SECURITY;
+    
+    if( ( pxClientNetworkParams->xSecurity == eWiFiSecurityWPA2 ) || 
+        ( pxClientNetworkParams->xSecurity == eWiFiSecurityWPA ) )
+    {
+        memcpy( pxClientNetworkParams->xPassword.xWPA.cPassphrase, pcPassword, xPasswordLength );
+        pxClientNetworkParams->xPassword.xWPA.ucLength = xPasswordLength;
+    }
 }
 
 /* Set network parameters for this test's defined parameters. */
 static inline void prvSetTestNetworkParameters( WIFINetworkParams_t * pxTestNetworkParams )
 {
-    pxTestNetworkParams->pcSSID = testwifiWIFI_SSID;
-    pxTestNetworkParams->ucSSIDLength = sizeof( testwifiWIFI_SSID );
-    pxTestNetworkParams->pcPassword = testwifiWIFI_PASSWORD;
-    pxTestNetworkParams->ucPasswordLength = sizeof( testwifiWIFI_PASSWORD );
+    const char *pcSSID = testwifiWIFI_SSID;
+    size_t xSSIDLength = strlen( pcSSID );
+    const char *pcPassword = testwifiWIFI_PASSWORD;
+    size_t xPasswordLength = strlen( pcPassword );
+    
+    memcpy( pxTestNetworkParams->ucSSID, pcSSID,  xSSIDLength );
+    pxTestNetworkParams->ucSSIDLength = xSSIDLength;
     pxTestNetworkParams->xSecurity = testwifiWIFI_SECURITY;
+    
+    if( ( pxTestNetworkParams->xSecurity == eWiFiSecurityWPA2 ) || 
+        ( pxTestNetworkParams->xSecurity == eWiFiSecurityWPA ) )
+    {
+        memcpy( pxTestNetworkParams->xPassword.xWPA.cPassphrase, pcPassword, xPasswordLength );
+        pxTestNetworkParams->xPassword.xWPA.ucLength = xPasswordLength;
+    }
 }
 
 /* Set the SoftAP network parameters for WIFI_ConfigureAP() test. */
 static inline void prvSetSoftAPNetworkParameters( WIFINetworkParams_t * pxSoftAPNetworkParams )
 {
-    pxSoftAPNetworkParams->pcSSID = wificonfigACCESS_POINT_SSID_PREFIX;
-    pxSoftAPNetworkParams->ucSSIDLength =
-        sizeof( wificonfigACCESS_POINT_SSID_PREFIX );
-    pxSoftAPNetworkParams->pcPassword = wificonfigACCESS_POINT_PASSKEY;
-    pxSoftAPNetworkParams->ucPasswordLength =
-        sizeof( wificonfigACCESS_POINT_PASSKEY );
+
+    const char *pcSSID = wificonfigACCESS_POINT_SSID_PREFIX;
+    size_t xSSIDLength = strlen( pcSSID );
+    const char *pcPassword = wificonfigACCESS_POINT_PASSKEY;
+    size_t xPasswordLength = strlen( pcPassword );
+    
+    memcpy( pxSoftAPNetworkParams->ucSSID, pcSSID,  xSSIDLength );
+    pxSoftAPNetworkParams->ucSSIDLength = xSSIDLength;
     pxSoftAPNetworkParams->xSecurity = wificonfigACCESS_POINT_SECURITY;
-    pxSoftAPNetworkParams->cChannel = wificonfigACCESS_POINT_CHANNEL;
+    
+    if( ( pxSoftAPNetworkParams->xSecurity == eWiFiSecurityWPA2 ) || 
+        ( pxSoftAPNetworkParams->xSecurity == eWiFiSecurityWPA ) )
+    {
+        memcpy( pxSoftAPNetworkParams->xPassword.xWPA.cPassphrase, pcPassword, xPasswordLength );
+        pxSoftAPNetworkParams->xPassword.xWPA.ucLength = xPasswordLength;
+    }
+    pxSoftAPNetworkParams->ucChannel = wificonfigACCESS_POINT_CHANNEL;
+
 }
 
 /* Set the network profile for WIFI_NetworkGet() and WIFI_NetworkAdd() tests. */
 static inline void prvSetNetworkProfile( WIFINetworkProfile_t * pxNetworkProfile )
 {
-    pxNetworkProfile->ucSSIDLength = sizeof( clientcredentialWIFI_SSID );
-    strncpy( pxNetworkProfile->cSSID, clientcredentialWIFI_SSID,
+    pxNetworkProfile->ucSSIDLength = strlen( clientcredentialWIFI_SSID );
+    memcpy( pxNetworkProfile->ucSSID, clientcredentialWIFI_SSID,
              pxNetworkProfile->ucSSIDLength );
-    pxNetworkProfile->ucPasswordLength = sizeof( clientcredentialWIFI_PASSWORD );
-    strncpy( pxNetworkProfile->cPassword, clientcredentialWIFI_PASSWORD,
+    pxNetworkProfile->ucPasswordLength = strlen( clientcredentialWIFI_PASSWORD );
+    memcpy( pxNetworkProfile->cPassword, clientcredentialWIFI_PASSWORD,
              pxNetworkProfile->ucPasswordLength );
     pxNetworkProfile->xSecurity = clientcredentialWIFI_SECURITY;
 }
@@ -328,7 +352,7 @@ static BaseType_t prvConnectAPTest( void )
     {
         vTaskDelay( testwifiCONNECTION_DELAY );
 
-        if( pdTRUE != WIFI_IsConnected() )
+        if( pdTRUE != WIFI_IsConnected( NULL ) )
         {
             configPRINTF( ( "Wi-Fi is not connected.\r\n" ) );
             xResult = pdFAIL;
@@ -614,8 +638,8 @@ TEST_SETUP( Full_WiFi )
 
     for( lI = 0; lI < cScanSize; lI++ )
     {
-        configPRINTF( ( "    %s: %d\r\n",
-                        xScanResults[ lI ].cSSID, xScanResults[ lI ].cRSSI ) );
+        configPRINTF( ( "    %.*s: %d\r\n",
+                        xScanResults[lI].ucSSIDLength,  ( char * ) xScanResults[ lI ].ucSSID, xScanResults[ lI ].cRSSI ) );
     }
 
     configPRINTF(
@@ -855,11 +879,7 @@ TEST( Full_WiFi, AFQP_WiFiConnectionLoop )
     WIFIReturnCode_t xWiFiStatus;
     int16_t sConnectLoop;
 
-    xNetworkParams.pcSSID = clientcredentialWIFI_SSID;
-    xNetworkParams.ucSSIDLength = sizeof( clientcredentialWIFI_SSID );
-    xNetworkParams.pcPassword = clientcredentialWIFI_PASSWORD;
-    xNetworkParams.ucPasswordLength = sizeof( clientcredentialWIFI_PASSWORD );
-    xNetworkParams.xSecurity = clientcredentialWIFI_SECURITY;
+    prvSetClientNetworkParameters( &xNetworkParams );
 
     /* Try connect and disconnect several times. Reconnect after the test. */
     if( TEST_PROTECT() )
@@ -894,10 +914,10 @@ TEST( Full_WiFi, AFQP_WiFiConnectionLoop )
  */
 TEST( Full_WiFi, AFQP_WiFiGetIP )
 {
-    uint8_t ucIPAddr[ 4 ];
     WIFIReturnCode_t xWiFiStatus;
+    WIFIIPConfiguration_t xIPConfiguration;
 
-    memset( ucIPAddr, 0, sizeof( ucIPAddr ) );
+    memset( &xIPConfiguration, 0, sizeof( xIPConfiguration ) );
 
     /* Connect to the AP. */
     TEST_ASSERT( prvConnectAPTest() == pdPASS );
@@ -905,12 +925,12 @@ TEST( Full_WiFi, AFQP_WiFiGetIP )
     if( TEST_PROTECT() )
     {
         /* Acquire the IP address. */
-        xWiFiStatus = WIFI_GetIP( ucIPAddr );
+        xWiFiStatus = WIFI_GetIPInfo( &xIPConfiguration );
 
         TEST_WIFI_ASSERT_REQUIRED_API( eWiFiSuccess == xWiFiStatus, xWiFiStatus );
 
         /* Assert that the IP address is found. */
-        TEST_ASSERT( *( ( uint32_t * ) ucIPAddr ) != 0 );
+        TEST_ASSERT( xIPConfiguration.xIPAddress.ulAddress[0] != 0 );
     }
     else
     {
@@ -929,7 +949,7 @@ TEST( Full_WiFi, AFQP_WIFI_GetIP_NullParameters )
 
     if( TEST_PROTECT() )
     {
-        xWiFiStatus = WIFI_GetIP( NULL );
+        xWiFiStatus = WIFI_GetIPInfo( NULL );
 
         TEST_WIFI_ASSERT_REQUIRED_API( xWiFiStatus != eWiFiSuccess, xWiFiStatus );
     }
@@ -1179,11 +1199,11 @@ TEST( Full_WiFi, AFQP_WiFiNetworkAddGetDelete )
          * just added. */
         if( xWiFiStatus == eWiFiSuccess )
         {
-            TEST_ASSERT_EQUAL_INT32( sizeof( clientcredentialWIFI_SSID ),
+            TEST_ASSERT_EQUAL_INT32( strlen( clientcredentialWIFI_SSID ),
                                      xNetworkProfile.ucSSIDLength );
             TEST_ASSERT_EQUAL_INT32(
-                0, strncmp( xNetworkProfile.cSSID, clientcredentialWIFI_SSID,
-                            sizeof( clientcredentialWIFI_SSID ) ) );
+                0, strncmp( ( char * ) xNetworkProfile.ucSSID, clientcredentialWIFI_SSID,
+                            strlen( clientcredentialWIFI_SSID ) ) );
             TEST_ASSERT_EQUAL_INT32( clientcredentialWIFI_SECURITY,
                                      xNetworkProfile.xSecurity );
         }
@@ -1379,7 +1399,7 @@ TEST( Full_WiFi, AFQP_WIFI_NetworkAdd_AddManyNetworks )
             /* Create the network SSID to verify was added. */
             lNetworkSSIDLength = sprintf( cNetworkSSID, "network%d", usNetworkIndex );
             cNetworkSSID[ lNetworkSSIDLength ] = '\0';
-            strcpy( xNetworkProfile.cSSID, cNetworkSSID );
+            strcpy( ( char* ) xNetworkProfile.ucSSID, cNetworkSSID );
             xNetworkProfile.ucSSIDLength = lNetworkSSIDLength;
 
             /* Add the network profile. */
@@ -1409,7 +1429,7 @@ TEST( Full_WiFi, AFQP_WIFI_NetworkAdd_AddManyNetworks )
                 /* Verify the network profile SSID. The returned network SSID may not be
                  * null terminated. */
                 lCompResults =
-                    strncmp( xNetworkProfile.cSSID, cNetworkSSID, lNetworkSSIDLength );
+                    strncmp( ( char * ) xNetworkProfile.ucSSID, cNetworkSSID, lNetworkSSIDLength );
                 TEST_ASSERT_EQUAL_INT32( 0, lCompResults );
             }
         }
@@ -1572,7 +1592,8 @@ TEST( Full_WiFi, AFQP_WIFI_ConfigureAP_NullParameters )
 
     /* Null SSID */
 
-    xNetworkParams.pcSSID = NULL;
+    memset( xNetworkParams.ucSSID, 0x00, sizeof( xNetworkParams.ucSSID ) );
+    xNetworkParams.ucSSIDLength = 0;
 
     if( TEST_PROTECT() )
     {
@@ -1581,9 +1602,9 @@ TEST( Full_WiFi, AFQP_WIFI_ConfigureAP_NullParameters )
     }
 
     /* Null password. */
-
-    xNetworkParams.pcSSID = wificonfigACCESS_POINT_SSID_PREFIX;
-    xNetworkParams.pcPassword = NULL;
+    prvSetSoftAPNetworkParameters( &xNetworkParams );
+    memset( xNetworkParams.xPassword.xWPA.cPassphrase, 0x00, sizeof( xNetworkParams.xPassword.xWPA.cPassphrase ) );
+    xNetworkParams.xPassword.xWPA.ucLength = 0;
 
     if( TEST_PROTECT() )
     {
@@ -1632,19 +1653,15 @@ TEST( Full_WiFi, AFQP_WIFI_ConfigureAP_InvalidSecurityType )
  */
 TEST( Full_WiFi, AFQP_WIFI_ConfigureAP_MaxSSIDLengthExceeded )
 {
-    char cLengthExceedingSSID[ wificonfigMAX_SSID_LEN + 2 ];
     WIFINetworkParams_t xNetworkParams = { 0 };
     WIFIReturnCode_t xWiFiStatus;
 
     /* Set the network parameters with valid parameters */
     prvSetSoftAPNetworkParameters( &xNetworkParams );
 
-    /* Set some SSID that exceeds the max length. */
-    memset( cLengthExceedingSSID, 'x', wificonfigMAX_SSID_LEN + 1 );
-    cLengthExceedingSSID[ wificonfigMAX_SSID_LEN + 1 ] = '\0';
-
-    xNetworkParams.pcSSID = cLengthExceedingSSID;
-    xNetworkParams.ucSSIDLength = sizeof( cLengthExceedingSSID );
+    /* Make sure ssid is not null terminated and set the length to greater than max length. */
+    memset( xNetworkParams.ucSSID, 'x', sizeof( xNetworkParams.ucSSID ) );
+    xNetworkParams.ucSSIDLength = wificonfigMAX_SSID_LEN + 1;
 
     if( TEST_PROTECT() )
     {
@@ -1659,19 +1676,16 @@ TEST( Full_WiFi, AFQP_WIFI_ConfigureAP_MaxSSIDLengthExceeded )
  */
 TEST( Full_WiFi, AFQP_WIFI_ConfigureAP_MaxPasswordLengthExceeded )
 {
-    char cLengthExceedingPassword[ wificonfigMAX_PASSPHRASE_LEN + 2 ];
+
     WIFINetworkParams_t xNetworkParams = { 0 };
     WIFIReturnCode_t xWiFiStatus;
 
     /* Set the network parameters with valid parameters */
     prvSetSoftAPNetworkParameters( &xNetworkParams );
 
-    /* Set a password that exceeds the max length. */
-    memset( cLengthExceedingPassword, 'x', wificonfigMAX_PASSPHRASE_LEN + 1 );
-    cLengthExceedingPassword[ wificonfigMAX_PASSPHRASE_LEN + 1 ] = '\0';
-
-    xNetworkParams.pcPassword = cLengthExceedingPassword;
-    xNetworkParams.ucPasswordLength = sizeof( cLengthExceedingPassword );
+    /* Make sure password is not null terminated and set the length to greater than max length. */
+    memset( xNetworkParams.xPassword.xWPA.cPassphrase, 'x', sizeof( xNetworkParams.xPassword.xWPA.cPassphrase ) );
+    xNetworkParams.xPassword.xWPA.ucLength = wificonfigMAX_PASSPHRASE_LEN + 1;
 
     if( TEST_PROTECT() )
     {
@@ -1710,7 +1724,7 @@ TEST( Full_WiFi, AFQP_WIFI_ConfigureAP_ZeroLengthPassword )
     prvSetSoftAPNetworkParameters( &xNetworkParams );
 
     /* Set zero length password parameter */
-    xNetworkParams.ucPasswordLength = 0;
+    xNetworkParams.xPassword.xWPA.ucLength = 0;
 
     if( TEST_PROTECT() )
     {
@@ -1734,7 +1748,7 @@ TEST( Full_WiFi, AFQP_WIFI_ConfigureAP_ConfigureAllChannels )
     {
         for( ulIndex = 0; ulIndex < testwifiMAX_CHANNEL_NUMBER; ulIndex++ )
         {
-            xNetworkParams.cChannel = ulIndex;
+            xNetworkParams.ucChannel = ulIndex;
             WIFI_ConfigureAP( &xNetworkParams );
         }
     }
@@ -1821,7 +1835,7 @@ TEST( Full_WiFi, AFQP_WiFiIsConnected )
 
         vTaskDelay( testwifiCONNECTION_DELAY );
 
-        xIsConnected = WIFI_IsConnected();
+        xIsConnected = WIFI_IsConnected( NULL );
         TEST_WIFI_ASSERT_REQUIRED_API( pdTRUE == xIsConnected, xWiFiStatus );
 
         /* Confirm if we are truly connected with the round-trip test. */
@@ -1832,7 +1846,7 @@ TEST( Full_WiFi, AFQP_WiFiIsConnected )
 
         vTaskDelay( testwifiCONNECTION_DELAY );
 
-        xIsConnected = WIFI_IsConnected();
+        xIsConnected = WIFI_IsConnected( NULL );
         TEST_WIFI_ASSERT_REQUIRED_API( pdFALSE == xIsConnected, xIsConnected );
 
         TEST_ASSERT( prvRoundTripTest() != pdPASS );
@@ -1861,7 +1875,10 @@ TEST( Full_WiFi, AFQP_WIFI_ConnectAP_NullParameters )
 
     /* Null SSID */
     prvSetClientNetworkParameters( &xNetworkParams );
-    xNetworkParams.pcSSID = NULL;
+    
+    /* Set SSID is to all zeroed buffer with a zero length. */
+    memset( xNetworkParams.ucSSID, 0x00, sizeof( xNetworkParams.ucSSID ) );
+    xNetworkParams.ucSSIDLength = 0;
 
     if( TEST_PROTECT() )
     {
@@ -1871,7 +1888,8 @@ TEST( Full_WiFi, AFQP_WIFI_ConnectAP_NullParameters )
 
     /* Test a null password when it is needed. */
     prvSetClientNetworkParameters( &xNetworkParams );
-    xNetworkParams.pcPassword = NULL;
+    memset( xNetworkParams.xPassword.xWPA.cPassphrase, 0x00, sizeof( xNetworkParams.xPassword.xWPA.cPassphrase ) );
+    xNetworkParams.xPassword.xWPA.ucLength = 0;
 
     if( TEST_PROTECT() )
     {
@@ -1906,15 +1924,15 @@ TEST( Full_WiFi, AFQP_WIFI_ConnectAP_InvalidPassword )
     prvSetClientNetworkParameters( &xNetworkParams );
 
     /* Set the invalid password. */
-    xNetworkParams.pcPassword = testwifiINVALID_WIFI_PASSWORD;
-    xNetworkParams.ucPasswordLength = sizeof( testwifiINVALID_WIFI_PASSWORD );
+    strncpy( xNetworkParams.xPassword.xWPA.cPassphrase, testwifiINVALID_WIFI_PASSWORD, sizeof( xNetworkParams.xPassword.xWPA.cPassphrase ) );
+    xNetworkParams.xPassword.xWPA.ucLength = strlen( testwifiINVALID_WIFI_PASSWORD );
 
     if( TEST_PROTECT() )
     {
         xWiFiStatus = WIFI_ConnectAP( &xNetworkParams );
     }
 
-    xIsConnected = WIFI_IsConnected();
+    xIsConnected = WIFI_IsConnected( NULL );
 
     if( ( xIsConnected == pdFALSE ) && ( xWiFiStatus == eWiFiSuccess ) )
     {
@@ -1939,15 +1957,15 @@ TEST( Full_WiFi, AFQP_WIFI_ConnectAP_InvalidSSID )
     prvSetClientNetworkParameters( &xNetworkParams );
 
     /* Set the invalid SSID. */
-    xNetworkParams.pcSSID = testwifiINVALID_WIFI_SSID;
-    xNetworkParams.ucSSIDLength = sizeof( testwifiINVALID_WIFI_SSID );
+    strncpy( ( char * ) xNetworkParams.ucSSID,  testwifiINVALID_WIFI_SSID, sizeof( xNetworkParams.ucSSID ) );
+    xNetworkParams.ucSSIDLength = strlen( testwifiINVALID_WIFI_SSID );
 
     if( TEST_PROTECT() )
     {
         xWiFiStatus = WIFI_ConnectAP( &xNetworkParams );
     }
 
-    xIsConnected = WIFI_IsConnected();
+    xIsConnected = WIFI_IsConnected( NULL );
 
     if( ( xIsConnected == pdFALSE ) && ( xWiFiStatus == eWiFiSuccess ) )
     {
@@ -2007,7 +2025,7 @@ TEST( Full_WiFi, AFQP_WIFI_ConnectAP_ConnectAllChannels )
     {
         for( ulIndex = 0; ulIndex < testwifiMAX_CHANNEL_NUMBER; ulIndex++ )
         {
-            xNetworkParams.cChannel = ulIndex;
+            xNetworkParams.ucChannel = ulIndex;
             WIFI_ConnectAP( &xNetworkParams );
         }
     }
@@ -2022,24 +2040,20 @@ TEST( Full_WiFi, AFQP_WIFI_ConnectAP_MaxSSIDLengthExceeded )
     WIFINetworkParams_t xNetworkParams = { 0 };
     WIFIReturnCode_t xWiFiStatus = eWiFiFailure;
     BaseType_t xIsConnected;
-    char cLengthExceedingSSID[ wificonfigMAX_SSID_LEN + 2 ];
 
     /* Set the valid client parameters. */
     prvSetClientNetworkParameters( &xNetworkParams );
 
-    memset( cLengthExceedingSSID, 'x', wificonfigMAX_SSID_LEN + 1 );
-    cLengthExceedingSSID[ wificonfigMAX_SSID_LEN + 1 ] = '\0';
-
-    /* Set the SSID exceeding the max length */
-    xNetworkParams.pcSSID = cLengthExceedingSSID;
-    xNetworkParams.ucSSIDLength = sizeof( cLengthExceedingSSID );
+    /* Ensure SSID is not null terminated and set the length to greater than max length */
+    memset( xNetworkParams.ucSSID, 'x', sizeof( xNetworkParams.ucSSID ) );
+    xNetworkParams.ucSSIDLength = wificonfigMAX_SSID_LEN + 1;
 
     if( TEST_PROTECT() )
     {
         xWiFiStatus = WIFI_ConnectAP( &xNetworkParams );
     }
 
-    xIsConnected = WIFI_IsConnected();
+    xIsConnected = WIFI_IsConnected( NULL );
 
     if( ( xIsConnected == pdFALSE ) && ( xWiFiStatus == eWiFiSuccess ) )
     {
@@ -2060,24 +2074,20 @@ TEST( Full_WiFi, AFQP_WIFI_ConnectAP_MaxPasswordLengthExceeded )
     WIFINetworkParams_t xNetworkParams = { 0 };
     WIFIReturnCode_t xWiFiStatus = eWiFiFailure;
     BaseType_t xIsConnected;
-    char cLengthExceedingPassword[ wificonfigMAX_PASSPHRASE_LEN + 2 ];
 
     /* Set the valid client parameters. */
     prvSetClientNetworkParameters( &xNetworkParams );
 
-    /* Set the password exceeding the max length. */
-    memset( cLengthExceedingPassword, 'x', wificonfigMAX_PASSPHRASE_LEN + 1 );
-    cLengthExceedingPassword[ wificonfigMAX_PASSPHRASE_LEN + 1 ] = '\0';
-
-    xNetworkParams.pcPassword = cLengthExceedingPassword;
-    xNetworkParams.ucPasswordLength = sizeof( cLengthExceedingPassword );
+    /* Ensure password is not null terminated and set the length to greater than max length */
+    memset( xNetworkParams.xPassword.xWPA.cPassphrase, 'x', sizeof( xNetworkParams.xPassword.xWPA.cPassphrase ) );
+    xNetworkParams.xPassword.xWPA.ucLength = wificonfigMAX_PASSPHRASE_LEN + 1;
 
     if( TEST_PROTECT() )
     {
         xWiFiStatus = WIFI_ConnectAP( &xNetworkParams );
     }
 
-    xIsConnected = WIFI_IsConnected();
+    xIsConnected = WIFI_IsConnected( NULL );
 
     if( ( xIsConnected == pdFALSE ) && ( xWiFiStatus == eWiFiSuccess ) )
     {
@@ -2121,7 +2131,7 @@ TEST( Full_WiFi, AFQP_WIFI_ConnectAP_ZeroLengthPassword )
     /* Set the valid client parameters. */
     prvSetClientNetworkParameters( &xNetworkParams );
 
-    xNetworkParams.ucPasswordLength = 0;
+    xNetworkParams.xPassword.xWPA.ucLength = 0;
 
     if( TEST_PROTECT() )
     {
@@ -2143,7 +2153,7 @@ TEST( Full_WiFi, AFQP_WIFI_ConnectAP_PasswordLengthLess )
     prvSetClientNetworkParameters( &xNetworkParams );
 
     /* Set a password less. */
-    xNetworkParams.ucPasswordLength = sizeof( clientcredentialWIFI_PASSWORD ) - 1;
+    xNetworkParams.xPassword.xWPA.ucLength = strlen( clientcredentialWIFI_PASSWORD ) - 1;
 
     if( TEST_PROTECT() )
     {
@@ -2189,16 +2199,16 @@ TEST( Full_WiFi, AFQP_WiFiConnectMultipleAP )
             /* TODO: Check for could not connect error code. This error code does not
              * exist yet. */
             snprintf( cMessageString, xMessageStringLength,
-                      "Could not connect to %s on iteration %d after %d "
+                      "Could not connect to %.*s on iteration %d after %d "
                       "retries. Status was %d.",
-                      xTestNetworkParams.pcSSID, ( int ) ulIndex, ( int ) xMaxRetries,
+                      xTestNetworkParams.ucSSIDLength, ( char *) xTestNetworkParams.ucSSID, ( int ) ulIndex, ( int ) xMaxRetries,
                       eWiFiStatus );
             TEST_WIFI_ASSERT_REQUIRED_API_MSG(
                 eWiFiStatus == eWiFiSuccess, eWiFiStatus, cMessageString );
 
             vTaskDelay( testwifiCONNECTION_DELAY );
 
-            xIsConnected = WIFI_IsConnected();
+            xIsConnected = WIFI_IsConnected( NULL );
             TEST_WIFI_ASSERT_REQUIRED_API_MSG(
                 pdTRUE == xIsConnected, xIsConnected,
                 ( "API is violated, we must connect to the new network." ) );
@@ -2211,9 +2221,9 @@ TEST( Full_WiFi, AFQP_WiFiConnectMultipleAP )
             if( xRoundTripResults == pdFAIL )
             {
                 snprintf( cMessageString, xMessageStringLength,
-                          "Wi-Fi API claims to be connected to %s, but round "
+                          "Wi-Fi API claims to be connected to %.*s, but round "
                           "trip test on iteration %d failed.\r\n",
-                          xTestNetworkParams.pcSSID, ( int ) ulIndex );
+                          xTestNetworkParams.ucSSIDLength, ( char *) xTestNetworkParams.ucSSID, ( int ) ulIndex );
                 TEST_FAIL_MESSAGE( cMessageString );
             }
 
@@ -2221,16 +2231,17 @@ TEST( Full_WiFi, AFQP_WiFiConnectMultipleAP )
                                eWiFiSuccess, ulInitialRetryPeriodMs, xMaxRetries );
 
             snprintf( cMessageString, xMessageStringLength,
-                      "Could not connect to %s on iteration %d after %d "
+                      "Could not connect to %.*s on iteration %d after %d "
                       "retries. Status was %d.",
-                      xClientNetworkParams.pcSSID, ( int ) ulIndex, ( int ) xMaxRetries,
+                      xTestNetworkParams.ucSSIDLength, ( char *) xTestNetworkParams.ucSSID,
+                      ( int ) ulIndex, ( int ) xMaxRetries,
                       eWiFiStatus );
             TEST_WIFI_ASSERT_REQUIRED_API_MSG(
                 eWiFiStatus == eWiFiSuccess, eWiFiStatus, cMessageString );
 
             vTaskDelay( testwifiCONNECTION_DELAY );
 
-            xIsConnected = WIFI_IsConnected();
+            xIsConnected = WIFI_IsConnected( NULL );
             TEST_WIFI_ASSERT_REQUIRED_API_MSG(
                 pdTRUE == xIsConnected, xIsConnected,
                 ( "API is violated, we must connect to the new network." ) );
@@ -2243,9 +2254,9 @@ TEST( Full_WiFi, AFQP_WiFiConnectMultipleAP )
             if( xRoundTripResults == pdFAIL )
             {
                 snprintf( cMessageString, xMessageStringLength,
-                          "Wi-Fi API claims to be connected to %s, but round "
+                          "Wi-Fi API claims to be connected to %.*s, but round "
                           "trip test on iteration %lu failed.\r\n",
-                          xClientNetworkParams.pcSSID,
+                          xTestNetworkParams.ucSSIDLength, ( char *) xTestNetworkParams.ucSSID,
                           ( long unsigned int ) ulIndex );
                 TEST_FAIL_MESSAGE( cMessageString );
             }
@@ -2290,9 +2301,9 @@ static void prvConnectionTask( void * pvParameters )
         {
             snprintf( pxTaskParams->cStatusMsg,
                       sizeof( pxTaskParams->cStatusMsg ),
-                      "Task %d failed to connect to the AP %s with error code %d.\r\n",
+                      "Task %d failed to connect to the AP %.*s with error code %d.\r\n",
                       pxTaskParams->usTaskId,
-                      xTestNetworkParams.pcSSID,
+                      xTestNetworkParams.ucSSIDLength, ( char *) xTestNetworkParams.ucSSID,
                       xWiFiConnectStatus );
             configPRINTF( ( pxTaskParams->cStatusMsg ) );
             break;
@@ -2309,8 +2320,9 @@ static void prvConnectionTask( void * pvParameters )
         {
             snprintf( pxTaskParams->cStatusMsg,
                       sizeof( pxTaskParams->cStatusMsg ),
-                      "Task %d failed to connect to the AP %s with error code %d.\r\n",
-                      pxTaskParams->usTaskId, xClientNetworkParams.pcSSID,
+                      "Task %d failed to connect to the AP %.*s with error code %d.\r\n",
+                      pxTaskParams->usTaskId,
+                      xTestNetworkParams.ucSSIDLength, ( char *) xTestNetworkParams.ucSSID,
                       xWiFiConnectStatus );
             configPRINTF( ( pxTaskParams->cStatusMsg ) );
             break;
@@ -2340,7 +2352,7 @@ static void prvConnectionTask( void * pvParameters )
         }
 
         /* Check that we are indicated as connected. */
-        xIsConnected = WIFI_IsConnected();
+        xIsConnected = WIFI_IsConnected( NULL );
 
         if( xIsConnected == pdFALSE )
         {
@@ -2421,7 +2433,7 @@ static void prvConnectionTask( void * pvParameters )
         }
 
         /* Are we disconnected? */
-        xIsConnected = WIFI_IsConnected();
+        xIsConnected = WIFI_IsConnected( NULL );
 
         if( xIsConnected == pdTRUE )
         {
@@ -2566,6 +2578,7 @@ TEST( Full_WiFi, AFQP_WiFiSeperateTasksConnectingAndDisconnectingAtOnce )
         xTaskConnectDisconnectSyncEventGroupHandle = NULL;
     }
 }
+#if (testwifiENABLE_EXT_WIFI_TESTS == 1)
 
 // ---------------------------------------------------------------------
 static void extWifiEventCb(WIFIEvent_t * xEvent)
@@ -2601,7 +2614,7 @@ TEST( Full_WiFi, AFQP_WifiScanAndGetResult)
     WIFIReturnCode_t rtnCode;
     WIFIScanConfig_t scanConfig;
     uint16_t ucNumNetworks;
-    const WIFIScanResultExt_t *pScanResult;
+    const WIFIScanResult_t *pScanResult;
     EventBits_t eventBits;
     int i;
 
@@ -2661,28 +2674,28 @@ TEST( Full_WiFi, AFQP_WifiScanAndGetResult)
 TEST( Full_WiFi, AFQP_WifiSetModeGetModeExt)
 {
     WIFIReturnCode_t retCode;
-    WIFIDeviceModeExt_t orgMode, deviceMode;
+    WIFIDeviceMode_t orgMode, deviceMode;
 
     // Get the original mode, to be restored later
-    retCode = WIFI_GetModeExt(&orgMode);
+    retCode = WIFI_GetMode(&orgMode);
     TEST_ASSERT(retCode == eWiFiSuccess);
 
-    retCode = WIFI_SetModeExt(eWiFiModeStationExt);
+    retCode = WIFI_SetMode(eWiFiModeStation);
     TEST_WIFI_ASSERT_OPTIONAL_API(retCode == eWiFiSuccess, retCode);
 
-    retCode = WIFI_GetModeExt(&deviceMode);
+    retCode = WIFI_GetMode(&deviceMode);
     TEST_ASSERT(retCode == eWiFiSuccess);
-    TEST_ASSERT(deviceMode == eWiFiModeStationExt);
+    TEST_ASSERT(deviceMode == eWiFiModeStation);
 
-    retCode = WIFI_SetModeExt(eWiFiModeAPExt);
+    retCode = WIFI_SetMode(eWiFiModeAP);
     TEST_WIFI_ASSERT_OPTIONAL_API(retCode == eWiFiSuccess, retCode);
 
-    retCode = WIFI_GetModeExt(&deviceMode);
+    retCode = WIFI_GetMode(&deviceMode);
     TEST_ASSERT(retCode == eWiFiSuccess);
-    TEST_ASSERT(deviceMode == eWiFiModeAPExt);
+    TEST_ASSERT(deviceMode == eWiFiModeAP);
 
     // Restore the mode
-    retCode = WIFI_SetModeExt(orgMode);
+    retCode = WIFI_SetMode(orgMode);
     TEST_WIFI_ASSERT_OPTIONAL_API(retCode == eWiFiSuccess, retCode);
 }
 
@@ -2694,7 +2707,7 @@ TEST( Full_WiFi, AFQP_WifiStartConnectAPDisconnect)
 {
     EventBits_t eventBits;
     WIFIReturnCode_t retCode;
-    WIFINetworkParamsExt_t networkParams;
+    WIFINetworkParams_t networkParams;
     WIFIIPConfiguration_t ipConfig;
     int8_t rssi;
     WIFIStatisticInfo_t xStatistics;
@@ -2712,7 +2725,7 @@ TEST( Full_WiFi, AFQP_WifiStartConnectAPDisconnect)
 
     xEventGroupClearBits( xExtWifiEventHandle, EXT_WIFI_EVENT_CONNECTED | EXT_WIFI_EVENT_IP_READY);
 
-    memset(&networkParams, 0x0, sizeof(WIFINetworkParamsExt_t));
+    memset(&networkParams, 0x0, sizeof(WIFINetworkParams_t));
     networkParams.ucSSIDLength = strlen(clientcredentialWIFI_SSID);
     memcpy(networkParams.ucSSID, clientcredentialWIFI_SSID, networkParams.ucSSIDLength);
     
@@ -2823,7 +2836,7 @@ TEST( Full_WiFi, AFQP_GetCapability)
  */
 TEST( Full_WiFi, AFQP_WiFiConfigureAPExt )
 {
-    WIFINetworkParamsExt_t xNetworkParams = {{ 0 }}; 
+    WIFINetworkParams_t xNetworkParams = {{ 0 }}; 
     WIFIReturnCode_t xWiFiStatus;
     WIFIStationInfo_t xStationList;
     uint8_t uStationListSize, loopTime;
@@ -2858,5 +2871,5 @@ TEST( Full_WiFi, AFQP_WiFiConfigureAPExt )
     } while(uStationListSize == 0 && ++loopTime < MAX_LOOP_COUNT);
     TEST_ASSERT(loopTime < MAX_LOOP_COUNT); 
 }
-
+#endif
 
