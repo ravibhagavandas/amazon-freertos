@@ -365,11 +365,11 @@ WIFIReturnCode_t WIFI_ConnectAP( const WIFINetworkParams_t * const pxNetworkPara
     uint8_t ucMACAddress[ ipMAC_ADDRESS_LENGTH_BYTES ];
 
     configASSERT( pxNetworkParams != NULL );
-    configASSERT( pxNetworkParams->pcSSID != NULL );
+    configASSERT( pxNetworkParams->ucSSIDLength > 0 );
 
     if( pxNetworkParams->xSecurity != eWiFiSecurityOpen )
     {
-        configASSERT( pxNetworkParams->pcPassword != NULL );
+        configASSERT( pxNetworkParams->xPassword.xWPA.ucLength > 0 );
     }
 
     /* Set mode to station mode. */
@@ -391,21 +391,25 @@ WIFIReturnCode_t WIFI_ConnectAP( const WIFINetworkParams_t * const pxNetworkPara
         return eWiFiFailure;
     }
 
-    WDRV_EXT_CmdSSIDSet( ( uint8_t * ) pxNetworkParams->pcSSID, pxNetworkParams->ucSSIDLength );
+    WDRV_EXT_CmdSSIDSet( ( uint8_t *)pxNetworkParams->ucSSID, pxNetworkParams->ucSSIDLength );
 
     /*Set the AP security. */
-    if( pxNetworkParams->ucPasswordLength > wificonfigMAX_PASSPHRASE_LEN )
+    if( pxNetworkParams->xPassword.xWPA.ucLength > wificonfigMAX_PASSPHRASE_LEN )
     {
         return eWiFiFailure;
     }
 
-    WIFI_SecuritySet( pxNetworkParams->xSecurity, pxNetworkParams->pcPassword, pxNetworkParams->ucPasswordLength );
+    WIFI_SecuritySet( pxNetworkParams->xSecurity, 
+                      pxNetworkParams->xPassword.xWPA.cPassphrase, 
+                      pxNetworkParams->xPassword.xWPA.ucLength );
 
     /*Set driver state. */
     WDRV_IsDisconnectRequestedSet( pdFALSE );
     WDRV_ConnectionStateSet( WDRV_CONNECTION_STATE_IN_PROGRESS );
 
-    WDRV_DBG_INFORM_MESSAGE( ( "Start Wi-Fi Connection to SSID %.*s...\r\n", pxNetworkParams->ucSSIDLength, pxNetworkParams->pcSSID ) );
+    WDRV_DBG_INFORM_MESSAGE( ( "Start Wi-Fi Connection to SSID %.*s...\r\n", 
+                                pxNetworkParams->ucSSIDLength, 
+                                (char *) pxNetworkParams->ucSSID ) );
 
     /* Read MAC address from the chip and set it in FreeRTOS network stack. */
     WDRV_EXT_CmdMacAddressGet( ucMACAddress );
@@ -563,18 +567,18 @@ WIFIReturnCode_t WIFI_GetIP( uint8_t * pucIPAddr )
 WIFIReturnCode_t WIFI_ConfigureAP( const WIFINetworkParams_t * const pxNetworkParams )
 {
     configASSERT( pxNetworkParams != NULL );
-    configASSERT( pxNetworkParams->pcSSID != NULL );
+    configASSERT( pxNetworkParams->ucSSIDLength > 0 );
 
     if( pxNetworkParams->xSecurity != eWiFiSecurityOpen )
     {
-        configASSERT( pxNetworkParams->pcPassword != NULL );
+        configASSERT( pxNetworkParams->xPassword.xWPA.ucLength > 0 );
     }
 
     /* Set mode to station mode. */
     WIFI_SetMode( eWiFiModeAP );
 
     /* Set the AP channel. */
-    WDRV_EXT_CmdChannelSet( pxNetworkParams->cChannel );
+    WDRV_EXT_CmdChannelSet( pxNetworkParams->ucChannel );
 
     /*Set the AP SSID. */
     if( pxNetworkParams->ucSSIDLength > wificonfigMAX_SSID_LEN )
@@ -582,15 +586,17 @@ WIFIReturnCode_t WIFI_ConfigureAP( const WIFINetworkParams_t * const pxNetworkPa
         return eWiFiFailure;
     }
 
-    WDRV_EXT_CmdSSIDSet( ( uint8_t * ) pxNetworkParams->pcSSID, pxNetworkParams->ucSSIDLength );
+    WDRV_EXT_CmdSSIDSet( ( uint8_t * ) pxNetworkParams->ucSSID, pxNetworkParams->ucSSIDLength );
 
     /*Set the AP security. */
-    if( pxNetworkParams->ucPasswordLength > wificonfigMAX_PASSPHRASE_LEN )
+    if( pxNetworkParams->xPassword.xWPA.ucLength > wificonfigMAX_PASSPHRASE_LEN )
     {
         return eWiFiFailure;
     }
 
-    WIFI_SecuritySet( pxNetworkParams->xSecurity, pxNetworkParams->pcPassword, pxNetworkParams->ucPasswordLength );
+    WIFI_SecuritySet( pxNetworkParams->xSecurity, 
+                      pxNetworkParams->xPassword.xWPA.cPassphrase, 
+                      pxNetworkParams->xPassword.xWPA.ucLength );
 
     /*Set driver state. */
     WDRV_IsDisconnectRequestedSet( pdFALSE );
@@ -762,18 +768,17 @@ WIFIReturnCode_t WIFI_Scan( WIFIScanResult_t * pxBuffer,
         WDRV_EXT_ScanResultGet( idx, &scanResult );
 
         /*Fill in scan result buffer*/
-        m2m_memcpy( ( uint8_t * ) pxBuffer[ idx ].cSSID, scanResult.ssid, scanResult.ssidLen );
+        m2m_memcpy( ( uint8_t * ) pxBuffer[ idx ].ucSSID, scanResult.ssid, scanResult.ssidLen );
 
         if( scanResult.ssidLen < wificonfigMAX_SSID_LEN )
         {
-            pxBuffer[ idx ].cSSID[ scanResult.ssidLen ] = '\0';
+            pxBuffer[ idx ].ucSSID[ scanResult.ssidLen ] = '\0';
         }
 
         m2m_memcpy( pxBuffer[ idx ].ucBSSID, scanResult.bssid, wificonfigMAX_BSSID_LEN );
         pxBuffer[ idx ].xSecurity = scanResult.apConfig;
         pxBuffer[ idx ].cRSSI = scanResult.rssi;
-        pxBuffer[ idx ].cChannel = ( int8_t ) scanResult.channel;
-        pxBuffer[ idx ].ucHidden = 0;
+        pxBuffer[ idx ].ucChannel = ( int8_t ) scanResult.channel;
     } while( ++idx < ucNumNetworks );
 
     WDRV_EXT_ScanDoneSet();
@@ -787,13 +792,25 @@ WIFIReturnCode_t WIFI_Scan( WIFIScanResult_t * pxBuffer,
  *
  * @return pdTRUE if the link is up, pdFalse otherwise.
  */
-BaseType_t WIFI_IsConnected( void )
+BaseType_t WIFI_IsConnected( const WIFINetworkParams_t * pxNetworkParams )
 {
     BaseType_t xIsConnected = pdFALSE;
-
-    if( isLinkUp() )
+    
+    if ( ( pxNetworkParams == NULL ) && isLinkUp() )
     {
         xIsConnected = pdTRUE;
+    }
+    else if ( pxNetworkParams->ucSSIDLength > 0 )
+    {
+        uint8_t pucConnSSID[ wificonfigMAX_SSID_LEN + 1 ] = { 0 };
+        uint8_t ucConnSSIDLength = 0;
+        
+        WDRV_EXT_CmdSSIDGet(pucConnSSID, &ucConnSSIDLength);
+        if ( ( memcmp( pxNetworkParams->ucSSID, pucConnSSID, ucConnSSIDLength ) == 0 )
+            && ( pxNetworkParams->ucSSIDLength == ucConnSSIDLength ) )
+        {
+            xIsConnected = pdTRUE;
+        }
     }
 
     return xIsConnected;
@@ -1131,7 +1148,8 @@ WIFIReturnCode_t WIFI_NetworkDelete( uint16_t usIndex )
     #endif /* ifdef ENABLE_NETWORK_STORAGE */
 }
 
-WIFIReturnCode_t WIFI_RegisterNetworkStateChangeEventCallback( IotNetworkStateChangeEventCallback_t xCallback  )
+WIFIReturnCode_t WIFI_RegisterEvent( WIFIEventType_t xEventType, 
+                                     WIFIEventHandler_t xHandler  )
 {
     /** Needs to implement dispatching network state change events **/
     return eWiFiNotSupported;
