@@ -541,17 +541,21 @@ WIFIReturnCode_t WIFI_GetHostIP( char * pcHost,
 /**
  * @brief Retrieves the Wi-Fi interface's IP address.
  *
- * @param[in] pucIPAddr - IP Address buffer.
- * unsigned long ulIPAddress = 0;
- * WIFI_GetIP(&ulIPAddress);
+ * @param[in] pxIPInfo - Address of a WIFIIPConfiguration_t to store results.
  *
- * @return eWiFiSuccess if disconnected, eWiFiFailure otherwise.
+ * @return eWiFiSuccess
+ * 
+ * Example:
+ * WIFIIPConfiguration_t pxMyIPInfo;
+ * WIFI_GetIPInfo( &pxMyIPInfo );
+ * 
  */
-WIFIReturnCode_t WIFI_GetIP( uint8_t * pucIPAddr )
+WIFIReturnCode_t WIFI_GetIPInfo( WIFIIPConfiguration_t * pxIPInfo )
 {
-    configASSERT( pucIPAddr != NULL );
+    configASSERT( pxIPInfo != NULL );
 
-    *( ( uint32_t * ) pucIPAddr ) = FreeRTOS_GetIPAddress();
+    memset( pxIPInfo, 0x00, sizeof( WIFIIPConfiguration_t ) );
+    pxIPInfo->xIPAddress.ulAddress[0] = FreeRTOS_GetIPAddress();
 
     return eWiFiSuccess;
 }
@@ -762,24 +766,33 @@ WIFIReturnCode_t WIFI_Scan( WIFIScanResult_t * pxBuffer,
         return eWiFiFailure;
     }
 
-    do
+    /* Copy over valid results */
+    for (idx = 0; idx < ucNumNetworks; idx++)
     {
-        /*Get scan result*/
-        WDRV_EXT_ScanResultGet( idx, &scanResult );
-
-        /*Fill in scan result buffer*/
-        m2m_memcpy( ( uint8_t * ) pxBuffer[ idx ].ucSSID, scanResult.ssid, scanResult.ssidLen );
-
-        if( scanResult.ssidLen < wificonfigMAX_SSID_LEN )
+        if ( idx < num_scan_results )
         {
-            pxBuffer[ idx ].ucSSID[ scanResult.ssidLen ] = '\0';
-        }
+            /*Get scan result*/
+            WDRV_EXT_ScanResultGet( idx, &scanResult );
 
-        m2m_memcpy( pxBuffer[ idx ].ucBSSID, scanResult.bssid, wificonfigMAX_BSSID_LEN );
-        pxBuffer[ idx ].xSecurity = scanResult.apConfig;
-        pxBuffer[ idx ].cRSSI = scanResult.rssi;
-        pxBuffer[ idx ].ucChannel = ( int8_t ) scanResult.channel;
-    } while( ++idx < ucNumNetworks );
+            /*Fill in scan result buffer*/
+            m2m_memcpy( ( uint8_t * ) pxBuffer[ idx ].ucSSID, scanResult.ssid, scanResult.ssidLen );
+            pxBuffer[ idx ].ucSSIDLength = scanResult.ssidLen;
+
+            if( scanResult.ssidLen < wificonfigMAX_SSID_LEN )
+            {
+                pxBuffer[ idx ].ucSSID[ scanResult.ssidLen ] = '\0';
+            }
+
+            m2m_memcpy( pxBuffer[ idx ].ucBSSID, scanResult.bssid, wificonfigMAX_BSSID_LEN );
+            pxBuffer[ idx ].xSecurity = scanResult.apConfig;
+            pxBuffer[ idx ].cRSSI = scanResult.rssi;
+            pxBuffer[ idx ].ucChannel = ( int8_t ) scanResult.channel;
+        }
+        else
+        {
+            memset(&pxBuffer[ idx ], 0u, sizeof(WIFIScanResult_t));
+        }
+    }
 
     WDRV_EXT_ScanDoneSet();
 
@@ -790,17 +803,21 @@ WIFIReturnCode_t WIFI_Scan( WIFIScanResult_t * pxBuffer,
 /**
  * @brief Check if the Wi-Fi is connected.
  *
- * @return pdTRUE if the link is up, pdFalse otherwise.
+ * param[in] pxNetworkParams - Network parameters to query, if NULL then just check the
+ *                             Wi-Fi link status.
+ * @return If pxNetworkParams == NULL then return pdTRUE if any connection is present.
+ *         If pxNetworkParams != NULL then return pdTRUE only if connected to the SSID
+ *         specified by pxNetworkParams->ucSSID
  */
 BaseType_t WIFI_IsConnected( const WIFINetworkParams_t * pxNetworkParams )
 {
     BaseType_t xIsConnected = pdFALSE;
     
-    if ( ( pxNetworkParams == NULL ) && isLinkUp() )
+    if ( !pxNetworkParams && isLinkUp() )
     {
         xIsConnected = pdTRUE;
     }
-    else if ( pxNetworkParams->ucSSIDLength > 0 )
+    else if ( pxNetworkParams && ( pxNetworkParams->ucSSIDLength > 0 ) )
     {
         uint8_t pucConnSSID[ wificonfigMAX_SSID_LEN + 1 ] = { 0 };
         uint8_t ucConnSSIDLength = 0;
