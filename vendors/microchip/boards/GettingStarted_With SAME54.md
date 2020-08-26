@@ -1,12 +1,13 @@
-**Getting Started with the Microchip SAME54 Xplained Pro**
+# Getting Started with the Microchip SAME54 Xplained Pro
 
-This tutorial provides instructions for getting started with the Microchip SAME54 Xplained Pro. Microchip provides three solutions with Amazon FreeRTOS
+This tutorial provides instructions for getting started with the Microchip SAME54 Xplained Pro.
+Microchip provides three solutions with FreeRTOS
 
 1. Secure Element based Wired Solution with ECC608
 2. Secure Element based Wi-Fi (Wireless) solution with ECC608 and
-3. Wired only solution.
+3. Wired only solution (NVM Based).
 
-If you do not have the following components, visit the AWS Partner Device Catalog to purchase one from our partner.
+If you do not have the following components, visit the AWS Partner Device Catalog to purchase one from our [partner](https://devices.amazonaws.com/detail/a3G0h0000077I6kEAE/SAM-E54-Xplained-Pro).
 
 - [SAME54 Xplained Pro](https://www.microchip.com/developmenttools/ProductDetails/ATSAME54-XPRO).
 - [ATECC608A Trust](https://www.microchip.com/developmenttools/ProductDetails/DT100104#additional-summary) (for Secure element based Wired/Wireless solution).
@@ -16,28 +17,34 @@ If you do not have the following components, visit the AWS Partner Device Catalo
 
 ## **Pre-Requisites:**
 
-Before you begin, you must configure AWS IoT and your Amazon FreeRTOS download to connect your device to the AWS Cloud.
-
-To get started with Amazon FreeRTOS, you need an AWS account, an IAM user with permission to access AWS IoT and Amazon FreeRTOS cloud services, and you need one of the supported hardware platforms. You also need to download Amazon FreeRTOS and configure your board&#39;s Amazon FreeRTOS demo project to work with AWS IoT. The following sections walk you through these requirements.
+To get started with FreeRTOS, you need an AWS account, an IAM user with permission to access AWS IoT and Amazon FreeRTOS cloud services, and you need one of the supported hardware platforms. You also need to download Amazon FreeRTOS and configure your board&#39;s Amazon FreeRTOS demo project to work with AWS IoT. The following sections walk you through these requirements.
 
 1. [Setting Up Your AWS Account and Permissions](https://docs.aws.amazon.com/freertos/latest/userguide/freertos-account-and-permissions.html)
 
-- To use Secure element based solution (Wired/Wireless), provision the Microchip ATECC608A Secure Element with Windows Simulator. Please refer [Getting started with the Microchip ATECC608A Secure Element with Windows simulator](https://docs.aws.amazon.com/freertos/latest/userguide/getting_started_atecc608a.html).  ATECC608A Trust board is used instead of ATECC608A secure element clickboard in the above link, select the TrustCUSTOM secure element on the ATECC608A Trust board by switch on the DIP Switch 5 of SW2.
-- To use Wired only solution, [Registering Your MCU Board with AWS IoT](https://docs.aws.amazon.com/freertos/latest/userguide/get-started-freertos-thing.html)
+2. Registering your MCU Board with AWS IOT
+	- For Secure element based solution, provision the Microchip ATECC608A Secure Element with Windows Simulator.
+		-  Please refer [Getting started with the Microchip ATECC608A Secure Element with Windows simulator](https://docs.aws.amazon.com/freertos/latest/userguide/getting_started_atecc608a.html). 
+		-  Users may also use the new [ATECC608A Trust board](http://ww1.microchip.com/downloads/en/DeviceDoc/ATECC608A-Trust-Development-Board-Users-Guide-DS50002922A.pdf), instead of ATECC608A secure element clickboard used in above step.
+		-  The above steps also registers the device in AWS IOT for secured wired solution.
+	- To use Wired only solution, [Registering Your MCU Board with AWS IoT](https://docs.aws.amazon.com/freertos/latest/userguide/get-started-freertos-thing.html)
 
-3. From the [MicrochipTech repository](https://github.com/MicrochipTech/amazon-freertos/tree/mchpdev/), download the amazon-freertos repository (mchpdev branch).  In this tutorial, the path to the Amazon FreeRTOS download directory is referred to as _\&lt;amazon-freertos\&gt;_.
+3. From the [MicrochipTech repository](https://github.com/MicrochipTech/amazon-freertos/tree/mchpdev/), download the amazon-freertos repository (mchpdev branch).  
+
+---
+**IMPORTANT**
+
+The maximum length of a file path on Microsoft Windows is 260 characters. To accommodate the files in the FreeRTOS projects, make sure that the path to the Root path directory is fewer than 40 characters long.
+Long FreeRTOS download directory paths can cause build failures.
+
+---
 
 4. Demo Configuration
+	- For Secure Wired/Wireless solution, use the aws_clientcredential.h and aws_clientcredentialkeys.h obtained as part of the provisioning Secure Element (ATECC608).
+	- For Wired only solution, refer [Configuring the FreeRTOS Demos](https://docs.aws.amazon.com/freertos/latest/userguide/freertos-configure.html)
 
-- For Secure Wired or Secure Wireless solution, use the aws_clientcredentialkeys.h obtained as part of the provisioning setup.
-- To configure Wi-Fi, refer the topic “To configure your AWS IoT endpoint” and “To configure your Wi-Fi” in [Configuring the Amazon FreeRTOS Demos](https://docs.aws.amazon.com/freertos/latest/userguide/freertos-configure.html)
-- For Wired only solution, refer [Configuring the Amazon FreeRTOS Demos](https://docs.aws.amazon.com/freertos/latest/userguide/freertos-configure.html)
 
-**Important**
 
-The maximum length of a file path on Microsoft Windows is 260 characters. To accommodate the files in the Amazon FreeRTOS projects, make sure that the path to the Root path directory is fewer than 40 characters long.
-
-**Program Amazon Root CA**
+## **WIFI Configuration for Cloud Connectivity (Program Amazon Root CA)**
 
 To use WiFi (wireless) solution, you need to program the Amazon Root CA to ATWINC3400 or ATWINC1500. Below are the steps
 1. Download [Amazon Root CA3](https://docs.aws.amazon.com/iot/latest/developerguide/server-authentication.html#server-authentication-certs) in .pem formate
@@ -63,8 +70,6 @@ To use WiFi (wireless) solution, you need to program the Amazon Root CA to ATWIN
       * Plug the WINC1500 Xplained Pro into the SAMD21 board in the EXT1 location and connect the DEBUG USB port of the board to the host computer using a Type A to Micro B USB Cable.
       * Execute "samd21_xplained_pro_firmware_update.bat" in folder src/ to upgrade the firmware and program Root CA
 
-
-
 ## **Overview**
 
 This tutorial contains instructions for the following getting started steps:
@@ -76,23 +81,24 @@ This tutorial contains instructions for the following getting started steps:
 5. Interacting with the application running on your board across a serial connection, for monitoring and debugging purposes.
 
 ## Set Up the Microchip SAME54 Xplained Pro Hardware
-To use Secured Wired Solution,
+**To use Secured Wired Solution**,
 1. Connect one end of an Ethernet cable to the ethernet PHY available in the board, Connect the other end to your router or other internet port.
 2. Plug the mikroBUS XPlained Pro adapter into the SAME54 board in the EXT2 location.
-3. Plug the ATECC608A Trust board into the mikroBUSX XPlained Pro adapter. Make sure that the notched corner of the click board matches with the notched icon on the adapter board.
-4. Select the TrustCUSTOM secure element on the ATECC608A Trust board by switch on the DIP Switch 5 of SW2.
+3. Plug the ATECC608A Trust board into the mikroBUS XPlained Pro adapter. Make sure that the notched corner of the click board matches with the notched icon on the adapter board.
+4. Select the TrustCUSTOM secure element on the ATECC608A Trust board by switch on the DIP Switch 1 of SW2.
+![Image of ATECC608 Trust](ATECC608Trust.jpg)
 5. Connect the DEBUG USB port of the board to the host computer using a Type A
 to Micro B USB Cable.
 
 
-To use Secured Wireless,
+**To use Secured Wireless**,
 1. Plug the WINC3400/ WINC1500 Xplained Pro into the SAME54 board in the EXT1 location
 2. Plug the mikroBUS XPlained Pro adapter into the SAME54 board in the EXT2 location.
 3. Plug the ATECC608A Trust board into the mikroBUSX XPlained Pro adapter. Make sure that the notched corner of the click board matches with the notched icon on the adapter board.
-4. Select the TrustCUSTOM secure element on the ATECC608A Trust board by switch on the DIP Switch 5 of SW2
+4. Select the TrustCUSTOM secure element on the ATECC608A Trust board by switch on the DIP Switch 1 of SW2
 4. Connect the DEBUG USB port of the board to the host computer using a Type A to Micro B USB Cable.
 
-To use Wired only Solution,
+**To use Wired only Solution**,
 1. Connect the DEBUG USB port of the board to the host computer using a Type A to Micro B USB Cable.
 2. Connect one end of an Ethernet cable to the ethernet PHY available in the board, Connect the other end to your router or other internet port.
 
@@ -101,7 +107,7 @@ To use Wired only Solution,
 
 **Note**
 
-The Amazon FreeRTOS project for this device is based on MPLAB Harmony v3. To build the project, you need to use versions of the MPLAB tools that are compatible with Harmony v3, like v2.40 or higher of the MPLAB XC32 Compiler and the latest MPLAB IDE.
+The FreeRTOS project for this device is based on MPLAB Harmony v3. To build the project, you need to use versions of the MPLAB tools that are compatible with Harmony v3, like v2.40 or higher of the MPLAB XC32 Compiler and the latest MPLAB IDE.
 
 1. Install [Python version 3.x](https://www.python.org/downloads/) or later.
 2. Install the MPLAB X IDE:
@@ -119,9 +125,9 @@ The Amazon FreeRTOS project for this device is based on MPLAB Harmony v3. To bui
   - Stop bits: 1
   - Flow control: None
 
-## Build and Run Amazon FreeRTOS Demo Project
+## Build and Run FreeRTOS Demo Project
 
-### Open the Amazon FreeRTOS Demo in the MPLAB IDE
+### Open the FreeRTOS Demo Project (MQTT Demo) in the MPLAB IDE
 
 1. Open MPLAB IDE. If you have more than one version of the compiler installed, you need to select the compiler that you want to use from within the IDE.
 2. From the  **File**  menu, choose  **Open Project**.
@@ -144,7 +150,7 @@ projects\microchip\same54_xpro_ecc\mplab\aws_demos\firmware\aws_demos.X.
 
 When you open the project for the first time, you might get an error message about the compiler. In the IDE, navigate to  **Tools** ,  **Options** ,  **Embedded** , and then select the compiler that you are using for your project. The demo kit comes with on-board EDBG debugger/programmer, which would be used for Programming/Debugging the Amazon FreeRTOS project.
 
-### Run the Amazon FreeRTOS Demo Project
+### Run the FreeRTOS Demo Project
 
 1. Rebuild your project.
 2. On the  **Projects**  tab, right-click the aws\_demos top-level folder, and then choose  **Debug**.
@@ -158,9 +164,15 @@ You can use the MQTT client in the AWS IoT console to monitor the messages that 
 
 1. Sign in to the [AWS IoT console](https://console.aws.amazon.com/iotv2/).
 2. In the navigation pane, choose  **Test**  to open the MQTT client.
-3. In  **Subscription topic** , enter  **iotdemo/#** , and then choose  **Subscribe to topic**.
+3. In  **Subscription topic** , enter  **iotdemo/#** , and then choose  **Subscribe to topic**. 
+This will enable you to see the periodically published messages by the MQTT Hello World example.
 
 ## Troubleshooting
 
-1. The Xplained Pro already has an ECC508 of slave address 0xC0, so use a different slave address to avoid conflicts.
-For general troubleshooting information about Getting Started with Amazon FreeRTOS, see [Troubleshooting Getting Started](https://docs.aws.amazon.com/freertos/latest/userguide/gsg-troubleshooting.html).
+If no messages appear in the AWS IoT console, try the following:
+1. Open a terminal window to view the logging output of the sample. This can help you determine
+what is going wrong.
+2. Check that your network credentials are valid.
+3. The Xplained Pro already has an ECC508 of slave address 0xC0, so use a different slave address to avoid conflicts, when secured solution is used.
+
+For general troubleshooting information about Getting Started with FreeRTOS, see [Troubleshooting Getting Started](https://docs.aws.amazon.com/freertos/latest/userguide/gsg-troubleshooting.html).
