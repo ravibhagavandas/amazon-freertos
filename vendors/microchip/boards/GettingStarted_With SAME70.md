@@ -28,6 +28,7 @@ To get started with FreeRTOS, you need an AWS account, an IAM user with permissi
 	- To use Wired only solution, [Registering Your MCU Board with AWS IoT](https://docs.aws.amazon.com/freertos/latest/userguide/get-started-freertos-thing.html)
 
 3. From the [MicrochipTech repository](https://github.com/MicrochipTech/amazon-freertos/tree/mchpdev/), download the amazon-freertos repository (mchpdev branch).  
+To clone or download the repo from Github,go to the main page of this repository and then click Clone button to clone this repo or download as zip file.
 
 ---
 **IMPORTANT**
@@ -85,7 +86,7 @@ The FreeRTOS project for this device is based on MPLAB Harmony v3. To build the 
   - [MPLAB XC32/32++ Compiler for Windows](http://www.microchip.com/mplabxc32windows)
   - [MPLAB XC32/32++ Compiler for macOS](http://www.microchip.com/mplabxc32osx)
   - [MPLAB XC32/32++ Compiler for Linux](http://www.microchip.com/mplabxc32linux)
-4. Start up a UART terminal emulator and open a connection with the following settings:
+4. Start up a UART terminal emulator like TeraTerm and open the EDBG COM Port connection with the following settings:
   - Baud rate: 115200
   - Data: 8 bit
   - Parity: None

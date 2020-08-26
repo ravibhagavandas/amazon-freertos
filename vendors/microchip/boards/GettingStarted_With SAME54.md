@@ -28,7 +28,8 @@ To get started with FreeRTOS, you need an AWS account, an IAM user with permissi
 		-  The above steps also registers the device in AWS IOT for secured wired solution.
 	- To use Wired only solution, [Registering Your MCU Board with AWS IoT](https://docs.aws.amazon.com/freertos/latest/userguide/get-started-freertos-thing.html)
 
-3. From the [MicrochipTech repository](https://github.com/MicrochipTech/amazon-freertos/tree/mchpdev/), download the amazon-freertos repository (mchpdev branch).  
+3. From the [MicrochipTech repository](https://github.com/MicrochipTech/amazon-freertos/tree/mchpdev/), download the amazon-freertos repository (mchpdev branch). 
+To clone or download the repo from Github,go to the main page of this repository and then click Clone button to clone this repo or download as zip file. 
 
 ---
 **IMPORTANT**
@@ -46,17 +47,17 @@ Long FreeRTOS download directory paths can cause build failures.
 
 ## **WIFI Configuration for Cloud Connectivity (Program Amazon Root CA)**
 
-To use WiFi (wireless) solution, you need to program the Amazon Root CA to ATWINC3400 or ATWINC1500. Below are the steps
-1. Download [Amazon Root CA3](https://docs.aws.amazon.com/iot/latest/developerguide/server-authentication.html#server-authentication-certs) in .pem formate
+To use WiFi (wireless) solution, you need to program the Amazon Root CA to WINC3400 Xplained Pro or WINC1500 Xplained Pro. Below are the steps
+1. Download [Amazon Root CA3](https://docs.aws.amazon.com/iot/latest/developerguide/server-authentication.html#server-authentication-certs) in .pem format
 2. Convert the .pem format to .cer
-    * Use OpenSSL command to conert .pem to .crt
+    * Use OpenSSL command to convert .pem to .crt
       >openssl x509 -outform der -in certificate.pem -out certificate.crt
     * Double click .crt file in Windows -> Select "Detail" tab --> Click "Copy to File" --> Click "Next" --> Select "DER encoded binary X.509 (.CER)" --> Click "Next" --> Input the file name as "AmazonRootCA3" --> "AmazonRootCA3.cer" file is generated
 3. Import Firmware Update Project and Upgrade
-    * Install [Atmel Studio 7.0](https://gallery.microchip.com/policies/studio)
+    * Install [Atmel Studio 7.0] from Windows Environment.(https://gallery.microchip.com/policies/studio)
     * Search for "Firmware Update Project" from the "New Example Project" of ASF menu in Atmel Studio
     
-      To use ATWINC3400,
+      To use WINC3400 Xplained Pro,
       * Select "WINC Firmware Update Project (v1.3.1) SAMD21 Xplained Pro" and then press the OK button to import firmware update project and related documentation
       * Place "AmazonRootCA3.cer" to the project folder src\firmware\Tools\root_certificate_downloader\binary
       * Update src\firmware\flash_image.config by adding below line in [root certificates] section
@@ -64,7 +65,7 @@ To use WiFi (wireless) solution, you need to program the Amazon Root CA to ATWIN
       * Plug the WINC3400 Xplained Pro into the SAMD21 board in the EXT1 location and connect the DEBUG USB port of the board to the host computer using a Type A to Micro B USB Cable.
       * Execute "samd21_xplained_pro_firmware_update.bat" in folder src/ to upgrade the firmware and program Root CA
 
-      To use ATWINC1500,
+      To use WINC1500 Xplained Pro,
       * Select "WINC Firmware Update Project (v19.6.1) SAMD21 Xplained Pro" and then press the OK button to import firmware update project and related documentation
       * Place "AmazonRootCA3.cer" to the project folder src\firmware\Tools\root_certificate_downloader\binary
       * Plug the WINC1500 Xplained Pro into the SAMD21 board in the EXT1 location and connect the DEBUG USB port of the board to the host computer using a Type A to Micro B USB Cable.
@@ -118,7 +119,7 @@ The FreeRTOS project for this device is based on MPLAB Harmony v3. To build the 
   - [MPLAB XC32/32++ Compiler for Windows](http://www.microchip.com/mplabxc32windows)
   - [MPLAB XC32/32++ Compiler for macOS](http://www.microchip.com/mplabxc32osx)
   - [MPLAB XC32/32++ Compiler for Linux](http://www.microchip.com/mplabxc32linux)
-4. Start up a UART terminal emulator and open a connection with the following settings:
+4. Start up a UART terminal emulator like TeraTerm and open the EDBG COM Port connection with the following settings:
   - Baud rate: 115200
   - Data: 8 bit
   - Parity: None
