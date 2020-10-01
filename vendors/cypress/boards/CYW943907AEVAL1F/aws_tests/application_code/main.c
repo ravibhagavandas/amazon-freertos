@@ -172,7 +172,7 @@ void prvWifiConnect( void )
 {
     WIFINetworkParams_t xNetworkParams;
     WIFIReturnCode_t xWifiStatus;
-    uint8_t ucTempIp[ 4 ] = { 0 };
+    WIFIIPConfiguration_t xIPConfig;
 
     xWifiStatus = WIFI_On();
 
@@ -194,12 +194,12 @@ void prvWifiConnect( void )
     }
 
     /* Setup parameters. */
-    xNetworkParams.pcSSID = clientcredentialWIFI_SSID;
-    xNetworkParams.ucSSIDLength = sizeof( clientcredentialWIFI_SSID );
-    xNetworkParams.pcPassword = clientcredentialWIFI_PASSWORD;
-    xNetworkParams.ucPasswordLength = sizeof( clientcredentialWIFI_PASSWORD );
+    xNetworkParams.ucSSIDLength = strnlen( clientcredentialWIFI_SSID, wificonfigMAX_SSID_LEN );
+    memcpy( xNetworkParams.ucSSID, clientcredentialWIFI_SSID, xNetworkParams.ucSSIDLength );
+    xNetworkParams.xPassword.xWPA.ucLength = strnlen( clientcredentialWIFI_PASSWORD, wificonfigMAX_PASSPHRASE_LEN );
+    memcpy( xNetworkParams.xPassword.xWPA.cPassphrase, clientcredentialWIFI_PASSWORD, xNetworkParams.xPassword.xWPA.ucLength );
     xNetworkParams.xSecurity = clientcredentialWIFI_SECURITY;
-    xNetworkParams.cChannel = 0;
+    xNetworkParams.ucChannel = 0;
 
     xWifiStatus = WIFI_ConnectAP( &( xNetworkParams ) );
 
@@ -207,12 +207,15 @@ void prvWifiConnect( void )
     {
         configPRINTF( ( "Wi-Fi Connected to AP. Creating tasks which use network...\r\n" ) );
 
-        xWifiStatus = WIFI_GetIP( ucTempIp );
+        xWifiStatus = WIFI_GetIPInfo( &xIPConfig );
 
         if( eWiFiSuccess == xWifiStatus )
         {
             configPRINTF( ( "IP Address acquired %d.%d.%d.%d\r\n",
-                            ucTempIp[ 0 ], ucTempIp[ 1 ], ucTempIp[ 2 ], ucTempIp[ 3 ] ) );
+                            ( uint8_t )( xIPConfig.xIPAddress.ulAddress[ 0 ] >> 24 ),
+                            ( uint8_t )( xIPConfig.xIPAddress.ulAddress[ 0 ] >> 16 ),
+                            ( uint8_t )( xIPConfig.xIPAddress.ulAddress[ 0 ] >> 8 ),
+                            ( uint8_t )( xIPConfig.xIPAddress.ulAddress[ 0 ] >> 0 ) ) );
         }
     }
     else
