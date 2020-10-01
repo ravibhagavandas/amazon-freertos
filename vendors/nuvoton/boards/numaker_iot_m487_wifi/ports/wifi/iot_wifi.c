@@ -326,11 +326,10 @@ WIFIReturnCode_t WIFI_GetIPInfo( WIFIIPConfiguration_t * pxIPConfig )
 
     if (xSemaphoreTake(xNuWiFi.xWifiSem, xSemaphoreWaitTicks) == pdTRUE) {
         if (xNuWiFi.xWifiObject.IsConnected == pdTRUE) {
-						uint32_t ulIPv4 = ( xNuWiFi.xWifiObject.StaIpAddr[ 0 ] << 24
-													 		  || xNuWiFi.xWifiObject.StaIpAddr[ 0 ] << 16
-													 		  || xNuWiFi.xWifiObject.StaIpAddr[ 0 ] << 8
-															  || xNuWiFi.xWifiObject.StaIpAddr[ 0 ] << 0 );
-            pxIPConfig->xIPAddress.ulAddress[ 0 ] = ulIPv4;
+            pxIPConfig->xIPAddress.ulAddress[ 0 ] = ( ( xNuWiFi.xWifiObject.StaIpAddr[ 0 ] << 24 )
+                                                      | ( xNuWiFi.xWifiObject.StaIpAddr[ 1 ] << 16 )
+                                                      | ( xNuWiFi.xWifiObject.StaIpAddr[ 2 ] << 8 )
+                                                      | ( xNuWiFi.xWifiObject.StaIpAddr[ 3 ] << 0 ) ) ;
             xWiFiRet = eWiFiSuccess;
         }
         xSemaphoreGive(xNuWiFi.xWifiSem);
