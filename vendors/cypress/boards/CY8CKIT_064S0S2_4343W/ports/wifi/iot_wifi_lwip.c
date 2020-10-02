@@ -479,17 +479,24 @@ WIFIReturnCode_t WIFI_Disconnect( void )
 
 /*-----------------------------------------------------------*/
 
-WIFIReturnCode_t WIFI_GetIP( uint8_t * pucIPAddr )
+WIFIReturnCode_t WIFI_GetIPInfo( WIFIIPConfiguration_t * pxIPInfo )
 {
-    configASSERT(pucIPAddr != NULL);
+    configASSERT(pxIPInfo != NULL);
     if (cy_rtos_get_mutex(&wifiMutex, wificonfigMAX_SEMAPHORE_WAIT_TIME_MS) == CY_RSLT_SUCCESS)
     {
-        if (pucIPAddr == NULL && netInterface == NULL)
+        if ( pxIPInfo == NULL && netInterface == NULL)
         {
             cy_rtos_set_mutex(&wifiMutex);
             return eWiFiFailure;
         }
+
+        uint8_t pucIPAddr[ 4 ] = { 0 };
         memcpy(pucIPAddr, &netInterface->ip_addr.u_addr.ip4, sizeof(netInterface->ip_addr.u_addr.ip4));
+        pxIPInfo->xIPAddress.ulAddress[ 0 ] = ( ( pucIPAddr[0] << 24 )
+                                                | ( pucIPAddr[1] << 16 )
+                                                | ( pucIPAddr[2] << 8 )
+                                                | ( pucIPAddr[3] << 0 ) );
+
         if (cy_rtos_set_mutex(&wifiMutex) != CY_RSLT_SUCCESS)
         {
             return eWiFiFailure;
