@@ -505,7 +505,7 @@ int32_t SOCKETS_Recv( Socket_t xSocket,
                     lStatus = xBufferLength;
                     memcpy((uint8_t*)pvBuffer, xSocketCntx[Socket].recvBuffer+xSocketCntx[Socket].socketRecvOffset, lStatus);
                     xSocketCntx[Socket].socketRecvLength -= xBufferLength;
-                xSocketCntx[Socket].socketRecvOffset+= xBufferLength;
+                    xSocketCntx[Socket].socketRecvOffset+= xBufferLength;
                 
             }
             
@@ -529,18 +529,18 @@ int32_t SOCKETS_Recv( Socket_t xSocket,
         if(xSocketCntx[Socket].socketRecvTO> 0){
 
             (xSocketCntx[Socket].waitingTask)[RECV_SEM] = xTaskGetCurrentTaskHandle();
-            
-            xTaskNotifyWait( WDRV_MAC_EVENT_SOCKET_RECV, WDRV_MAC_EVENT_SOCKET_RECV, &evBits, ~0);
+                
+            xTaskNotifyWait( WDRV_MAC_EVENT_SOCKET_RECV, WDRV_MAC_EVENT_SOCKET_RECV, &evBits, xSocketCntx[Socket].socketRecvTO);
 
             if( ( evBits & WDRV_MAC_EVENT_SOCKET_RECV ) == 0 )
             {
                 /* Timed out. */
                 configPRINTF( ( "recv timeout\r\n" ) );
-                lStatus =  SOCKETS_SOCKET_ERROR;
+                lStatus =  SOCKETS_EWOULDBLOCK;
             }
-           else
-           {
-            /* Socket recv callback completed */
+            else
+            {
+             /* Socket recv callback completed */
 
             if(xSocketCntx[Socket].socketRecvLength <= xBufferLength)
             {
