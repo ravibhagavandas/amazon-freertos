@@ -857,8 +857,8 @@ TEST( Full_WiFi, AFQP_WIFI_Scan )
 
     for( lI = 0; lI < cScanSize; lI++ )
     {
-        configPRINTF( ( "    %s: %d\r\n",
-                        xScanResults[ lI ].cSSID, xScanResults[ lI ].cRSSI ) );
+        configPRINTF( ( "    %.*s: %d\r\n",
+                        xScanResults[ lI ].ucSSIDLength, xScanResults[ lI ].ucSSID, xScanResults[ lI ].cRSSI ) );
     }
 
     configPRINTF(
