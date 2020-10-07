@@ -67,8 +67,6 @@
 #include "syslog.h"
 
 #include "dhcpd.h"
-
-#include "aws_wifi_ext.h"
 /*-----------------------------------------------------------
  *
  * Constants and Macros
