@@ -109,6 +109,8 @@ static ES_WIFI_SecurityType_t prvConvertSecurityFromAbstractedToST( WIFISecurity
             xConvertedSecurityType = ES_WIFI_SEC_WPA2;
             break;
 
+        case eWiFiSecurityWPA2_ent:
+        case eWiFiSecurityWPA3:
         case eWiFiSecurityNotSupported:
             xConvertedSecurityType = ES_WIFI_SEC_UNKNOWN;
             break;
@@ -131,7 +133,7 @@ static ES_WIFI_SecurityType_t prvConvertSecurityFromAbstractedToST( WIFISecurity
  * @param[in] xCap Capacity of pcDest i.e. max characters it can store
  *
  */
-static size_t prvByteArrayToString( char *pcDest, uint8_t *pucSrc, size_t xLen, size_t xCap )
+static size_t prvByteArrayToString( char *pcDest, const void *pucSrc, size_t xLen, size_t xCap )
 {
 	configASSERT( pcDest );
 	configASSERT( pucSrc );
