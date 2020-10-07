@@ -953,7 +953,7 @@ static bool _mtk_wifi_apply_setting( uint8_t port,
     mtk_auth = _aws_security_to_mtk_auth   ( pxNetworkParams->xSecurity );
     mtk_ciph = _aws_security_to_mtk_encrypt( pxNetworkParams->xSecurity );
 
-    if( port == WIFI_PORT_AP && wifi_config_set_channel( port, pxNetworkParams->cChannel ) < 0 )
+    if( port == WIFI_PORT_AP && wifi_config_set_channel( port, pxNetworkParams->ucChannel ) < 0 )
     {
         LOG_E( wifi, "%s: set CHANNEL fail\n", __FUNCTION__ );
         return false;
@@ -1696,10 +1696,7 @@ WIFIReturnCode_t WIFI_Scan( WIFIScanResult_t * pxBuffer,
             pxBuffer[ j ].cRSSI = pxApList[ i ].rssi;
 
             /* channel */
-            pxBuffer[ j ].cChannel = pxApList[ i ].channel;
-
-            /* hidden SSID */
-            pxBuffer[ j ].ucHidden = pxApList[ i ].is_hidden;
+            pxBuffer[ j ].ucChannel = pxApList[ i ].channel;
 
             j++;
         }
