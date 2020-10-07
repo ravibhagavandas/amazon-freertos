@@ -393,7 +393,7 @@ static WIFIReturnCode_t prvStartScan( uint32_t ulIntervalSec,
  * @param[in] xCap Capacity of pcDest i.e. max characters it can store
  *
  */
-static size_t prvByteArrayToString( char *pcDest, uint8_t *pucSrc, size_t xLen, size_t xCap )
+static size_t prvByteArrayToString( char *pcDest, const void *pucSrc, size_t xLen, size_t xCap )
 {
     configASSERT( pcDest );
     configASSERT( pucSrc );
