@@ -505,10 +505,27 @@ static IotNetworkManager_t networkManager =
     static bool _wifiEnable( void )
     {
         bool ret = true;
+        WIFIReturnCode_t wifiRet;
 
         if( WIFI_On() != eWiFiSuccess )
         {
             ret = false;
+        }
+
+        if( ret == true )
+        {
+            /* Register network state change callback with the Wi-Fi driver */
+            wifiRet = WIFI_RegisterEvent( eWiFiEventIPReady, _wifiEventHandler );
+
+            if( wifiRet == eWiFiSuccess )
+            {
+                wifiRet = WIFI_RegisterEvent( eWiFiEventDisconnected, _wifiEventHandler );
+            }
+
+            if( ( wifiRet != eWiFiSuccess ) && ( wifiRet != eWiFiNotSupported ) )
+            {
+                ret = false;
+            }
         }
 
         #if ( IOT_BLE_ENABLE_WIFI_PROVISIONING == 0 )
@@ -750,7 +767,6 @@ BaseType_t AwsIotNetworkManager_Init( void )
 {
     BaseType_t error = pdTRUE;
     static bool isInit = false;
-    WIFIReturnCode_t wifiRet;
 
     if( !isInit )
     {
@@ -777,19 +793,6 @@ BaseType_t AwsIotNetworkManager_Init( void )
 
             #if WIFI_ENABLED
                 IotListDouble_InsertTail( &networkManager.networks, &wifiNetwork.link );
-
-                /* One time registration of network event callback with the Wi-Fi driver */
-                wifiRet = WIFI_RegisterEvent( eWiFiEventIPReady, _wifiEventHandler );
-
-                if( wifiRet == eWiFiSuccess )
-                {
-                    wifiRet = WIFI_RegisterEvent( eWiFiEventDisconnected, _wifiEventHandler );
-                }
-
-                if( ( wifiRet != eWiFiSuccess ) && ( wifiRet != eWiFiNotSupported ) )
-                {
-                    error = pdFALSE;
-                }
             #endif /* if WIFI_ENABLED */
 
             #if ETH_ENABLED
