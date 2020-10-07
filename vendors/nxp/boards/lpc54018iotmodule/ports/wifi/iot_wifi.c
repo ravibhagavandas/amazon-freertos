@@ -308,7 +308,7 @@ static WIFIReturnCode_t conv_mode_to_qcom(WIFIDeviceMode_t xDeviceMode, QCOM_WLA
  * @param[in] xCap Capacity of pcDest i.e. max characters it can store
  *
  */
-static size_t prvByteArrayToString( char * pcDest, uint8_t * pucSrc, size_t xLen, size_t xCap )
+static size_t prvByteArrayToString( char * pcDest, const uint8_t * const pucSrc, size_t xLen, size_t xCap )
 {
 	configASSERT( pcDest );
 	configASSERT( pucSrc );
