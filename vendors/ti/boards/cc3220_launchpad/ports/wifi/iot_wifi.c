@@ -511,6 +511,8 @@ WIFIReturnCode_t WIFI_ConnectAP( const WIFINetworkParams_t * const pxNetworkPara
     WIFIReturnCode_t xRetVal = eWiFiSuccess;
     int32_t lRetVal;
     SlWlanSecParams_t xSecurityParams = { 0 };
+    char cSSID[ wificonfigMAX_SSID_LEN + 1 ] = { 0 };
+    char cPassword[ wificonfigMAX_PASSPHRASE_LEN + 1 ] = { 0 };
 
     configASSERT( pxNetworkParams != NULL );
     configASSERT( pxNetworkParams->ucSSIDLength > 0 );
@@ -528,14 +530,12 @@ WIFIReturnCode_t WIFI_ConnectAP( const WIFINetworkParams_t * const pxNetworkPara
             /* Write the input constant SSID to the local copy. A local copy of the
             * Wi-Fi SSID parameter is needed because Network_IF_ConnectAP() will
             * attempt to write to it's input parameter pcSsid. */
-            char pcSSID[ pxNetworkParams->ucSSIDLength + 1 ];
-            prvByteArrayToString( pcSSID, pxNetworkParams->ucSSID, pxNetworkParams->ucSSIDLength, wificonfigMAX_SSID_LEN );
+            prvByteArrayToString( cSSID, pxNetworkParams->ucSSID, pxNetworkParams->ucSSIDLength, wificonfigMAX_SSID_LEN );
 
             /* Initialize AP security params. */
-            char pcPassword[ pxNetworkParams->xPassword.xWPA.ucLength + 1];
-            prvByteArrayToString( pcPassword, pxNetworkParams->xPassword.xWPA.cPassphrase, pxNetworkParams->xPassword.xWPA.ucLength, wificonfigMAX_PASSPHRASE_LEN);
-            xSecurityParams.Key = ( signed char * ) pcPassword;
-            xSecurityParams.KeyLen = strlen(pcPassword);
+            prvByteArrayToString( cPassword, pxNetworkParams->xPassword.xWPA.cPassphrase, pxNetworkParams->xPassword.xWPA.ucLength, wificonfigMAX_PASSPHRASE_LEN );
+            xSecurityParams.Key = ( signed char * ) cPassword;
+            xSecurityParams.KeyLen = strlen(cPassword);
 
             xSecurityParams.Type = prvConvertSecurityAbstractedToTI( pxNetworkParams->xSecurity );
 
@@ -543,7 +543,7 @@ WIFIReturnCode_t WIFI_ConnectAP( const WIFINetworkParams_t * const pxNetworkPara
             {
                 /* Connect to the Access Point. If the credentials are incorrect this
                 * function will ask for an open SSID. */
-                lRetVal = Network_IF_ConnectAP( pcSSID,
+                lRetVal = Network_IF_ConnectAP( cSSID,
                                                 xSecurityParams );
             }
             else
@@ -1101,6 +1101,8 @@ WIFIReturnCode_t WIFI_ConfigureAP( const WIFINetworkParams_t * const pxNetworkPa
     int16_t sRetCode;
     uint8_t ucChannel;
     uint8_t ucSecurityType;
+    char cSSID[ wificonfigMAX_SSID_LEN + 1 ] = { 0 };
+    char cPassword[ wificonfigMAX_PASSPHRASE_LEN + 1 ] = { 0 };
 
     configASSERT( pxNetworkParams != NULL );
     configASSERT( pxNetworkParams->ucSSIDLength > 0 );
@@ -1123,12 +1125,11 @@ WIFIReturnCode_t WIFI_ConfigureAP( const WIFINetworkParams_t * const pxNetworkPa
         else
         {
             /*Set Access point SSID.*/
-            char pcSSID[ pxNetworkParams->ucSSIDLength + 1 ];
-            prvByteArrayToString( pcSSID, pxNetworkParams->ucSSID, pxNetworkParams->ucSSIDLength, wificonfigMAX_SSID_LEN );
+            prvByteArrayToString( cSSID, pxNetworkParams->ucSSID, pxNetworkParams->ucSSIDLength, wificonfigMAX_SSID_LEN );
             sRetCode = sl_WlanSet( SL_WLAN_CFG_AP_ID,
                                    SL_WLAN_AP_OPT_SSID,
-                                   strlen( pcSSID ),
-                                   pcSSID );
+                                   strlen( cSSID ),
+                                   cSSID );
         }
 
         /* Print error, if there is one. */
@@ -1183,12 +1184,11 @@ WIFIReturnCode_t WIFI_ConfigureAP( const WIFINetworkParams_t * const pxNetworkPa
                 else
                 {
                     /*Set Access point password.*/
-                    char pcPassword[ pxNetworkParams->xPassword.xWPA.ucLength + 1 ];
-                    prvByteArrayToString( pcPassword, pxNetworkParams->xPassword.xWPA.cPassphrase, pxNetworkParams->xPassword.xWPA.ucLength, wificonfigMAX_PASSPHRASE_LEN );
+                    prvByteArrayToString( cPassword, pxNetworkParams->xPassword.xWPA.cPassphrase, pxNetworkParams->xPassword.xWPA.ucLength, wificonfigMAX_PASSPHRASE_LEN );
                     sRetCode = sl_WlanSet( SL_WLAN_CFG_AP_ID,
                                           SL_WLAN_AP_OPT_PASSWORD,
-                                          strlen( pcPassword ),
-                                          ( uint8_t * ) pcPassword );
+                                          strlen( cPassword ),
+                                          ( uint8_t * ) cPassword );
                 }
 
                 if( sRetCode != 0 )
