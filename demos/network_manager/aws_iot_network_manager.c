@@ -589,12 +589,12 @@ static IotNetworkManager_t networkManager =
         if( pxEvent->xEventType == eWiFiEventIPReady )
         {
             pucIpAddr = ( uint8_t * ) ( &pxEvent->xInfo.xIPReady.xIPAddress.ulAddress[ 0 ] );
-            IotLogInfo( "Connected to WiFi access point. IP address %d.%d.%d.%d", pucIpAddr[ 0 ], pucIpAddr[ 1 ], pucIpAddr[ 2 ], pucIpAddr[ 3 ] );
+            IotLogInfo( "Connected to WiFi access point, ip address: %d.%d.%d.%d.", pucIpAddr[ 0 ], pucIpAddr[ 1 ], pucIpAddr[ 2 ], pucIpAddr[ 3 ] );
             _onNetworkStateChangeCallback( AWSIOT_NETWORK_TYPE_WIFI, eNetworkStateEnabled );
         }
         else if( pxEvent->xEventType == eWiFiEventDisconnected )
         {
-            IotLogInfo( "Disconnected from WiFi access point, reason = %d", pxEvent->xInfo.xDisconnected.xReason );
+            IotLogInfo( "Disconnected from WiFi access point, reason code: %d.", pxEvent->xInfo.xDisconnected.xReason );
             _onNetworkStateChangeCallback( AWSIOT_NETWORK_TYPE_WIFI, eNetworkStateDisabled );
         }
     }

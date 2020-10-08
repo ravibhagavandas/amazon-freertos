@@ -84,10 +84,49 @@ static SemaphoreHandle_t xWiFiSem; /**< WiFi module semaphore. */
  */
 static const TickType_t xSemaphoreWaitTicks = pdMS_TO_TICKS( wificonfigMAX_SEMAPHORE_WAIT_TIME_MS );
 
+static WIFIEventHandler_t xWifiEventHandlers[ eWiFiEventMax ]; 
+
+static WIFIReason_t convertReasonCode( uint8_t reasonCode )
+{
+    WIFIReason_t retCode;
+    switch( reasonCode )
+    {
+        case WIFI_REASON_AUTH_EXPIRE:
+            retCode = eWiFiReasonAuthExpired;
+            break;
+        case WIFI_REASON_ASSOC_EXPIRE:
+            retCode = eWiFiReasonAssocExpired;
+            break;
+        case WIFI_REASON_AUTH_LEAVE:
+            retCode = eWiFiReasonAuthLeaveBSS;
+            break;
+        case WIFI_REASON_4WAY_HANDSHAKE_TIMEOUT:
+            retCode = eWiFiReason4WayTimeout;
+            break;
+        case WIFI_REASON_BEACON_TIMEOUT:
+            retCode = eWiFiReasonBeaconTimeout;
+            break;
+        case WIFI_REASON_AUTH_FAIL:
+            retCode = eWiFiReasonAuthFailed;
+            break;
+        case WIFI_REASON_ASSOC_FAIL:
+            retCode = eWiFiReasonAssocFailed;
+            break;
+        case WIFI_REASON_NO_AP_FOUND:
+            retCode = eWiFiReasonAPNotFound;
+            break;
+        default:
+            retCode = eWiFiReasonUnspecified;
+            break;
+    }
+    return retCode;
+} 
+
 static esp_err_t event_handler(void *ctx, system_event_t *event)
 {
     /* For accessing reason codes in case of disconnection */
     system_event_info_t *info = &event->event_info;
+    WIFIEvent_t eventInfo = { 0 };
 
     switch(event->event_id) {
         case SYSTEM_EVENT_STA_START:
@@ -102,6 +141,12 @@ static esp_err_t event_handler(void *ctx, system_event_t *event)
             wifi_conn_state = true;
             xEventGroupClearBits(wifi_event_group, DISCONNECTED_BIT);
             xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);
+            if( xWifiEventHandlers[ eWiFiEventIPReady ] != NULL )
+            {
+                eventInfo.xEventType = eWiFiEventIPReady;
+                eventInfo.xInfo.xIPReady.xIPAddress.ulAddress[ 0 ] = info->got_ip.ip_info.ip.addr;
+                xWifiEventHandlers[ eWiFiEventIPReady ]( &eventInfo );
+            }
             break;
         case SYSTEM_EVENT_STA_DISCONNECTED:
             ESP_LOGI(TAG, "SYSTEM_EVENT_STA_DISCONNECTED: %d", info->disconnected.reason);
@@ -131,6 +176,13 @@ static esp_err_t event_handler(void *ctx, system_event_t *event)
             wifi_conn_state = false;
             xEventGroupClearBits(wifi_event_group, CONNECTED_BIT);
             xEventGroupSetBits(wifi_event_group, DISCONNECTED_BIT);
+
+            if( xWifiEventHandlers[ eWiFiEventDisconnected ] != NULL )
+            {
+                eventInfo.xEventType = eWiFiEventDisconnected;
+                eventInfo.xInfo.xDisconnected.xReason = convertReasonCode( info->disconnected.reason );
+                xWifiEventHandlers[ eWiFiEventDisconnected ]( &eventInfo );
+            }
             break;
         case SYSTEM_EVENT_AP_START:
             ESP_LOGI(TAG, "SYSTEM_EVENT_AP_START");
@@ -1475,6 +1527,21 @@ WIFIReturnCode_t WIFI_GetPMMode( WIFIPMMode_t * pxPMModeType,
 WIFIReturnCode_t WIFI_RegisterEvent( WIFIEventType_t xEventType,
                                      WIFIEventHandler_t xHandler )
 {
-    return eWiFiNotSupported;
+    WIFIReturnCode_t xWiFiRet;
+
+    switch( xEventType )
+    {
+        case eWiFiEventIPReady:
+        case eWiFiEventDisconnected:
+            xWifiEventHandlers[ xEventType ] = xHandler;
+            xWiFiRet = eWiFiSuccess;
+            break;
+        default:
+            xWiFiRet = eWiFiNotSupported;
+            break;
+    }
+
+
+    return xWiFiRet;
 }
 /*-----------------------------------------------------------*/
