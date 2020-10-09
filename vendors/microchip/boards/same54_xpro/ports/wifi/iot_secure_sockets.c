@@ -344,6 +344,7 @@ int32_t SOCKETS_Close( Socket_t xSocket )
                     {
                         break;
                     }
+                    vTaskDelay(50 / portTICK_PERIOD_MS);
                 }
             }
             
@@ -919,6 +920,7 @@ int32_t SOCKETS_Shutdown( Socket_t xSocket,
                     {
                         break;
                     }
+                    vTaskDelay(50 / portTICK_PERIOD_MS);
                 }
             }
             

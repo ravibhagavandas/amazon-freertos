@@ -1171,7 +1171,7 @@ WIFIReturnCode_t WIFI_ConnectAP( const WIFINetworkParams_t * const pxNetworkPara
         }
         
          xSemaphoreGive(xWiFiSemaphore);      
-         vTaskDelay(5000);// WIFI wait for DHCP
+         
         return eWiFiSuccess;
 
     }
