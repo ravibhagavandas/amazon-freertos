@@ -404,7 +404,7 @@ static MQTTStatus_t createMQTTConnectionWithBroker( const MQTTFixedBuffer_t * bu
      * is valid. Note that the packetId is not present in the connection ack. */
     result = MQTT_DeserializeAck( &incomingPacket, &packetId, &sessionPresent );
 
-    LogInfo( ( "Successfully received a CONNACK packet" ) );
+    LogError( ( "Successfully received a CONNACK packet" ) );
 
     if( result != MQTTSuccess )
     {
@@ -474,7 +474,7 @@ static MQTTStatus_t mqttSubscribeToTopics( const MQTTFixedBuffer_t * buf )
     
     if( result == MQTTSuccess )
     {
-        LogInfo( ( "Successfully sent subscribe packet to the broker" ) );
+        LogError( ( "Successfully sent subscribe packet to the broker" ) );
     }
     else
     {
@@ -535,7 +535,7 @@ static MQTTStatus_t mqttUnsubscribeFromTopic( const MQTTFixedBuffer_t * buf )
 
     if( result == MQTTSuccess )
     {
-        LogInfo( ( "Successfully sent unsubscribe packet to the broker" ) );
+        LogError( ( "Successfully sent unsubscribe packet to the broker" ) );
     }
     else
     {
@@ -580,7 +580,7 @@ static MQTTStatus_t mqttKeepAlive( const MQTTFixedBuffer_t * buf )
     }
     else
     {
-         LogInfo( ( "Successfully sent a ping request packet to the broker" ) );
+         LogError( ( "Successfully sent a ping request packet to the broker" ) );
     }
     
     return result;
@@ -619,7 +619,7 @@ static void mqttDisconnect( const MQTTFixedBuffer_t * buf )
     }
     else
     {
-         LogInfo( ( "Successfully sent a disconnect request packet to the broker" ) );
+         LogError( ( "Successfully sent a disconnect request packet to the broker" ) );
     }
  }
 
@@ -687,7 +687,7 @@ static MQTTStatus_t mqttPublishToTopic( const MQTTFixedBuffer_t * buf )
         }
         else
         {
-            LogInfo( ( "Successfully published to %s", mqttPublishInfo.pTopicName ) );
+            LogError( ( "Successfully published to %s", mqttPublishInfo.pTopicName ) );
         }
     }
     
@@ -740,10 +740,10 @@ static void mqttProcessIncomingPublish( const MQTTPublishInfo_t * pPubInfo,
     {
         if( 0 == strncmp( subscriptionArray[ i ], pPubInfo->pTopicName, pPubInfo->topicNameLength ) )
         {
-            LogInfo( ( "Incoming Publish Topic Name: %.*s matches subscribed topic.",
+            LogError( ( "Incoming Publish Topic Name: %.*s matches subscribed topic.",
                        pPubInfo->topicNameLength,
                        pPubInfo->pTopicName ) );
-            LogInfo( ( "Incoming Publish Message : %.*s",
+            LogError( ( "Incoming Publish Message : %.*s",
                        pPubInfo->payloadLength,
                        ( char * ) pPubInfo->pPayload ) );
             matchedSubscription = true;
@@ -768,7 +768,7 @@ static void mqttProcessIncomingPacket( MQTTFixedBuffer_t * buf )
     uint16_t responsePacketId = 0;
     bool sessionPresent = false;
 
-    LogInfo( ( "Trying to receive an incoming packet" ) );
+    LogError( ( "Trying to receive an incoming packet" ) );
 
     /***
      * For readability, error handling in this function is restricted to the use of
@@ -783,7 +783,7 @@ static void mqttProcessIncomingPacket( MQTTFixedBuffer_t * buf )
     {
         result = MQTT_DeserializePublish( &incomingPacket, &responsePacketId, &publishInfo );
         configASSERT( result == MQTTSuccess );
-        LogInfo( ( "Incoming publish packet received successfully." ) );
+        LogError( ( "Incoming publish packet received successfully." ) );
 
         /* Process incoming Publish message. */
         mqttProcessIncomingPublish( &publishInfo, responsePacketId );
@@ -794,7 +794,7 @@ static void mqttProcessIncomingPacket( MQTTFixedBuffer_t * buf )
          * of the messages we sent out, verify that the ACK packet is a valid MQTT
          * packet. Since CONNACK is already processed, session present parameter is
          * to NULL */
-         LogInfo( ( "Incoming ACK packet received successfully." ) );
+         LogError( ( "Incoming ACK packet received successfully." ) );
         result = MQTT_DeserializeAck( &incomingPacket, &responsePacketId, &sessionPresent );
         configASSERT( result == MQTTSuccess );
 

@@ -91,7 +91,7 @@
 
     #elif LIBRARY_LOG_LEVEL == LOG_ERROR
         /* Only ERROR messages will be logged. */
-        #define LogError( message )    SdkLog( ( "[ERROR] [%s] "LOG_METADATA_FORMAT, LIBRARY_LOG_NAME, LOG_METADATA_ARGS ) ); SdkLog( message ); SdkLog( ( "\r\n" ) )
+        #define LogError( message )    SdkLog( message ); SdkLog( ( "\r\n" ) )
         #define LogWarn( message )
         #define LogInfo( message )
         #define LogDebug( message )
