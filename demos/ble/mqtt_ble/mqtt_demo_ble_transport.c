@@ -211,7 +211,10 @@ static void demoCallback( IotBleDataTransferChannelEvent_t event,
     else if( event == IOT_BLE_DATA_TRANSFER_CHANNEL_DATA_RECEIVED )
     {
         acceptCode = IotBleMqttTransportAcceptData( &xContext );
-        configASSERT( acceptCode == MQTTSuccess );
+        if( acceptCode != MQTTSuccess )
+        {
+            LogError( ( "Error in accepting data %d", acceptCode ) );
+        }
     }
 
     /* Event for when channel is closed. */
@@ -416,7 +419,7 @@ static MQTTStatus_t createMQTTConnectionWithBroker( const MQTTFixedBuffer_t * bu
 }
 
 
-static void mqttSubscribeToTopics( const MQTTFixedBuffer_t * buf )
+static MQTTStatus_t mqttSubscribeToTopics( const MQTTFixedBuffer_t * buf )
 {
     MQTTStatus_t result = MQTTSuccess;
     MQTTSubscribeInfo_t mqttSubscription[ NUM_SUBS_AT_ONCE ];
@@ -455,18 +458,34 @@ static void mqttSubscribeToTopics( const MQTTFixedBuffer_t * buf )
                                       subscribePacketIdentifier,
                                       remainingLength,
                                       buf );
-    configASSERT( result == MQTTSuccess );
+    if( result == MQTTSuccess )
+    {
 
-    /* Send Subscribe request to the broker. */
-    status = ( size_t ) IotBleMqttTransportSend( &xContext, buf->pBuffer, packetSize );
+        /* Send Subscribe request to the broker. */
+        status = ( size_t ) IotBleMqttTransportSend( &xContext, buf->pBuffer, packetSize );
+        if( status != packetSize )
+        {
+            LogError( ( "Failed to send all bytes %d, sent = %d.", packetSize, status ) );
+            result = MQTTSendFailed;
+        }
+    }
 
-    configASSERT( status == packetSize );
-
-    LogInfo( ( "Successfully sent subscribe packet to the broker" ) );
+    //configASSERT( status == packetSize );
+    
+    if( result == MQTTSuccess )
+    {
+        LogInfo( ( "Successfully sent subscribe packet to the broker" ) );
+    }
+    else
+    {
+        LogError( ( "Failed to send subscribe packet to broker err = %d", result ) );
+    }
+    
+    return result;
 }
 
 
-static void mqttUnsubscribeFromTopic( const MQTTFixedBuffer_t * buf )
+static MQTTStatus_t mqttUnsubscribeFromTopic( const MQTTFixedBuffer_t * buf )
 {
     MQTTStatus_t result = MQTTSuccess;
     MQTTSubscribeInfo_t mqttUnsubscription[ NUM_SUBS_AT_ONCE ];
@@ -500,17 +519,34 @@ static void mqttUnsubscribeFromTopic( const MQTTFixedBuffer_t * buf )
                                         unsubscribePacketIdentifier,
                                         remainingLength,
                                         buf );
-    configASSERT( result == MQTTSuccess );
+    //configASSERT( result == MQTTSuccess );
 
     /* Send Unsubscribe request to the broker. */
-    status = ( size_t ) IotBleMqttTransportSend( &xContext, buf->pBuffer, packetSize );
-    configASSERT( status == packetSize );
+    if( result == MQTTSuccess )
+    {
+        status = ( size_t ) IotBleMqttTransportSend( &xContext, buf->pBuffer, packetSize );
+        if( status != packetSize )
+        {
+            LogError( ( "Failed to send all bytes %d, sent = %d", packetSize, status ) );
+            result = MQTTSendFailed;
+        }
+    }
+    //configASSERT( status == packetSize );
 
-    LogInfo( ( "Successfully sent an unsubscribe packet to the broker" ) );
+    if( result == MQTTSuccess )
+    {
+        LogInfo( ( "Successfully sent unsubscribe packet to the broker" ) );
+    }
+    else
+    {
+        LogError( ( "Failed to send unsubscribe packet to broker, err = %d", result ) );
+    }
+    
+    return result;
 }
 
 
-static void mqttKeepAlive( const MQTTFixedBuffer_t * buf )
+static MQTTStatus_t mqttKeepAlive( const MQTTFixedBuffer_t * buf )
 {
     MQTTStatus_t result = MQTTSuccess;
     int32_t status = 0;
@@ -524,13 +560,30 @@ static void mqttKeepAlive( const MQTTFixedBuffer_t * buf )
     configASSERT( packetSize > 0U );
 
     result = MQTT_SerializePingreq( buf );
-    configASSERT( result == MQTTSuccess );
+    //configASSERT( result == MQTTSuccess );
 
     /* Send Ping Request to the broker. */
-    status = IotBleMqttTransportSend( &xContext, buf->pBuffer, packetSize );
-    configASSERT( status == ( int32_t ) packetSize );
-
-    LogInfo( ( "Successfully sent a ping request packet to the broker" ) );
+    if( result == MQTTSuccess )
+    {
+         status = IotBleMqttTransportSend( &xContext, buf->pBuffer, packetSize );
+         if( status != packetSize )
+         {
+             LogError( ( "Cannot send all bytes %d, sent = %d.", packetSize, status ) );
+             result = MQTTSendFailed;
+         }
+     }
+    //configASSERT( status == ( int32_t ) packetSize );
+    
+    if( result != MQTTSuccess )
+    {
+        LogError( ( "Failed to send a ping request packet to the broker err = %d.", result ) );
+    }
+    else
+    {
+         LogInfo( ( "Successfully sent a ping request packet to the broker" ) );
+    }
+    
+    return result;
 }
 
 
@@ -547,17 +600,31 @@ static void mqttDisconnect( const MQTTFixedBuffer_t * buf )
     configASSERT( packetSize > 0U );
 
     result = MQTT_SerializeDisconnect( buf );
-    configASSERT( result == MQTTSuccess );
+    //configASSERT( result == MQTTSuccess );
+    
+    if( result == MQTTSuccess )
+    {
+         status = IotBleMqttTransportSend( &xContext, buf->pBuffer, packetSize );
+         if( status != packetSize )
+         {
+             LogError( ( "Cannot send all bytes %d, sent = %d.", packetSize, status ) );
+             result = MQTTSendFailed;
+         }
+     }
+    //configASSERT( status == ( int32_t ) packetSize );
+    
+    if( result != MQTTSuccess )
+    {
+        LogError( ( "Failed to send a disconnect request packet to the broker err = %d.", result ) );
+    }
+    else
+    {
+         LogInfo( ( "Successfully sent a disconnect request packet to the broker" ) );
+    }
+ }
 
-    /* Send disconnect packet to the broker */
-    status = IotBleMqttTransportSend( &xContext, buf->pBuffer, packetSize );
-    configASSERT( status == ( int32_t ) packetSize );
 
-    LogInfo( ( "Successfully sent a disconnect packet to the broker" ) );
-}
-
-
-static void mqttPublishToTopic( const MQTTFixedBuffer_t * buf )
+static MQTTStatus_t mqttPublishToTopic( const MQTTFixedBuffer_t * buf )
 {
     MQTTStatus_t result;
     MQTTPublishInfo_t mqttPublishInfo;
@@ -600,14 +667,31 @@ static void mqttPublishToTopic( const MQTTFixedBuffer_t * buf )
                                         subPacketId,
                                         remainingLength,
                                         buf );
-        configASSERT( result == MQTTSuccess );
+        //configASSERT( result == MQTTSuccess );
+        
+        if( result == MQTTSuccess )
+        {
 
-        bytesSent = ( size_t ) IotBleMqttTransportSend( &xContext, buf->pBuffer, packetSize );
-
-        configASSERT( bytesSent == ( size_t ) packetSize );
-
-        LogInfo( ( "Successfully published to %s", mqttPublishInfo.pTopicName ) );
+            bytesSent = ( size_t ) IotBleMqttTransportSend( &xContext, buf->pBuffer, packetSize );
+            if( bytesSent != packetSize )
+            {
+                LogError( ( "Cannot send all bytes %d, bytes sent = %d.", packetSize, bytesSent ) );
+                result = MQTTSendFailed;
+            }
+        }
+        
+        if( result != MQTTSuccess )
+        {
+            LogError( ( "Failed to publish to %s", mqttPublishInfo.pTopicName ) );
+            break;
+        }
+        else
+        {
+            LogInfo( ( "Successfully published to %s", mqttPublishInfo.pTopicName ) );
+        }
     }
+    
+    return result;
 }
 
 
@@ -710,6 +794,7 @@ static void mqttProcessIncomingPacket( MQTTFixedBuffer_t * buf )
          * of the messages we sent out, verify that the ACK packet is a valid MQTT
          * packet. Since CONNACK is already processed, session present parameter is
          * to NULL */
+         LogInfo( ( "Incoming ACK packet received successfully." ) );
         result = MQTT_DeserializeAck( &incomingPacket, &responsePacketId, &sessionPresent );
         configASSERT( result == MQTTSuccess );
 
@@ -730,7 +815,7 @@ MQTTStatus_t RunMQTTBLETransportDemo( void )
     uint16_t loopCount = 0;
     const uint16_t maxLoopCount = 5U;
     uint16_t demoIterations = 0;
-    const uint16_t maxDemoIterations = 5U;
+    const uint16_t maxDemoIterations = 2U;
     bool publishPacketSent = false;
 
     /***
@@ -770,7 +855,11 @@ MQTTStatus_t RunMQTTBLETransportDemo( void )
              * from the broker. This demo uses QOS0 in subscribe, therefore, the Publish
              * messages received from the broker will have QOS0. */
 
-            mqttSubscribeToTopics( &fixedBuffer );
+            status = mqttSubscribeToTopics( &fixedBuffer );
+            if( status != MQTTSuccess )
+            {
+                break;
+            }
 
             /* Process incoming packets from the broker. There will be one SUBACK packet
              * for each topic subscribed to.  There remains the possiblity that another
@@ -797,7 +886,11 @@ MQTTStatus_t RunMQTTBLETransportDemo( void )
                 /* Publish to the topic every other time to trigger sending of PINGREQ  */
                 if( publishPacketSent == false )
                 {
-                    mqttPublishToTopic( &fixedBuffer );
+                    status = mqttPublishToTopic( &fixedBuffer );
+                    if( status != MQTTSuccess )
+                    {
+                        break;
+                    }
 
                     /* Set control packet sent flag to true so that the lastControlPacketSent
                      * timestamp will be updated. */
@@ -813,7 +906,11 @@ MQTTStatus_t RunMQTTBLETransportDemo( void )
                 {
                     /* Check if the keep-alive period has elapsed, since the last control packet was sent.
                      * If the period has elapsed, send out MQTT PINGREQ to the broker.  */
-                    mqttKeepAlive( &fixedBuffer );
+                    status = mqttKeepAlive( &fixedBuffer );
+                    if( status != MQTTSuccess )
+                    {
+                        break;
+                    }
 
                     /* Since PUBLISH packet is not sent for this iteration, set publishPacketSent to false
                      * so the next iteration will send PUBLISH .*/
@@ -836,7 +933,11 @@ MQTTStatus_t RunMQTTBLETransportDemo( void )
                 break;
             }
 
-            mqttUnsubscribeFromTopic( &fixedBuffer );
+            status = mqttUnsubscribeFromTopic( &fixedBuffer );
+            if( status != MQTTSuccess )
+            {
+                break;
+            }
 
             /* Process Incoming unsubscribe acks from the broker. */
             for( size_t subscriptionNumber = 0; subscriptionNumber < NUM_SUBS_AT_ONCE; ++subscriptionNumber )
