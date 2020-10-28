@@ -352,13 +352,16 @@ static IotNetworkManager_t networkManager =
             }
         }
 
+
         if( ret == true )
         {
             /* Register BLE Connection callback */
             ret = _bleRegisterUnregisterCb( false );
         }
 
-        if( ret == false )
+	configPRINTF(( "BLE Name for advertisement %s\r\n", IOT_BLE_DEVICE_COMPLETE_LOCAL_NAME ));
+        
+	if( ret == false )
         {
             bleNetwork.state = eNetworkStateUnknown;
         }
