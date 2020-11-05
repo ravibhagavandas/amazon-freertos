@@ -340,6 +340,7 @@ static IotNetworkManager_t networkManager =
                 ret = false;
             }
         }
+	configPRINTF(("BLE device name : %s\r\n", IOT_BLE_DEVICE_COMPLETE_LOCAL_NAME ));
 
         if( ret == true )
         {
@@ -351,6 +352,9 @@ static IotNetworkManager_t networkManager =
                 ret = false;
             }
         }
+	
+	configPRINTF(("BLE on successufll\r\n"));
+
 
         if( ret == true )
         {
