@@ -42,7 +42,6 @@
 /* MTU size. */
 #define IOT_BLE_PREFERRED_MTU_SIZE          ( NRF_SDH_BLE_GATT_MAX_MTU_SIZE )
 
-#define IOT_BLE_ENCRYPTION_REQUIRED               ( 0 )
 
 /**
  * Buffer size for network interface shim layer. The config is to
