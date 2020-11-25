@@ -351,6 +351,14 @@ static IotNetworkManager_t networkManager =
                 ret = false;
             }
         }
+        
+        configPRINTF(( "Device Name %s, numeric comp : %d, sc %d, io %d, enc %d\r\n",
+                      IOT_BLE_DEVICE_COMPLETE_LOCAL_NAME,
+                      IOT_BLE_ENABLE_NUMERIC_COMPARISON,
+                      IOT_BLE_ENABLE_SECURE_CONNECTION,
+                      IOT_BLE_INPUT_OUTPUT,
+                      IOT_BLE_ENCRYPTION_REQUIRED ));
+                        
 
         if( ret == true )
         {
