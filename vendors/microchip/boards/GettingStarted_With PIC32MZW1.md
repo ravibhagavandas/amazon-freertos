@@ -96,7 +96,7 @@ Provision the Microchip Trust&Go Secure Element as per the following steps
     2. Open MPLAB IDE
     2. From the  **File**  menu, choose  **Open Project**.
     3. Browse to and open the project based on hardware selection  
-    projects\microchip\curiosity2_pic32mzw1\mplab\tng_certificate_reader\firmware\tng_certificate_reader.X.
+    projects\microchip\curiosity_pic32mzw1_ecc\mplab\tng_certificate_reader\firmware\tng_certificate_reader.X.
     4. Rebuild your project.
     5. On the Projects tab, right-click the tng_certificate_reader top-level folder, and then choose **Run**
     6. Connect the Curiosity Board to your PC through USB Power connector (J204) to power up the board
@@ -208,11 +208,11 @@ This tutorial contains instructions for the following getting started steps:
 
 For Secure Element based Wireless Solution with ECC608 Trust&Go:
 
-projects\microchip\curiosity2_pic32mzw1\mplab\aws_demos\firmware\aws_demos.X.
+projects\microchip\curiosity_pic32mzw1_ecc\mplab\aws_demos\firmware\aws_demos.X.
 
 For Wireless only Solution:
 
-projects\microchip\curiosity2_pic32mzw1_ecc\mplab\aws_demos\firmware\aws_demos.X.
+projects\microchip\curiosity_pic32mzw1\mplab\aws_demos\firmware\aws_demos.X.
 
 **Note**
 
