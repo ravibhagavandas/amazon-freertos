@@ -1,10 +1,11 @@
 # Getting Started with the Microchip SAME70 Xplained Ultra
 
 This tutorial provides instructions for getting started with the Microchip SAME70 Xplained Ultra.
-Microchip provides two solutions with FreeRTOS
+Microchip provides three solutions with FreeRTOS
 
 1. Secure Element based Wired Solution with ECC608
-2. Wired only solution (NVM Based).
+2. Secure Element based Wi-Fi (Wireless) solution with ECC608 and
+3. Wired only solution (NVM Based).
 
 If you do not have the following components, visit the AWS Partner Device Catalog to purchase one from our [partner](https://devices.amazonaws.com/detail/a3G0h0000077I6TEAU/SAM-E70-Xplained-Ultra-Evaluation-Kit).
 
@@ -12,6 +13,7 @@ If you do not have the following components, visit the AWS Partner Device Catalo
 - [LAN8720 PHY daughter board](http://www.microchip.com/DevelopmentTools/ProductDetails.aspx?PartNO=ac320004-3)
 - [ATECC608A Trust](https://www.microchip.com/developmenttools/ProductDetails/DT100104#additional-summary) (for Secure element based solution).
 - [mikroBUS Xplained Pro adapter](https://www.microchip.com/Developmenttools/ProductDetails/ATMBUSADAPTER-XPRO) (for Secure element based solution).
+- [WINC1500 Xplained Pro](https://www.microchip.com/DevelopmentTools/ProductDetails/ATWINC1500-XPRO) (for Secure Element based Wireless solution) .
 - [SAMD21 XPlained Pro](https://www.microchip.com/DevelopmentTools/ProductDetails/ATSAMD21-XPRO) (for Provisoning ECC608).
 
 ## **Pre-Requisites:**
@@ -39,8 +41,29 @@ Long FreeRTOS download directory paths can cause build failures.
 ---
 
 4. Demo Configuration
-	- For Secure Wired solution, use the aws_clientcredential.h and aws_clientcredentialkeys.h obtained as part of the provisioning Secure Element (ATECC608).
+	- For Secure Wired/Wireless solution, use the aws_clientcredential.h and aws_clientcredentialkeys.h obtained as part of the provisioning Secure Element (ATECC608).
+		- For Wireless solution, enter the WIFI SSID and password in aws_clientcredential.h.
 	- For Wired only solution, refer [Configuring the FreeRTOS Demos](https://docs.aws.amazon.com/freertos/latest/userguide/freertos-configure.html)
+
+
+
+## **WIFI Configuration for Cloud Connectivity (Program Amazon Root CA)**
+
+To use WiFi (wireless) solution, you need to program the Amazon Root CA to WINC3400 Xplained Pro or WINC1500 Xplained Pro. Below are the steps
+1. Download [Amazon Root CA3](https://docs.aws.amazon.com/iot/latest/developerguide/server-authentication.html#server-authentication-certs) in .pem format
+2. Convert the .pem format to .cer
+    * Use OpenSSL command to convert .pem to .crt
+      >openssl x509 -outform der -in certificate.pem -out certificate.crt
+    * Double click .crt file in Windows -> Select "Detail" tab --> Click "Copy to File" --> Click "Next" --> Select "DER encoded binary X.509 (.CER)" --> Click "Next" --> Input the file name as "AmazonRootCA3" --> "AmazonRootCA3.cer" file is generated
+3. Import Firmware Update Project and Upgrade
+    * Install [Atmel Studio 7.0] from Windows Environment.(https://gallery.microchip.com/policies/studio)
+    * Search for "Firmware Update Project" from the "New Example Project" of ASF menu in Atmel Studio
+    
+      To use WINC1500 Xplained Pro,
+      * Select "WINC Firmware Update Project (v19.6.1) SAMD21 Xplained Pro" and then press the OK button to import firmware update project and related documentation
+      * Place "AmazonRootCA3.cer" to the project folder src\firmware\Tools\root_certificate_downloader\binary
+      * Plug the WINC1500 Xplained Pro into the SAMD21 board in the EXT1 location and connect the DEBUG USB port of the board to the host computer using a Type A to Micro B USB Cable.
+      * Execute "samd21_xplained_pro_firmware_update.bat" in folder src/ to upgrade the firmware and program Root CA
 
 ## **Overview**
 
@@ -64,6 +87,12 @@ This tutorial contains instructions for the following getting started steps:
 to Micro B USB Cable.
 
 
+**To use Secured Wireless**,
+1. Plug the WINC1500 Xplained Pro into the SAME70 board in the EXT1 location
+2. Plug the mikroBUS XPlained Pro adapter into the SAME70 board in the EXT2 location.
+3. Plug the ATECC608A Trust board into the mikroBUSX XPlained Pro adapter. Make sure that the notched corner of the click board matches with the notched icon on the adapter board.
+4. Select the TrustCUSTOM secure element on the ATECC608A Trust board by switch on the DIP Switch 1 of SW2
+4. Connect the DEBUG USB port of the board to the host computer using a Type A to Micro B USB Cable.
 
 **To use Wired only Solution**,
 1. Connect the PIC32 LAN8720 PHY daughter board to the ETHERNET PHY MODULE header on the SAME70 Xplained Ultra Kit.
@@ -103,11 +132,15 @@ The FreeRTOS project for this device is based on MPLAB Harmony v3. To build the 
 
 For Secured Wired:
 
-projects\microchip\same70_xult\mplab\aws_demos\firmware\aws_demos.X.
+	projects\microchip\same70_xult_ecc\mplab\aws_demos\firmware\aws_demos.X.
+
+For Secured Wireless:
+
+	projects\microchip\same70_xult_winc1500\mplab\aws_demos\firmware\aws_demos.X.
 
 For Wired only Solution:
 
-projects\microchip\same70_xult_ecc\mplab\aws_demos\firmware\aws_demos.X.
+	projects\microchip\same70_xult\mplab\aws_demos\firmware\aws_demos.X.
 
 
 **Note**
@@ -128,14 +161,20 @@ You can use the MQTT client in the AWS IoT console to monitor the messages that 
 
 1. Sign in to the [AWS IoT console](https://console.aws.amazon.com/iotv2/).
 2. In the navigation pane, choose  **Test**  to open the MQTT client.
-3. In  **Subscription topic** , enter  **iotdemo/#** , and then choose  **Subscribe to topic**. 
+3. In the **Quality of Service** select **1 ( This client will acknowledge to the Device Gateway that messages are received). **
+4. In  **Subscription topic** , enter  **iotdemo/#** , and then choose  **Subscribe to topic**. 
 This will enable you to see the periodically published messages by the MQTT Hello World example.
+
+<img src="mqtt_demo_publish.png" width="1000">
+
+#### Output in Serial port terminal
+<img src="mqtt_demo.png" width="1000">
 
 ## Troubleshooting
 
 If no messages appear in the AWS IoT console, try the following:
 1. Open a terminal window to view the logging output of the sample. This can help you determine
 what is going wrong.
-2. Check that your network credentials are valid
+2. Check that your network credentials are valid.
 
 For general troubleshooting information about Getting Started with FreeRTOS, see [Troubleshooting Getting Started](https://docs.aws.amazon.com/freertos/latest/userguide/gsg-troubleshooting.html).

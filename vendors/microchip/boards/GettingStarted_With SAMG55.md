@@ -1,20 +1,14 @@
-# Getting Started with the Microchip Curiosity PIC32MZEF 2.0
+# Getting Started with the Microchip SAMG55 Xplained Pro
 
-This tutorial provides instructions for getting started with the Microchip Curiosity PIC32MZEF 2.0.
-Microchip provides three solutions with FreeRTOS
+This tutorial provides instructions for getting started with the Microchip SAMG55 Xplained Pro.
+Microchip provides Wi-Fi based solutions with FreeRTOS
 
-1. Secure Element based Wired Solution with ECC608
-2. Secure Element based Wi-Fi (Wireless) solution with ECC608 and
-3. Wired only solution (NVM Based).
+If you do not have the following components, visit the AWS Partner Device Catalog to purchase one from our [partner](https://devices.amazonaws.com/detail/a3G0h0000077I6kEAE/SAM-E54-Xplained-Pro).
 
-If you do not have the following components, visit the AWS Partner Device Catalog to purchase one from our [partner](https://devices.amazonaws.com/detail/a3G0h0000077I69EAE/Curiosity-PIC32MZ-EF-2.0-Development-Board).
-
-- [Curiosity PIC32MZ EF  2.0 Development Board](https://www.microchip.com/Developmenttools/ProductDetails/DM320209)
-- [MikroElectronika USB UART click Board](https://www.mikroe.com/usb-uart-click)
-- [LAN8720 PHY daughter board](http://www.microchip.com/DevelopmentTools/ProductDetails.aspx?PartNO=ac320004-3)
-- [ATECC608A Trust](https://www.microchip.com/developmenttools/ProductDetails/DT100104#additional-summary) (for Secure element based solution).
-- [mikroBUS Xplained Pro adapter](https://www.microchip.com/Developmenttools/ProductDetails/ATMBUSADAPTER-XPRO) (for Secure element based solution).
-- [WINC3400 Xplained Pro](https://www.microchip.com/developmenttools/ProductDetails/PartNo/ATWINC3400-XPRO) or [WINC1500 Xplained Pro](https://www.microchip.com/DevelopmentTools/ProductDetails/ATWINC1500-XPRO) (for Secure Element based Wireless solution) .
+- [SAMG55 Xplained Pro](https://www.microchip.com/developmenttools/ProductDetails/ATSAMG55-XPRO).
+- [ATECC608A Trust](https://www.microchip.com/developmenttools/ProductDetails/DT100104#additional-summary) (for Secure element based Wired/Wireless solution).
+- [mikroBUS Xplained Pro adapter](https://www.microchip.com/Developmenttools/ProductDetails/ATMBUSADAPTER-XPRO) (for Secure element based Wired/Wireless solution).
+- [WINC1500 Xplained Pro](https://www.microchip.com/DevelopmentTools/ProductDetails/ATWINC1500-XPRO) (for Secure Element based Wireless solution) .
 - [SAMD21 XPlained Pro](https://www.microchip.com/DevelopmentTools/ProductDetails/ATSAMD21-XPRO) (for Provisoning ECC608).
 
 ## **Pre-Requisites:**
@@ -30,8 +24,8 @@ To get started with FreeRTOS, you need an AWS account, an IAM user with permissi
 		-  The above steps also registers the device in AWS IOT for secured wired solution.
 	- To use Wired only solution, [Registering Your MCU Board with AWS IoT](https://docs.aws.amazon.com/freertos/latest/userguide/get-started-freertos-thing.html)
 
-3. From the [MicrochipTech repository](https://github.com/MicrochipTech/amazon-freertos/tree/mchpdev/), download the amazon-freertos repository (mchpdev branch).  
-To clone or download the repo from Github,go to the main page of this repository and then click Clone button to clone this repo or download as zip file.
+3. From the [MicrochipTech repository](https://github.com/MicrochipTech/amazon-freertos/tree/mchpdev/), download the amazon-freertos repository (mchpdev branch). 
+To clone or download the repo from Github,go to the main page of this repository and then click Clone button to clone this repo or download as zip file. 
 
 ---
 **IMPORTANT**
@@ -42,9 +36,8 @@ Long FreeRTOS download directory paths can cause build failures.
 ---
 
 4. Demo Configuration
-	- For Secure Wired/Wireless solution, use the aws_clientcredential.h and aws_clientcredentialkeys.h obtained as part of the provisioning Secure Element (ATECC608).
-		- For Wireless solution, enter the WIFI SSID and password in aws_clientcredential.h.
-	- For Wired only solution, refer [Configuring the FreeRTOS Demos](https://docs.aws.amazon.com/freertos/latest/userguide/freertos-configure.html)
+	- Use the aws_clientcredential.h and aws_clientcredentialkeys.h obtained as part of the provisioning Secure Element (ATECC608).
+	- For Wireless solution, enter the WIFI SSID and password in aws_clientcredential.h.
 
 
 
@@ -76,33 +69,12 @@ This tutorial contains instructions for the following getting started steps:
 4. Loading the application binary image to your board, and then running the application.
 5. Interacting with the application running on your board across a serial connection, for monitoring and debugging purposes.
 
-## Set Up the Microchip Curiosity PIC32MZEF 2.0 Hardware
-**To use Secured Wired Solution**
-1. Connect the MikroElectronika USB UART click Board to the microBUS 1 connector on the Microchip 2.0 Curiosity PIC32MZ EF 2.0.
-2. Connect the PIC32 LAN8720 PHY daughter board to the ETHERNET PHY MODULE header on the Microchip Curiosity PIC32MZ EF.2.0
-3. Connect the MikroElectronika USB UART click Board to your computer using a USB A to USB mini-B cable.
-4. Connect one end of an Ethernet cable to the ethernet PHY available in the board, Connect the other end to your router or other internet port.
-5. Plug the mikroBUS XPlained Pro adapter into the PIC32MZ board in the J501 extension.
-6. Plug the ATECC608A Trust board into the mikroBUS XPlained Pro adapter. Make sure that the notched corner of the click board matches with the notched icon on the adapter board.
-7. Select the TrustCUSTOM secure element on the ATECC608A Trust board by switch on the DIP Switch 1 of SW2.
-![Image of ATECC608 Trust](ATECC608Trust.jpg)
-8. Connect the DEBUG USB port of the board to the host computer using a Type A to Micro B USB Cable.
-
-
-**To use Secured Wireless**,
-1. Plug the ATECC608A Trust board in microBUS 1 connector on the Microchip 2.0 Curiosity PIC32MZ EF 2.0Make sure that the notched corner of the click board matches with the notched icon on the adapter board.
-2. Connect the MikroElectronika USB UART click Board to the microBUS 1 connector on top of the ATECC608A Trust Board.
-3. Connect the MikroElectronika USB UART click Board to your computer using a USB A to USB mini-B cable.
-5. Plug the WINC1500 Xplained pro in the J501 extension.
-8. Connect the DEBUG USB port of the board to the host computer using a Type A to Micro B USB Cable.
-
-**To use Wired only Solution**,
-1. Connect the MikroElectronika USB UART click Board to the microBUS 1 connector on the Microchip 2.0 Curiosity PIC32MZ EF 2.0.
-2. Connect the PIC32 LAN8720 PHY daughter board to the ETHERNET PHY MODULE header on the Microchip Curiosity PIC32MZ EF.2.0
-3. Connect the MikroElectronika USB UART click Board to your computer using a USB A to USB mini-B cable.
-4. Connect one end of an Ethernet cable to the LAN8720 PHY daughter board. Connect the other end to your router or other internet port.
-5. Connect the DEBUG USB port of the board to the host computer using a Type A to Micro B USB Cable.
-
+## Set Up the Microchip SAMG55 Xplained Pro Hardware
+1. Plug the WINC1500 Xplained Pro into the SAMG55 board in the EXT1 location
+2. Plug the mikroBUS XPlained Pro adapter into the SAMG55 board in the EXT3 location.
+3. Plug the ATECC608A Trust board into the mikroBUSX XPlained Pro adapter. Make sure that the notched corner of the click board matches with the notched icon on the adapter board.
+4. Select the TrustCUSTOM secure element on the ATECC608A Trust board by switch on the DIP Switch 1 of SW2
+4. Connect the DEBUG USB port of the board to the host computer using a Type A to Micro B USB Cable.
 
 ## Set Up Your Development Environment
 
@@ -119,7 +91,7 @@ The FreeRTOS project for this device is based on MPLAB Harmony v3. To build the 
   - [MPLAB XC32/32++ Compiler for Windows](http://www.microchip.com/mplabxc32windows)
   - [MPLAB XC32/32++ Compiler for macOS](http://www.microchip.com/mplabxc32osx)
   - [MPLAB XC32/32++ Compiler for Linux](http://www.microchip.com/mplabxc32linux)
-4. Start up a UART terminal emulator like TeraTerm and open the USB UART Click COM Port connection with the following settings:
+4. Start up a UART terminal emulator like TeraTerm and open the EDBG COM Port connection with the following settings:
   - Baud rate: 115200
   - Data: 8 bit
   - Parity: None
@@ -134,18 +106,9 @@ The FreeRTOS project for this device is based on MPLAB Harmony v3. To build the 
 2. From the  **File**  menu, choose  **Open Project**.
 3. Browse to and open the project based on hardware selection.
 
-For Secured Wired:
-
-	projects\microchip\curiosity2_pic32mzef_ecc\mplab\aws_demos\firmware\aws_demos.X.
-
 For Secured Wireless:
 
-	projects\microchip\curiosity2_pic32mzef_winc1500\mplab\aws_demos\firmware\aws_demos.X.
-
-For Wired only Solution:
-
-	projects\microchip\curiosity2_pic32mzef\mplab\aws_demos\firmware\aws_demos.X.
-
+	projects\microchip\samg55_xpro_winc1500\mplab\aws_demos\firmware\aws_demos.X.
 
 **Note**
 

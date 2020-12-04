@@ -41,6 +41,7 @@ Long FreeRTOS download directory paths can cause build failures.
 
 4. Demo Configuration
 	- For Secure Wired/Wireless solution, use the aws_clientcredential.h and aws_clientcredentialkeys.h obtained as part of the provisioning Secure Element (ATECC608).
+		- For Wireless solution, enter the WIFI SSID and password in aws_clientcredential.h.
 	- For Wired only solution, refer [Configuring the FreeRTOS Demos](https://docs.aws.amazon.com/freertos/latest/userguide/freertos-configure.html)
 
 
@@ -136,15 +137,19 @@ The FreeRTOS project for this device is based on MPLAB Harmony v3. To build the 
 
 For Secured Wired:
 
-projects\microchip\same54_xpro\mplab\aws_demos\firmware\aws_demos.X.
+	projects\microchip\same54_xpro_ecc\mplab\aws_demos\firmware\aws_demos.X.
 
 For Secured Wireless:
 
-projects\microchip\same54_xpro_winc3400\mplab\aws_demos\firmware\aws_demos.X.
+	For WINC3400: 
+		projects\microchip\same54_xpro_winc3400\mplab\aws_demos\firmware\aws_demos.X.
+	
+	For WINC1500: 
+		projects\microchip\same54_xpro_winc1500\mplab\aws_demos\firmware\aws_demos.X.
 
 For Wired only Solution:
 
-projects\microchip\same54_xpro_ecc\mplab\aws_demos\firmware\aws_demos.X.
+	projects\microchip\same54_xpro\mplab\aws_demos\firmware\aws_demos.X.
 
 
 **Note**
@@ -165,8 +170,14 @@ You can use the MQTT client in the AWS IoT console to monitor the messages that 
 
 1. Sign in to the [AWS IoT console](https://console.aws.amazon.com/iotv2/).
 2. In the navigation pane, choose  **Test**  to open the MQTT client.
-3. In  **Subscription topic** , enter  **iotdemo/#** , and then choose  **Subscribe to topic**. 
+3. In the **Quality of Service** select **1 ( This client will acknowledge to the Device Gateway that messages are received). **
+4. In  **Subscription topic** , enter  **iotdemo/#** , and then choose  **Subscribe to topic**. 
 This will enable you to see the periodically published messages by the MQTT Hello World example.
+
+<img src="mqtt_demo_publish.png" width="1000">
+
+#### Output in Serial port terminal
+<img src="mqtt_demo.png" width="1000">
 
 ## Troubleshooting
 

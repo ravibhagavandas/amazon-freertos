@@ -39,7 +39,7 @@
  *
  *  These defines are used in iot_demo_runner.h for demo selection */
 
-#define CONFIG_OTA_UPDATE_DEMO_ENABLED
+#define CONFIG_MQTT_DEMO_ENABLED
 
 
 
