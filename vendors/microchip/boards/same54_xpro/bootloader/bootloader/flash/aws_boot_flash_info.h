@@ -34,6 +34,10 @@
 /*Microchip includes.*/
 #include "definitions.h"
 #include "aws_boot_nvm.h"
+
+#define AWS_NVM_QUAD_SIZE                (16)
+
+#define AWS_BOOTLOADER_SIZE              (0x10000U)
 /**
  * @brief Flash device ID.
  */
@@ -42,18 +46,18 @@
 /**
  * @brief Flash device base.
  */
-#define FLASH_DEVICE_BASE                 ( 0 )
+#define FLASH_DEVICE_BASE                 ( 0x0 )
 
 /**
  * @brief Flash partitions for OTA images.
  */
-#define FLASH_PARTITION_IMAGE_0           ( 0x2000U )
-#define FLASH_PARTITION_IMAGE_1           ( 0x2000U )
+#define FLASH_PARTITION_IMAGE_0           ( 0U )
+#define FLASH_PARTITION_IMAGE_1           ( 1U )
 
 /**
  * @brief Flash partition offsets.
  */
-#define FLASH_PARTITION_OFFSET_IMAGE_0    ( 0x8000U )
+#define FLASH_PARTITION_OFFSET_IMAGE_0    ( AWS_BOOTLOADER_SIZE)
 #define FLASH_PARTITION_OFFSET_IMAGE_1    ( AWS_FLASH_SIZE/2 + FLASH_PARTITION_OFFSET_IMAGE_0 )
 
 /**
@@ -61,9 +65,11 @@
  */
 #define FLASH_PARTITIONS_OTA_MAX          ( 2U )
 
+#define BOOTIMAGE_DESCRIPTOR_SIZE      (8192) // size of BootImage Descriptot is 330!!!.    
+
 /**
  * @brief Flash partition size.
  */
-#define FLASH_IMAGE_SIZE_MAX              ( 0 )
+#define FLASH_IMAGE_SIZE_MAX              (( AWS_FLASH_SIZE/2 ) - AWS_BOOTLOADER_SIZE - BOOTIMAGE_DESCRIPTOR_SIZE)
 
 #endif /* ifndef _AWS_BOOT_FLASH_INFO_H_ */

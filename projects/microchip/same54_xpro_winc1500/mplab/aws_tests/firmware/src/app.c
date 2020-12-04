@@ -131,7 +131,7 @@ void APP_Tasks ( void )
 
         case APP_STATE_SERVICE_TASKS:
         {
-
+			WDT_Clear(); 
             break;
         }
 

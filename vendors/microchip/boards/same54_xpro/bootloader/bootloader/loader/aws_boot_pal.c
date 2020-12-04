@@ -46,6 +46,7 @@ void BOOT_PAL_LaunchApplication( const void * const pvLaunchAddress )
     uint32_t msp            = *(uint32_t *)(pvLaunchAddress);
     uint32_t reset_vector   = *(uint32_t *)(pvLaunchAddress + 4);
     void ( * pfApplicationEntry )( void ) = ( void ( * )( void ) )pvLaunchAddress;
+    WDT_Enable();
     if (msp == 0xffffffff)
     {
         BOOT_LOG_L1( "\n] msp is invalid!!!. \r\n");
@@ -55,7 +56,6 @@ void BOOT_PAL_LaunchApplication( const void * const pvLaunchAddress )
     __set_MSP(msp);
 
     asm("bx %0"::"r" (reset_vector));
-     //( *pfApplicationEntry )();
 }
 
 /*-----------------------------------------------------------*/
@@ -64,46 +64,14 @@ void BOOT_PAL_LaunchApplicationDesc( const BOOTImageDescriptor_t * const pvLaunc
 {
     DEFINE_BOOT_METHOD_NAME( "BOOT_PAL_LaunchApplicationDesc" );
 
-    void * pvExecAddress = pvLaunchDescriptor->pvExecAddress;
+    void * pvExecAddress = (void *) AWS_BOOTLOADER_SIZE;
 
     /* The microchip flash is organized in two memory banks and it should
      * be toggled depending on if we are executing from lower or upper bank.
      */
-    if( pvLaunchDescriptor >= ( BOOTImageDescriptor_t * ) ( FLASH_DEVICE_BASE + FLASH_PARTITION_OFFSET_IMAGE_1 ) )
-    {
-        /* Executing from upper bank so toggle.*/
-        AWS_NVM_ToggleFlashBanks();
-
-        BOOT_LOG_L1( "\n[%s] Memory banks are swapped. \r\n", BOOT_METHOD_NAME );
-    }
-    pvExecAddress=0x8000;
     BOOT_PAL_LaunchApplication( pvExecAddress );
 }
 
-/*-----------------------------------------------------------*/
-
-BaseType_t BOOT_PAL_WatchdogInit( void )
-{
-    return pdTRUE;
-}
-
-/*-----------------------------------------------------------*/
-
-BaseType_t BOOT_PAL_WatchdogEnable( void )
-{
-    BaseType_t xReturn = pdFALSE;
-    WDT_Enable();
-    return xReturn;
-}
-
-/*-----------------------------------------------------------*/
-
-BaseType_t BOOT_PAL_WatchdogDisable( void )
-{
-    BaseType_t xReturn = pdFALSE;
-    WDT_Disable();
-    return xReturn;
-}
 
 /*-----------------------------------------------------------*/
 

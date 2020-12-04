@@ -48,33 +48,6 @@ void BOOT_PAL_LaunchApplication( const void * const pvLaunchAddress );
 void BOOT_PAL_LaunchApplicationDesc( const BOOTImageDescriptor_t * const pvLaunchDescriptor );
 
 /**
- * @brief Watchdog Init.
- * Initialize watchdog timer to support test run of new OTA image
- * received and rollback feature if this new image fails. The timeout is
- * selected based on time required for few retries for new OTA image to
- * communicate with the cloud service.
- * @param[in] None.
- * @return pdTRUE if watchdog is enabled, pdFALSE otherwise.
- */
-BaseType_t BOOT_PAL_WatchdogInit( void );
-
-/**
- * @brief Watchdog Enable.
- * Enable the watchdog timer.
- * @param[in] None.
- * @return pdTRUE if watchdog is enabled, pdFALSE otherwise.
- */
-BaseType_t BOOT_PAL_WatchdogEnable( void );
-
-/**
- * @brief Watchdog Disable.
- * Disable the watchdog timer.
- * @param[in] None.
- * @return pdTRUE if watchdog is disabled, pdFALSE otherwise.
- */
-BaseType_t BOOT_PAL_WatchdogDisable( void );
-
-/**
  * @brief Boot error state notification.
  * This function is used for notifying error state in bootloader.
  * @param[in] None.

@@ -71,7 +71,7 @@ extern const atcacert_def_t g_cert_def_0_root ;
 
 /* initialization done timeout. */
 #define WIFI_MAC_INIT_TIMEOUT                   ( pdMS_TO_TICKS( 5000 ) )
-#define WIFI_MAC_CONNECT_TIMEOUT                ( pdMS_TO_TICKS( 15000 ) )
+#define WIFI_MAC_CONNECT_TIMEOUT                ( pdMS_TO_TICKS( 10000 ) )
 #define WIFI_MAC_DISCONNECT_TIMEOUT             ( pdMS_TO_TICKS( 3000 ) )
 #define WIFI_MAC_PING_TIMEOUT                   ( pdMS_TO_TICKS( 5000 ) )
 #define WIFI_MAC_SET_CIPHER_TIMEOUT             ( pdMS_TO_TICKS( 3000 ) )
@@ -721,6 +721,7 @@ static signed char ecdh_derive_client_shared_secret(
         if (ATCA_SUCCESS == atcab_ecdh_tempkey(server_public_key->x, ecdh_shared_secret))
         {
             status = M2M_SUCCESS;
+            configPRINTF(("ecdh_derive_client_shared_secret completed\r\n"));
         }
     }
 	return status;
@@ -834,6 +835,7 @@ uint16_t *signature_size)
     {
         wifi_context.pkcs11_funcs->C_CloseSession(wifi_context.pkcs11_session);
     }
+    configPRINTF(("ecdsa_process_sign_gen_request completed\r\n"));
 
     return xResult;
 }
@@ -1171,7 +1173,7 @@ WIFIReturnCode_t WIFI_ConnectAP( const WIFINetworkParams_t * const pxNetworkPara
         }
         
          xSemaphoreGive(xWiFiSemaphore);      
-         
+         vTaskDelay(5000);// WIFI wait for DHCP
         return eWiFiSuccess;
 
     }

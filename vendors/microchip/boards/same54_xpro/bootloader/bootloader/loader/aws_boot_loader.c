@@ -40,6 +40,8 @@
  * @brief Bootloader data.
  */
 
+
+static BOOTPartition_Info_t xPartitionInfo;
 /* Bootloader state, start in initialization state.*/
 static BOOTState_t xBootState = eBootStateInit;
 
@@ -107,18 +109,6 @@ static const BootStateFunction_t apfBootStateFunctionTable[] =
 static BaseType_t prvValidateImage( const BOOTImageDescriptor_t * pxAppDescriptor );
 
 /**
- * @brief Invalidate an application image.
- * If the application image fails validation it should be invalidated to avoid
- * further use by erasing the header. If bootconfigENABLE_ERASE_INVALID is set
- * the flash area is completely erased.It is recommended to erase entire image
- * if it fails any validations.
- * @param[in] pxAppDescriptor ptr to the application descriptor of the image to
- * be invalidated.
- * @return pdPASS if invalidation successful, pdFAIL otherwise
- */
-static BaseType_t prvInvalidateImage( const BOOTImageDescriptor_t * pxAppDescriptor );
-
-/**
  * @brief Launch application into execution.
  * This launches application into execution from the address passed by calling
  * platform specific launch function.
@@ -163,28 +153,7 @@ static BOOTState_t prvBOOT_Init( void )
      * Initialize application descriptor for image to be executed.
      */
     pxAppDescriptorExec = NULL;
-
-    /**
-     * Initialize  watchdog.
-     */
-    #if ( bootconfigENABLE_WATCHDOG_TIMER == 1 )
-        {
-            if( pdTRUE == BOOT_PAL_WatchdogInit() )
-            {
-                BOOT_LOG_L1( "[%s] Watchdog timer initialized.\r\n", BOOT_METHOD_NAME );
-                xReturnState = eBootStateValidation;
-            }
-            else
-            {
-                BOOT_LOG_L1( "[%s] Watchdog timer initialization failed.\r\n", BOOT_METHOD_NAME );
-                xReturnState = eBootStateError;
-            }
-        }
-    #else /* if ( bootconfigENABLE_WATCHDOG_TIMER == 1 ) */
-        {
-            BOOT_LOG_L1( "BOOT_Init : Watchdog config disabled.\r\n" );
-        }
-    #endif /* if ( bootconfigENABLE_WATCHDOG_TIMER == 1 ) */
+    xReturnState = eBootStateValidation;
 
     /**
      * Initialize the crypto library.
@@ -208,6 +177,7 @@ static BOOTState_t prvBOOT_Init( void )
         }
     #endif /* if ( bootconfigENABLE_CRYPTO_SIGNATURE_VERIFICATION == 1 ) */
 
+
     /**
      * Return next state.
      */
@@ -225,7 +195,7 @@ static BOOTState_t prvBOOT_ValidateImages( void )
     uint8_t ucIndex = 0;
 
     /* Partition Info*/
-    BOOTPartition_Info_t xPartitionInfo;
+    
     memset( &xPartitionInfo, 0x00, sizeof( xPartitionInfo ) );
 
     /**
@@ -240,7 +210,8 @@ static BOOTState_t prvBOOT_ValidateImages( void )
          */
         for( ucIndex = 0; ucIndex < xPartitionInfo.ucNumOfApps; ucIndex++ )
         {
-            if( pdPASS == prvValidateImage( xPartitionInfo.paxOTAAppDescriptor[ ucIndex ] ) )
+            BOOT_LOG_L1( "[%s] Validation started for image at 0x%08x \r\n", BOOT_METHOD_NAME, xPartitionInfo.paxOTAAppDescriptor[ ucIndex ] );
+           if( pdPASS == prvValidateImage( xPartitionInfo.paxOTAAppDescriptor[ ucIndex ] ) )
             {
                 if( ulSeqNumber < xPartitionInfo.paxOTAAppDescriptor[ ucIndex ]->ulSequenceNum )
                 {
@@ -256,10 +227,6 @@ static BOOTState_t prvBOOT_ValidateImages( void )
                  */
                 BOOT_LOG_L1( "[%s] Validation failed for image at 0x%08x \r\n", BOOT_METHOD_NAME, xPartitionInfo.paxOTAAppDescriptor[ ucIndex ] );
 
-                if( pdPASS != prvInvalidateImage( xPartitionInfo.paxOTAAppDescriptor[ ucIndex ] ) )
-                {
-                    BOOT_LOG_L1( "[%s] Invalidation failed.\r\n", BOOT_METHOD_NAME );
-                }
             }
         }
     }
@@ -268,12 +235,13 @@ static BOOTState_t prvBOOT_ValidateImages( void )
         BOOT_LOG_L1( "[%s] Partition table error.\r\n", BOOT_METHOD_NAME );
     }
 
+    BOOT_LOG_L1( "\n[%s] Booting image with sequence number 0x%x \r\n", BOOT_METHOD_NAME, ulSeqNumber);
     /**
      *  check if we have an image to execute in OTA partitions.
      */
     if( pxAppDescriptorExec != NULL )
     {
-        BOOT_LOG_L1( "\n[%s] Booting image with sequence number %d at 0x%08x \r\n", BOOT_METHOD_NAME, ulSeqNumber, pxAppDescriptorExec );
+        BOOT_LOG_L1( "\n[%s] Booting image with sequence number 0x%x at 0x%08x \r\n", BOOT_METHOD_NAME, ulSeqNumber, pxAppDescriptorExec );
 
         /* We have an image to execute. */
         xReturnState = eBootStateExecuteImage;
@@ -294,7 +262,6 @@ static BOOTState_t prvBOOT_ValidateImages( void )
 
                     /* Execute default image. */
                     xReturnState = eBootStateExecuteDefault;
-                    BOOT_LOG_L1( "\n[%s] Booting default image 0x%x. \r\n", BOOT_METHOD_NAME,pvDefaultExecAddress );
                 }
                 else
                 {
@@ -308,9 +275,10 @@ static BOOTState_t prvBOOT_ValidateImages( void )
             }
         #endif /* if ( bootconfigENABLE_DEFAULT_START == 1 ) */
     }
-
     return xReturnState;
 }
+
+
 
 /*-----------------------------------------------------------*/
 
@@ -320,6 +288,9 @@ static BOOTState_t prvBOOT_ExecuteImage( void )
 
     BaseType_t xReturn = pdFALSE;
     uint8_t ucImageFlags = 0;
+    
+    BOOTImageDescriptor_t *pOldImageDesc = ( BOOTImageDescriptor_t * ) ( FLASH_DEVICE_BASE +  AWS_FLASH_SIZE/2 - BOOTIMAGE_DESCRIPTOR_SIZE );
+    BOOTImageDescriptor_t *pNewImageDesc = ( BOOTImageDescriptor_t * ) ( FLASH_DEVICE_BASE + AWS_FLASH_SIZE - BOOTIMAGE_DESCRIPTOR_SIZE);
 
     BOOTImageDescriptor_t xCopyDescriptor;
     memset( &xCopyDescriptor, 0x00, sizeof( xCopyDescriptor ) );
@@ -331,6 +302,17 @@ static BOOTState_t prvBOOT_ExecuteImage( void )
 
     xCopyDescriptor = *pxAppDescriptorExec;
     ucImageFlags = pxAppDescriptorExec->xImageHeader.ucImageFlags;
+    
+    if( pxAppDescriptorExec >= ( BOOTImageDescriptor_t * ) ( FLASH_DEVICE_BASE + AWS_FLASH_SIZE/2 ) )
+    {
+        BOOT_LOG_L1( "\n[%s] Memory banks are swapped. \r\n", BOOT_METHOD_NAME );
+        // Before this, add image descriptor for new and reset for old.
+        
+        /* Executing from upper bank so toggle.*/
+        AWS_NVM_ToggleFlashBanks();
+    }
+
+    
 
     if( ucImageFlags == ( uint8_t ) eBootImageFlagValid )
     {
@@ -348,9 +330,10 @@ static BOOTState_t prvBOOT_ExecuteImage( void )
                      xCopyDescriptor.xImageHeader.ucImageFlags,
                      pxAppDescriptorExec );
 
-        if( BOOT_FLASH_Write( pxAppDescriptorExec->xImageHeader.ulAlign,
-                              xCopyDescriptor.xImageHeader.ulAlign,
-                              sizeof( xCopyDescriptor ) ) )
+        
+       if( AWS_NVM_QuadWordWrite(pxAppDescriptorExec,&xCopyDescriptor,
+            sizeof(BOOTImageDescriptor_t)/AWS_NVM_QUAD_SIZE ))
+        
         {
             BOOT_LOG_L1( "[%s] Updated the image flags: 0x%08x\r\n",
                          BOOT_METHOD_NAME,
@@ -364,24 +347,7 @@ static BOOTState_t prvBOOT_ExecuteImage( void )
                          pxAppDescriptorExec );
             xReturn = pdFALSE;
         }
-
-        /**
-         * Enable watchdog.
-         */
-        #if ( bootconfigENABLE_WATCHDOG_TIMER == 1 )
-            {
-                if( pdTRUE == BOOT_PAL_WatchdogEnable() )
-                {
-                    BOOT_LOG_L1( "[%s] Watchdog timer started.\r\n", BOOT_METHOD_NAME );
-                    xReturn = pdTRUE;
-                }
-                else
-                {
-                    BOOT_LOG_L1( "[%s] Watchdog timer start failed.\r\n", BOOT_METHOD_NAME );
-                    xReturn = pdFALSE;
-                }
-            }
-        #endif /* if ( bootconfigENABLE_WATCHDOG_TIMER == 1 ) */
+     
     }
 
     if( xReturn == pdTRUE )
@@ -399,11 +365,22 @@ static BOOTState_t prvBOOT_ExecuteImage( void )
 
 static BOOTState_t prvBOOT_ExecuteDefault( void )
 {
+    DEFINE_BOOT_METHOD_NAME( "prvBOOT_ExecuteImage" );
     if( pvDefaultExecAddress == NULL )
     {
         return eBootStateError;
     }
-
+    
+    // Copy Bootloader in both address spaces!!!.
+    uint32_t *pBootloader = (uint8_t *) (FLASH_DEVICE_BASE+ AWS_FLASH_SIZE/2);
+    uint32_t *pDefaultBootloader = (uint8_t *) (FLASH_DEVICE_BASE);
+    BOOTImageDescriptor_t *pxAppDescriptor = (BOOTImageDescriptor_t *) (FLASH_DEVICE_BASE + AWS_FLASH_SIZE/2 -  BOOTIMAGE_DESCRIPTOR_SIZE);
+    BOOTImageDescriptor_t AppDescriptor = *pxAppDescriptor;
+    pvDefaultExecAddress=0x10000;
+    
+    BOOT_LOG_L1( "[%s] Size of BootImageDescriptor %d \r\n", BOOT_METHOD_NAME,sizeof(BOOTImageDescriptor_t) );
+    
+    AWS_NVM_QuadWordWrite(pBootloader,pDefaultBootloader, AWS_BOOTLOADER_SIZE/AWS_NVM_QUAD_SIZE );
     /* Launch, never returns from here. */
     BOOT_PAL_LaunchApplication( pvDefaultExecAddress );
 }
@@ -478,64 +455,15 @@ static BaseType_t prvValidateImage( const BOOTImageDescriptor_t * pxAppDescripto
         }
         else
         {
-            BOOT_LOG_L1( "[%s] Valid image flags: 0x%02x at: 0x%08x\r\n",
+            BOOT_LOG_L1( "[%s] Valid image flags: 0x%02x Image Version 0x%x at: 0x%08x\r\n",
                          BOOT_METHOD_NAME,
-                         ucImageFlags,
+                         ucImageFlags,pxAppDescriptor->ulSequenceNum,
                          pxAppDescriptor );
             xReturn = pdTRUE;
         }
     }
 
-    /**
-     *  Check if application image is built for this Hardware.
-     */
-    #if ( bootconfigENABLE_HWID_VALIDATION == 1 )
-        {
-            if( xReturn == pdTRUE )
-            {
-                if( pxAppDescriptor->ulHardwareID == bootconfigHARDWARE_ID )
-                {
-                    BOOT_LOG_L1( "[%s] Hardware ID is valid.\r\n", BOOT_METHOD_NAME );
-                    xReturn = pdTRUE;
-                }
-                else
-                {
-                    BOOT_LOG_L1( "[%s] Hardware ID is invalid.\r\n", BOOT_METHOD_NAME );
-                    xReturn = pdFALSE;
-                }
-            }
-        }
-    #else /* if ( bootconfigENABLE_HWID_VALIDATION == 1 ) */
-        {
-            BOOT_LOG_L3( "[%s] Hardware ID validation disabled.\r\n", BOOT_METHOD_NAME );
-        }
-    #endif /* if ( bootconfigENABLE_HWID_VALIDATION == 1 ) */
-
-    /**
-     *  Validate the addresses.
-     */
-    #if ( bootconfigENABLE_ADDRESS_VALIDATION == 1 )
-        {
-            if( xReturn == pdTRUE )
-            {
-                if( pdTRUE == BOOT_FLASH_ValidateAddress( pxAppDescriptor ) )
-                {
-                    BOOT_LOG_L1( "[%s] Addresses are valid.\r\n", BOOT_METHOD_NAME );
-                    xReturn = pdTRUE;
-                }
-                else
-                {
-                    BOOT_LOG_L1( "[%s]  Addresses are not valid.\r\n", BOOT_METHOD_NAME );
-                    xReturn = pdFALSE;
-                }
-            }
-        }
-    #else /* if ( bootconfigENABLE_ADDRESS_VALIDATION == 1 ) */
-        {
-            BOOT_LOG_L1( "[%s] Address validation is disabled.\r\n", BOOT_METHOD_NAME );
-        }
-    #endif /* if ( bootconfigENABLE_ADDRESS_VALIDATION == 1 ) */
-
+   
     /**
      * Verify the crypto signature of application image.
      */
@@ -543,28 +471,22 @@ static BaseType_t prvValidateImage( const BOOTImageDescriptor_t * pxAppDescripto
         {
             if( xReturn == pdTRUE )
             {
+                BOOT_LOG_L1( "[%s] Inside Crypto\r\n",BOOT_METHOD_NAME); 
                 /* Start address of the application image after header. */
-                pucStartAddress = ( uint8_t * ) pxAppDescriptor;
-                pucStartAddress = pucStartAddress + sizeof( BOOTImageHeader_t );
+                pucStartAddress = ( uint8_t * ) pxAppDescriptor +  BOOTIMAGE_DESCRIPTOR_SIZE + AWS_BOOTLOADER_SIZE- AWS_FLASH_SIZE/2;
 
                 /* Size of the application. */
-                ulSizeApp = pxAppDescriptor->pvEndAddress - pxAppDescriptor->pvStartAddress;
+                ulSizeApp = pxAppDescriptor->xImageTrailer.ulSize;
 
                 /* Application trailer. */
                 pucTrailerAddress = pucStartAddress + ulSizeApp;
-
-                /* Align it to BOOT_QUAD_WORD_SIZE. */
-                if( ( ( uint32_t ) pucTrailerAddress % BOOT_QUAD_WORD_SIZE ) != 0 )
-                {
-                    pucTrailerAddress += BOOT_QUAD_WORD_SIZE - ( ( uint32_t ) pucTrailerAddress % BOOT_QUAD_WORD_SIZE );
-                }
-
-                pxImgTrailer = ( BOOTImageTrailer_t * ) pucTrailerAddress;
+                
+                BOOT_LOG_L1( "[%s] Inside Crypto pxAppDescriptor->xImageTrailer.ulSignatureSize = 0x%x, size=%d\r\na",BOOT_METHOD_NAME,pxAppDescriptor->xImageTrailer.ulSignatureSize,ulSizeApp); 
 
                 if( pdTRUE == BOOT_CRYPTO_Verify( pucStartAddress,
                                                   ulSizeApp,
-                                                  pxImgTrailer->aucSignature,
-                                                  pxImgTrailer->ulSignatureSize ) )
+                                                  pxAppDescriptor->xImageTrailer.aucSignature,
+                                                  pxAppDescriptor->xImageTrailer.ulSignatureSize ) )
                 {
                     BOOT_LOG_L1( "[%s] Crypto signature is valid.\r\n", BOOT_METHOD_NAME );
                     xReturn = pdTRUE;
@@ -587,28 +509,4 @@ static BaseType_t prvValidateImage( const BOOTImageDescriptor_t * pxAppDescripto
 
 /*-----------------------------------------------------------*/
 
-static BaseType_t prvInvalidateImage( const BOOTImageDescriptor_t * pxAppDescriptor )
-{
-    DEFINE_BOOT_METHOD_NAME( "prvInvalidateImage" );
 
-    BaseType_t xReturn = pdFALSE;
-
-    /* Erase the header first. */
-    xReturn = BOOT_FLASH_EraseHeader( pxAppDescriptor );
-
-    #if ( bootconfigENABLE_ERASE_INVALID == 1 )
-        {
-            if( xReturn == pdTRUE )
-            {
-                /* Erase the entire bank. */
-                xReturn = BOOT_FLASH_EraseBank( pxAppDescriptor );
-            }
-        }
-    #else
-        {
-            BOOT_LOG_L1( "[%s] Full bank erase is disabled.\r\n", BOOT_METHOD_NAME );
-        }
-    #endif /* if ( bootconfigENABLE_ERASE_INVALID == 1 ) */
-
-    return pdTRUE;
-}

@@ -57,33 +57,5 @@
  */
 #define bootconfigENABLE_ERASE_INVALID                    ( 1U )
 
-/**
- * @brief Validate Hardware ID
- * This enables validation of platform hardware ID and protect from executing
- * application built for other platforms or hardware versions.
- */
-#define bootconfigENABLE_HWID_VALIDATION                  ( 0U )
-
-/**
- * @brief Validate Addresses
- * This enables validation of addresses in the application descriptor and
- * should be always enabled.
- */
-#define bootconfigENABLE_ADDRESS_VALIDATION               ( 1U )
-
-/**
- * @brief Hardware ID
- * Unique hardware ID for the platform.
- */
-#define bootconfigHARDWARE_ID                             ( 0x1U )
-
-/**
- * @brief Enable watchdog
- * Enable watchdog timer to support test run of new OTA application image.
- * In case test run of the new ITA image fails the watchdog timer reset will
- * allow bootloader to roll back to previous image.
- */
-#define bootconfigENABLE_WATCHDOG_TIMER                   ( 1U )
-
 
 #endif /* _AWS_BOOT_CONFIG_H_ */

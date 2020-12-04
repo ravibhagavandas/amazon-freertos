@@ -64,7 +64,7 @@ static uint32_t smart_eep_status;
 
 void NVMCTRL_Initialize(void)
 {
-   NVMCTRL_REGS->NVMCTRL_CTRLA = NVMCTRL_CTRLA_RWS(5) | NVMCTRL_CTRLA_AUTOWS_Msk;    
+   NVMCTRL_REGS->NVMCTRL_CTRLA = NVMCTRL_CTRLA_CACHEDIS0(1) |  NVMCTRL_CTRLA_CACHEDIS1(1) | NVMCTRL_CTRLA_RWS(5) | NVMCTRL_CTRLA_AUTOWS_Msk;    
 }
 
 bool NVMCTRL_Read( uint32_t *data, uint32_t length, const uint32_t address )
@@ -153,6 +153,8 @@ bool NVMCTRL_PageWrite( const uint32_t *data, const uint32_t address )
 
     /* Clear global error flag */
     nvm_error = 0;
+
+     NVMCTRL_SetWriteMode(NVMCTRL_WMODE_MAN);
 
     /* writing 32-bit data into the given address.  Writes to the page buffer must be 32 bits */
     for (i = 0; i < (NVMCTRL_FLASH_PAGESIZE/4); i++)

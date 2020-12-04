@@ -33,11 +33,9 @@
 
 #define AWS_NVM_QUAD_SIZE    16
 
-#define AWS_FLASH_SIZE   1
+#define AWS_FLASH_SIZE   (0x100000)
 /* performs a quad write operation */
-bool AWS_NVM_QuadWordWrite( const uint32_t * address,
-                            const uint32_t * data,
-                            int nQuads );
+bool AWS_NVM_QuadWordWrite(uint8_t * ptrFlash , uint8_t * pData,int nBlocks);
 
 /* toggles the mapping of the program flash panels: */
 /* lower <-> upper */
@@ -59,5 +57,6 @@ bool AWS_FlashProgramBlock( const uint8_t * address,
 /* which is flash bank 1 to the lower region */
 bool AWS_FlashProgramIsSwapped( void );
 
+bool AWS_FlashBlockErase(const uint32_t* ptrFlash, int nBlocks);
 
 #endif /* _AWS_BOOT_NVM_H_ */

@@ -139,6 +139,8 @@ void vApplicationDaemonTaskStartupHook( void );
  */
 static void prvMiscInitialization( void );
 
+extern void vStartOTAUpdateDemoTask();
+
 /*-----------------------------------------------------------*/
 
 /**
@@ -178,6 +180,8 @@ void prvWifiConnect( void )
         xNetworkParams.ucPasswordLength = sizeof( clientcredentialWIFI_PASSWORD );
         xNetworkParams.xSecurity = clientcredentialWIFI_SECURITY;
         WIFI_ConnectAP( &xNetworkParams );
+		
+		
 
         xTaskCreate( TEST_RUNNER_RunTests_task,
             "TestRunner",

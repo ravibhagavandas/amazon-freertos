@@ -133,6 +133,8 @@ void APP_Tasks ( void )
              * state i.e APP_STATE_SERVICE_TASKS otherwise if it fails next
              * app state is APP_STATE_ERROR.
              */
+            // Copy the bootloader into second flash
+            
              appData.state = APP_STATE_SERVICE_TASKS;
       
             break;

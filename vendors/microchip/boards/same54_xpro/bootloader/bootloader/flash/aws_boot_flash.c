@@ -74,7 +74,7 @@ BaseType_t BOOT_FLASH_EraseHeader( const BOOTImageDescriptor_t * pxAppDescriptor
 
         if( memcmp( &XEmptyDesc, pxAppDescriptor, sizeof( XEmptyDesc ) ) != 0 )
         {
-            if( !AWS_NVM_QuadWordWrite( pxAppDescriptor->xImageHeader.ulAlign,
+            if( !AWS_NVM_QuadWordWrite( pxAppDescriptor,
                                         XEmptyDesc.xImageHeader.ulAlign,
                                         sizeof( XEmptyDesc ) / AWS_NVM_QUAD_SIZE ) )
             {
@@ -117,13 +117,17 @@ BaseType_t BOOT_FLASH_EraseBank( const BOOTImageDescriptor_t * pxAppDescriptor )
     BaseType_t xReturn = pdFALSE;
     uint8_t ucFlashArea;
 
+    ucFlashArea = BOOT_FLASH_GetFlashArea( pxAppDescriptor );
+
+    xReturn = AWS_FlashErase( ucFlashArea );
+
     if( xReturn == pdTRUE )
     {
-        BOOT_LOG_L2( "[%s] Bank erased at : 0x%08x\r\n", BOOT_METHOD_NAME, (int)pxAppDescriptor );
+        BOOT_LOG_L2( "[%s] Bank erased at : 0x%08x\r\n", BOOT_METHOD_NAME, pxAppDescriptor );
     }
     else
     {
-        BOOT_LOG_L2( "[%s] Bank erase failed at : 0x%08x\r\n", BOOT_METHOD_NAME, (int)pxAppDescriptor );
+        BOOT_LOG_L2( "[%s] Bank erase failed at : 0x%08x\r\n", BOOT_METHOD_NAME, pxAppDescriptor );
     }
 
     return xReturn;
@@ -141,7 +145,7 @@ BaseType_t BOOT_FLASH_ValidateAddress( const BOOTImageDescriptor_t * pxAppDescri
     const void * const pvStartAddressLimit = ( const void * ) ( FLASH_DEVICE_BASE + FLASH_PARTITION_OFFSET_IMAGE_0 + sizeof( BOOTImageHeader_t ) );
 
     /* End address needs to be < than this limit.*/
-    const void * const pvEndAddressLimit = ( const void * ) ( FLASH_DEVICE_BASE + FLASH_IMAGE_SIZE_MAX );
+    const void * const pvEndAddressLimit = ( const void * ) ( FLASH_DEVICE_BASE + FLASH_IMAGE_SIZE_MAX);
 
     /* Validate the start address.*/
     xReturn = ( ( pxAppDescriptor->pvStartAddress >= pvStartAddressLimit ) &&

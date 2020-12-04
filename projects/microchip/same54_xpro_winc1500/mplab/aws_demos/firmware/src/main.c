@@ -107,13 +107,14 @@ int main( void )
 void prvWifiConnect( void )
 {
     static int iInit=0;
+    
     if(!iInit)
     {
-        SYSTEM_Init();
-        wifi_winc_crypto_init();
-        vDevModeKeyProvisioning();
-        DEMO_RUNNER_RunDemos();    
-        iInit=1;
+     SYSTEM_Init();
+     wifi_winc_crypto_init();
+     vDevModeKeyProvisioning();
+     DEMO_RUNNER_RunDemos();    
+     iInit=1;
     }
 }
 
@@ -257,8 +258,6 @@ void vApplicationIdleHook( void )
         xLastTimeCheck = xTimeNow;
     }
     
-        
-
 
     /* This is just a trivial example of an idle hook.  It is called on each
      * cycle of the idle task if configUSE_IDLE_HOOK is set to 1 in

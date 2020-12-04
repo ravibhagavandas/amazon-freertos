@@ -18,6 +18,8 @@
                 <sourceRootElem>../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/linker_script</sourceRootElem>
                 <sourceRootElem>../../../../../../../vendors/microchip/boards/same70_xult/aws_tests/linker_script</sourceRootElem>
                 <sourceRootElem>../../../../../../../vendors/microchip/boards/same54_xpro/aws_tests/linker_script</sourceRootElem>
+                <sourceRootElem>../../../../../../../libraries/freertos_plus/aws/ota/src</sourceRootElem>
+                <sourceRootElem>../../../../../../../libraries/freertos_plus/aws/ota/test</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>

@@ -82,13 +82,13 @@ void TC3_TimerInitialize( void )
     }
 
     /* Configure counter mode & prescaler */
-    TC3_REGS->COUNT16.TC_CTRLA = TC_CTRLA_MODE_COUNT16 | TC_CTRLA_PRESCALER_DIV1 | TC_CTRLA_PRESCSYNC_PRESC ;
+    TC3_REGS->COUNT16.TC_CTRLA = TC_CTRLA_MODE_COUNT16 | TC_CTRLA_PRESCALER_DIV256 | TC_CTRLA_PRESCSYNC_PRESC ;
 
     /* Configure in Match Frequency Mode */
     TC3_REGS->COUNT16.TC_WAVE = TC_WAVE_WAVEGEN_MPWM;
 
     /* Configure timer period */
-    TC3_REGS->COUNT16.TC_CC[0U] = 60000U;
+    TC3_REGS->COUNT16.TC_CC[0U] = 234U;
 
     /* Clear all interrupt flags */
     TC3_REGS->COUNT16.TC_INTFLAG = TC_INTFLAG_Msk;
@@ -126,7 +126,16 @@ void TC3_TimerStop( void )
 
 uint32_t TC3_TimerFrequencyGet( void )
 {
-    return (uint32_t)(60000000UL);
+    return (uint32_t)(234375UL);
+}
+
+void TC3_TimerCommandSet(TC_COMMAND command)
+{
+    TC3_REGS->COUNT16.TC_CTRLBSET = command << TC_CTRLBSET_CMD_Pos;
+    while((TC3_REGS->COUNT16.TC_SYNCBUSY))
+    {
+        /* Wait for Write Synchronization */
+    }    
 }
 
 /* Get the current timer counter value */

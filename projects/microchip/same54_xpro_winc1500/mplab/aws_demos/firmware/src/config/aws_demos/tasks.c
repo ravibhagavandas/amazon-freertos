@@ -76,7 +76,7 @@ static void _WDRV_WINC_Tasks(  void *pvParameters  )
     while(1)
     {
         WDRV_WINC_Tasks(sysObj.drvWifiWinc);
-        vTaskDelay(1 / portTICK_PERIOD_MS);
+        vTaskDelay(10 / portTICK_PERIOD_MS);
     }
 }
 
@@ -85,7 +85,7 @@ void _SYS_CMD_Tasks(  void *pvParameters  )
     while(1)
     {
         SYS_CMD_Tasks();
-        vTaskDelay(10 / portTICK_PERIOD_MS);
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
 }
 

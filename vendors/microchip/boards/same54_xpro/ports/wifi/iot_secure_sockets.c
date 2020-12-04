@@ -327,27 +327,7 @@ int32_t SOCKETS_Close( Socket_t xSocket )
                 configPRINTF(("Timeout to free receive buffer\r\n")); 
                 ret = SOCKETS_EINVAL;
             } 
-            
-            for(i =0 ; i <MAX_SEM ; i++)
-            {
-                while (1) {
-                      //configPRINTF(("loop, i = %d\r\n", i));  
-                    if ((xSocketCntx[sock].xSocketsOpSemaphore)[i] != NULL)
-                    {
-                         if (uxSemaphoreGetCount((xSocketCntx[sock].xSocketsOpSemaphore)[i]) ==1)
-                         {
-                            vSemaphoreDelete((xSocketCntx[sock].xSocketsOpSemaphore)[i]);
-                            break;
-                         }
-                    }
-                    else
-                    {
-                        break;
-                    }
-                    vTaskDelay(50 / portTICK_PERIOD_MS);
-                }
-            }
-            
+
              configPRINTF(("Socket Close Completed \r\n"));  
         }
         else
@@ -416,7 +396,7 @@ int32_t SOCKETS_Connect( Socket_t xSocket,
             /* Wait for socket connect to complete. */
            (xSocketCntx[Socket].waitingTask)[CONNECT_SEM] = xTaskGetCurrentTaskHandle();
 
-                xTaskNotifyWait( WDRV_MAC_EVENT_SOCKET_CONNECT, WDRV_MAC_EVENT_SOCKET_CONNECT, &evBits, SOCKET_CONNECT_TIMEOUT );
+            xTaskNotifyWait( WDRV_MAC_EVENT_SOCKET_CONNECT, WDRV_MAC_EVENT_SOCKET_CONNECT, &evBits, SOCKET_CONNECT_TIMEOUT );
 
             if( ( evBits & WDRV_MAC_EVENT_SOCKET_CONNECT ) == 0 )
             {
@@ -575,18 +555,18 @@ int32_t SOCKETS_Recv( Socket_t xSocket,
                          "socket_recv_command_task",
                          512,
                          Socket,
-                         tskIDLE_PRIORITY, NULL );          
+                         tskIDLE_PRIORITY+3, NULL );          
         }
         
         //indicate recv called, don't call again until data is received.
         xSocketCntx[Socket].recvCalled = 1;
         
             /* Wait for socket recv to complete if it's a blocking socket. */
-        if(xSocketCntx[Socket].socketRecvTO> 0){
+        if(xSocketCntx[Socket].socketRecvTO>= 0){
 
             (xSocketCntx[Socket].waitingTask)[RECV_SEM] = xTaskGetCurrentTaskHandle();
                 
-            xTaskNotifyWait( WDRV_MAC_EVENT_SOCKET_RECV, WDRV_MAC_EVENT_SOCKET_RECV, &evBits, xSocketCntx[Socket].socketRecvTO);
+            xTaskNotifyWait( WDRV_MAC_EVENT_SOCKET_RECV, WDRV_MAC_EVENT_SOCKET_RECV, &evBits, xSocketCntx[Socket].socketRecvTO+1);
 
             if( ( evBits & WDRV_MAC_EVENT_SOCKET_RECV ) == 0 )
             {
@@ -895,6 +875,7 @@ int32_t SOCKETS_Shutdown( Socket_t xSocket,
             {
                 if(xSocketCntx[Socket].recvBuffer != NULL)
                     vPortFree(xSocketCntx[Socket].recvBuffer);
+				xSocketCntx[Socket].recvBuffer=NULL;
                 ret = SOCKETS_ERROR_NONE;
                 xSemaphoreGive(xSocketCntx[Socket].xSocketsOpSemaphore[RECV_BUF_SEM]);
             }
@@ -903,27 +884,7 @@ int32_t SOCKETS_Shutdown( Socket_t xSocket,
                 configPRINTF(("Timeout to free receive buffer\r\n")); 
                 ret = SOCKETS_EINVAL;
             } 
-            
-            for(i =0 ; i <MAX_SEM ; i++)
-            {
-                while (1) {
-                      //configPRINTF(("loop, i = %d\r\n", i));  
-                    if ((xSocketCntx[Socket].xSocketsOpSemaphore)[i] != NULL)
-                    {
-                         if (uxSemaphoreGetCount((xSocketCntx[Socket].xSocketsOpSemaphore)[i]) ==1)
-                         {
-                            vSemaphoreDelete((xSocketCntx[Socket].xSocketsOpSemaphore)[i]);
-                            break;
-                         }
-                    }
-                    else
-                    {
-                        break;
-                    }
-                    vTaskDelay(50 / portTICK_PERIOD_MS);
-                }
-            }
-            
+
              configPRINTF(("Socket Shutdown Completed\r\n"));  
         }
         else

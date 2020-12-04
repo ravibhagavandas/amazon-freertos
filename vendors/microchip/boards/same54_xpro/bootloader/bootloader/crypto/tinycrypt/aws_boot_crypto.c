@@ -35,7 +35,7 @@
 /* Bootloader includes.*/
 #include "aws_boot_types.h"
 #include "aws_boot_crypto.h"
-//#include "aws_boot_codesigner_public_key.h"
+#include "aws_boot_codesigner_public_key.h"
 
 /* Crypto includes.*/
 #include "tinycrypt/sha256.h"
@@ -47,10 +47,6 @@
 #include "asn1.h"
 #include "asn1utility.h"
 
-const unsigned char pucCodeSignPublicKey[] = {10};
-
-
-const unsigned int ulCodeSignPublickeyLength =  1;
 
 /*-----------------------------------------------------------*/
 

@@ -1,0 +1,1 @@
+python factory_image_generator.py -b aws_demos.X.production.bin -p MCHP-Curiosity-PIC32MZEF -k ecdsasigner.key -x bootloader.X.production.hex

@@ -131,7 +131,9 @@ void APP_Tasks ( void )
 
         case APP_STATE_SERVICE_TASKS:
         {
-
+              if(WIFI_IsConnected())
+                WDT_Clear(); 
+            
             break;
         }
 

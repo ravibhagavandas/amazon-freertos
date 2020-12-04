@@ -102,13 +102,6 @@ __STATIC_INLINE void  __attribute__((optimize("-O1"))) TCM_Disable(void)
 
 __STATIC_INLINE void ICache_Enable(void)
 {
-    CMCC_REGS->CMCC_CTRL &= ~(CMCC_CTRL_CEN_Msk);
-    while((CMCC_REGS->CMCC_SR & CMCC_SR_CSTS_Msk) == CMCC_SR_CSTS_Msk)
-    {
-        /*Wait for the operation to complete*/
-    }
-    CMCC_REGS->CMCC_CFG |= (CMCC_CFG_DCDIS_Msk);
-    CMCC_REGS->CMCC_CTRL = (CMCC_CTRL_CEN_Msk);
 }
 
 __STATIC_INLINE void DCache_Enable(void)
@@ -146,7 +139,8 @@ void __attribute__((optimize("-O1"), section(".text.Reset_Handler"), long_call))
     FPU_Enable();
 #endif
 
-	TCM_Configure(2);
+
+    TCM_Configure(2);
 
     /* Enable TCM   */
     TCM_Enable();
@@ -166,8 +160,6 @@ void __attribute__((optimize("-O1"), section(".text.Reset_Handler"), long_call))
     __libc_init_array();
 
 
-    /* Enable Instruction Cache */
-    ICache_Enable();
 
 
     /* Call the optional application-provided _on_bootstrap() function. */
@@ -184,6 +176,7 @@ void __attribute__((optimize("-O1"), section(".text.Reset_Handler"), long_call))
 
     /* Branch to application's main function */
     main();
+
 #if (defined(__DEBUG) || defined(__DEBUG_D)) && defined(__XC32)
     __builtin_software_breakpoint();
 #endif

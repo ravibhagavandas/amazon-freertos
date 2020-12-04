@@ -1,0 +1,13 @@
+configName: aws_tests
+folderName: ''
+format_version: v1.0
+frameworkPath: ../../../../../..
+processor: ATSAME54P20A
+projectName: ''
+settings:
+  PackageFilter: aws_cloud;bootloader;bootloader_apps_uart;bsp;core;core_apps_pic32cm_le00_ls00;core_apps_pic32cm_le_ls;cryptoauthlib;csp;csp_apps_pic32cm_le00_ls00;csp_apps_pic32cm_le_ls;csp_apps_sam_d5x_e5x;net;usb;validation;wireless;
+  FORCE_OPTIMIZATION: 'false'
+  GENERATE_BACKUP: 'true'
+  CMSISPath: .\dev_packs\arm\CMSIS\5.7.0
+  MERGE_STRATEGY: USER_ALL
+  DFPPath: .\dev_packs\Microchip\SAME54_DFP\3.4.70\atdf\ATSAME54P20A.atdf

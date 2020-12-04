@@ -29,7 +29,7 @@
 #include "aws_boot_types.h"
 #include "aws_boot_flash_info.h"
 
-/* Default partition table for PIC32MZ2048EFM100.
+/* Default partition table for SAME54.
  * The device support two memory banks which can be toggled.
  */
 static FLASHPartition_t axPartitonTable[] =
@@ -77,7 +77,7 @@ uint8_t BOOT_FLASH_GetFlashArea( const BOOTImageDescriptor_t * pxAppDesc )
     {
         if( axPartitonTable[ ucIndex ].ucPartitionType == FLASH_PARTITION_TYPE_APP )
         {
-            if( pvAppDesc == ( void * ) ( FLASH_DEVICE_BASE + axPartitonTable[ ucIndex ].xFlashArea.ulOffset ) )
+            if( pvAppDesc == ( void * ) ( FLASH_DEVICE_BASE + axPartitonTable[ ucIndex ].xFlashArea.ulOffset ) -AWS_BOOTLOADER_SIZE + AWS_FLASH_SIZE/2 - BOOTIMAGE_DESCRIPTOR_SIZE )
             {
                 ucFlashArea = axPartitonTable[ ucIndex ].xFlashArea.ucFlashAreaId;
                 break;
@@ -105,17 +105,25 @@ BaseType_t BOOT_FLASH_ReadPartitionTable( BOOTPartition_Info_t * xPartitionInfo 
             case FLASH_PARTITION_TYPE_APP:
                 xPartitionInfo->ucNumOfApps++;
 
-                if( axPartitonTable[ i ].ucPartitionSubType & FLASH_PARTITION_SUBTYPE_APP_OTA )
-                {
-                    xPartitionInfo->paxOTAAppDescriptor[ i ] =
-                        ( void * ) ( FLASH_DEVICE_BASE + axPartitonTable[ i ].xFlashArea.ulOffset);
-                }
-
+               
                 if( axPartitonTable[ i ].ucPartitionSubType & FLASH_PARTITION_SUBTYPE_APP_DEFAULT )
                 {
+                    // Partition 1
                     xPartitionInfo->pvDefaultAppExecAddress =
-                        ( void * ) ( FLASH_DEVICE_BASE + axPartitonTable[ i ].xFlashArea.ulOffset );
+                        ( void * ) ( FLASH_DEVICE_BASE  + AWS_BOOTLOADER_SIZE);
+                                        xPartitionInfo->paxOTAAppDescriptor[ i ] =
+                       xPartitionInfo->paxOTAAppDescriptor[ i ] = ( void * ) ( FLASH_DEVICE_BASE + AWS_FLASH_SIZE/2 - BOOTIMAGE_DESCRIPTOR_SIZE);
+                    printf("\r\n Default Boot Image Descriptor Location [%d] = [0x%x]", i,xPartitionInfo->paxOTAAppDescriptor[ i ]);
+
                 }
+                else if( axPartitonTable[ i ].ucPartitionSubType & FLASH_PARTITION_SUBTYPE_APP_OTA )
+                {
+                    // Partition 2
+                    xPartitionInfo->paxOTAAppDescriptor[ i ] =
+                        ( void * ) ( FLASH_DEVICE_BASE + AWS_FLASH_SIZE - BOOTIMAGE_DESCRIPTOR_SIZE);
+                    printf("\r\n Boot Image Descriptor Location [%d] = [0x%x]", i,xPartitionInfo->paxOTAAppDescriptor[ i ]);
+                }
+
 
                 break;
 
