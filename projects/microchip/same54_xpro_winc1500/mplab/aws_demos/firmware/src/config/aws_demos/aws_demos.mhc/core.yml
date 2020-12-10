@@ -1037,6 +1037,27 @@ children:
       - type: Dynamic
         attributes: {id: core, value: 'false'}
   - type: Boolean
+    attributes: {id: NVIC_10_0_ENABLE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: 'false'}
+  - type: String
+    attributes: {id: NVIC_10_0_HANDLER}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: WDT_Handler}
+  - type: Boolean
+    attributes: {id: NVIC_10_0_HANDLER_LOCK}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: 'false'}
+  - type: Boolean
     attributes: {id: NVIC_110_0_ENABLE}
     children:
     - type: Values
@@ -3221,6 +3242,34 @@ children:
         attributes: {id: enabled}
         children:
         - {type: Value, value: 'true'}
+  - type: Boolean
+    attributes: {id: WDT_INTERRUPT_ENABLE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: 'false'}
+  - type: Boolean
+    attributes: {id: WDT_INTERRUPT_ENABLE_UPDATE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: 'true'}
+  - type: String
+    attributes: {id: WDT_INTERRUPT_HANDLER}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: WDT_Handler}
+  - type: Boolean
+    attributes: {id: WDT_INTERRUPT_HANDLER_LOCK}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: 'false'}
   - type: File
     attributes: {id: WDT_SOURCE}
     children:

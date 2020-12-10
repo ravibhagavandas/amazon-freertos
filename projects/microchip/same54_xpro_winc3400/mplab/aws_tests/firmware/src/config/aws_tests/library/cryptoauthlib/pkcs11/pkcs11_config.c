@@ -235,9 +235,10 @@ static CK_RV pkcs11_config_parse_device(pkcs11_slot_ctx_ptr slot_ctx, char* cfgs
         slot_ctx->interface_config.devtype = ATECC508A;
         rv = CKR_OK;
     }
-    else if (!strcmp(argv[0], "ATECC608A"))
+    else if (!strncmp(argv[0], "ATECC608", 8))
     {
-        slot_ctx->interface_config.devtype = ATECC608A;
+        slot_ctx->interface_config.devtype = ATECC608;
+
         if (1 < argc)
         {
 #if defined(ATCA_TNGTLS_SUPPORT) || defined(ATCA_TNGLORA_SUPPORT) || defined(ATCA_TFLEX_SUPPORT)
@@ -271,7 +272,7 @@ static CK_RV pkcs11_config_parse_interface(pkcs11_slot_ctx_ptr slot_ctx, char* c
     pkcs11_config_split_string(cfgstr, ',', &argc, argv);
 
     /* Device part number was a late addition so this defaults it to a 608 */
-    slot_ctx->interface_config.devtype = ATECC608A;
+    slot_ctx->interface_config.devtype = ATECC608;
     slot_ctx->interface_config.wake_delay = 1500;
     slot_ctx->interface_config.rx_retries = 20;
 
@@ -335,11 +336,11 @@ static CK_RV pkcs11_config_parse_interface(pkcs11_slot_ctx_ptr slot_ctx, char* c
         }
         if (argc > 2)
         {
-            slot_ctx->interface_config.atcaspi.select_pin = (uint8_t)strtol(argv[1], NULL, 16);
+            slot_ctx->interface_config.atcaspi.select_pin = (uint8_t)strtol(argv[2], NULL, 16);
         }
         if (argc > 3)
         {
-            slot_ctx->interface_config.atcaspi.baud = (uint32_t)strtol(argv[1], NULL, 16);
+            slot_ctx->interface_config.atcaspi.baud = (uint32_t)strtol(argv[3], NULL, 10);
         }
         rv = CKR_OK;
 #endif
@@ -759,7 +760,7 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
                     /* If a label wasn't set - configure a default */
                     if (!slot_ctx->label[0])
                     {
-                        snprintf((char*)slot_ctx->label, sizeof(slot_ctx->label)-1, "%02XABC", (uint8_t)i);
+                        snprintf((char*)slot_ctx->label, sizeof(slot_ctx->label) - 1, "%02XABC", (uint8_t)i);
                     }
                 }
 #endif

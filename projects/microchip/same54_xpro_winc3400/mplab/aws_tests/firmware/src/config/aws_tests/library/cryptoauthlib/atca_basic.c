@@ -38,7 +38,7 @@
 #endif
 
 const char atca_version[] = ATCA_LIBRARY_VERSION_DATE;
-SHARED_LIB_EXPORT ATCADevice _gDevice = NULL;
+ATCADevice _gDevice = NULL;
 #ifdef ATCA_NO_HEAP
 SHARED_LIB_EXPORT struct atca_command g_atcab_command;
 SHARED_LIB_EXPORT struct atca_iface g_atcab_iface;
@@ -98,10 +98,10 @@ ATCA_STATUS atcab_init_ext(ATCADevice* device, ATCAIfaceCfg *cfg)
         }
 #endif
 
-#ifdef ATCA_ATECC608A_SUPPORT
-        if (cfg->devtype == ATECC608A)
+#ifdef ATCA_ATECC608_SUPPORT
+        if (cfg->devtype == ATECC608)
         {
-            if ((status = atcab_read_bytes_zone(ATCA_ZONE_CONFIG, 0, ATCA_CHIPMODE_OFFSET, &(*device)->mCommands->clock_divider, 1)) != ATCA_SUCCESS)
+            if ((status = calib_read_bytes_zone(*device, ATCA_ZONE_CONFIG, 0, ATCA_CHIPMODE_OFFSET, &(*device)->mCommands->clock_divider, 1)) != ATCA_SUCCESS)
             {
                 return status;
             }
@@ -368,7 +368,7 @@ ATCA_STATUS atcab_aes(uint8_t mode, uint16_t key_id, const uint8_t* aes_in, uint
 
     if (atcab_is_ca_device(dev_type))
     {
-#if defined(ATCA_ATECC608A_SUPPORT)
+#if defined(ATCA_ATECC608_SUPPORT)
         status = calib_aes(_gDevice, mode, key_id, aes_in, aes_out);
 #endif
     }
@@ -402,7 +402,7 @@ ATCA_STATUS atcab_aes_encrypt_ext(ATCADevice device, uint16_t key_id, uint8_t ke
 
     if (atcab_is_ca_device(dev_type))
     {
-#if defined(ATCA_ATECC608A_SUPPORT)
+#if defined(ATCA_ATECC608_SUPPORT)
         status = calib_aes_encrypt(device, key_id, key_block, plaintext, ciphertext);
 #endif
     }
@@ -454,7 +454,7 @@ ATCA_STATUS atcab_aes_decrypt_ext(ATCADevice device, uint16_t key_id, uint8_t ke
 
     if (atcab_is_ca_device(dev_type))
     {
-#if defined(ATCA_ATECC608A_SUPPORT)
+#if defined(ATCA_ATECC608_SUPPORT)
         status = calib_aes_decrypt(device, key_id, key_block, ciphertext, plaintext);
 #endif
     }
@@ -502,7 +502,7 @@ ATCA_STATUS atcab_aes_gfm(const uint8_t* h, const uint8_t* input, uint8_t* outpu
 
     if (atcab_is_ca_device(dev_type))
     {
-#if defined(ATCA_ATECC608A_SUPPORT)
+#if defined(ATCA_ATECC608_SUPPORT)
         status = calib_aes_gfm(_gDevice, h, input, output);
 #endif
     }
@@ -596,7 +596,7 @@ ATCA_STATUS atcab_aes_gcm_init_rand(atca_aes_gcm_ctx_t* ctx, uint16_t key_id, ui
 }
 
 /** \brief Process Additional Authenticated Data (AAD) using GCM mode and a
- *         key within the ATECC608A device.
+ *         key within the ATECC608 device.
  *
  * This can be called multiple times. atcab_aes_gcm_init() or
  * atcab_aes_gcm_init_rand() should be called before the first use of this
@@ -631,7 +631,7 @@ ATCA_STATUS atcab_aes_gcm_aad_update(atca_aes_gcm_ctx_t* ctx, const uint8_t* aad
     return status;
 }
 
-/** \brief Encrypt data using GCM mode and a key within the ATECC608A device.
+/** \brief Encrypt data using GCM mode and a key within the ATECC608 device.
  *         atcab_aes_gcm_init() or atcab_aes_gcm_init_rand() should be called
  *         before the first use of this function.
  *
@@ -694,7 +694,7 @@ ATCA_STATUS atcab_aes_gcm_encrypt_finish(atca_aes_gcm_ctx_t* ctx, uint8_t* tag, 
     return status;
 }
 
-/** \brief Decrypt data using GCM mode and a key within the ATECC608A device.
+/** \brief Decrypt data using GCM mode and a key within the ATECC608 device.
  *         atcab_aes_gcm_init() or atcab_aes_gcm_init_rand() should be called
  *         before the first use of this function.
  *
@@ -1056,7 +1056,7 @@ ATCA_STATUS atcab_ecdh_ioenc(uint16_t key_id, const uint8_t* public_key, uint8_t
 
     if (atcab_is_ca_device(dev_type))
     {
-#ifdef ATCA_ATECC608A_SUPPORT
+#ifdef ATCA_ATECC608_SUPPORT
         status = calib_ecdh_ioenc(_gDevice, key_id, public_key, pms, io_key);
 #endif
     }
@@ -1089,7 +1089,7 @@ ATCA_STATUS atcab_ecdh_tempkey(const uint8_t* public_key, uint8_t* pms)
 
     if (atcab_is_ca_device(dev_type))
     {
-#ifdef ATCA_ATECC608A_SUPPORT
+#ifdef ATCA_ATECC608_SUPPORT
         status = calib_ecdh_tempkey(_gDevice, public_key, pms);
 #endif
     }
@@ -1123,7 +1123,7 @@ ATCA_STATUS atcab_ecdh_tempkey_ioenc(const uint8_t* public_key, uint8_t* pms, co
 
     if (atcab_is_ca_device(dev_type))
     {
-#ifdef ATCA_ATECC608A_SUPPORT
+#ifdef ATCA_ATECC608_SUPPORT
         status = calib_ecdh_tempkey_ioenc(_gDevice, public_key, pms, io_key);
 #endif
     }
@@ -1260,21 +1260,21 @@ ATCA_STATUS atcab_genkey(uint16_t key_id, uint8_t* public_key)
  *
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS atcab_get_pubkey(uint16_t key_id, uint8_t* public_key)
+ATCA_STATUS atcab_get_pubkey_ext(ATCADevice device, uint16_t key_id, uint8_t* public_key)
 {
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
-    ATCADeviceType dev_type = atcab_get_device_type();
+    ATCADeviceType dev_type = atcab_get_device_type_ext(device);
 
     if (atcab_is_ca_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
-        status = calib_get_pubkey(_gDevice, key_id, public_key);
+        status = calib_get_pubkey(device, key_id, public_key);
 #endif
     }
     else if (atcab_is_ta_device(dev_type))
     {
 #if ATCA_TA_SUPPORT
-        status = talib_get_pubkey_compat(_gDevice, key_id, public_key);
+        status = talib_get_pubkey_compat(device, key_id, public_key);
 #endif
     }
     else
@@ -1282,6 +1282,22 @@ ATCA_STATUS atcab_get_pubkey(uint16_t key_id, uint8_t* public_key)
         status = ATCA_NOT_INITIALIZED;
     }
     return status;
+}
+
+/** \brief Uses GenKey command to calculate the public key from an existing
+ *          private key in a slot.
+ *
+ *  \param[in]  key_id      Slot number of the private key.
+ *  \param[out] public_key  Public key will be returned here. Format will be
+ *                          the X and Y integers in big-endian format.
+ *                          64 bytes for P256 curve. Set to NULL if public key
+ *                          isn't required.
+ *
+ *  \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcab_get_pubkey(uint16_t key_id, uint8_t* public_key)
+{
+    return atcab_get_pubkey_ext(_gDevice, key_id, public_key);
 }
 
 // HMAC command functions
@@ -1383,7 +1399,7 @@ ATCA_STATUS atcab_info(uint8_t* revision)
 }
 
 /** \brief Use the Info command to set the persistent latch state for an
- *          ATECC608A device.
+ *          ATECC608 device.
  *
  *  \param[out] state  Persistent latch state. Set (true) or clear (false).
  *
@@ -1412,7 +1428,7 @@ ATCA_STATUS atcab_info_set_latch(bool state)
 }
 
 /** \brief Use the Info command to get the persistent latch current state for
- *          an ATECC608A device.
+ *          an ATECC608 device.
  *
  *  \param[out] state  The state is returned here. Set (true) or Cler (false).
  *
@@ -1731,7 +1747,7 @@ ATCA_STATUS atcab_mac(uint8_t mode, uint16_t key_id, const uint8_t* challenge, u
  *                          nonce calculation mode (bit 15).
  * \param[in]  num_in       Input value to either be included in the nonce
  *                          calculation in random modes (20 bytes) or to be
- *                          written directly (32 bytes or 64 bytes(ATECC608A))
+ *                          written directly (32 bytes or 64 bytes(ATECC608))
  *                          in pass-through mode.
  * \param[out] rand_out     If using a random mode, the internally generated
  *                          32-byte random number that was used in the nonce
@@ -1794,7 +1810,7 @@ ATCA_STATUS atcab_nonce(const uint8_t* num_in)
 /** \brief Execute a Nonce command in pass-through mode to load one of the
  *          device's internal buffers with a fixed value.
  *
- * For the ATECC608A, available targets are TempKey (32 or 64 bytes), Message
+ * For the ATECC608, available targets are TempKey (32 or 64 bytes), Message
  * Digest Buffer (32 or 64 bytes), or the Alternate Key Buffer (32 bytes). For
  * all other devices, only TempKey (32 bytes) is available.
  *
@@ -2472,7 +2488,7 @@ ATCA_STATUS atcab_secureboot(uint8_t mode, uint16_t param2, const uint8_t* diges
 
     if (atcab_is_ca_device(dev_type))
     {
-#ifdef ATCA_ATECC608A_SUPPORT
+#ifdef ATCA_ATECC608_SUPPORT
         status = calib_secureboot(_gDevice, mode, param2, digest, signature, mac);
 #endif
     }
@@ -2509,7 +2525,7 @@ ATCA_STATUS atcab_secureboot_mac(uint8_t mode, const uint8_t* digest, const uint
 
     if (atcab_is_ca_device(dev_type))
     {
-#ifdef ATCA_ATECC608A_SUPPORT
+#ifdef ATCA_ATECC608_SUPPORT
         status = calib_secureboot_mac(_gDevice, mode, digest, signature, num_in, io_key, is_verified);
 #endif
     }
@@ -2527,7 +2543,7 @@ ATCA_STATUS atcab_secureboot_mac(uint8_t mode, const uint8_t* digest, const uint
 /* SelfTest Command */
 
 /** \brief Executes the SelfTest command, which performs a test of one or more
- *          of the cryptographic engines within the ATECC608A chip.
+ *          of the cryptographic engines within the ATECC608 chip.
  *
  *  \param[in]  mode    Functions to test. Can be a bit field combining any
  *                      of the following: SELFTEST_MODE_RNG,
@@ -2546,7 +2562,7 @@ ATCA_STATUS atcab_selftest(uint8_t mode, uint16_t param2, uint8_t* result)
 
     if (atcab_is_ca_device(dev_type))
     {
-#ifdef ATCA_ATECC608A_SUPPORT
+#ifdef ATCA_ATECC608_SUPPORT
         status = calib_selftest(_gDevice, mode, param2, result);
 #endif
     }
@@ -2572,12 +2588,12 @@ ATCA_STATUS atcab_selftest(uint8_t mode, uint16_t param2, uint8_t* result)
  *                              End(2), Public(3), HMACstart(4), HMACend(5),
  *                              Read_Context(6), or Write_Context(7). Also
  *                              message digest target location for the
- *                              ATECC608A.
+ *                              ATECC608.
  * \param[in]    length         Number of bytes in the message parameter or
  *                              KeySlot for the HMAC key if Mode is
  *                              HMACstart(4) or Public(3).
  * \param[in]    data_in        Message bytes to be hashed or Write_Context if
- *                              restoring a context on the ATECC608A. Can be
+ *                              restoring a context on the ATECC608. Can be
  *                              NULL if not required by the mode.
  * \param[out]   data_out       Data returned by the command (digest or
  *                              context).
@@ -2704,7 +2720,7 @@ ATCA_STATUS atcab_sha_end(uint8_t* digest, uint16_t length, const uint8_t* messa
 }
 
 /** \brief Executes SHA command to read the SHA-256 context back. Only for
- *          ATECC608A with SHA-256 contexts. HMAC not supported.
+ *          ATECC608 with SHA-256 contexts. HMAC not supported.
  *
  *  \param[out]   context       Context data is returned here.
  *  \param[in,out] context_size  As input, the size of the context buffer in
@@ -2738,7 +2754,7 @@ ATCA_STATUS atcab_sha_read_context(uint8_t* context, uint16_t* context_size)
 }
 
 /** \brief Executes SHA command to write (restore) a SHA-256 context into the
- *          the device. Only supported for ATECC608A with SHA-256 contexts.
+ *          the device. Only supported for ATECC608 with SHA-256 contexts.
  *
  *  \param[in] context       Context data to be restored.
  *  \param[in] context_size  Size of the context data in bytes.
@@ -2988,7 +3004,7 @@ ATCA_STATUS atcab_sha_hmac_update(atca_hmac_sha256_ctx_t* ctx, const uint8_t* da
  * \param[in]  ctx     HMAC/SHA-256 context
  * \param[out] digest  HMAC/SHA-256 result is returned here (32 bytes).
  * \param[in]  target  Where to save the digest internal to the device.
- *                     For ATECC608A, can be SHA_MODE_TARGET_TEMPKEY,
+ *                     For ATECC608, can be SHA_MODE_TARGET_TEMPKEY,
  *                     SHA_MODE_TARGET_MSGDIGBUF, or SHA_MODE_TARGET_OUT_ONLY.
  *                     For all other devices, SHA_MODE_TARGET_TEMPKEY is the
  *                     only option.
@@ -3024,7 +3040,7 @@ ATCA_STATUS atcab_sha_hmac_finish(atca_hmac_sha256_ctx_t* ctx, uint8_t* digest, 
  * \param[in]  key_slot   Slot key id to use for the HMAC calculation
  * \param[out] digest     Digest is returned here (32 bytes).
  * \param[in]  target     Where to save the digest internal to the device.
- *                        For ATECC608A, can be SHA_MODE_TARGET_TEMPKEY,
+ *                        For ATECC608, can be SHA_MODE_TARGET_TEMPKEY,
  *                        SHA_MODE_TARGET_MSGDIGBUF, or
  *                        SHA_MODE_TARGET_OUT_ONLY. For all other devices,
  *                        SHA_MODE_TARGET_TEMPKEY is the only option.
@@ -3095,8 +3111,9 @@ ATCA_STATUS atcab_sign_base(uint8_t mode, uint16_t key_id, uint8_t* signature)
 /** \brief Executes Sign command, to sign a 32-byte external message using the
  *                   private key in the specified slot. The message to be signed
  *                   will be loaded into the Message Digest Buffer to the
- *                   ATECC608A device or TempKey for other devices.
+ *                   ATECC608 device or TempKey for other devices.
  *
+ *  \param[in]  device     Device context pointer
  *  \param[in]  key_id     Slot of the private key to be used to sign the
  *                         message.
  *  \param[in]  msg        32-byte message to be signed. Typically the SHA256
@@ -3107,10 +3124,10 @@ ATCA_STATUS atcab_sign_base(uint8_t mode, uint16_t key_id, uint8_t* signature)
  *
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS atcab_sign(uint16_t key_id, const uint8_t* msg, uint8_t* signature)
+ATCA_STATUS atcab_sign_ext(ATCADevice device, uint16_t key_id, const uint8_t* msg, uint8_t* signature)
 {
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
-    ATCADeviceType dev_type = atcab_get_device_type();
+    ATCADeviceType dev_type = atcab_get_device_type_ext(device);
 
     if (atcab_is_ca_device(dev_type))
     {
@@ -3129,6 +3146,26 @@ ATCA_STATUS atcab_sign(uint16_t key_id, const uint8_t* msg, uint8_t* signature)
         status = ATCA_NOT_INITIALIZED;
     }
     return status;
+}
+
+/** \brief Executes Sign command, to sign a 32-byte external message using the
+ *                   private key in the specified slot. The message to be signed
+ *                   will be loaded into the Message Digest Buffer to the
+ *                   ATECC608 device or TempKey for other devices.
+ *
+ *  \param[in]  key_id     Slot of the private key to be used to sign the
+ *                         message.
+ *  \param[in]  msg        32-byte message to be signed. Typically the SHA256
+ *                         hash of the full message.
+ *  \param[out] signature  Signature will be returned here. Format is R and S
+ *                         integers in big-endian format. 64 bytes for P256
+ *                         curve.
+ *
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS atcab_sign(uint16_t key_id, const uint8_t* msg, uint8_t* signature)
+{
+    return atcab_sign_ext(_gDevice, key_id, msg, signature);
 }
 
 /** \brief Executes Sign command to sign an internally generated message.
@@ -3211,7 +3248,7 @@ ATCA_STATUS atcab_updateextra(uint8_t mode, uint16_t new_value)
  *          public key. In all cases, the signature is an input to the command.
  *
  * For the Stored, External, and ValidateExternal Modes, the contents of
- * TempKey (or Message Digest Buffer in some cases for the ATECC608A) should
+ * TempKey (or Message Digest Buffer in some cases for the ATECC608) should
  * contain the 32 byte message.
  *
  * \param[in] mode        Verify command mode and options
@@ -3261,7 +3298,51 @@ ATCA_STATUS atcab_verify(uint8_t mode, uint16_t key_id, const uint8_t* signature
 /** \brief Executes the Verify command, which verifies a signature (ECDSA
  *          verify operation) with all components (message, signature, and
  *          public key) supplied. The message to be signed will be loaded into
- *          the Message Digest Buffer to the ATECC608A device or TempKey for
+ *          the Message Digest Buffer to the ATECC608 device or TempKey for
+ *          other devices.
+ *
+ * \param[in]  device       Device context pointer
+ * \param[in]  message      32 byte message to be verified. Typically
+ *                          the SHA256 hash of the full message.
+ * \param[in]  signature    Signature to be verified. R and S integers in
+ *                          big-endian format. 64 bytes for P256 curve.
+ * \param[in]  public_key   The public key to be used for verification. X and
+ *                          Y integers in big-endian format. 64 bytes for
+ *                          P256 curve.
+ * \param[out] is_verified  Boolean whether or not the message, signature,
+ *                          public key verified.
+ *
+ * \return ATCA_SUCCESS on verification success or failure, because the
+ *         command still completed successfully.
+ */
+ATCA_STATUS atcab_verify_extern_ext(ATCADevice device, const uint8_t* message, const uint8_t* signature, const uint8_t* public_key, bool* is_verified)
+{
+    ATCA_STATUS status = ATCA_UNIMPLEMENTED;
+    ATCADeviceType dev_type = atcab_get_device_type_ext(device);
+
+    if (atcab_is_ca_device(dev_type))
+    {
+#ifdef ATCA_ECC_SUPPORT
+        status = calib_verify_extern(device, message, signature, public_key, is_verified);
+#endif
+    }
+    else if (atcab_is_ta_device(dev_type))
+    {
+#if ATCA_TA_SUPPORT
+        status = talib_verify_extern_compat(device, message, signature, public_key, is_verified);
+#endif
+    }
+    else
+    {
+        status = ATCA_NOT_INITIALIZED;
+    }
+    return status;
+}
+
+/** \brief Executes the Verify command, which verifies a signature (ECDSA
+ *          verify operation) with all components (message, signature, and
+ *          public key) supplied. The message to be signed will be loaded into
+ *          the Message Digest Buffer to the ATECC608 device or TempKey for
  *          other devices.
  *
  * \param[in]  message      32 byte message to be verified. Typically
@@ -3279,32 +3360,13 @@ ATCA_STATUS atcab_verify(uint8_t mode, uint16_t key_id, const uint8_t* signature
  */
 ATCA_STATUS atcab_verify_extern(const uint8_t* message, const uint8_t* signature, const uint8_t* public_key, bool* is_verified)
 {
-    ATCA_STATUS status = ATCA_UNIMPLEMENTED;
-    ATCADeviceType dev_type = atcab_get_device_type();
-
-    if (atcab_is_ca_device(dev_type))
-    {
-#ifdef ATCA_ECC_SUPPORT
-        status = calib_verify_extern(_gDevice, message, signature, public_key, is_verified);
-#endif
-    }
-    else if (atcab_is_ta_device(dev_type))
-    {
-#if ATCA_TA_SUPPORT
-        status = talib_verify_extern_compat(_gDevice, message, signature, public_key, is_verified);
-#endif
-    }
-    else
-    {
-        status = ATCA_NOT_INITIALIZED;
-    }
-    return status;
+    return atcab_verify_extern_ext(_gDevice, message, signature, public_key, is_verified);
 }
 
 /** \brief Executes the Verify command with verification MAC, which verifies a
  *          signature (ECDSA verify operation) with all components (message,
  *          signature, and public key) supplied. This function is only available
- *          on the ATECC608A.
+ *          on the ATECC608.
  *
  * \param[in]  message      32 byte message to be verified. Typically
  *                          the SHA256 hash of the full message.
@@ -3347,7 +3409,49 @@ ATCA_STATUS atcab_verify_extern_mac(const uint8_t* message, const uint8_t* signa
 /** \brief Executes the Verify command, which verifies a signature (ECDSA
  *          verify operation) with a public key stored in the device. The
  *          message to be signed will be loaded into the Message Digest Buffer
- *          to the ATECC608A device or TempKey for other devices.
+ *          to the ATECC608 device or TempKey for other devices.
+ *
+ * \param[in]  device       Device context pointer
+ * \param[in]  message      32 byte message to be verified. Typically
+ *                          the SHA256 hash of the full message.
+ * \param[in]  signature    Signature to be verified. R and S integers in
+ *                          big-endian format. 64 bytes for P256 curve.
+ * \param[in]  key_id       Slot containing the public key to be used in the
+ *                         verification.
+ * \param[out] is_verified  Boolean whether or not the message, signature,
+ *                          public key verified.
+ *
+ * \return ATCA_SUCCESS on verification success or failure, because the
+ *         command still completed successfully.
+ */
+ATCA_STATUS atcab_verify_stored_ext(ATCADevice device, const uint8_t* message, const uint8_t* signature, uint16_t key_id, bool* is_verified)
+{
+    ATCA_STATUS status = ATCA_UNIMPLEMENTED;
+    ATCADeviceType dev_type = atcab_get_device_type_ext(device);
+
+    if (atcab_is_ca_device(dev_type))
+    {
+#ifdef ATCA_ECC_SUPPORT
+        status = calib_verify_stored(device, message, signature, key_id, is_verified);
+#endif
+    }
+    else if (atcab_is_ta_device(dev_type))
+    {
+#if ATCA_TA_SUPPORT
+        status = talib_verify_stored_compat(device, message, signature, key_id, is_verified);
+#endif
+    }
+    else
+    {
+        status = ATCA_NOT_INITIALIZED;
+    }
+    return status;
+}
+
+/** \brief Executes the Verify command, which verifies a signature (ECDSA
+ *          verify operation) with a public key stored in the device. The
+ *          message to be signed will be loaded into the Message Digest Buffer
+ *          to the ATECC608 device or TempKey for other devices.
  *
  * \param[in]  message      32 byte message to be verified. Typically
  *                          the SHA256 hash of the full message.
@@ -3363,31 +3467,12 @@ ATCA_STATUS atcab_verify_extern_mac(const uint8_t* message, const uint8_t* signa
  */
 ATCA_STATUS atcab_verify_stored(const uint8_t* message, const uint8_t* signature, uint16_t key_id, bool* is_verified)
 {
-    ATCA_STATUS status = ATCA_UNIMPLEMENTED;
-    ATCADeviceType dev_type = atcab_get_device_type();
-
-    if (atcab_is_ca_device(dev_type))
-    {
-#ifdef ATCA_ECC_SUPPORT
-        status = calib_verify_stored(_gDevice, message, signature, key_id, is_verified);
-#endif
-    }
-    else if (atcab_is_ta_device(dev_type))
-    {
-#if ATCA_TA_SUPPORT
-        status = talib_verify_stored_compat(_gDevice, message, signature, key_id, is_verified);
-#endif
-    }
-    else
-    {
-        status = ATCA_NOT_INITIALIZED;
-    }
-    return status;
+    return atcab_verify_stored_ext(_gDevice, message, signature, key_id, is_verified);
 }
 
 /** \brief Executes the Verify command with verification MAC, which verifies a
  *          signature (ECDSA verify operation) with a public key stored in the
- *          device. This function is only available on the ATECC608A.
+ *          device. This function is only available on the ATECC608.
  *
  * \param[in]  message      32 byte message to be verified. Typically
  *                          the SHA256 hash of the full message.

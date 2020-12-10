@@ -405,20 +405,20 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: FC28768896FC3A7EC10A8916F82E995F
-- generatedChecksum: 32972814770797BB78AB418780B0FF26
+- generatedChecksum: 18D788BF73C98CA075E39E74E48BE078
   logicalPath: config\aws_tests\library\cryptoauthlib
   name: atca_basic.c
   physicalPath: library\cryptoauthlib
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 32972814770797BB78AB418780B0FF26
-- generatedChecksum: EAC4DB97EA75C9DFE56F3030EFBD1C2D
+  userChecksum: 18D788BF73C98CA075E39E74E48BE078
+- generatedChecksum: ED83A4589780C13B48A7BFA21C6C9DCC
   logicalPath: config\aws_tests\library\cryptoauthlib
   name: atca_basic.h
   physicalPath: library\cryptoauthlib
   security: NON_SECURE
   type: SOURCE
-  userChecksum: EAC4DB97EA75C9DFE56F3030EFBD1C2D
+  userChecksum: ED83A4589780C13B48A7BFA21C6C9DCC
 - generatedChecksum: 7A3C7433D5B1A51B74A8924E342D644E
   logicalPath: config\aws_tests\library\cryptoauthlib
   name: atca_bool.h
@@ -468,20 +468,20 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: A699E93A802539F77DC8A54AB9961305
-- generatedChecksum: A582943BD3D8738E31B34925EAD8414F
+- generatedChecksum: 438BE57ED488CFF75E81BAEDD0F20BA6
   logicalPath: config\aws_tests\library\cryptoauthlib
   name: atca_compiler.h
   physicalPath: library\cryptoauthlib
   security: NON_SECURE
   type: SOURCE
-  userChecksum: A582943BD3D8738E31B34925EAD8414F
-- generatedChecksum: 5311664AD46C6A0A4C2B7FC5D5B0EDF6
+  userChecksum: 438BE57ED488CFF75E81BAEDD0F20BA6
+- generatedChecksum: 8500092E7EA1EB920BF9E9DDFF2038F7
   logicalPath: config\aws_tests\library\cryptoauthlib\crypto
   name: atca_crypto_hw_aes.h
   physicalPath: library\cryptoauthlib\crypto
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 5311664AD46C6A0A4C2B7FC5D5B0EDF6
+  userChecksum: 8500092E7EA1EB920BF9E9DDFF2038F7
 - generatedChecksum: 65171793E500AE687BC8CCD3C6049D31
   logicalPath: config\aws_tests\library\cryptoauthlib\crypto
   name: atca_crypto_hw_aes_cbc.c
@@ -489,6 +489,20 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: 65171793E500AE687BC8CCD3C6049D31
+- generatedChecksum: 73C92B191D2927DD6DDC543D05D73461
+  logicalPath: config\aws_tests\library\cryptoauthlib\crypto
+  name: atca_crypto_hw_aes_cbcmac.c
+  physicalPath: library\cryptoauthlib\crypto
+  security: NON_SECURE
+  type: SOURCE
+  userChecksum: 73C92B191D2927DD6DDC543D05D73461
+- generatedChecksum: B674D95DED12D3239D9B2D31C3A8504A
+  logicalPath: config\aws_tests\library\cryptoauthlib\crypto
+  name: atca_crypto_hw_aes_ccm.c
+  physicalPath: library\cryptoauthlib\crypto
+  security: NON_SECURE
+  type: SOURCE
+  userChecksum: B674D95DED12D3239D9B2D31C3A8504A
 - generatedChecksum: 08A64A9051E86869223102BA11C2A0AD
   logicalPath: config\aws_tests\library\cryptoauthlib\crypto
   name: atca_crypto_hw_aes_cmac.c
@@ -503,13 +517,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: 2524D72F7A43204248272C0893543EB7
-- generatedChecksum: 044125C5B1E3A04BEC183A3F9DEB7832
+- generatedChecksum: 2FC81F071ACA6D9FB034A1846A2C4302
   logicalPath: config\aws_tests\library\cryptoauthlib\crypto
   name: atca_crypto_sw.h
   physicalPath: library\cryptoauthlib\crypto
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 044125C5B1E3A04BEC183A3F9DEB7832
+  userChecksum: 2FC81F071ACA6D9FB034A1846A2C4302
 - generatedChecksum: 4B532B685AD0C9C275D5D5416B9E0145
   logicalPath: config\aws_tests\library\cryptoauthlib\crypto
   name: atca_crypto_sw_ecdsa.c
@@ -552,20 +566,20 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: A1D4B8DF10B6AB9164B16D14A4E49A32
-- generatedChecksum: 4393D6DEE59D21AC15E8E45B4C173AF8
+- generatedChecksum: 944E9C33A933469A26FF4AA548282F73
   logicalPath: config\aws_tests\library\cryptoauthlib\crypto
   name: atca_crypto_sw_sha2.c
   physicalPath: library\cryptoauthlib\crypto
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 4393D6DEE59D21AC15E8E45B4C173AF8
-- generatedChecksum: 87C1DA115439D884C952DCE47832318D
+  userChecksum: 944E9C33A933469A26FF4AA548282F73
+- generatedChecksum: 2DF89DD03016078326191F5B0452C596
   logicalPath: config\aws_tests\library\cryptoauthlib\crypto
   name: atca_crypto_sw_sha2.h
   physicalPath: library\cryptoauthlib\crypto
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 87C1DA115439D884C952DCE47832318D
+  userChecksum: 2DF89DD03016078326191F5B0452C596
 - generatedChecksum: 367980753E682BFC5D189349D2A8359A
   logicalPath: config\aws_tests\library\cryptoauthlib
   name: atca_debug.c
@@ -587,13 +601,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: 43C5FF2398A4F18A68B28D6F44173072
-- generatedChecksum: 59ADBF11B2812B89C7634CA36FF9C482
+- generatedChecksum: AB817EC33D10FAE68CED8ECCDC5BF3AE
   logicalPath: config\aws_tests\library\cryptoauthlib
   name: atca_device.h
   physicalPath: library\cryptoauthlib
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 59ADBF11B2812B89C7634CA36FF9C482
+  userChecksum: AB817EC33D10FAE68CED8ECCDC5BF3AE
 - generatedChecksum: D795A75011D4314A4F797792DD5150FF
   logicalPath: config\aws_tests\library\cryptoauthlib
   name: atca_devtypes.h
@@ -601,20 +615,20 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: D795A75011D4314A4F797792DD5150FF
-- generatedChecksum: B1EC87C61E0262886371C6F621307545
+- generatedChecksum: 2090A10BE42B2E900D438ACCF45F953E
   logicalPath: config\aws_tests\library\cryptoauthlib\hal
   name: atca_hal.c
   physicalPath: library\cryptoauthlib\hal
   security: NON_SECURE
   type: SOURCE
-  userChecksum: B1EC87C61E0262886371C6F621307545
-- generatedChecksum: 2E688B1546CF8DEEA45C5B3CDDA97455
+  userChecksum: 2090A10BE42B2E900D438ACCF45F953E
+- generatedChecksum: 17D4AD98717B9949D2DE5886BAEFD275
   logicalPath: config\aws_tests\library\cryptoauthlib\hal
   name: atca_hal.h
   physicalPath: library\cryptoauthlib\hal
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 2E688B1546CF8DEEA45C5B3CDDA97455
+  userChecksum: 17D4AD98717B9949D2DE5886BAEFD275
 - generatedChecksum: E4D5015B6ED91C69BBF1AA82B29C876B
   logicalPath: config\aws_tests\library\cryptoauthlib
   name: atca_helpers.c
@@ -636,13 +650,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: 3C0710375DF9A8D43FE5DD313CCB0F27
-- generatedChecksum: 8ECE7F5EA697082F734C84ED616AC6C8
+- generatedChecksum: FD9A5D00825CE29396BBE4306A643286
   logicalPath: config\aws_tests\library\cryptoauthlib\host
   name: atca_host.h
   physicalPath: library\cryptoauthlib\host
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 8ECE7F5EA697082F734C84ED616AC6C8
+  userChecksum: FD9A5D00825CE29396BBE4306A643286
 - generatedChecksum: E09C1465B725BB068B890D02BD6F887E
   logicalPath: config\aws_tests\library\cryptoauthlib
   name: atca_iface.c
@@ -650,13 +664,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: E09C1465B725BB068B890D02BD6F887E
-- generatedChecksum: FC25A5F5C445EA03E5D828EAB216BAB1
+- generatedChecksum: 695F23312CCF4E8E69687D8A5C6922EC
   logicalPath: config\aws_tests\library\cryptoauthlib
   name: atca_iface.h
   physicalPath: library\cryptoauthlib
   security: NON_SECURE
   type: SOURCE
-  userChecksum: FC25A5F5C445EA03E5D828EAB216BAB1
+  userChecksum: 695F23312CCF4E8E69687D8A5C6922EC
 - generatedChecksum: CA051859F3F10276EE04149B20E844AF
   logicalPath: config\aws_tests\library\cryptoauthlib\jwt
   name: atca_jwt.c
@@ -692,13 +706,20 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: C44F01BA65C6AC0A0BB2F1F257D2C405
-- generatedChecksum: 3131C647319D5D61DBCE0DF6E319757C
+- generatedChecksum: 3705FEC29C650A53EDEB1DB4F0EC96EC
+  logicalPath: config\aws_tests\library\cryptoauthlib
+  name: atca_utils_sizes.c
+  physicalPath: library\cryptoauthlib
+  security: NON_SECURE
+  type: SOURCE
+  userChecksum: 3705FEC29C650A53EDEB1DB4F0EC96EC
+- generatedChecksum: 396783A037464CFC6E0AAAAD67117091
   logicalPath: config\aws_tests\library\cryptoauthlib
   name: atca_version.h
   physicalPath: library\cryptoauthlib
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 3131C647319D5D61DBCE0DF6E319757C
+  userChecksum: 396783A037464CFC6E0AAAAD67117091
 - generatedChecksum: 39B479CDDBCD8CEB51C6FDAD2D5D6527
   logicalPath: config\aws_tests\library\cryptoauthlib\atcacert
   name: atcacert.h
@@ -818,13 +839,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: A7A2774DFC6D6D25BEF0C630E5B90A50
-- generatedChecksum: 7EBCE41657EB05EE9D90F8DC896C1D66
+- generatedChecksum: D60F91BDEF95A87037F97F75C8165F5F
   logicalPath: \amazon-freertos\tests\include
   name: aws_clientcredential.h
   physicalPath: ..\..\..\..\..\..\..\..\..\..\amazon-freertos\tests\include
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 7EBCE41657EB05EE9D90F8DC896C1D66
+  userChecksum: D60F91BDEF95A87037F97F75C8165F5F
 - generatedChecksum: 3E04929A97D18C91D89EC67E8E591191
   logicalPath: \amazon-freertos\tests\include
   name: aws_clientcredential_keys.h
@@ -1168,13 +1189,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: C9C49188AEDABDB8386EB9BAA38FBC6D
-- generatedChecksum: 2B45282A4CA6D3663EE511009BB601A0
+- generatedChecksum: A375E06FD228D1620AB589072240307F
   logicalPath: \amazon-freertos\tests\common
   name: aws_test_runner.c
   physicalPath: ..\..\..\..\..\..\..\..\..\..\amazon-freertos\tests\common
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 2B45282A4CA6D3663EE511009BB601A0
+  userChecksum: A375E06FD228D1620AB589072240307F
 - generatedChecksum: 8B640808BC5AAF8515A3E5415E4366E5
   logicalPath: \amazon-freertos\tests\include
   name: aws_test_runner.h
@@ -1231,13 +1252,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: 31EE97F9C2C964CE020412B2B156BA10
-- generatedChecksum: 879A6C45DBBD1E21E9600DE6421139A8
+- generatedChecksum: 64865F208A8F19980035A027ACCDD782
   logicalPath: amazon-freertos\vendors\microchip\boards\same70_xult\ports\wifi
   name: aws_wifi.c
   physicalPath: ..\..\..\..\..\..\..\..\..\..\amazon-freertos\vendors\microchip\boards\same70_xult\ports\wifi
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 879A6C45DBBD1E21E9600DE6421139A8
+  userChecksum: 64865F208A8F19980035A027ACCDD782
 - generatedChecksum: 40A321BCD4ADAE3A1E292C3F46929256
   logicalPath: \amazon-freertos\libraries\3rdparty\mbedtls\library
   name: base64.c
@@ -1756,13 +1777,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: 764C6B2E9ADDDD6595AECAC12671BCFE
-- generatedChecksum: 02DDEBC2D658C9F6669BBA4ABD2622C2
+- generatedChecksum: 390FDC7BC149DBA5FF34402A30961B3A
   logicalPath: config\aws_tests\library\cryptoauthlib
   name: cryptoauthlib.h
   physicalPath: library\cryptoauthlib
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 02DDEBC2D658C9F6669BBA4ABD2622C2
+  userChecksum: 390FDC7BC149DBA5FF34402A30961B3A
 - generatedChecksum: 83E32A87C5A4670577AB1D3C04152E09
   logicalPath: \amazon-freertos\libraries\3rdparty\mbedtls\library
   name: ctr_drbg.c
@@ -2120,13 +2141,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: 9C154298DD371D80113691C9E7A44815
-- generatedChecksum: 9DD432EA98FE2BD239574BFD8E750E20
+- generatedChecksum: A0B02226E8192C9003F47508C980A3FB
   logicalPath: config\aws_tests\library\cryptoauthlib\hal
   name: hal_i2c_harmony.c
   physicalPath: library\cryptoauthlib\hal
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 9DD432EA98FE2BD239574BFD8E750E20
+  userChecksum: A0B02226E8192C9003F47508C980A3FB
 - generatedChecksum: 83313F4F9191AAA554DF6A9E58FC2B39
   logicalPath: \amazon-freertos\libraries\3rdparty\mbedtls\library
   name: havege.c
@@ -2512,13 +2533,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: 34C433008D4801DC5F4492419489ED0D
-- generatedChecksum: 86C1DAC40C720FC272FCC1D7B56A7637
+- generatedChecksum: B812B0F4FDD260036EABE98B0B238B2F
   logicalPath: \amazon-freertos\libraries\c_sdk\standard\mqtt\src
   name: iot_mqtt_api.c
   physicalPath: ..\..\..\..\..\..\..\..\..\..\amazon-freertos\libraries\c_sdk\standard\mqtt\src
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 86C1DAC40C720FC272FCC1D7B56A7637
+  userChecksum: B812B0F4FDD260036EABE98B0B238B2F
 - generatedChecksum: 4312F0E7894CD3691EE89994A48488D8
   logicalPath: \amazon-freertos\libraries\c_sdk\standard\mqtt\include
   name: iot_mqtt_config_defaults.h
@@ -2687,13 +2708,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: F825CC2A9808C489CCED66BA4EF1921C
-- generatedChecksum: FF968D0BA9AF2D331DE5B1B4E4CB6B39
+- generatedChecksum: 84F606462D7B08D1433E0B8FE52B1757
   logicalPath: amazon-freertos\vendors\microchip\boards\same70_xult\ports\wifi
   name: iot_secure_sockets.c
   physicalPath: ..\..\..\..\..\..\..\..\..\..\amazon-freertos\vendors\microchip\boards\same70_xult\ports\wifi
   security: NON_SECURE
   type: SOURCE
-  userChecksum: FF968D0BA9AF2D331DE5B1B4E4CB6B39
+  userChecksum: 84F606462D7B08D1433E0B8FE52B1757
 - generatedChecksum: FF7A6DCA2553BAE65488E7C3519E7BB7
   logicalPath: \amazon-freertos\libraries\abstractions\secure_sockets\include
   name: iot_secure_sockets.h
@@ -3044,13 +3065,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: F785609D068B4059412E51C57B758C5B
-- generatedChecksum: F549A87B0C5C8D7DD399EC30EC0A9764
+- generatedChecksum: 728B7EFB8A3BB5C18CD62C3CC3823159
   logicalPath: \amazon-freertos\libraries\c_sdk\standard\mqtt\test\system
   name: iot_tests_mqtt_system.c
   physicalPath: ..\..\..\..\..\..\..\..\..\..\amazon-freertos\libraries\c_sdk\standard\mqtt\test\system
   security: NON_SECURE
   type: SOURCE
-  userChecksum: F549A87B0C5C8D7DD399EC30EC0A9764
+  userChecksum: 728B7EFB8A3BB5C18CD62C3CC3823159
 - generatedChecksum: 9CBC59AD254679A5146C4FBED67C4B14
   logicalPath: \amazon-freertos\libraries\c_sdk\standard\mqtt\test\unit
   name: iot_tests_mqtt_validate.c
@@ -3485,13 +3506,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: FC7FE6DE7B53FC3B04CCBF556704DD56
-- generatedChecksum: 1D56282521FF3E7E17A8E39AA96CE818
+- generatedChecksum: FEADD3082513AAEC06D2352F611F6965
   logicalPath: config\aws_tests\library\cryptoauthlib\pkcs11
   name: pkcs11_config.c
   physicalPath: library\cryptoauthlib\pkcs11
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 1D56282521FF3E7E17A8E39AA96CE818
+  userChecksum: FEADD3082513AAEC06D2352F611F6965
 - generatedChecksum: 431DA9C218C28C34EAD6A1756C9817CC
   logicalPath: config\aws_tests\library\cryptoauthlib\pkcs11
   name: pkcs11_debug.c
@@ -4416,13 +4437,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: 3E6DD27C531EACFF1DD05D9537E2BA9F
-- generatedChecksum: FFFFA10876259C85FD5032D6864E1B85
+- generatedChecksum: 4F38D53E5F023DBC0D405056BC43568F
   logicalPath: config\aws_tests\driver\winc
   name: wdrv_winc.c
   physicalPath: driver\winc
   security: NON_SECURE
   type: SOURCE
-  userChecksum: FFFFA10876259C85FD5032D6864E1B85
+  userChecksum: 4F38D53E5F023DBC0D405056BC43568F
 - generatedChecksum: 77997C36D4C45AEC165A240204B431D0
   logicalPath: config\aws_tests\driver\winc
   name: wdrv_winc_assoc.c
@@ -4486,20 +4507,20 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: 8EC1AFE5482D0690045233EE8F1243FF
-- generatedChecksum: D90120014F7FE01D08131D9433529D8A
+- generatedChecksum: 00CAE7603997384F4E3EA921E88D95DD
   logicalPath: config\aws_tests\driver\winc
   name: wdrv_winc_nvm.c
   physicalPath: driver\winc
   security: NON_SECURE
   type: SOURCE
-  userChecksum: D90120014F7FE01D08131D9433529D8A
-- generatedChecksum: 4AA07391431205B3719899F2AD90E2CB
+  userChecksum: 00CAE7603997384F4E3EA921E88D95DD
+- generatedChecksum: DA9E5CC7166DB440C7455068BEF22120
   logicalPath: config\aws_tests\driver\winc\osal
   name: wdrv_winc_osal.c
   physicalPath: driver\winc\osal
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 4AA07391431205B3719899F2AD90E2CB
+  userChecksum: DA9E5CC7166DB440C7455068BEF22120
 - generatedChecksum: 8DA7EBDD57D257EDAB74390BAA6984D5
   logicalPath: config\aws_tests\driver\winc
   name: wdrv_winc_powersave.c
@@ -4521,13 +4542,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: E5A07F904CB44DD45846968DCDD08416
-- generatedChecksum: FEC5E1BBB0941EC26BBBD70815F606BA
+- generatedChecksum: DE3D5EC4924CF7C21A0035E663D7EDA4
   logicalPath: config\aws_tests\driver\winc\dev\spi
   name: wdrv_winc_spi.c
   physicalPath: driver\winc\dev\spi
   security: NON_SECURE
   type: SOURCE
-  userChecksum: FEC5E1BBB0941EC26BBBD70815F606BA
+  userChecksum: DE3D5EC4924CF7C21A0035E663D7EDA4
 - generatedChecksum: 29A99C3302D799CD8D98C0401BCE6F6A
   logicalPath: config\aws_tests\driver\winc
   name: wdrv_winc_ssl.c

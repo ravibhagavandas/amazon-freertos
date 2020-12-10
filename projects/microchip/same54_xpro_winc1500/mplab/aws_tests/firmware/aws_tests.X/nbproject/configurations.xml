@@ -153,7 +153,7 @@
               <itemPath>../src/config/aws_tests/peripheral/trng/plib_trng.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f11" displayName="wdt" projectFiles="true">
-              <itemPath>..\src\config\aws_tests\peripheral\wdt\plib_wdt.h</itemPath>
+              <itemPath>../src/config/aws_tests/peripheral/wdt/plib_wdt.h</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f2" displayName="system" projectFiles="true">
@@ -1235,6 +1235,8 @@
                 <itemPath>../src/config/aws_tests/library/cryptoauthlib/crypto/atca_crypto_sw_sha1.h</itemPath>
                 <itemPath>../src/config/aws_tests/library/cryptoauthlib/crypto/atca_crypto_sw_sha2.c</itemPath>
                 <itemPath>../src/config/aws_tests/library/cryptoauthlib/crypto/atca_crypto_sw_sha2.h</itemPath>
+                <itemPath>../src/config/aws_tests/library/cryptoauthlib/crypto/atca_crypto_hw_aes_cbcmac.c</itemPath>
+                <itemPath>../src/config/aws_tests/library/cryptoauthlib/crypto/atca_crypto_hw_aes_ccm.c</itemPath>
               </logicalFolder>
               <logicalFolder name="f1" displayName="hal" projectFiles="true">
                 <itemPath>../src/config/aws_tests/library/cryptoauthlib/hal/ATECC608_0.c</itemPath>
@@ -1295,6 +1297,7 @@
               <itemPath>../src/config/aws_tests/library/cryptoauthlib/atca_status.h</itemPath>
               <itemPath>../src/config/aws_tests/library/cryptoauthlib/atca_version.h</itemPath>
               <itemPath>../src/config/aws_tests/library/cryptoauthlib/cryptoauthlib.h</itemPath>
+              <itemPath>../src/config/aws_tests/library/cryptoauthlib/atca_utils_sizes.c</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f6" displayName="osal" projectFiles="true">
@@ -1341,7 +1344,7 @@
               <itemPath>../src/config/aws_tests/peripheral/trng/plib_trng.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f11" displayName="wdt" projectFiles="true">
-              <itemPath>..\src\config\aws_tests\peripheral\wdt\plib_wdt.c</itemPath>
+              <itemPath>../src/config/aws_tests/peripheral/wdt/plib_wdt.c</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f5" displayName="stdio" projectFiles="true">
@@ -1437,14 +1440,14 @@
         <targetDevice>ATSAME54P20A</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>EdbgTool</platformTool>
+        <platformTool>noID</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.41</languageToolchainVersion>
+        <languageToolchainVersion>2.50</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAME54_DFP" vendor="Microchip" version="3.1.43"/>
         <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
+        <pack name="SAME54_DFP" vendor="Microchip" version="3.4.70"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>
@@ -1456,7 +1459,21 @@
         <archiverTool>
         </archiverTool>
         <loading>
-          <loadableFile>../../../../../../../vendors/microchip/boards/same54_xpro/bootloader/bootloader/utility/bootloader.X.production.hex</loadableFile>
+          <makeArtifact PL="../../../../../same54_xpro/mplab/bootloader/firmware/bootloader.X"
+                        CT="1"
+                        CN="same54_xpro"
+                        AC="true"
+                        BL="true"
+                        WD="../../../../../same54_xpro/mplab/bootloader/firmware/bootloader.X"
+                        BC="${MAKE}  -f Makefile CONF=same54_xpro"
+                        DBC="${MAKE}  -f Makefile CONF=same54_xpro TYPE_IMAGE=DEBUG_RUN"
+                        CC="rm -rf &quot;build/same54_xpro&quot; &quot;dist/same54_xpro&quot;"
+                        OP="dist/same54_xpro/production/bootloader.X.production.hex"
+                        DOP="dist/same54_xpro/debug/bootloader.X.debug.elf"
+                        FL="dist/same54_xpro/production/bootloader.X.production.hex"
+                        PD="dist/same54_xpro/production/bootloader.X.production.elf"
+                        DD="dist/same54_xpro/debug/bootloader.X.debug.elf">
+          </makeArtifact>
           <useAlternateLoadableFile>false</useAlternateLoadableFile>
           <parseOnProdLoad>false</parseOnProdLoad>
           <alternateLoadableFile></alternateLoadableFile>
@@ -1680,8 +1697,6 @@
         <property key="memories.programmemory.ranges" value="0-fffff"/>
         <property key="memories.rww" value="true"/>
         <property key="poweroptions.powerenable" value="false"/>
-        <property key="programmerToGoFilePath"
-                  value="D:/H3_KIT/amazon-freertos/projects/microchip/same54_xpro_winc1500/mplab/aws_tests/firmware/aws_tests.X/debug/aws_tests/aws_tests_ptg"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges"

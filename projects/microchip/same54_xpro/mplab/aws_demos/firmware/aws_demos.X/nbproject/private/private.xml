@@ -6,7 +6,6 @@
             <file>file:/D:/AWS3_2/amazon-freertos/libraries/freertos_plus/standard/freertos_plus_tcp/source/portable/NetworkInterface/same54/BufferAllocation_2.c</file>
             <file>file:/D:/AWS3_2/amazon-freertos/libraries/freertos_plus/standard/freertos_plus_tcp/source/portable/NetworkInterface/same54/NetworkInterface_eth.c</file>
             <file>file:/D:/AWS3_2/amazon-freertos/projects/microchip/same54_xpro/mplab/aws_demos/firmware/src/main.c</file>
-            <file>file:/D:/AWS3_2/amazon-freertos/demos/include/aws_clientcredential.h</file>
             <file>file:/D:/AWS3_2/amazon-freertos/vendors/microchip/boards/same54_xpro/aws_demos/config_files/NetworkConfig.h</file>
             <file>file:/D:/AWS3_2/amazon-freertos/projects/microchip/same54_xpro/mplab/aws_demos/firmware/src/config/aws_demos/tasks.c</file>
         </group>

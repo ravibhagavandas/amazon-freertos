@@ -6,6 +6,8 @@
             <file>file:/D:/AWS3_2/amazon-freertos/vendors/microchip/boards/same54_xpro/aws_tests/config_files/NetworkConfig.h</file>
             <file>file:/D:/AWS3_2/amazon-freertos/vendors/microchip/boards/same54_xpro/aws_tests/config_files/FreeRTOSConfig.h</file>
             <file>file:/D:/AWS3_2/amazon-freertos/vendors/microchip/boards/same54_xpro/aws_tests/config_files/FreeRTOSIPConfig.h</file>
+            <file>file:/D:/AWS3_2/amazon-freertos/projects/microchip/same54_xpro_winc3400/mplab/aws_tests/firmware/src/main.c</file>
+            <file>file:/D:/AWS3_2/amazon-freertos/vendors/microchip/boards/same54_xpro/ports/pkcs11/iot_pkcs11_secure_element.c</file>
         </group>
     </open-files>
 </project-private>

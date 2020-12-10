@@ -68,6 +68,11 @@
               <itemPath>../src/config/aws_demos/library/cryptoauthlib/atca_config.h</itemPath>
             </logicalFolder>
           </logicalFolder>
+          <logicalFolder name="f5" displayName="osal" projectFiles="true">
+            <itemPath>../src/config/aws_demos/osal/osal.h</itemPath>
+            <itemPath>../src/config/aws_demos/osal/osal_definitions.h</itemPath>
+            <itemPath>../src/config/aws_demos/osal/osal_freertos.h</itemPath>
+          </logicalFolder>
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f7" displayName="clock" projectFiles="true">
               <itemPath>../src/config/aws_demos/peripheral/clock/plib_clock.h</itemPath>
@@ -134,12 +139,8 @@
           <itemPath>../src/config/aws_demos/device_cache.h</itemPath>
           <itemPath>../src/config/aws_demos/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/aws_demos/definitions.h</itemPath>
+          <itemPath>../src/config/aws_demos/device.h</itemPath>
         </logicalFolder>
-      </logicalFolder>
-      <logicalFolder name="f3" displayName="osal" projectFiles="true">
-        <itemPath>../src/config/aws_demos/osal/osal.h</itemPath>
-        <itemPath>../src/config/aws_demos/osal/osal_definitions.h</itemPath>
-        <itemPath>../src/config/aws_demos/osal/osal_freertos.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="packs" projectFiles="true">
         <logicalFolder name="f1" displayName="ATSAME54P20A_DFP" projectFiles="true">
@@ -187,8 +188,6 @@
           <logicalFolder name="f2" displayName="pio" projectFiles="true">
             <itemPath>../src/packs/ATSAME54P20A_DFP/pio/same54p20a.h</itemPath>
           </logicalFolder>
-          <itemPath>../src/packs/ATSAME54P20A_DFP/device.h</itemPath>
-          <itemPath>../src/packs/ATSAME54P20A_DFP/atsame54p20a_compat.h</itemPath>
           <itemPath>../src/packs/ATSAME54P20A_DFP/atsame54p20a.h</itemPath>
         </logicalFolder>
         <logicalFolder name="f2" displayName="CMSIS" projectFiles="true">
@@ -204,6 +203,7 @@
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang_ltm.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/core_cm4.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/mpu_armv7.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cachel1_armv7.h</itemPath>
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
@@ -214,6 +214,11 @@
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
                    projectFiles="true">
+      <logicalFolder name="f1" displayName="config" projectFiles="true">
+        <logicalFolder name="f1" displayName="aws_demos" projectFiles="true">
+          <itemPath>../src/config/aws_demos/ATSAME54P20A.ld</itemPath>
+        </logicalFolder>
+      </logicalFolder>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
@@ -221,93 +226,93 @@
       <logicalFolder name="f2" displayName="amazon-freertos" projectFiles="true">
         <logicalFolder name="f4" displayName="demos" projectFiles="true">
           <logicalFolder name="f1" displayName="defender" projectFiles="true">
-            <itemPath>../../../../../../../demos/defender/aws_iot_demo_defender.c</itemPath>
+            <itemPath>..\..\..\..\..\..\..\demos\defender\aws_iot_demo_defender.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f2" displayName="demo_runner" projectFiles="true">
-            <itemPath>../../../../../../../demos/demo_runner/aws_demo.c</itemPath>
-            <itemPath>../../../../../../../demos/demo_runner/aws_demo_network_addr.c</itemPath>
-            <itemPath>../../../../../../../demos/demo_runner/aws_demo_version.c</itemPath>
-            <itemPath>../../../../../../../demos/demo_runner/iot_demo_freertos.c</itemPath>
-            <itemPath>../../../../../../../demos/demo_runner/iot_demo_runner.c</itemPath>
+            <itemPath>..\..\..\..\..\..\..\demos\demo_runner\aws_demo.c</itemPath>
+            <itemPath>..\..\..\..\..\..\..\demos\demo_runner\aws_demo_network_addr.c</itemPath>
+            <itemPath>..\..\..\..\..\..\..\demos\demo_runner\aws_demo_version.c</itemPath>
+            <itemPath>..\..\..\..\..\..\..\demos\demo_runner\iot_demo_freertos.c</itemPath>
+            <itemPath>..\..\..\..\..\..\..\demos\demo_runner\iot_demo_runner.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f3"
                          displayName="dev_mode_key_provisioning"
                          projectFiles="true">
             <logicalFolder name="f1" displayName="include" projectFiles="true">
-              <itemPath>../../../../../../../demos/dev_mode_key_provisioning/include/aws_dev_mode_key_provisioning.h</itemPath>
+              <itemPath>..\..\..\..\..\..\..\demos\dev_mode_key_provisioning\include\aws_dev_mode_key_provisioning.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="src" projectFiles="true">
-              <itemPath>../../../../../../../demos/dev_mode_key_provisioning/src/aws_dev_mode_key_provisioning.c</itemPath>
+              <itemPath>..\..\..\..\..\..\..\demos\dev_mode_key_provisioning\src\aws_dev_mode_key_provisioning.c</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f4"
                          displayName="greengrass_connectivity"
                          projectFiles="true">
-            <itemPath>../../../../../../../demos/greengrass_connectivity/aws_greengrass_discovery_demo.c</itemPath>
+            <itemPath>..\..\..\..\..\..\..\demos\greengrass_connectivity\aws_greengrass_discovery_demo.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f5" displayName="https" projectFiles="true">
-            <itemPath>../../../../../../../demos/https/iot_demo_https_common.c</itemPath>
-            <itemPath>../../../../../../../demos/https/iot_demo_https_common.h</itemPath>
-            <itemPath>../../../../../../../demos/https/iot_demo_https_s3_download_async.c</itemPath>
-            <itemPath>../../../../../../../demos/https/iot_demo_https_s3_download_sync.c</itemPath>
-            <itemPath>../../../../../../../demos/https/iot_demo_https_s3_upload_async.c</itemPath>
-            <itemPath>../../../../../../../demos/https/iot_demo_https_s3_upload_sync.c</itemPath>
-            <itemPath>../../../../../../../demos/https/presigned_urls_gen.py</itemPath>
+            <itemPath>..\..\..\..\..\..\..\demos\https\iot_demo_https_common.c</itemPath>
+            <itemPath>..\..\..\..\..\..\..\demos\https\iot_demo_https_common.h</itemPath>
+            <itemPath>..\..\..\..\..\..\..\demos\https\iot_demo_https_s3_download_async.c</itemPath>
+            <itemPath>..\..\..\..\..\..\..\demos\https\iot_demo_https_s3_download_sync.c</itemPath>
+            <itemPath>..\..\..\..\..\..\..\demos\https\iot_demo_https_s3_upload_async.c</itemPath>
+            <itemPath>..\..\..\..\..\..\..\demos\https\iot_demo_https_s3_upload_sync.c</itemPath>
+            <itemPath>..\..\..\..\..\..\..\demos\https\presigned_urls_gen.py</itemPath>
           </logicalFolder>
           <logicalFolder name="f6" displayName="include" projectFiles="true">
-            <itemPath>../../../../../../../demos/include/aws_application_version.h</itemPath>
-            <itemPath>../../../../../../../demos/include/aws_ble_gatt_server_demo.h</itemPath>
-            <itemPath>../../../../../../../demos/include/aws_clientcredential.h</itemPath>
-            <itemPath>../../../../../../../demos/include/aws_clientcredential_keys.h</itemPath>
-            <itemPath>../../../../../../../demos/include/aws_demo.h</itemPath>
-            <itemPath>../../../../../../../demos/include/aws_iot_demo_network.h</itemPath>
-            <itemPath>../../../../../../../demos/include/aws_ota_codesigner_certificate.h</itemPath>
-            <itemPath>../../../../../../../demos/include/aws_wifi_connect_task.h</itemPath>
-            <itemPath>../../../../../../../demos/include/iot_ble_numericComparison.h</itemPath>
-            <itemPath>../../../../../../../demos/include/iot_config_common.h</itemPath>
-            <itemPath>../../../../../../../demos/include/iot_demo_logging.h</itemPath>
-            <itemPath>../../../../../../../demos/include/iot_demo_runner.h</itemPath>
+            <itemPath>..\..\..\..\..\..\..\demos\include\aws_application_version.h</itemPath>
+            <itemPath>..\..\..\..\..\..\..\demos\include\aws_ble_gatt_server_demo.h</itemPath>
+            <itemPath>..\..\..\..\..\..\..\demos\include\aws_clientcredential.h</itemPath>
+            <itemPath>..\..\..\..\..\..\..\demos\include\aws_clientcredential_keys.h</itemPath>
+            <itemPath>..\..\..\..\..\..\..\demos\include\aws_demo.h</itemPath>
+            <itemPath>..\..\..\..\..\..\..\demos\include\aws_iot_demo_network.h</itemPath>
+            <itemPath>..\..\..\..\..\..\..\demos\include\aws_ota_codesigner_certificate.h</itemPath>
+            <itemPath>..\..\..\..\..\..\..\demos\include\aws_wifi_connect_task.h</itemPath>
+            <itemPath>..\..\..\..\..\..\..\demos\include\iot_ble_numericComparison.h</itemPath>
+            <itemPath>..\..\..\..\..\..\..\demos\include\iot_config_common.h</itemPath>
+            <itemPath>..\..\..\..\..\..\..\demos\include\iot_demo_logging.h</itemPath>
+            <itemPath>..\..\..\..\..\..\..\demos\include\iot_demo_runner.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f7" displayName="mqtt" projectFiles="true">
-            <itemPath>../../../../../../../demos/mqtt/iot_demo_mqtt.c</itemPath>
+            <itemPath>..\..\..\..\..\..\..\demos\mqtt\iot_demo_mqtt.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f8" displayName="network_manager" projectFiles="true">
-            <itemPath>../../../../../../../demos/network_manager/aws_iot_demo_network.c</itemPath>
-            <itemPath>../../../../../../../demos/network_manager/aws_iot_network_manager.c</itemPath>
-            <itemPath>../../../../../../../demos/network_manager/iot_network_manager_private.h</itemPath>
+            <itemPath>..\..\..\..\..\..\..\demos\network_manager\aws_iot_demo_network.c</itemPath>
+            <itemPath>..\..\..\..\..\..\..\demos\network_manager\aws_iot_network_manager.c</itemPath>
+            <itemPath>..\..\..\..\..\..\..\demos\network_manager\iot_network_manager_private.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f9" displayName="ota" projectFiles="true">
-            <itemPath>../../../../../../../demos/ota/aws_iot_ota_update_demo.c</itemPath>
+            <itemPath>..\..\..\..\..\..\..\demos\ota\aws_iot_ota_update_demo.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f10" displayName="shadow" projectFiles="true">
-            <itemPath>../../../../../../../demos/shadow/aws_iot_demo_shadow.c</itemPath>
+            <itemPath>..\..\..\..\..\..\..\demos\shadow\aws_iot_demo_shadow.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f11" displayName="tcp" projectFiles="true">
-            <itemPath>../../../../../../../demos/tcp/aws_tcp_echo_client_single_task.c</itemPath>
-            <itemPath>../../../../../../../demos/tcp/aws_tcp_echo_client_single_tasks.h</itemPath>
+            <itemPath>..\..\..\..\..\..\..\demos\tcp\aws_tcp_echo_client_single_task.c</itemPath>
+            <itemPath>..\..\..\..\..\..\..\demos\tcp\aws_tcp_echo_client_single_tasks.h</itemPath>
           </logicalFolder>
         </logicalFolder>
         <logicalFolder name="f1" displayName="freertos_kernel" projectFiles="true">
           <logicalFolder name="f2" displayName="include" projectFiles="true">
-            <itemPath>../../../../../../../freertos_kernel/include/atomic.h</itemPath>
-            <itemPath>../../../../../../../freertos_kernel/include/croutine.h</itemPath>
-            <itemPath>../../../../../../../freertos_kernel/include/deprecated_definitions.h</itemPath>
-            <itemPath>../../../../../../../freertos_kernel/include/event_groups.h</itemPath>
-            <itemPath>../../../../../../../freertos_kernel/include/FreeRTOS.h</itemPath>
-            <itemPath>../../../../../../../freertos_kernel/include/list.h</itemPath>
-            <itemPath>../../../../../../../freertos_kernel/include/message_buffer.h</itemPath>
-            <itemPath>../../../../../../../freertos_kernel/include/mpu_prototypes.h</itemPath>
-            <itemPath>../../../../../../../freertos_kernel/include/mpu_wrappers.h</itemPath>
-            <itemPath>../../../../../../../freertos_kernel/include/portable.h</itemPath>
-            <itemPath>../../../../../../../freertos_kernel/include/projdefs.h</itemPath>
-            <itemPath>../../../../../../../freertos_kernel/include/queue.h</itemPath>
-            <itemPath>../../../../../../../freertos_kernel/include/semphr.h</itemPath>
-            <itemPath>../../../../../../../freertos_kernel/include/StackMacros.h</itemPath>
-            <itemPath>../../../../../../../freertos_kernel/include/stack_macros.h</itemPath>
-            <itemPath>../../../../../../../freertos_kernel/include/stdint.readme</itemPath>
-            <itemPath>../../../../../../../freertos_kernel/include/stream_buffer.h</itemPath>
-            <itemPath>../../../../../../../freertos_kernel/include/task.h</itemPath>
-            <itemPath>../../../../../../../freertos_kernel/include/timers.h</itemPath>
+            <itemPath>..\..\..\..\..\..\..\freertos_kernel\include\atomic.h</itemPath>
+            <itemPath>..\..\..\..\..\..\..\freertos_kernel\include\croutine.h</itemPath>
+            <itemPath>..\..\..\..\..\..\..\freertos_kernel\include\deprecated_definitions.h</itemPath>
+            <itemPath>..\..\..\..\..\..\..\freertos_kernel\include\event_groups.h</itemPath>
+            <itemPath>..\..\..\..\..\..\..\freertos_kernel\include\FreeRTOS.h</itemPath>
+            <itemPath>..\..\..\..\..\..\..\freertos_kernel\include\list.h</itemPath>
+            <itemPath>..\..\..\..\..\..\..\freertos_kernel\include\message_buffer.h</itemPath>
+            <itemPath>..\..\..\..\..\..\..\freertos_kernel\include\mpu_prototypes.h</itemPath>
+            <itemPath>..\..\..\..\..\..\..\freertos_kernel\include\mpu_wrappers.h</itemPath>
+            <itemPath>..\..\..\..\..\..\..\freertos_kernel\include\portable.h</itemPath>
+            <itemPath>..\..\..\..\..\..\..\freertos_kernel\include\projdefs.h</itemPath>
+            <itemPath>..\..\..\..\..\..\..\freertos_kernel\include\queue.h</itemPath>
+            <itemPath>..\..\..\..\..\..\..\freertos_kernel\include\semphr.h</itemPath>
+            <itemPath>..\..\..\..\..\..\..\freertos_kernel\include\StackMacros.h</itemPath>
+            <itemPath>..\..\..\..\..\..\..\freertos_kernel\include\stack_macros.h</itemPath>
+            <itemPath>..\..\..\..\..\..\..\freertos_kernel\include\stdint.readme</itemPath>
+            <itemPath>..\..\..\..\..\..\..\freertos_kernel\include\stream_buffer.h</itemPath>
+            <itemPath>..\..\..\..\..\..\..\freertos_kernel\include\task.h</itemPath>
+            <itemPath>..\..\..\..\..\..\..\freertos_kernel\include\timers.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f1" displayName="portable" projectFiles="true">
             <logicalFolder name="f1" displayName="GCC" projectFiles="true">
@@ -320,284 +325,284 @@
               <itemPath>../../../../../../../freertos_kernel/portable/MemMang/heap_4.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <itemPath>../../../../../../../freertos_kernel/croutine.c</itemPath>
-          <itemPath>../../../../../../../freertos_kernel/event_groups.c</itemPath>
-          <itemPath>../../../../../../../freertos_kernel/list.c</itemPath>
-          <itemPath>../../../../../../../freertos_kernel/queue.c</itemPath>
-          <itemPath>../../../../../../../freertos_kernel/stream_buffer.c</itemPath>
-          <itemPath>../../../../../../../freertos_kernel/tasks.c</itemPath>
-          <itemPath>../../../../../../../freertos_kernel/timers.c</itemPath>
+          <itemPath>..\..\..\..\..\..\..\freertos_kernel\croutine.c</itemPath>
+          <itemPath>..\..\..\..\..\..\..\freertos_kernel\event_groups.c</itemPath>
+          <itemPath>..\..\..\..\..\..\..\freertos_kernel\list.c</itemPath>
+          <itemPath>..\..\..\..\..\..\..\freertos_kernel\queue.c</itemPath>
+          <itemPath>..\..\..\..\..\..\..\freertos_kernel\stream_buffer.c</itemPath>
+          <itemPath>..\..\..\..\..\..\..\freertos_kernel\tasks.c</itemPath>
+          <itemPath>..\..\..\..\..\..\..\freertos_kernel\timers.c</itemPath>
         </logicalFolder>
         <logicalFolder name="f2" displayName="libraries" projectFiles="true">
           <logicalFolder name="f3" displayName="3rdparty" projectFiles="true">
             <logicalFolder name="f1" displayName="http_parser" projectFiles="true">
-              <itemPath>../../../../../../../libraries/3rdparty/http_parser/.mailmap</itemPath>
-              <itemPath>../../../../../../../libraries/3rdparty/http_parser/.travis.yml</itemPath>
-              <itemPath>../../../../../../../libraries/3rdparty/http_parser/AUTHORS</itemPath>
-              <itemPath>../../../../../../../libraries/3rdparty/http_parser/http_parser.c</itemPath>
-              <itemPath>../../../../../../../libraries/3rdparty/http_parser/http_parser.gyp</itemPath>
-              <itemPath>../../../../../../../libraries/3rdparty/http_parser/http_parser.h</itemPath>
+              <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\http_parser\.mailmap</itemPath>
+              <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\http_parser\.travis.yml</itemPath>
+              <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\http_parser\AUTHORS</itemPath>
+              <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\http_parser\http_parser.c</itemPath>
+              <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\http_parser\http_parser.gyp</itemPath>
+              <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\http_parser\http_parser.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="jsmn" projectFiles="true">
-              <itemPath>../../../../../../../libraries/3rdparty/jsmn/jsmn.c</itemPath>
-              <itemPath>../../../../../../../libraries/3rdparty/jsmn/jsmn.h</itemPath>
+              <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\jsmn\jsmn.c</itemPath>
+              <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\jsmn\jsmn.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="mbedtls" projectFiles="true">
               <logicalFolder name="f1" displayName="include" projectFiles="true">
                 <logicalFolder name="f1" displayName="mbedtls" projectFiles="true">
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/aes.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/aesni.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/arc4.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/asn1.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/asn1write.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/base64.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/bignum.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/blowfish.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/bn_mul.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/camellia.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/ccm.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/certs.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/check_config.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/cipher.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/cipher_internal.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/cmac.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/compat-1.3.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/config.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/ctr_drbg.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/debug.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/des.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/dhm.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/ecdh.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/ecdsa.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/ecjpake.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/ecp.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/ecp_internal.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/entropy.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/entropy_poll.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/error.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/gcm.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/havege.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/hmac_drbg.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/md.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/md2.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/md4.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/md5.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/md_internal.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/memory_buffer_alloc.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/net.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/net_sockets.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/oid.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/padlock.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/pem.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/pk.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/pkcs12.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/pkcs5.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/pk_internal.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/platform.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/platform_time.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/platform_util.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/ripemd160.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/rsa.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/rsa_internal.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/sha1.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/sha256.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/sha512.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/ssl.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/ssl_cache.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/ssl_ciphersuites.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/ssl_cookie.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/ssl_internal.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/ssl_ticket.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/threading.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/timing.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/version.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/x509.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/x509_crl.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/x509_crt.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/x509_csr.h</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/mbedtls/include/mbedtls/xtea.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\aes.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\aesni.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\arc4.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\asn1.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\asn1write.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\base64.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\bignum.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\blowfish.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\bn_mul.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\camellia.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\ccm.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\certs.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\check_config.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\cipher.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\cipher_internal.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\cmac.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\compat-1.3.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\config.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\ctr_drbg.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\debug.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\des.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\dhm.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\ecdh.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\ecdsa.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\ecjpake.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\ecp.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\ecp_internal.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\entropy.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\entropy_poll.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\error.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\gcm.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\havege.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\hmac_drbg.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\md.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\md2.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\md4.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\md5.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\md_internal.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\memory_buffer_alloc.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\net.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\net_sockets.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\oid.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\padlock.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\pem.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\pk.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\pkcs12.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\pkcs5.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\pk_internal.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\platform.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\platform_time.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\platform_util.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\ripemd160.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\rsa.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\rsa_internal.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\sha1.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\sha256.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\sha512.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\ssl.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\ssl_cache.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\ssl_ciphersuites.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\ssl_cookie.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\ssl_internal.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\ssl_ticket.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\threading.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\timing.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\version.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\x509.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\x509_crl.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\x509_crt.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\x509_csr.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\include\mbedtls\xtea.h</itemPath>
                 </logicalFolder>
               </logicalFolder>
               <logicalFolder name="f2" displayName="library" projectFiles="true">
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/aes.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/aesni.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/arc4.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/asn1parse.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/asn1write.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/base64.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/bignum.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/blowfish.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/camellia.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/ccm.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/certs.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/cipher.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/cipher_wrap.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/cmac.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/ctr_drbg.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/debug.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/des.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/dhm.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/ecdh.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/ecdsa.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/ecjpake.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/ecp.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/ecp_curves.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/entropy.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/entropy_poll.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/error.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/gcm.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/havege.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/hmac_drbg.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/md.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/md2.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/md4.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/md5.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/md_wrap.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/memory_buffer_alloc.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/net_sockets.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/oid.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/padlock.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/pem.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/pk.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/pkcs12.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/pkcs5.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/pkparse.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/pkwrite.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/pk_wrap.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/platform.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/platform_util.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/ripemd160.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/rsa.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/rsa_internal.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/sha1.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/sha256.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/sha512.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/ssl_cache.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/ssl_ciphersuites.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/ssl_cli.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/ssl_cookie.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/ssl_srv.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/ssl_ticket.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/ssl_tls.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/threading.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/timing.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/version.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/version_features.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/x509.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/x509write_crt.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/x509write_csr.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/x509_create.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/x509_crl.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/x509_crt.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/x509_csr.c</itemPath>
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/library/xtea.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\aes.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\aesni.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\arc4.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\asn1parse.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\asn1write.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\base64.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\bignum.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\blowfish.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\camellia.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\ccm.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\certs.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\cipher.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\cipher_wrap.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\cmac.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\ctr_drbg.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\debug.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\des.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\dhm.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\ecdh.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\ecdsa.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\ecjpake.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\ecp.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\ecp_curves.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\entropy.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\entropy_poll.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\error.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\gcm.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\havege.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\hmac_drbg.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\md.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\md2.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\md4.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\md5.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\md_wrap.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\memory_buffer_alloc.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\net_sockets.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\oid.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\padlock.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\pem.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\pk.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\pkcs12.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\pkcs5.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\pkparse.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\pkwrite.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\pk_wrap.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\platform.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\platform_util.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\ripemd160.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\rsa.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\rsa_internal.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\sha1.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\sha256.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\sha512.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\ssl_cache.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\ssl_ciphersuites.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\ssl_cli.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\ssl_cookie.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\ssl_srv.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\ssl_ticket.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\ssl_tls.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\threading.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\timing.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\version.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\version_features.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\x509.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\x509write_crt.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\x509write_csr.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\x509_create.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\x509_crl.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\x509_crt.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\x509_csr.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\library\xtea.c</itemPath>
               </logicalFolder>
               <logicalFolder name="f3" displayName="utils" projectFiles="true">
-                <itemPath>../../../../../../../libraries/3rdparty/mbedtls/utils/mbedtls_utils.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\mbedtls\utils\mbedtls_utils.c</itemPath>
               </logicalFolder>
             </logicalFolder>
             <logicalFolder name="f4" displayName="pkcs11" projectFiles="true">
-              <itemPath>../../../../../../../libraries/3rdparty/pkcs11/pkcs11.h</itemPath>
-              <itemPath>../../../../../../../libraries/3rdparty/pkcs11/pkcs11f.h</itemPath>
-              <itemPath>../../../../../../../libraries/3rdparty/pkcs11/pkcs11t.h</itemPath>
+              <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\pkcs11\pkcs11.h</itemPath>
+              <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\pkcs11\pkcs11f.h</itemPath>
+              <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\pkcs11\pkcs11t.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f5" displayName="tinycbor" projectFiles="true">
-              <itemPath>../../../../../../../libraries/3rdparty/tinycbor/cbor.h</itemPath>
-              <itemPath>../../../../../../../libraries/3rdparty/tinycbor/cborencoder.c</itemPath>
-              <itemPath>../../../../../../../libraries/3rdparty/tinycbor/cborencoder_close_container_checked.c</itemPath>
-              <itemPath>../../../../../../../libraries/3rdparty/tinycbor/cborerrorstrings.c</itemPath>
-              <itemPath>../../../../../../../libraries/3rdparty/tinycbor/cborinternal_p.h</itemPath>
-              <itemPath>../../../../../../../libraries/3rdparty/tinycbor/cborparser.c</itemPath>
-              <itemPath>../../../../../../../libraries/3rdparty/tinycbor/cborparser_dup_string.c</itemPath>
-              <itemPath>../../../../../../../libraries/3rdparty/tinycbor/cborpretty.c</itemPath>
-              <itemPath>../../../../../../../libraries/3rdparty/tinycbor/cborpretty_stdio.c</itemPath>
-              <itemPath>../../../../../../../libraries/3rdparty/tinycbor/cborvalidation.c</itemPath>
-              <itemPath>../../../../../../../libraries/3rdparty/tinycbor/compilersupport_p.h</itemPath>
-              <itemPath>../../../../../../../libraries/3rdparty/tinycbor/tinycbor-version.h</itemPath>
-              <itemPath>../../../../../../../libraries/3rdparty/tinycbor/utf8_p.h</itemPath>
+              <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycbor\cbor.h</itemPath>
+              <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycbor\cborencoder.c</itemPath>
+              <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycbor\cborencoder_close_container_checked.c</itemPath>
+              <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycbor\cborerrorstrings.c</itemPath>
+              <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycbor\cborinternal_p.h</itemPath>
+              <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycbor\cborparser.c</itemPath>
+              <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycbor\cborparser_dup_string.c</itemPath>
+              <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycbor\cborpretty.c</itemPath>
+              <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycbor\cborpretty_stdio.c</itemPath>
+              <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycbor\cborvalidation.c</itemPath>
+              <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycbor\compilersupport_p.h</itemPath>
+              <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycbor\tinycbor-version.h</itemPath>
+              <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycbor\utf8_p.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f6" displayName="tinycrypt" projectFiles="true">
               <logicalFolder name="f1" displayName="asn1" projectFiles="true">
-                <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/asn1/asn1.h</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycrypt\asn1\asn1.h</itemPath>
               </logicalFolder>
               <logicalFolder name="f2" displayName="lib" projectFiles="true">
                 <logicalFolder name="f1" displayName="include" projectFiles="true">
                   <logicalFolder name="f1" displayName="tinycrypt" projectFiles="true">
-                    <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/lib/include/tinycrypt/aes.h</itemPath>
-                    <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/lib/include/tinycrypt/cbc_mode.h</itemPath>
-                    <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/lib/include/tinycrypt/ccm_mode.h</itemPath>
-                    <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/lib/include/tinycrypt/cmac_mode.h</itemPath>
-                    <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/lib/include/tinycrypt/constants.h</itemPath>
-                    <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/lib/include/tinycrypt/ctr_mode.h</itemPath>
-                    <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/lib/include/tinycrypt/ctr_prng.h</itemPath>
-                    <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/lib/include/tinycrypt/ecc.h</itemPath>
-                    <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/lib/include/tinycrypt/ecc_dh.h</itemPath>
-                    <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/lib/include/tinycrypt/ecc_dsa.h</itemPath>
-                    <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/lib/include/tinycrypt/ecc_platform_specific.h</itemPath>
-                    <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/lib/include/tinycrypt/hmac.h</itemPath>
-                    <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/lib/include/tinycrypt/hmac_prng.h</itemPath>
-                    <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/lib/include/tinycrypt/sha256.h</itemPath>
-                    <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/lib/include/tinycrypt/utils.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycrypt\lib\include\tinycrypt\aes.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycrypt\lib\include\tinycrypt\cbc_mode.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycrypt\lib\include\tinycrypt\ccm_mode.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycrypt\lib\include\tinycrypt\cmac_mode.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycrypt\lib\include\tinycrypt\constants.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycrypt\lib\include\tinycrypt\ctr_mode.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycrypt\lib\include\tinycrypt\ctr_prng.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycrypt\lib\include\tinycrypt\ecc.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycrypt\lib\include\tinycrypt\ecc_dh.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycrypt\lib\include\tinycrypt\ecc_dsa.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycrypt\lib\include\tinycrypt\ecc_platform_specific.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycrypt\lib\include\tinycrypt\hmac.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycrypt\lib\include\tinycrypt\hmac_prng.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycrypt\lib\include\tinycrypt\sha256.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycrypt\lib\include\tinycrypt\utils.h</itemPath>
                   </logicalFolder>
                 </logicalFolder>
                 <logicalFolder name="f2" displayName="source" projectFiles="true">
-                  <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/lib/source/aes_decrypt.c</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/lib/source/aes_encrypt.c</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/lib/source/cbc_mode.c</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/lib/source/ccm_mode.c</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/lib/source/cmac_mode.c</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/lib/source/ctr_mode.c</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/lib/source/ctr_prng.c</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/lib/source/ecc.c</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/lib/source/ecc_dh.c</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/lib/source/ecc_dsa.c</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/lib/source/ecc_platform_specific.c</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/lib/source/hmac.c</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/lib/source/hmac_prng.c</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/lib/source/sha256.c</itemPath>
-                  <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/lib/source/utils.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycrypt\lib\source\aes_decrypt.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycrypt\lib\source\aes_encrypt.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycrypt\lib\source\cbc_mode.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycrypt\lib\source\ccm_mode.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycrypt\lib\source\cmac_mode.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycrypt\lib\source\ctr_mode.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycrypt\lib\source\ctr_prng.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycrypt\lib\source\ecc.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycrypt\lib\source\ecc_dh.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycrypt\lib\source\ecc_dsa.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycrypt\lib\source\ecc_platform_specific.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycrypt\lib\source\hmac.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycrypt\lib\source\hmac_prng.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycrypt\lib\source\sha256.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycrypt\lib\source\utils.c</itemPath>
                 </logicalFolder>
               </logicalFolder>
-              <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/AUTHORS</itemPath>
-              <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/config.mk</itemPath>
-              <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/README</itemPath>
-              <itemPath>../../../../../../../libraries/3rdparty/tinycrypt/VERSION</itemPath>
+              <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycrypt\AUTHORS</itemPath>
+              <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycrypt\config.mk</itemPath>
+              <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycrypt\README</itemPath>
+              <itemPath>..\..\..\..\..\..\..\libraries\3rdparty\tinycrypt\VERSION</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f1" displayName="abstractions" projectFiles="true">
             <logicalFolder name="f3" displayName="ble_hal" projectFiles="true">
               <logicalFolder name="f1" displayName="include" projectFiles="true">
-                <itemPath>../../../../../../../libraries/abstractions/ble_hal/include/bt_hal_avsrc_profile.h</itemPath>
-                <itemPath>../../../../../../../libraries/abstractions/ble_hal/include/bt_hal_gatt_client.h</itemPath>
-                <itemPath>../../../../../../../libraries/abstractions/ble_hal/include/bt_hal_gatt_server.h</itemPath>
-                <itemPath>../../../../../../../libraries/abstractions/ble_hal/include/bt_hal_gatt_types.h</itemPath>
-                <itemPath>../../../../../../../libraries/abstractions/ble_hal/include/bt_hal_manager.h</itemPath>
-                <itemPath>../../../../../../../libraries/abstractions/ble_hal/include/bt_hal_manager_adapter_ble.h</itemPath>
-                <itemPath>../../../../../../../libraries/abstractions/ble_hal/include/bt_hal_manager_adapter_classic.h</itemPath>
-                <itemPath>../../../../../../../libraries/abstractions/ble_hal/include/bt_hal_manager_types.h</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\abstractions\ble_hal\include\bt_hal_avsrc_profile.h</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\abstractions\ble_hal\include\bt_hal_gatt_client.h</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\abstractions\ble_hal\include\bt_hal_gatt_server.h</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\abstractions\ble_hal\include\bt_hal_gatt_types.h</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\abstractions\ble_hal\include\bt_hal_manager.h</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\abstractions\ble_hal\include\bt_hal_manager_adapter_ble.h</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\abstractions\ble_hal\include\bt_hal_manager_adapter_classic.h</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\abstractions\ble_hal\include\bt_hal_manager_types.h</itemPath>
               </logicalFolder>
             </logicalFolder>
             <logicalFolder name="f4" displayName="common_io" projectFiles="true">
               <logicalFolder name="f1" displayName="include" projectFiles="true">
-                <itemPath>../../../../../../../libraries/abstractions/common_io/include/iot_adc.h</itemPath>
-                <itemPath>../../../../../../../libraries/abstractions/common_io/include/iot_battery.h</itemPath>
-                <itemPath>../../../../../../../libraries/abstractions/common_io/include/iot_efuse.h</itemPath>
-                <itemPath>../../../../../../../libraries/abstractions/common_io/include/iot_flash.h</itemPath>
-                <itemPath>../../../../../../../libraries/abstractions/common_io/include/iot_gpio.h</itemPath>
-                <itemPath>../../../../../../../libraries/abstractions/common_io/include/iot_hw.h</itemPath>
-                <itemPath>../../../../../../../libraries/abstractions/common_io/include/iot_i2c.h</itemPath>
-                <itemPath>../../../../../../../libraries/abstractions/common_io/include/iot_i2s.h</itemPath>
-                <itemPath>../../../../../../../libraries/abstractions/common_io/include/iot_perfcounter.h</itemPath>
-                <itemPath>../../../../../../../libraries/abstractions/common_io/include/iot_power.h</itemPath>
-                <itemPath>../../../../../../../libraries/abstractions/common_io/include/iot_pwm.h</itemPath>
-                <itemPath>../../../../../../../libraries/abstractions/common_io/include/iot_reset.h</itemPath>
-                <itemPath>../../../../../../../libraries/abstractions/common_io/include/iot_rtc.h</itemPath>
-                <itemPath>../../../../../../../libraries/abstractions/common_io/include/iot_spi.h</itemPath>
-                <itemPath>../../../../../../../libraries/abstractions/common_io/include/iot_timer.h</itemPath>
-                <itemPath>../../../../../../../libraries/abstractions/common_io/include/iot_tsensor.h</itemPath>
-                <itemPath>../../../../../../../libraries/abstractions/common_io/include/iot_uart.h</itemPath>
-                <itemPath>../../../../../../../libraries/abstractions/common_io/include/iot_usb_device.h</itemPath>
-                <itemPath>../../../../../../../libraries/abstractions/common_io/include/iot_watchdog.h</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\abstractions\common_io\include\iot_adc.h</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\abstractions\common_io\include\iot_battery.h</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\abstractions\common_io\include\iot_efuse.h</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\abstractions\common_io\include\iot_flash.h</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\abstractions\common_io\include\iot_gpio.h</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\abstractions\common_io\include\iot_hw.h</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\abstractions\common_io\include\iot_i2c.h</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\abstractions\common_io\include\iot_i2s.h</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\abstractions\common_io\include\iot_perfcounter.h</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\abstractions\common_io\include\iot_power.h</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\abstractions\common_io\include\iot_pwm.h</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\abstractions\common_io\include\iot_reset.h</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\abstractions\common_io\include\iot_rtc.h</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\abstractions\common_io\include\iot_spi.h</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\abstractions\common_io\include\iot_timer.h</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\abstractions\common_io\include\iot_tsensor.h</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\abstractions\common_io\include\iot_uart.h</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\abstractions\common_io\include\iot_usb_device.h</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\abstractions\common_io\include\iot_watchdog.h</itemPath>
               </logicalFolder>
             </logicalFolder>
             <logicalFolder name="f1" displayName="pkcs11" projectFiles="true">
@@ -612,25 +617,25 @@
               <logicalFolder name="f1" displayName="freertos" projectFiles="true">
                 <logicalFolder name="f1" displayName="include" projectFiles="true">
                   <logicalFolder name="f1" displayName="platform" projectFiles="true">
-                    <itemPath>../../../../../../../libraries/abstractions/platform/freertos/include/platform/iot_network_ble.h</itemPath>
-                    <itemPath>../../../../../../../libraries/abstractions/platform/freertos/include/platform/iot_network_freertos.h</itemPath>
-                    <itemPath>../../../../../../../libraries/abstractions/platform/freertos/include/platform/iot_platform_types_freertos.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\abstractions\platform\freertos\include\platform\iot_network_ble.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\abstractions\platform\freertos\include\platform\iot_network_freertos.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\abstractions\platform\freertos\include\platform\iot_platform_types_freertos.h</itemPath>
                   </logicalFolder>
                 </logicalFolder>
-                <itemPath>../../../../../../../libraries/abstractions/platform/freertos/iot_clock_freertos.c</itemPath>
-                <itemPath>../../../../../../../libraries/abstractions/platform/freertos/iot_metrics.c</itemPath>
-                <itemPath>../../../../../../../libraries/abstractions/platform/freertos/iot_network_freertos.c</itemPath>
-                <itemPath>../../../../../../../libraries/abstractions/platform/freertos/iot_threads_freertos.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\abstractions\platform\freertos\iot_clock_freertos.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\abstractions\platform\freertos\iot_metrics.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\abstractions\platform\freertos\iot_network_freertos.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\abstractions\platform\freertos\iot_threads_freertos.c</itemPath>
               </logicalFolder>
               <logicalFolder name="f2" displayName="include" projectFiles="true">
                 <logicalFolder name="f1" displayName="platform" projectFiles="true">
-                  <itemPath>../../../../../../../libraries/abstractions/platform/include/platform/iot_clock.h</itemPath>
-                  <itemPath>../../../../../../../libraries/abstractions/platform/include/platform/iot_metrics.h</itemPath>
-                  <itemPath>../../../../../../../libraries/abstractions/platform/include/platform/iot_network.h</itemPath>
-                  <itemPath>../../../../../../../libraries/abstractions/platform/include/platform/iot_threads.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\abstractions\platform\include\platform\iot_clock.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\abstractions\platform\include\platform\iot_metrics.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\abstractions\platform\include\platform\iot_network.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\abstractions\platform\include\platform\iot_threads.h</itemPath>
                 </logicalFolder>
                 <logicalFolder name="f2" displayName="types" projectFiles="true">
-                  <itemPath>../../../../../../../libraries/abstractions/platform/include/types/iot_platform_types.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\abstractions\platform\include\types\iot_platform_types.h</itemPath>
                 </logicalFolder>
               </logicalFolder>
             </logicalFolder>
@@ -638,18 +643,18 @@
               <logicalFolder name="f1" displayName="include" projectFiles="true">
                 <logicalFolder name="f1" displayName="FreeRTOS_POSIX" projectFiles="true">
                   <logicalFolder name="f1" displayName="sys" projectFiles="true">
-                    <itemPath>../../../../../../../libraries/abstractions/posix/include/FreeRTOS_POSIX/sys/types.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\abstractions\posix\include\FreeRTOS_POSIX\sys\types.h</itemPath>
                   </logicalFolder>
-                  <itemPath>../../../../../../../libraries/abstractions/posix/include/FreeRTOS_POSIX/errno.h</itemPath>
-                  <itemPath>../../../../../../../libraries/abstractions/posix/include/FreeRTOS_POSIX/fcntl.h</itemPath>
-                  <itemPath>../../../../../../../libraries/abstractions/posix/include/FreeRTOS_POSIX/mqueue.h</itemPath>
-                  <itemPath>../../../../../../../libraries/abstractions/posix/include/FreeRTOS_POSIX/pthread.h</itemPath>
-                  <itemPath>../../../../../../../libraries/abstractions/posix/include/FreeRTOS_POSIX/sched.h</itemPath>
-                  <itemPath>../../../../../../../libraries/abstractions/posix/include/FreeRTOS_POSIX/semaphore.h</itemPath>
-                  <itemPath>../../../../../../../libraries/abstractions/posix/include/FreeRTOS_POSIX/signal.h</itemPath>
-                  <itemPath>../../../../../../../libraries/abstractions/posix/include/FreeRTOS_POSIX/time.h</itemPath>
-                  <itemPath>../../../../../../../libraries/abstractions/posix/include/FreeRTOS_POSIX/unistd.h</itemPath>
-                  <itemPath>../../../../../../../libraries/abstractions/posix/include/FreeRTOS_POSIX/utils.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\abstractions\posix\include\FreeRTOS_POSIX\errno.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\abstractions\posix\include\FreeRTOS_POSIX\fcntl.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\abstractions\posix\include\FreeRTOS_POSIX\mqueue.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\abstractions\posix\include\FreeRTOS_POSIX\pthread.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\abstractions\posix\include\FreeRTOS_POSIX\sched.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\abstractions\posix\include\FreeRTOS_POSIX\semaphore.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\abstractions\posix\include\FreeRTOS_POSIX\signal.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\abstractions\posix\include\FreeRTOS_POSIX\time.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\abstractions\posix\include\FreeRTOS_POSIX\unistd.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\abstractions\posix\include\FreeRTOS_POSIX\utils.h</itemPath>
                 </logicalFolder>
               </logicalFolder>
             </logicalFolder>
@@ -658,9 +663,9 @@
                 <itemPath>../../../../../../../libraries/abstractions/secure_sockets/freertos_plus_tcp/iot_secure_sockets.c</itemPath>
               </logicalFolder>
               <logicalFolder name="f2" displayName="include" projectFiles="true">
-                <itemPath>../../../../../../../libraries/abstractions/secure_sockets/include/iot_secure_sockets.h</itemPath>
-                <itemPath>../../../../../../../libraries/abstractions/secure_sockets/include/iot_secure_sockets_config_defaults.h</itemPath>
-                <itemPath>../../../../../../../libraries/abstractions/secure_sockets/include/iot_secure_sockets_wrapper_metrics.h</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\abstractions\secure_sockets\include\iot_secure_sockets.h</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\abstractions\secure_sockets\include\iot_secure_sockets_config_defaults.h</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\abstractions\secure_sockets\include\iot_secure_sockets_wrapper_metrics.h</itemPath>
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
@@ -668,38 +673,38 @@
             <logicalFolder name="f1" displayName="aws" projectFiles="true">
               <logicalFolder name="f1" displayName="defender" projectFiles="true">
                 <logicalFolder name="f1" displayName="include" projectFiles="true">
-                  <itemPath>../../../../../../../libraries/c_sdk/aws/defender/include/aws_defender.h</itemPath>
-                  <itemPath>../../../../../../../libraries/c_sdk/aws/defender/include/aws_iot_defender.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\aws\defender\include\aws_defender.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\aws\defender\include\aws_iot_defender.h</itemPath>
                 </logicalFolder>
                 <logicalFolder name="f2" displayName="src" projectFiles="true">
                   <logicalFolder name="f1" displayName="private" projectFiles="true">
-                    <itemPath>../../../../../../../libraries/c_sdk/aws/defender/src/private/aws_iot_defender_internal.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\aws\defender\src\private\aws_iot_defender_internal.h</itemPath>
                   </logicalFolder>
-                  <itemPath>../../../../../../../libraries/c_sdk/aws/defender/src/aws_iot_defender_api.c</itemPath>
-                  <itemPath>../../../../../../../libraries/c_sdk/aws/defender/src/aws_iot_defender_collector.c</itemPath>
-                  <itemPath>../../../../../../../libraries/c_sdk/aws/defender/src/aws_iot_defender_mqtt.c</itemPath>
-                  <itemPath>../../../../../../../libraries/c_sdk/aws/defender/src/aws_iot_defender_v1.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\aws\defender\src\aws_iot_defender_api.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\aws\defender\src\aws_iot_defender_collector.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\aws\defender\src\aws_iot_defender_mqtt.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\aws\defender\src\aws_iot_defender_v1.c</itemPath>
                 </logicalFolder>
               </logicalFolder>
               <logicalFolder name="f2" displayName="shadow" projectFiles="true">
                 <logicalFolder name="f1" displayName="include" projectFiles="true">
                   <logicalFolder name="f1" displayName="types" projectFiles="true">
-                    <itemPath>../../../../../../../libraries/c_sdk/aws/shadow/include/types/aws_iot_shadow_types.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\aws\shadow\include\types\aws_iot_shadow_types.h</itemPath>
                   </logicalFolder>
-                  <itemPath>../../../../../../../libraries/c_sdk/aws/shadow/include/aws_iot_shadow.h</itemPath>
-                  <itemPath>../../../../../../../libraries/c_sdk/aws/shadow/include/aws_shadow.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\aws\shadow\include\aws_iot_shadow.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\aws\shadow\include\aws_shadow.h</itemPath>
                 </logicalFolder>
                 <logicalFolder name="f2" displayName="src" projectFiles="true">
                   <logicalFolder name="f1" displayName="private" projectFiles="true">
-                    <itemPath>../../../../../../../libraries/c_sdk/aws/shadow/src/private/aws_iot_shadow_internal.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\aws\shadow\src\private\aws_iot_shadow_internal.h</itemPath>
                   </logicalFolder>
-                  <itemPath>../../../../../../../libraries/c_sdk/aws/shadow/src/aws_iot_shadow_api.c</itemPath>
-                  <itemPath>../../../../../../../libraries/c_sdk/aws/shadow/src/aws_iot_shadow_operation.c</itemPath>
-                  <itemPath>../../../../../../../libraries/c_sdk/aws/shadow/src/aws_iot_shadow_parser.c</itemPath>
-                  <itemPath>../../../../../../../libraries/c_sdk/aws/shadow/src/aws_iot_shadow_static_memory.c</itemPath>
-                  <itemPath>../../../../../../../libraries/c_sdk/aws/shadow/src/aws_iot_shadow_subscription.c</itemPath>
-                  <itemPath>../../../../../../../libraries/c_sdk/aws/shadow/src/aws_shadow.c</itemPath>
-                  <itemPath>../../../../../../../libraries/c_sdk/aws/shadow/src/aws_shadow_config_defaults.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\aws\shadow\src\aws_iot_shadow_api.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\aws\shadow\src\aws_iot_shadow_operation.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\aws\shadow\src\aws_iot_shadow_parser.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\aws\shadow\src\aws_iot_shadow_static_memory.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\aws\shadow\src\aws_iot_shadow_subscription.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\aws\shadow\src\aws_shadow.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\aws\shadow\src\aws_shadow_config_defaults.h</itemPath>
                 </logicalFolder>
               </logicalFolder>
             </logicalFolder>
@@ -707,95 +712,95 @@
               <logicalFolder name="f1" displayName="common" projectFiles="true">
                 <logicalFolder name="f1" displayName="include" projectFiles="true">
                   <logicalFolder name="f1" displayName="private" projectFiles="true">
-                    <itemPath>../../../../../../../libraries/c_sdk/standard/common/include/private/iot_default_root_certificates.h</itemPath>
-                    <itemPath>../../../../../../../libraries/c_sdk/standard/common/include/private/iot_doubly_linked_list.h</itemPath>
-                    <itemPath>../../../../../../../libraries/c_sdk/standard/common/include/private/iot_error.h</itemPath>
-                    <itemPath>../../../../../../../libraries/c_sdk/standard/common/include/private/iot_lib_init.h</itemPath>
-                    <itemPath>../../../../../../../libraries/c_sdk/standard/common/include/private/iot_logging.h</itemPath>
-                    <itemPath>../../../../../../../libraries/c_sdk/standard/common/include/private/iot_static_memory.h</itemPath>
-                    <itemPath>../../../../../../../libraries/c_sdk/standard/common/include/private/iot_taskpool_internal.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\common\include\private\iot_default_root_certificates.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\common\include\private\iot_doubly_linked_list.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\common\include\private\iot_error.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\common\include\private\iot_lib_init.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\common\include\private\iot_logging.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\common\include\private\iot_static_memory.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\common\include\private\iot_taskpool_internal.h</itemPath>
                   </logicalFolder>
                   <logicalFolder name="f2" displayName="types" projectFiles="true">
-                    <itemPath>../../../../../../../libraries/c_sdk/standard/common/include/types/iot_network_types.h</itemPath>
-                    <itemPath>../../../../../../../libraries/c_sdk/standard/common/include/types/iot_taskpool_types.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\common\include\types\iot_network_types.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\common\include\types\iot_taskpool_types.h</itemPath>
                   </logicalFolder>
-                  <itemPath>../../../../../../../libraries/c_sdk/standard/common/include/iot_appversion32.h</itemPath>
-                  <itemPath>../../../../../../../libraries/c_sdk/standard/common/include/iot_atomic.h</itemPath>
-                  <itemPath>../../../../../../../libraries/c_sdk/standard/common/include/iot_init.h</itemPath>
-                  <itemPath>../../../../../../../libraries/c_sdk/standard/common/include/iot_linear_containers.h</itemPath>
-                  <itemPath>../../../../../../../libraries/c_sdk/standard/common/include/iot_logging_setup.h</itemPath>
-                  <itemPath>../../../../../../../libraries/c_sdk/standard/common/include/iot_logging_task.h</itemPath>
-                  <itemPath>../../../../../../../libraries/c_sdk/standard/common/include/iot_taskpool.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\common\include\iot_appversion32.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\common\include\iot_atomic.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\common\include\iot_init.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\common\include\iot_linear_containers.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\common\include\iot_logging_setup.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\common\include\iot_logging_task.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\common\include\iot_taskpool.h</itemPath>
                 </logicalFolder>
                 <logicalFolder name="f2" displayName="logging" projectFiles="true">
-                  <itemPath>../../../../../../../libraries/c_sdk/standard/common/logging/iot_logging.c</itemPath>
-                  <itemPath>../../../../../../../libraries/c_sdk/standard/common/logging/iot_logging_task_dynamic_buffers.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\common\logging\iot_logging.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\common\logging\iot_logging_task_dynamic_buffers.c</itemPath>
                 </logicalFolder>
                 <logicalFolder name="f3" displayName="taskpool" projectFiles="true">
-                  <itemPath>../../../../../../../libraries/c_sdk/standard/common/taskpool/iot_taskpool.c</itemPath>
-                  <itemPath>../../../../../../../libraries/c_sdk/standard/common/taskpool/iot_taskpool_static_memory.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\common\taskpool\iot_taskpool.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\common\taskpool\iot_taskpool_static_memory.c</itemPath>
                 </logicalFolder>
-                <itemPath>../../../../../../../libraries/c_sdk/standard/common/iot_device_metrics.c</itemPath>
-                <itemPath>../../../../../../../libraries/c_sdk/standard/common/iot_init.c</itemPath>
-                <itemPath>../../../../../../../libraries/c_sdk/standard/common/iot_static_memory_common.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\common\iot_device_metrics.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\common\iot_init.c</itemPath>
+                <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\common\iot_static_memory_common.c</itemPath>
               </logicalFolder>
               <logicalFolder name="f2" displayName="https" projectFiles="true">
                 <logicalFolder name="f1" displayName="include" projectFiles="true">
                   <logicalFolder name="f1" displayName="types" projectFiles="true">
-                    <itemPath>../../../../../../../libraries/c_sdk/standard/https/include/types/iot_https_types.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\https\include\types\iot_https_types.h</itemPath>
                   </logicalFolder>
-                  <itemPath>../../../../../../../libraries/c_sdk/standard/https/include/iot_https_client.h</itemPath>
-                  <itemPath>../../../../../../../libraries/c_sdk/standard/https/include/iot_https_utils.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\https\include\iot_https_client.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\https\include\iot_https_utils.h</itemPath>
                 </logicalFolder>
                 <logicalFolder name="f2" displayName="src" projectFiles="true">
                   <logicalFolder name="f1" displayName="private" projectFiles="true">
-                    <itemPath>../../../../../../../libraries/c_sdk/standard/https/src/private/iot_https_internal.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\https\src\private\iot_https_internal.h</itemPath>
                   </logicalFolder>
-                  <itemPath>../../../../../../../libraries/c_sdk/standard/https/src/iot_https_client.c</itemPath>
-                  <itemPath>../../../../../../../libraries/c_sdk/standard/https/src/iot_https_utils.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\https\src\iot_https_client.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\https\src\iot_https_utils.c</itemPath>
                 </logicalFolder>
               </logicalFolder>
               <logicalFolder name="f3" displayName="mqtt" projectFiles="true">
                 <logicalFolder name="f1" displayName="include" projectFiles="true">
                   <logicalFolder name="f1" displayName="types" projectFiles="true">
-                    <itemPath>../../../../../../../libraries/c_sdk/standard/mqtt/include/types/iot_mqtt_types.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\mqtt\include\types\iot_mqtt_types.h</itemPath>
                   </logicalFolder>
-                  <itemPath>../../../../../../../libraries/c_sdk/standard/mqtt/include/iot_mqtt.h</itemPath>
-                  <itemPath>../../../../../../../libraries/c_sdk/standard/mqtt/include/iot_mqtt_agent.h</itemPath>
-                  <itemPath>../../../../../../../libraries/c_sdk/standard/mqtt/include/iot_mqtt_agent_config_defaults.h</itemPath>
-                  <itemPath>../../../../../../../libraries/c_sdk/standard/mqtt/include/iot_mqtt_config_defaults.h</itemPath>
-                  <itemPath>../../../../../../../libraries/c_sdk/standard/mqtt/include/iot_mqtt_lib.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\mqtt\include\iot_mqtt.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\mqtt\include\iot_mqtt_agent.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\mqtt\include\iot_mqtt_agent_config_defaults.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\mqtt\include\iot_mqtt_config_defaults.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\mqtt\include\iot_mqtt_lib.h</itemPath>
                 </logicalFolder>
                 <logicalFolder name="f2" displayName="src" projectFiles="true">
                   <logicalFolder name="f1" displayName="private" projectFiles="true">
-                    <itemPath>../../../../../../../libraries/c_sdk/standard/mqtt/src/private/iot_mqtt_internal.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\mqtt\src\private\iot_mqtt_internal.h</itemPath>
                   </logicalFolder>
-                  <itemPath>../../../../../../../libraries/c_sdk/standard/mqtt/src/iot_mqtt_agent.c</itemPath>
-                  <itemPath>../../../../../../../libraries/c_sdk/standard/mqtt/src/iot_mqtt_api.c</itemPath>
-                  <itemPath>../../../../../../../libraries/c_sdk/standard/mqtt/src/iot_mqtt_network.c</itemPath>
-                  <itemPath>../../../../../../../libraries/c_sdk/standard/mqtt/src/iot_mqtt_operation.c</itemPath>
-                  <itemPath>../../../../../../../libraries/c_sdk/standard/mqtt/src/iot_mqtt_serialize.c</itemPath>
-                  <itemPath>../../../../../../../libraries/c_sdk/standard/mqtt/src/iot_mqtt_static_memory.c</itemPath>
-                  <itemPath>../../../../../../../libraries/c_sdk/standard/mqtt/src/iot_mqtt_subscription.c</itemPath>
-                  <itemPath>../../../../../../../libraries/c_sdk/standard/mqtt/src/iot_mqtt_validate.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\mqtt\src\iot_mqtt_agent.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\mqtt\src\iot_mqtt_api.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\mqtt\src\iot_mqtt_network.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\mqtt\src\iot_mqtt_operation.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\mqtt\src\iot_mqtt_serialize.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\mqtt\src\iot_mqtt_static_memory.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\mqtt\src\iot_mqtt_subscription.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\mqtt\src\iot_mqtt_validate.c</itemPath>
                 </logicalFolder>
               </logicalFolder>
               <logicalFolder name="f4" displayName="serializer" projectFiles="true">
                 <logicalFolder name="f1" displayName="include" projectFiles="true">
-                  <itemPath>../../../../../../../libraries/c_sdk/standard/serializer/include/iot_json_utils.h</itemPath>
-                  <itemPath>../../../../../../../libraries/c_sdk/standard/serializer/include/iot_serializer.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\serializer\include\iot_json_utils.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\serializer\include\iot_serializer.h</itemPath>
                 </logicalFolder>
                 <logicalFolder name="f2" displayName="src" projectFiles="true">
                   <logicalFolder name="f1" displayName="cbor" projectFiles="true">
-                    <itemPath>../../../../../../../libraries/c_sdk/standard/serializer/src/cbor/iot_serializer_tinycbor_decoder.c</itemPath>
-                    <itemPath>../../../../../../../libraries/c_sdk/standard/serializer/src/cbor/iot_serializer_tinycbor_encoder.c</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\serializer\src\cbor\iot_serializer_tinycbor_decoder.c</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\serializer\src\cbor\iot_serializer_tinycbor_encoder.c</itemPath>
                   </logicalFolder>
                   <logicalFolder name="f2" displayName="json" projectFiles="true">
-                    <itemPath>../../../../../../../libraries/c_sdk/standard/serializer/src/json/iot_serializer_json_decoder.c</itemPath>
-                    <itemPath>../../../../../../../libraries/c_sdk/standard/serializer/src/json/iot_serializer_json_encoder.c</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\serializer\src\json\iot_serializer_json_decoder.c</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\serializer\src\json\iot_serializer_json_encoder.c</itemPath>
                   </logicalFolder>
-                  <itemPath>../../../../../../../libraries/c_sdk/standard/serializer/src/iot_json_utils.c</itemPath>
-                  <itemPath>../../../../../../../libraries/c_sdk/standard/serializer/src/iot_serializer_static_memory.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\serializer\src\iot_json_utils.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\c_sdk\standard\serializer\src\iot_serializer_static_memory.c</itemPath>
                 </logicalFolder>
               </logicalFolder>
             </logicalFolder>
@@ -804,43 +809,43 @@
             <logicalFolder name="f2" displayName="aws" projectFiles="true">
               <logicalFolder name="f1" displayName="greengrass" projectFiles="true">
                 <logicalFolder name="f1" displayName="include" projectFiles="true">
-                  <itemPath>../../../../../../../libraries/freertos_plus/aws/greengrass/include/aws_ggd_config_defaults.h</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/aws/greengrass/include/aws_greengrass_discovery.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\freertos_plus\aws\greengrass\include\aws_ggd_config_defaults.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\freertos_plus\aws\greengrass\include\aws_greengrass_discovery.h</itemPath>
                 </logicalFolder>
                 <logicalFolder name="f2" displayName="src" projectFiles="true">
-                  <itemPath>../../../../../../../libraries/freertos_plus/aws/greengrass/src/aws_greengrass_discovery.c</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/aws/greengrass/src/aws_helper_secure_connect.c</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/aws/greengrass/src/aws_helper_secure_connect.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\freertos_plus\aws\greengrass\src\aws_greengrass_discovery.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\freertos_plus\aws\greengrass\src\aws_helper_secure_connect.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\freertos_plus\aws\greengrass\src\aws_helper_secure_connect.h</itemPath>
                 </logicalFolder>
               </logicalFolder>
               <logicalFolder name="f2" displayName="ota" projectFiles="true">
                 <logicalFolder name="f1" displayName="include" projectFiles="true">
-                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/include/aws_iot_ota_agent.h</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/include/aws_iot_ota_types.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\freertos_plus\aws\ota\include\aws_iot_ota_agent.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\freertos_plus\aws\ota\include\aws_iot_ota_types.h</itemPath>
                 </logicalFolder>
                 <logicalFolder name="f2" displayName="src" projectFiles="true">
                   <logicalFolder name="f1" displayName="mqtt" projectFiles="true">
-                    <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/mqtt/aws_iot_ota_cbor.c</itemPath>
-                    <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/mqtt/aws_iot_ota_cbor_internal.h</itemPath>
-                    <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/mqtt/aws_iot_ota_cbor.h</itemPath>
-                    <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/mqtt/aws_iot_ota_mqtt.c</itemPath>
-                    <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/mqtt/aws_iot_ota_mqtt.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\freertos_plus\aws\ota\src\mqtt\aws_iot_ota_cbor.c</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\freertos_plus\aws\ota\src\mqtt\aws_iot_ota_cbor_internal.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\freertos_plus\aws\ota\src\mqtt\aws_iot_ota_cbor.h</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\freertos_plus\aws\ota\src\mqtt\aws_iot_ota_mqtt.c</itemPath>
+                    <itemPath>..\..\..\..\..\..\..\libraries\freertos_plus\aws\ota\src\mqtt\aws_iot_ota_mqtt.h</itemPath>
                   </logicalFolder>
-                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/aws_iot_ota_agent.c</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/aws_iot_ota_agent_internal.h</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/aws_iot_ota_interface.c</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/aws_iot_ota_interface.h</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/aws/ota/src/aws_iot_ota_pal.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\freertos_plus\aws\ota\src\aws_iot_ota_agent.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\freertos_plus\aws\ota\src\aws_iot_ota_agent_internal.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\freertos_plus\aws\ota\src\aws_iot_ota_interface.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\freertos_plus\aws\ota\src\aws_iot_ota_interface.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\freertos_plus\aws\ota\src\aws_iot_ota_pal.h</itemPath>
                 </logicalFolder>
               </logicalFolder>
             </logicalFolder>
             <logicalFolder name="f1" displayName="standard" projectFiles="true">
               <logicalFolder name="f2" displayName="crypto" projectFiles="true">
                 <logicalFolder name="f1" displayName="include" projectFiles="true">
-                  <itemPath>../../../../../../../libraries/freertos_plus/standard/crypto/include/iot_crypto.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\freertos_plus\standard\crypto\include\iot_crypto.h</itemPath>
                 </logicalFolder>
                 <logicalFolder name="f2" displayName="src" projectFiles="true">
-                  <itemPath>../../../../../../../libraries/freertos_plus/standard/crypto/src/iot_crypto.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\freertos_plus\standard\crypto\src\iot_crypto.c</itemPath>
                 </logicalFolder>
               </logicalFolder>
               <logicalFolder name="f1" displayName="freertos_plus_tcp" projectFiles="true">
@@ -891,28 +896,28 @@
               </logicalFolder>
               <logicalFolder name="f3" displayName="pkcs11" projectFiles="true">
                 <logicalFolder name="f1" displayName="include" projectFiles="true">
-                  <itemPath>../../../../../../../libraries/freertos_plus/standard/pkcs11/include/iot_pkcs11.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\freertos_plus\standard\pkcs11\include\iot_pkcs11.h</itemPath>
                 </logicalFolder>
                 <logicalFolder name="f2" displayName="src" projectFiles="true">
-                  <itemPath>../../../../../../../libraries/freertos_plus/standard/pkcs11/src/iot_pkcs11.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\freertos_plus\standard\pkcs11\src\iot_pkcs11.c</itemPath>
                 </logicalFolder>
               </logicalFolder>
               <logicalFolder name="f4" displayName="tls" projectFiles="true">
                 <logicalFolder name="f1" displayName="include" projectFiles="true">
-                  <itemPath>../../../../../../../libraries/freertos_plus/standard/tls/include/iot_tls.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\freertos_plus\standard\tls\include\iot_tls.h</itemPath>
                 </logicalFolder>
                 <logicalFolder name="f2" displayName="src" projectFiles="true">
-                  <itemPath>../../../../../../../libraries/freertos_plus/standard/tls/src/iot_tls.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\freertos_plus\standard\tls\src\iot_tls.c</itemPath>
                 </logicalFolder>
               </logicalFolder>
               <logicalFolder name="f5" displayName="utils" projectFiles="true">
                 <logicalFolder name="f1" displayName="include" projectFiles="true">
-                  <itemPath>../../../../../../../libraries/freertos_plus/standard/utils/include/iot_pki_utils.h</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/standard/utils/include/iot_system_init.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\freertos_plus\standard\utils\include\iot_pki_utils.h</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\freertos_plus\standard\utils\include\iot_system_init.h</itemPath>
                 </logicalFolder>
                 <logicalFolder name="f2" displayName="src" projectFiles="true">
-                  <itemPath>../../../../../../../libraries/freertos_plus/standard/utils/src/iot_pki_utils.c</itemPath>
-                  <itemPath>../../../../../../../libraries/freertos_plus/standard/utils/src/iot_system_init.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\freertos_plus\standard\utils\src\iot_pki_utils.c</itemPath>
+                  <itemPath>..\..\..\..\..\..\..\libraries\freertos_plus\standard\utils\src\iot_system_init.c</itemPath>
                 </logicalFolder>
               </logicalFolder>
             </logicalFolder>
@@ -1117,6 +1122,8 @@
                 <itemPath>../src/config/aws_demos/library/cryptoauthlib/crypto/atca_crypto_sw_sha1.h</itemPath>
                 <itemPath>../src/config/aws_demos/library/cryptoauthlib/crypto/atca_crypto_sw_sha2.c</itemPath>
                 <itemPath>../src/config/aws_demos/library/cryptoauthlib/crypto/atca_crypto_sw_sha2.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/crypto/atca_crypto_hw_aes_cbcmac.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/crypto/atca_crypto_hw_aes_ccm.c</itemPath>
               </logicalFolder>
               <logicalFolder name="f1" displayName="hal" projectFiles="true">
                 <itemPath>../src/config/aws_demos/library/cryptoauthlib/hal/ATECC608_0.c</itemPath>
@@ -1177,7 +1184,11 @@
               <itemPath>../src/config/aws_demos/library/cryptoauthlib/atca_status.h</itemPath>
               <itemPath>../src/config/aws_demos/library/cryptoauthlib/atca_version.h</itemPath>
               <itemPath>../src/config/aws_demos/library/cryptoauthlib/cryptoauthlib.h</itemPath>
+              <itemPath>../src/config/aws_demos/library/cryptoauthlib/atca_utils_sizes.c</itemPath>
             </logicalFolder>
+          </logicalFolder>
+          <logicalFolder name="f6" displayName="osal" projectFiles="true">
+            <itemPath>../src/config/aws_demos/osal/osal_freertos.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f7" displayName="clock" projectFiles="true">
@@ -1247,18 +1258,44 @@
           <itemPath>../src/config/aws_demos/libc_syscalls.c</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder name="f3" displayName="osal" projectFiles="true">
-        <itemPath>../src/config/aws_demos/osal/osal_freertos.c</itemPath>
-      </logicalFolder>
       <itemPath>../src/app.c</itemPath>
       <itemPath>../src/main.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
                    projectFiles="false">
+      <logicalFolder name="f1" displayName="aws_demos.mhc" projectFiles="true">
+        <itemPath>..\src\config\aws_demos\aws_demos.mhc\AmazonFreeRTOS.yml</itemPath>
+        <itemPath>..\src\config\aws_demos\aws_demos.mhc\AmazonHWInterface.yml</itemPath>
+        <itemPath>..\src\config\aws_demos\aws_demos.mhc\atecc608.yml</itemPath>
+        <itemPath>..\src\config\aws_demos\aws_demos.mhc\cmsis.yml</itemPath>
+        <itemPath>..\src\config\aws_demos\aws_demos.mhc\core.yml</itemPath>
+        <itemPath>..\src\config\aws_demos\aws_demos.mhc\cryptoauthlib.yml</itemPath>
+        <itemPath>..\src\config\aws_demos\aws_demos.mhc\cryptoauthlib_pkcs11.yml</itemPath>
+        <itemPath>..\src\config\aws_demos\aws_demos.mhc\dfp.yml</itemPath>
+        <itemPath>..\src\config\aws_demos\aws_demos.mhc\drvExtPhyKsz8091.yml</itemPath>
+        <itemPath>..\src\config\aws_demos\aws_demos.mhc\drvGmac.yml</itemPath>
+        <itemPath>..\src\config\aws_demos\aws_demos.mhc\drvMiim.yml</itemPath>
+        <itemPath>..\src\config\aws_demos\aws_demos.mhc\eic.yml</itemPath>
+        <itemPath>..\src\config\aws_demos\aws_demos.mhc\evsys.yml</itemPath>
+        <itemPath>..\src\config\aws_demos\aws_demos.mhc\GraphSettings.yml</itemPath>
+        <itemPath>..\src\config\aws_demos\aws_demos.mhc\HarmonyCore.yml</itemPath>
+        <itemPath>..\src\config\aws_demos\aws_demos.mhc\nvmctrl.yml</itemPath>
+        <itemPath>..\src\config\aws_demos\aws_demos.mhc\project.yml</itemPath>
+        <itemPath>..\src\config\aws_demos\aws_demos.mhc\sercom2.yml</itemPath>
+        <itemPath>..\src\config\aws_demos\aws_demos.mhc\sercom6.yml</itemPath>
+        <itemPath>..\src\config\aws_demos\aws_demos.mhc\sercom7.yml</itemPath>
+        <itemPath>..\src\config\aws_demos\aws_demos.mhc\settings.yml</itemPath>
+        <itemPath>..\src\config\aws_demos\aws_demos.mhc\stdio.yml</itemPath>
+        <itemPath>..\src\config\aws_demos\aws_demos.mhc\sys_command.yml</itemPath>
+        <itemPath>..\src\config\aws_demos\aws_demos.mhc\sys_console.yml</itemPath>
+        <itemPath>..\src\config\aws_demos\aws_demos.mhc\sys_debug.yml</itemPath>
+        <itemPath>..\src\config\aws_demos\aws_demos.mhc\sys_time.yml</itemPath>
+        <itemPath>..\src\config\aws_demos\aws_demos.mhc\tc3.yml</itemPath>
+        <itemPath>..\src\config\aws_demos\aws_demos.mhc\trng.yml</itemPath>
+      </logicalFolder>
       <itemPath>Makefile</itemPath>
-      <itemPath>../src/config/aws_demos/harmony.prj</itemPath>
-      <itemPath>../src/config/aws_demos/aws_demos.xml</itemPath>
+      <itemPath>..\src\config\aws_demos\harmony-manifest-success.yml</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
@@ -1274,15 +1311,17 @@
         <targetDevice>ATSAME54P20A</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>EdbgTool</platformTool>
+        <platformTool>noID</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.41</languageToolchainVersion>
+        <languageToolchainVersion>2.50</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAME54_DFP" vendor="Microchip" version="3.1.43"/>
+        <pack name="SAME54_DFP" vendor="Microchip" version="3.4.70"/>
         <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
       </packs>
+      <ScriptingSettings>
+      </ScriptingSettings>
       <compileType>
         <linkerTool>
           <linkerLibItems>
@@ -1300,6 +1339,7 @@
       </compileType>
       <makeCustomizationType>
         <makeCustomizationPreStepEnabled>false</makeCustomizationPreStepEnabled>
+        <makeUseCleanTarget>false</makeUseCleanTarget>
         <makeCustomizationPreStep></makeCustomizationPreStep>
         <makeCustomizationPostStepEnabled>true</makeCustomizationPostStepEnabled>
         <makeCustomizationPostStep>${MP_CC_DIR}\xc32-objcopy -O ihex "${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.elf" "${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.hex" &amp;&amp; ${MP_CC_DIR}\xc32-objcopy -p -I ihex -O binary "${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.hex" "${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.bin"</makeCustomizationPostStep>
@@ -1340,7 +1380,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../../../../../../../demos/include;../../../../../../../freertos_kernel/include;../../../../../../../libraries/abstractions/platform/freertos/include;../../../../../../../libraries/abstractions/secure_sockets/include;../../../../../../../libraries/abstractions/pkcs11/include;../../../../../../../libraries/c_sdk/aws/defender/include;../../../../../../../libraries/c_sdk/aws/shadow/include;../../../../../../../libraries/c_sdk/standard/common/include;../../../../../../../libraries/c_sdk/standard/https/include;../../../../../../../libraries/c_sdk/standard/mqtt/include;../../../../../../../libraries/c_sdk/standard/serializer/include;../../../../../../../libraries/freertos_plus/aws/greengrass/include;../../../../../../../libraries/freertos_plus/aws/ota/include;../../../../../../../libraries/freertos_plus/standard/crypto/include;../../../../../../../libraries/freertos_plus/standard/utils/include;../../../../../../../libraries/freertos_plus/standard/tls/include;../../../../../../../libraries/freertos_plus/standard/pkcs11/include;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include;../../../../../../../libraries/abstractions/platform/include;../../../../../../../libraries/c_sdk/standard/common/include/private;../../../../../../../libraries/c_sdk/standard/common/include/types;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/portable/Compiler/GCC;../../../../../../../demos/network_manager;../../../../../../../demos/https;../../../../../../../demos/tcp;../../../../../../../libraries/3rdparty/jsmn;../../../../../../../libraries/3rdparty/mbedtls/include;../../../../../../../libraries/3rdparty/tinycbor;../../../../../../../libraries/3rdparty/pkcs11;../../../../../../../libraries/3rdparty/tinycrypt/asn1;../../../../../../../libraries/3rdparty/tinycrypt/lib/include;../../../../../../../demos/dev_mode_key_provisioning/include;../../../../../../../libraries/abstractions/pkcs11/mbedtls;../../../../../../../libraries/3rdparty/http_parser;../../../../../../../libraries/freertos_plus/aws/ota/src;../../../../../../../vendors/microchip/boards/same54_xpro/ports/pkcs11;../../../../../../../libraries/abstractions/wifi/include;../../../../../../../vendors/microchip/boards/same54/ports/wifi;../../../../../../../vendors/microchip/harmony3/afr;../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/config_files;../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/application_code;../../../../../../../vendors/microchip/boards/same54_xpro/ports/posix;../../../../../../../freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../../vendors/microchip/harmony3/afr/tcpip/src/common;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/portable/NetworkInterface/same54;../src;../src/config/aws_demos;../src/packs/ATSAME54P20A_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/config/aws_demos/library/cryptoauthlib;../src/config/aws_demos/library/cryptoauthlib/crypto;../src/config/aws_demos/library/cryptoauthlib/pkcs11"/>
+                  value="../src/config/aws_demos/library/cryptoauthlib;../src/config/aws_demos/library/cryptoauthlib/crypto;../src/config/aws_demos/library/cryptoauthlib/pkcs11;../src;../src/config/aws_demos;../src/packs/ATSAME54P20A_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../../../../../../../demos/include;../../../../../../../freertos_kernel/include;../../../../../../../libraries/abstractions/platform/freertos/include;../../../../../../../libraries/abstractions/secure_sockets/include;../../../../../../../libraries/abstractions/pkcs11/include;../../../../../../../libraries/c_sdk/aws/defender/include;../../../../../../../libraries/c_sdk/aws/shadow/include;../../../../../../../libraries/c_sdk/standard/common/include;../../../../../../../libraries/c_sdk/standard/https/include;../../../../../../../libraries/c_sdk/standard/mqtt/include;../../../../../../../libraries/c_sdk/standard/serializer/include;../../../../../../../libraries/freertos_plus/aws/greengrass/include;../../../../../../../libraries/freertos_plus/aws/ota/include;../../../../../../../libraries/freertos_plus/standard/crypto/include;../../../../../../../libraries/freertos_plus/standard/utils/include;../../../../../../../libraries/freertos_plus/standard/tls/include;../../../../../../../libraries/freertos_plus/standard/pkcs11/include;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include;../../../../../../../libraries/abstractions/platform/include;../../../../../../../libraries/c_sdk/standard/common/include/private;../../../../../../../libraries/c_sdk/standard/common/include/types;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/portable/Compiler/GCC;../../../../../../../demos/network_manager;../../../../../../../demos/https;../../../../../../../demos/tcp;../../../../../../../libraries/3rdparty/jsmn;../../../../../../../libraries/3rdparty/mbedtls/include;../../../../../../../libraries/3rdparty/tinycbor;../../../../../../../libraries/3rdparty/pkcs11;../../../../../../../libraries/3rdparty/tinycrypt/asn1;../../../../../../../libraries/3rdparty/tinycrypt/lib/include;../../../../../../../demos/dev_mode_key_provisioning/include;../../../../../../../libraries/abstractions/pkcs11/mbedtls;../../../../../../../libraries/3rdparty/http_parser;../../../../../../../libraries/freertos_plus/aws/ota/src;../../../../../../../vendors/microchip/boards/same54_xpro/ports/pkcs11;../../../../../../../libraries/abstractions/wifi/include;../../../../../../../vendors/microchip/boards/same54_xpro/ports/wifi;../../../../../../../vendors/microchip/harmony3/afr;../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/config_files;../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/application_code;../../../../../../../vendors/microchip/boards/same54_xpro/ports/posix;../../../../../../../freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../../vendors/microchip/harmony3/afr/tcpip/src/common;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/portable/NetworkInterface/same54"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="false"/>
@@ -1405,7 +1445,7 @@
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-cross-reference-file" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
-        <property key="heap-size" value="512"/>
+        <property key="heap-size" value="1024"/>
         <property key="input-libraries" value=""/>
         <property key="kseg-length" value=""/>
         <property key="kseg-origin" value=""/>
@@ -1437,7 +1477,8 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exceptions" value="true"/>
         <property key="exclude-floating-point" value="false"/>
-        <property key="extra-include-directories" value=""/>
+        <property key="extra-include-directories"
+                  value="../src;../src/config/aws_demos;../src/packs/ATSAME54P20A_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -1478,6 +1519,7 @@
         <property key="firmware.toolpack"
                   value="Press to select which tool pack to use"/>
         <property key="firmware.update.action" value="firmware.update.use.latest"/>
+        <property key="freeze.timers" value="false"/>
         <property key="memories.aux" value="false"/>
         <property key="memories.bootflash" value="true"/>
         <property key="memories.configurationmemory" value="true"/>
@@ -1491,6 +1533,7 @@
                   value="${memories.instruction.ram.ranges}"/>
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="0-fffff"/>
+        <property key="memories.rww" value="true"/>
         <property key="poweroptions.powerenable" value="false"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>

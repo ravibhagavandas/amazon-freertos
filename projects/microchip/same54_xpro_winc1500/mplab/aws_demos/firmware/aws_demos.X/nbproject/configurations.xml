@@ -153,7 +153,7 @@
               <itemPath>../src/config/aws_demos/peripheral/trng/plib_trng.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f11" displayName="wdt" projectFiles="true">
-              <itemPath>..\src\config\aws_demos\peripheral\wdt\plib_wdt.h</itemPath>
+              <itemPath>../src/config/aws_demos/peripheral/wdt/plib_wdt.h</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f2" displayName="system" projectFiles="true">
@@ -1154,6 +1154,8 @@
                 <itemPath>../src/config/aws_demos/library/cryptoauthlib/crypto/atca_crypto_sw_sha1.h</itemPath>
                 <itemPath>../src/config/aws_demos/library/cryptoauthlib/crypto/atca_crypto_sw_sha2.c</itemPath>
                 <itemPath>../src/config/aws_demos/library/cryptoauthlib/crypto/atca_crypto_sw_sha2.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/crypto/atca_crypto_hw_aes_cbcmac.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/crypto/atca_crypto_hw_aes_ccm.c</itemPath>
               </logicalFolder>
               <logicalFolder name="f1" displayName="hal" projectFiles="true">
                 <itemPath>../src/config/aws_demos/library/cryptoauthlib/hal/ATECC608_0.c</itemPath>
@@ -1214,6 +1216,7 @@
               <itemPath>../src/config/aws_demos/library/cryptoauthlib/atca_status.h</itemPath>
               <itemPath>../src/config/aws_demos/library/cryptoauthlib/atca_version.h</itemPath>
               <itemPath>../src/config/aws_demos/library/cryptoauthlib/cryptoauthlib.h</itemPath>
+              <itemPath>../src/config/aws_demos/library/cryptoauthlib/atca_utils_sizes.c</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f6" displayName="osal" projectFiles="true">
@@ -1260,7 +1263,7 @@
               <itemPath>../src/config/aws_demos/peripheral/trng/plib_trng.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f11" displayName="wdt" projectFiles="true">
-              <itemPath>..\src\config\aws_demos\peripheral\wdt\plib_wdt.c</itemPath>
+              <itemPath>../src/config/aws_demos/peripheral/wdt/plib_wdt.c</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f5" displayName="stdio" projectFiles="true">
@@ -1359,12 +1362,12 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>EdbgTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.40</languageToolchainVersion>
+        <languageToolchainVersion>2.50</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAME54_DFP" vendor="Microchip" version="3.4.70"/>
         <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
+        <pack name="SAME54_DFP" vendor="Microchip" version="3.4.70"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>
@@ -1377,9 +1380,9 @@
         </archiverTool>
         <loading>
           <loadableFile>../../../../../../../vendors/microchip/boards/same54_xpro/bootloader/bootloader/utility/bootloader.X.production.hex</loadableFile>
-          <useAlternateLoadableFile>false</useAlternateLoadableFile>
+          <useAlternateLoadableFile>true</useAlternateLoadableFile>
           <parseOnProdLoad>false</parseOnProdLoad>
-          <alternateLoadableFile></alternateLoadableFile>
+          <alternateLoadableFile>dist/aws_demos/production/aws_demos.X.production.factory.unified.hex</alternateLoadableFile>
         </loading>
         <subordinates>
         </subordinates>
@@ -1389,7 +1392,7 @@
         <makeUseCleanTarget>false</makeUseCleanTarget>
         <makeCustomizationPreStep></makeCustomizationPreStep>
         <makeCustomizationPostStepEnabled>true</makeCustomizationPostStepEnabled>
-        <makeCustomizationPostStep>${MP_CC_DIR}\xc32-objcopy -O ihex "${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.elf" "${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.hex" &amp;&amp; ${MP_CC_DIR}\xc32-objcopy -p -I ihex -O binary "${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.hex" "${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.bin"</makeCustomizationPostStep>
+        <makeCustomizationPostStep>${MP_CC_DIR}\xc32-objcopy -O ihex "${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.elf" "${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.hex" &amp;&amp; ${MP_CC_DIR}\xc32-objcopy -p -I ihex -O binary "${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.hex" "${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.bin" &amp;&amp; python ../../../../../../../vendors/microchip/boards/same54_xpro/bootloader/bootloader/utility/factory_image_generator.py -b "${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.bin" -p MCHP-Curiosity-PIC32MZEF -k ../../../../../../../vendors/microchip/boards/same54_xpro/bootloader/bootloader/utility/codesigner_cert_utility/ecdsasigner.key -x  ../../../../../../../vendors/microchip/boards/same54_xpro/bootloader/bootloader/utility/bootloader.X.production.hex</makeCustomizationPostStep>
         <makeCustomizationPutChecksumInUserID>false</makeCustomizationPutChecksumInUserID>
         <makeCustomizationEnableLongLines>false</makeCustomizationEnableLongLines>
         <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>
@@ -1436,7 +1439,7 @@
         <property key="place-data-into-section" value="false"/>
         <property key="post-instruction-scheduling" value="default"/>
         <property key="pre-instruction-scheduling" value="default"/>
-        <property key="preprocessor-macros" value=";PIC32_USE_ECC;__free_rtos__"/>
+        <property key="preprocessor-macros" value="PIC32_USE_ECC;__free_rtos__"/>
         <property key="strict-ansi" value="false"/>
         <property key="support-ansi" value="false"/>
         <property key="toplevel-reordering" value=""/>
@@ -1502,7 +1505,7 @@
         <property key="oXC32ld-extra-opts" value="-mno-newlib-nano"/>
         <property key="optimization-level" value=""/>
         <property key="preprocessor-macros"
-                  value=";ROM_LENGTH=0xf0000;ROM_ORIGIN=0x10000"/>
+                  value="ROM_LENGTH=0xf0000;ROM_ORIGIN=0x10000"/>
         <property key="remove-unused-sections" value="true"/>
         <property key="report-memory-usage" value="false"/>
         <property key="serial-length" value=""/>
@@ -1524,7 +1527,7 @@
         <property key="exceptions" value="true"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/aws_demos;../src/packs/ATSAME54P20A_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;"/>
+                  value="../src;../src/config/aws_demos;../src/packs/ATSAME54P20A_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -1584,8 +1587,6 @@
         <property key="memories.programmemory.ranges" value="0-fffff"/>
         <property key="memories.rww" value="true"/>
         <property key="poweroptions.powerenable" value="false"/>
-        <property key="programmerToGoFilePath"
-                  value="D:/H3_KIT/amazon-freertos/projects/microchip/same54_xpro_winc1500/mplab/aws_demos/firmware/aws_demos.X/debug/aws_demos/aws_demos_ptg"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges"

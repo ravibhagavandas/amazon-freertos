@@ -194,6 +194,33 @@
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
                    projectFiles="false">
+      <logicalFolder name="f1" displayName="aws_tests.mhc" projectFiles="true">
+        <itemPath>..\..\..\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\AmazonDeviceTester.yml</itemPath>
+        <itemPath>..\..\..\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\AmazonHWInterface.yml</itemPath>
+        <itemPath>..\..\..\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\atecc608.yml</itemPath>
+        <itemPath>..\..\..\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\core.yml</itemPath>
+        <itemPath>..\..\..\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\core_timer.yml</itemPath>
+        <itemPath>..\..\..\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\cryptoauthlib.yml</itemPath>
+        <itemPath>..\..\..\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\cryptoauthlib_pkcs11.yml</itemPath>
+        <itemPath>..\..\..\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\dfp.yml</itemPath>
+        <itemPath>..\..\..\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\drvExtPhyLan8740.yml</itemPath>
+        <itemPath>..\..\..\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\drvMiim.yml</itemPath>
+        <itemPath>..\..\..\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\drvPic32mEthmac.yml</itemPath>
+        <itemPath>..\..\..\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\GraphSettings.yml</itemPath>
+        <itemPath>..\..\..\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\HarmonyCore.yml</itemPath>
+        <itemPath>..\..\..\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\i2c1.yml</itemPath>
+        <itemPath>..\..\..\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\nvm.yml</itemPath>
+        <itemPath>..\..\..\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\project.yml</itemPath>
+        <itemPath>..\..\..\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\rng.yml</itemPath>
+        <itemPath>..\..\..\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\settings.yml</itemPath>
+        <itemPath>..\..\..\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\stdio.yml</itemPath>
+        <itemPath>..\..\..\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\sys_command.yml</itemPath>
+        <itemPath>..\..\..\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\sys_console.yml</itemPath>
+        <itemPath>..\..\..\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\sys_debug.yml</itemPath>
+        <itemPath>..\..\..\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\sys_time.yml</itemPath>
+        <itemPath>..\..\..\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\uart1.yml</itemPath>
+        <itemPath>..\..\..\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\uart4.yml</itemPath>
+      </logicalFolder>
       <itemPath>Makefile</itemPath>
     </logicalFolder>
   </logicalFolder>
@@ -218,6 +245,8 @@
       <packs>
         <pack name="PIC32MZ-EF_DFP" vendor="Microchip" version="1.1.45"/>
       </packs>
+      <ScriptingSettings>
+      </ScriptingSettings>
       <compileType>
         <linkerTool>
           <linkerLibItems>
@@ -235,6 +264,7 @@
       </compileType>
       <makeCustomizationType>
         <makeCustomizationPreStepEnabled>false</makeCustomizationPreStepEnabled>
+        <makeUseCleanTarget>false</makeUseCleanTarget>
         <makeCustomizationPreStep></makeCustomizationPreStep>
         <makeCustomizationPostStepEnabled>false</makeCustomizationPostStepEnabled>
         <makeCustomizationPostStep></makeCustomizationPostStep>

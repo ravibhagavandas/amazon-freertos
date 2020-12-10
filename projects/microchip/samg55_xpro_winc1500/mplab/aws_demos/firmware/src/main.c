@@ -72,6 +72,8 @@
 void prvWifiConnect( void );
 extern void wifi_winc_crypto_init (void);	
 
+#define DEV_PROVISION
+
 /**
  * @brief Application task startup hook.
  */

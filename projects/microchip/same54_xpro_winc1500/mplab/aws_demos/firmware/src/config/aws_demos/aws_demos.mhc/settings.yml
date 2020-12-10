@@ -5,7 +5,7 @@ frameworkPath: ../../../../../..
 processor: ATSAME54P20A
 projectName: ''
 settings:
-  PackageFilter: aws_cloud;bootloader;bootloader_apps_uart;bsp;core;core_apps_pic32cm_le00_ls00;core_apps_pic32cm_le_ls;cryptoauthlib;csp;csp_apps_pic32cm_le00_ls00;csp_apps_pic32cm_le_ls;csp_apps_sam_d5x_e5x;net;usb;validation;wireless;
+  PackageFilter: aws_cloud;bsp;core;crypto;cryptoauthlib;csp;net;wireless;
   FORCE_OPTIMIZATION: 'false'
   GENERATE_BACKUP: 'true'
   CMSISPath: .\dev_packs\arm\CMSIS\5.7.0

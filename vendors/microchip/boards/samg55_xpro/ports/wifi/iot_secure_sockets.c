@@ -396,7 +396,7 @@ int32_t SOCKETS_Connect( Socket_t xSocket,
             /* Wait for socket connect to complete. */
            (xSocketCntx[Socket].waitingTask)[CONNECT_SEM] = xTaskGetCurrentTaskHandle();
 
-                xTaskNotifyWait( WDRV_MAC_EVENT_SOCKET_CONNECT, WDRV_MAC_EVENT_SOCKET_CONNECT, &evBits, SOCKET_CONNECT_TIMEOUT );
+            xTaskNotifyWait( WDRV_MAC_EVENT_SOCKET_CONNECT, WDRV_MAC_EVENT_SOCKET_CONNECT, &evBits, SOCKET_CONNECT_TIMEOUT );
 
             if( ( evBits & WDRV_MAC_EVENT_SOCKET_CONNECT ) == 0 )
             {
@@ -562,11 +562,11 @@ int32_t SOCKETS_Recv( Socket_t xSocket,
         xSocketCntx[Socket].recvCalled = 1;
         
             /* Wait for socket recv to complete if it's a blocking socket. */
-        if(xSocketCntx[Socket].socketRecvTO> 0){
+        if(xSocketCntx[Socket].socketRecvTO>= 0){
 
             (xSocketCntx[Socket].waitingTask)[RECV_SEM] = xTaskGetCurrentTaskHandle();
                 
-            xTaskNotifyWait( WDRV_MAC_EVENT_SOCKET_RECV, WDRV_MAC_EVENT_SOCKET_RECV, &evBits, xSocketCntx[Socket].socketRecvTO);
+            xTaskNotifyWait( WDRV_MAC_EVENT_SOCKET_RECV, WDRV_MAC_EVENT_SOCKET_RECV, &evBits, xSocketCntx[Socket].socketRecvTO+1);
 
             if( ( evBits & WDRV_MAC_EVENT_SOCKET_RECV ) == 0 )
             {

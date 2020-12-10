@@ -420,41 +420,17 @@ implementation onto your devices instead.
 		projects\microchip\same54_xpro\mplab\bootloader\firmware\bootloader.X.
 3. The above project should use the code signer certificate created earlier and the output available in
 		projects\microchip\same54_xpro\mplab\bootloader\firmware\bootloader.X\dist\same54_xpro\production\bootloader.X.production.hex
-	should be copied to
+	and this would copy the output to
 		vendors\microchip\boards\same54_xpro\bootloader\bootloader\utility folder.
 4. The above step will ensure the demo project would be built faster. Place the code signer certificate in PEM format under
-	demos\include\aws_ota_codesigner_certificate.h.
+	demos\include\aws_ota_codesigner_certificate.h (You can use the tools\certificate_configuration\PEMfileToCString.html).
 
 5.  Update the application version for the
     factory image.
 
-6.  Build the aws_demos project.
+6.  Build and flash the aws_demos project, this will create the factory image and flash the signed factory image to the board.
 
-4.  Run the factory_image_generator.py script to generate the factory
-    image.
-
-This command takes the following parameters:
-
--   mplab.production.bin: The application binary.
-
--   ecdsasigner.key: The code-signing private key.
-
--   bootloader.X.production.hex: The bootloader hex ﬁle.
-
-When you build the aws_demos project, the application binary image and
-bootloader hex ﬁle are built as part of the process. The project
-under the projects\microchip\same54_xpro_winc1500\mplab\aws_demos\firmware\aws_demos.X directory contains a
-dist/aws_demos/production/ directory that contains an uniﬁed hex ﬁle as well as aws_demos.X.production.X.
-You need to run the factory image generator python code from command prompt at
-vendors\microchip\boards\same54_xpro\bootloader\bootloader\utility\
-
->
-		python factory_image_generator.py -b <location>/projects/microchip/same54_xpro_winc1500/mplab/aws_demos/firmware/aws_demos.X/dist/aws_demos/production/aws_demos.X.production.bin -p MCHP-Curiosity-PIC32MZEF -k ecdsasigner.key -x <location>\vendors\microchip\boards\same54_xpro\bootloader\bootloader\utility\bootloader.X.production.hex
-
-8.  Use the MPLab IPE tool to program the generated hex ﬁle onto the
-    device.
-
-9.  You can check that your factory image works by watching the board\'s
+7.  You can check that your factory image works by watching the board\'s
     UART output as the image is uploaded. If everything is set up
     correctly, you should see the image boot successfully:
 

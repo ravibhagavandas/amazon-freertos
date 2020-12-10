@@ -35,13 +35,7 @@
           </logicalFolder>
           <itemPath>../src/config/pic32mzef_nvm/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/pic32mzef_nvm/definitions.h</itemPath>
-        </logicalFolder>
-      </logicalFolder>
-      <logicalFolder name="f2" displayName="packs" projectFiles="true">
-        <logicalFolder name="f1"
-                       displayName="PIC32MZ2048EFM144_DFP"
-                       projectFiles="true">
-          <itemPath>../src/packs/PIC32MZ2048EFM144_DFP/device.h</itemPath>
+          <itemPath>../src/config/pic32mzef_nvm/device.h</itemPath>
         </logicalFolder>
       </logicalFolder>
     </logicalFolder>
@@ -194,7 +188,44 @@
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
                    projectFiles="false">
+      <logicalFolder name="f1" displayName="aws_demos.mhc" projectFiles="true">
+        <itemPath>..\..\..\aws_demos\firmware\src\config\aws_demos\aws_demos.mhc\AmazonFreeRTOS.yml</itemPath>
+        <itemPath>..\..\..\aws_demos\firmware\src\config\aws_demos\aws_demos.mhc\AmazonHWInterface.yml</itemPath>
+        <itemPath>..\..\..\aws_demos\firmware\src\config\aws_demos\aws_demos.mhc\BSP_PIC32MZ_EF_Curiosity_2.0.yml</itemPath>
+        <itemPath>..\..\..\aws_demos\firmware\src\config\aws_demos\aws_demos.mhc\core.yml</itemPath>
+        <itemPath>..\..\..\aws_demos\firmware\src\config\aws_demos\aws_demos.mhc\core_timer.yml</itemPath>
+        <itemPath>..\..\..\aws_demos\firmware\src\config\aws_demos\aws_demos.mhc\dfp.yml</itemPath>
+        <itemPath>..\..\..\aws_demos\firmware\src\config\aws_demos\aws_demos.mhc\drvExtPhyLan8740.yml</itemPath>
+        <itemPath>..\..\..\aws_demos\firmware\src\config\aws_demos\aws_demos.mhc\drvMiim.yml</itemPath>
+        <itemPath>..\..\..\aws_demos\firmware\src\config\aws_demos\aws_demos.mhc\drvPic32mEthmac.yml</itemPath>
+        <itemPath>..\..\..\aws_demos\firmware\src\config\aws_demos\aws_demos.mhc\GraphSettings.yml</itemPath>
+        <itemPath>..\..\..\aws_demos\firmware\src\config\aws_demos\aws_demos.mhc\HarmonyCore.yml</itemPath>
+        <itemPath>..\..\..\aws_demos\firmware\src\config\aws_demos\aws_demos.mhc\nvm.yml</itemPath>
+        <itemPath>..\..\..\aws_demos\firmware\src\config\aws_demos\aws_demos.mhc\project.yml</itemPath>
+        <itemPath>..\..\..\aws_demos\firmware\src\config\aws_demos\aws_demos.mhc\rng.yml</itemPath>
+        <itemPath>..\..\..\aws_demos\firmware\src\config\aws_demos\aws_demos.mhc\settings.yml</itemPath>
+        <itemPath>..\..\..\aws_demos\firmware\src\config\aws_demos\aws_demos.mhc\stdio.yml</itemPath>
+        <itemPath>..\..\..\aws_demos\firmware\src\config\aws_demos\aws_demos.mhc\sys_command.yml</itemPath>
+        <itemPath>..\..\..\aws_demos\firmware\src\config\aws_demos\aws_demos.mhc\sys_console.yml</itemPath>
+        <itemPath>..\..\..\aws_demos\firmware\src\config\aws_demos\aws_demos.mhc\sys_debug.yml</itemPath>
+        <itemPath>..\..\..\aws_demos\firmware\src\config\aws_demos\aws_demos.mhc\sys_time.yml</itemPath>
+        <itemPath>..\..\..\aws_demos\firmware\src\config\aws_demos\aws_demos.mhc\uart1.yml</itemPath>
+        <itemPath>..\..\..\aws_demos\firmware\src\config\aws_demos\aws_demos.mhc\uart4.yml</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f2" displayName="pic32mzef_nvm.mhc" projectFiles="true">
+        <itemPath>..\src\config\pic32mzef_nvm\pic32mzef_nvm.mhc\BSP_PIC32MZ_EF_Curiosity_2.0.yml</itemPath>
+        <itemPath>..\src\config\pic32mzef_nvm\pic32mzef_nvm.mhc\core.yml</itemPath>
+        <itemPath>..\src\config\pic32mzef_nvm\pic32mzef_nvm.mhc\dfp.yml</itemPath>
+        <itemPath>..\src\config\pic32mzef_nvm\pic32mzef_nvm.mhc\GraphSettings.yml</itemPath>
+        <itemPath>..\src\config\pic32mzef_nvm\pic32mzef_nvm.mhc\HarmonyCore.yml</itemPath>
+        <itemPath>..\src\config\pic32mzef_nvm\pic32mzef_nvm.mhc\nvm.yml</itemPath>
+        <itemPath>..\src\config\pic32mzef_nvm\pic32mzef_nvm.mhc\project.yml</itemPath>
+        <itemPath>..\src\config\pic32mzef_nvm\pic32mzef_nvm.mhc\settings.yml</itemPath>
+        <itemPath>..\src\config\pic32mzef_nvm\pic32mzef_nvm.mhc\stdio.yml</itemPath>
+        <itemPath>..\src\config\pic32mzef_nvm\pic32mzef_nvm.mhc\uart1.yml</itemPath>
+      </logicalFolder>
       <itemPath>Makefile</itemPath>
+      <itemPath>..\src\config\pic32mzef_nvm\harmony-manifest-success.yml</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
@@ -212,12 +243,14 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>noID</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.41</languageToolchainVersion>
+        <languageToolchainVersion>2.50</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
         <pack name="PIC32MZ-EF_DFP" vendor="Microchip" version="1.1.45"/>
       </packs>
+      <ScriptingSettings>
+      </ScriptingSettings>
       <compileType>
         <linkerTool>
           <linkerLibItems>
@@ -235,6 +268,7 @@
       </compileType>
       <makeCustomizationType>
         <makeCustomizationPreStepEnabled>false</makeCustomizationPreStepEnabled>
+        <makeUseCleanTarget>false</makeUseCleanTarget>
         <makeCustomizationPreStep></makeCustomizationPreStep>
         <makeCustomizationPostStepEnabled>false</makeCustomizationPostStepEnabled>
         <makeCustomizationPostStep></makeCustomizationPostStep>
@@ -251,7 +285,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../../../../../../../vendors/microchip/boards/curiosity2_pic32mzef/bootloader/bootloader/include;../../../../../../../vendors/microchip/boards/curiosity2_pic32mzef/bootloader/config_files;../../../../../../../libraries/3rdparty/tinycrypt/lib/include;../../../../../../../libraries/3rdparty/tinycrypt/asn1;../../../../../../../vendors/microchip/boards/curiosity2_pic32mzef/bootloader/bootloader/flash;../../../../../../../vendors/microchip/boards/curiosity2_pic32mzef/bootloader/common/include;../src;../src/config/pic32mzef_nvm;../src/packs/PIC32MZ2048EFM144_DFP;../src/mips"/>
+                  value="../src;../src/config/pic32mzef_nvm;../src/packs/PIC32MZ2048EFM144_DFP;../../../../../../../vendors/microchip/boards/curiosity2_pic32mzef/bootloader/bootloader/include;../../../../../../../vendors/microchip/boards/curiosity2_pic32mzef/bootloader/config_files;../../../../../../../libraries/3rdparty/tinycrypt/lib/include;../../../../../../../libraries/3rdparty/tinycrypt/asn1;../../../../../../../vendors/microchip/boards/curiosity2_pic32mzef/bootloader/bootloader/flash;../../../../../../../vendors/microchip/boards/curiosity2_pic32mzef/bootloader/common/include"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -347,7 +381,8 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exceptions" value="true"/>
         <property key="exclude-floating-point" value="false"/>
-        <property key="extra-include-directories" value=""/>
+        <property key="extra-include-directories"
+                  value="../src;../src/config/pic32mzef_nvm;../src/packs/PIC32MZ2048EFM144_DFP;"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>

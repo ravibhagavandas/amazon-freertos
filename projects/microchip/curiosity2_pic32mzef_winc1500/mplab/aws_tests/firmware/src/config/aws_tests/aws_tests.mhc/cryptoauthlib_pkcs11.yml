@@ -11,5 +11,12 @@ children:
       children:
       - type: User
         attributes: {value: 'true'}
+  - type: Integer
+    attributes: {id: CAL_PKCS11_MAX_SESSIONS}
+    children:
+    - type: Values
+      children:
+      - type: User
+        attributes: {value: '12'}
 - type: ElementPosition
-  attributes: {x: '1070', y: '100', id: cryptoauthlib_pkcs11}
+  attributes: {x: '1031', y: '88', id: cryptoauthlib_pkcs11}

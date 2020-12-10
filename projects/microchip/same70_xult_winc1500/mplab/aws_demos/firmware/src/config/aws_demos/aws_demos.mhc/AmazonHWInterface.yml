@@ -32,15 +32,6 @@ children:
         children:
         - {type: Value, value: 'false'}
   - type: Setting
-    attributes: {id: AFR2_XC32_AS_PRE_PROC_DIRS1}
-    children:
-    - type: Attributes
-      children:
-      - type: Boolean
-        attributes: {id: enabled}
-        children:
-        - {type: Value, value: 'false'}
-  - type: Setting
     attributes: {id: AFR2_XC32_AS_PRE_PROC_DIRS2}
     children:
     - type: Attributes

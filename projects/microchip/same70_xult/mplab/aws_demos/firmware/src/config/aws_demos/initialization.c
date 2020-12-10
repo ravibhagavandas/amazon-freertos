@@ -170,6 +170,26 @@ const SYS_CONSOLE_INIT sysConsole0Init =
 // *****************************************************************************
 // *****************************************************************************
 
+/*******************************************************************************
+  Function:
+    void STDIO_BufferModeSet ( void )
+
+  Summary:
+    Sets the buffering mode for stdin and stdout
+
+  Remarks:
+ ********************************************************************************/
+static void STDIO_BufferModeSet(void)
+{
+
+    /* Make stdin unbuffered */
+    setbuf(stdin, NULL);
+
+    /* Make stdout unbuffered */
+    setbuf(stdout, NULL);
+}
+
+
 
 
 /*******************************************************************************
@@ -185,7 +205,11 @@ const SYS_CONSOLE_INIT sysConsole0Init =
 void SYS_Initialize ( void* data )
 {
 
+
     EFC_Initialize();
+    STDIO_BufferModeSet();
+
+
   
     CLOCK_Initialize();
 	PIO_Initialize();
@@ -204,7 +228,7 @@ void SYS_Initialize ( void* data )
     
 	UART4_Initialize();
 
-	USART1_Initialize();
+    USART1_Initialize();
 
 
 

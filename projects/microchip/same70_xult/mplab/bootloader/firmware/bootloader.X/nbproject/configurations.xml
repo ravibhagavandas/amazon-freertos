@@ -182,6 +182,36 @@
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
                    projectFiles="false">
+      <logicalFolder name="f1" displayName="aws_tests.mhc" projectFiles="true">
+        <itemPath>..\..\..\..\..\same54_xpro_winc3400\mplab\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\AmazonDeviceTester.yml</itemPath>
+        <itemPath>..\..\..\..\..\same54_xpro_winc3400\mplab\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\AmazonHWInterface.yml</itemPath>
+        <itemPath>..\..\..\..\..\same54_xpro_winc3400\mplab\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\atecc608.yml</itemPath>
+        <itemPath>..\..\..\..\..\same54_xpro_winc3400\mplab\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\cmsis.yml</itemPath>
+        <itemPath>..\..\..\..\..\same54_xpro_winc3400\mplab\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\core.yml</itemPath>
+        <itemPath>..\..\..\..\..\same54_xpro_winc3400\mplab\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\cryptoauthlib.yml</itemPath>
+        <itemPath>..\..\..\..\..\same54_xpro_winc3400\mplab\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\cryptoauthlib_pkcs11.yml</itemPath>
+        <itemPath>..\..\..\..\..\same54_xpro_winc3400\mplab\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\dfp.yml</itemPath>
+        <itemPath>..\..\..\..\..\same54_xpro_winc3400\mplab\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\drvWifiWinc.yml</itemPath>
+        <itemPath>..\..\..\..\..\same54_xpro_winc3400\mplab\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\drv_spi.yml</itemPath>
+        <itemPath>..\..\..\..\..\same54_xpro_winc3400\mplab\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\eic.yml</itemPath>
+        <itemPath>..\..\..\..\..\same54_xpro_winc3400\mplab\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\evsys.yml</itemPath>
+        <itemPath>..\..\..\..\..\same54_xpro_winc3400\mplab\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\GraphSettings.yml</itemPath>
+        <itemPath>..\..\..\..\..\same54_xpro_winc3400\mplab\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\HarmonyCore.yml</itemPath>
+        <itemPath>..\..\..\..\..\same54_xpro_winc3400\mplab\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\nvmctrl.yml</itemPath>
+        <itemPath>..\..\..\..\..\same54_xpro_winc3400\mplab\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\project.yml</itemPath>
+        <itemPath>..\..\..\..\..\same54_xpro_winc3400\mplab\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\sercom2.yml</itemPath>
+        <itemPath>..\..\..\..\..\same54_xpro_winc3400\mplab\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\sercom4.yml</itemPath>
+        <itemPath>..\..\..\..\..\same54_xpro_winc3400\mplab\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\sercom6.yml</itemPath>
+        <itemPath>..\..\..\..\..\same54_xpro_winc3400\mplab\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\sercom7.yml</itemPath>
+        <itemPath>..\..\..\..\..\same54_xpro_winc3400\mplab\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\settings.yml</itemPath>
+        <itemPath>..\..\..\..\..\same54_xpro_winc3400\mplab\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\stdio.yml</itemPath>
+        <itemPath>..\..\..\..\..\same54_xpro_winc3400\mplab\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\sys_command.yml</itemPath>
+        <itemPath>..\..\..\..\..\same54_xpro_winc3400\mplab\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\sys_console.yml</itemPath>
+        <itemPath>..\..\..\..\..\same54_xpro_winc3400\mplab\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\sys_debug.yml</itemPath>
+        <itemPath>..\..\..\..\..\same54_xpro_winc3400\mplab\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\sys_time.yml</itemPath>
+        <itemPath>..\..\..\..\..\same54_xpro_winc3400\mplab\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\tc3.yml</itemPath>
+        <itemPath>..\..\..\..\..\same54_xpro_winc3400\mplab\aws_tests\firmware\src\config\aws_tests\aws_tests.mhc\trng.yml</itemPath>
+      </logicalFolder>
       <itemPath>Makefile</itemPath>
     </logicalFolder>
   </logicalFolder>
@@ -206,6 +236,8 @@
         <pack name="SAME70_DFP" vendor="Microchip" version="4.1.50"/>
         <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
       </packs>
+      <ScriptingSettings>
+      </ScriptingSettings>
       <compileType>
         <linkerTool>
           <linkerLibItems>
@@ -223,6 +255,7 @@
       </compileType>
       <makeCustomizationType>
         <makeCustomizationPreStepEnabled>false</makeCustomizationPreStepEnabled>
+        <makeUseCleanTarget>false</makeUseCleanTarget>
         <makeCustomizationPreStep></makeCustomizationPreStep>
         <makeCustomizationPostStepEnabled>false</makeCustomizationPostStepEnabled>
         <makeCustomizationPostStep></makeCustomizationPostStep>
