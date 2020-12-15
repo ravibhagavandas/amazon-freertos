@@ -19,7 +19,7 @@ files:
   physicalPath: library\cryptoauthlib\hal
   security: NON_SECURE
   type: SOURCE
-  userChecksum: B6EFCE24943648B52BD390544B73A8EF
+  userChecksum: E42E836B09AAEB86AEC0B6B74F69E778
 - generatedChecksum: 7D9AA9EB4682A95C090B6D701D845A58
   logicalPath: \amazon-freertos\libraries\3rdparty\http_parser
   name: AUTHORS
@@ -41,13 +41,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: 4F48FBDFDBFB41CD9D96FF9B1CBED62C
-- generatedChecksum: E35975213092B74A224ED44C83C27C44
+- generatedChecksum: 083F09B6E0CC858A880FFB494D281303
   logicalPath: amazon-freertos\vendors\microchip\boards\curiosity2_pic32mzef\aws_demos\config_files
   name: FreeRTOSConfig.h
   physicalPath: ..\..\..\..\..\..\..\..\..\..\amazon-freertos\vendors\microchip\boards\curiosity2_pic32mzef\aws_demos\config_files
   security: NON_SECURE
   type: SOURCE
-  userChecksum: E35975213092B74A224ED44C83C27C44
+  userChecksum: E4C706748FE9C059870D239FA8CE3937
 - generatedChecksum: 0FAED8C177A8B85EB18F7E9841C9A759
   logicalPath: amazon-freertos\vendors\microchip\boards\curiosity2_pic32mzef\aws_demos\config_files
   name: FreeRTOSIPConfig.h
@@ -761,7 +761,7 @@ files:
   physicalPath: ..\..\..\..\..\..\..\..\..\..\amazon-freertos\demos\include
   security: NON_SECURE
   type: SOURCE
-  userChecksum: D60F91BDEF95A87037F97F75C8165F5F
+  userChecksum: 9F1907786F1C63279CDA89B361FF671F
 - generatedChecksum: null
   logicalPath: \amazon-freertos\demos\include
   name: aws_clientcredential_keys.h
@@ -4577,13 +4577,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 3A3D90BBDFDB486B57C8FED3BA7D4135
-- generatedChecksum: 9875068A4EEB19CEC05E98831BCA8124
+- generatedChecksum: C109E41FC64BEF1B7F6FC2536517CA7E
   logicalPath: config\aws_demos
   name: configuration.h
   physicalPath: ''
   security: NON_SECURE
   type: HEADER
-  userChecksum: 9875068A4EEB19CEC05E98831BCA8124
+  userChecksum: C109E41FC64BEF1B7F6FC2536517CA7E
 - generatedChecksum: 97912588957D8061F4C2E4E3655F006A
   logicalPath: config\aws_demos\library\cryptoauthlib\pkcs11
   name: cryptoki.h
@@ -5298,6 +5298,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 864E55BD2393FAB02C5879ED5EFC940F
+- generatedChecksum: 9175BBED360A1F5665567266A2A2A4FA
+  logicalPath: config\aws_demos
+  name: p32MZ2048EFM144.ld
+  physicalPath: ''
+  security: NON_SECURE
+  type: LINKER
+  userChecksum: 9175BBED360A1F5665567266A2A2A4FA
 format_version: v1.0
 libraries: []
 settings:

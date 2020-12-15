@@ -754,7 +754,7 @@ files:
   physicalPath: ..\..\..\..\..\..\..\..\..\..\amazon-freertos\demos\include
   security: NON_SECURE
   type: SOURCE
-  userChecksum: D60F91BDEF95A87037F97F75C8165F5F
+  userChecksum: 21BF058546AD35F6DEA2FE97E4AF1292
 - generatedChecksum: null
   logicalPath: \amazon-freertos\demos\include
   name: aws_clientcredential_keys.h
@@ -3681,13 +3681,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: 71B585F65BF98EAC0A5FBA71201D8F21
-- generatedChecksum: 8AA3681EED55E354B4F2764AAECA5347
+- generatedChecksum: 4A9DE440ADBA9BD216642E4A51A8A297
   logicalPath: config\aws_demos\peripheral\nvmctrl
   name: plib_nvmctrl.c
   physicalPath: peripheral\nvmctrl
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 4DC2BD99F66A81DA81C2BF79A5176250
+  userChecksum: 4A9DE440ADBA9BD216642E4A51A8A297
 - generatedChecksum: 6FD6A2A509A3C9F204DD4E4118F31A3D
   logicalPath: config\aws_demos\peripheral\port
   name: plib_port.c
@@ -4072,7 +4072,7 @@ files:
   physicalPath: ''
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 7D46A544392EF57899891EBDE146A5C6
+  userChecksum: AB5A1A2022D976435D43BD1EE18D6EFB
 - generatedChecksum: B03404347A1CF2EEB581ADD1714FCA26
   logicalPath: \amazon-freertos\freertos_kernel\include
   name: stdint.readme
@@ -4185,7 +4185,7 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: 4818C5DDE6F2E52BB97A69179AD4721F
-- generatedChecksum: 8CE5B11D29801EEB11D937C77C782FF7
+- generatedChecksum: 4F2DDCB34AA066572BEB9E8A3E91FCA3
   logicalPath: config\aws_demos
   name: tasks.c
   physicalPath: ''
@@ -4696,13 +4696,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 52F91AC0727F2311EDA0E3BAA7719A9F
-- generatedChecksum: AA6DC07DDAB9D2B0819353E905FD557A
+- generatedChecksum: 69ECF4ABED2ADDE01594E0DE3419457F
   logicalPath: config\aws_demos
   name: configuration.h
   physicalPath: ''
   security: NON_SECURE
   type: HEADER
-  userChecksum: AA6DC07DDAB9D2B0819353E905FD557A
+  userChecksum: 69ECF4ABED2ADDE01594E0DE3419457F
 - generatedChecksum: 624A16D50759D7A491C523D747764B49
   logicalPath: packs\CMSIS\CMSIS\Core\Include
   name: core_cm4.h
@@ -5825,6 +5825,12 @@ settings:
   key: no-device-startup-code
   security: NON_SECURE
   value: 'true'
+- append: false
+  category: C32-LD
+  delimiter: ''
+  key: oXC32ld-extra-opts
+  security: NON_SECURE
+  value: -mno-newlib-nano
 - append: true
   category: C32-LD
   delimiter: ;=

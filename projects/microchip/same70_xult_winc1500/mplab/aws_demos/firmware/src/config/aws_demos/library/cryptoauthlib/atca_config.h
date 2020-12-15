@@ -11,7 +11,6 @@
 #endif
 
 /** Include Device Support Options */
-#define ATCA_ATECC608A_SUPPORT
 #define ATCA_ATECC608_SUPPORT
 
 

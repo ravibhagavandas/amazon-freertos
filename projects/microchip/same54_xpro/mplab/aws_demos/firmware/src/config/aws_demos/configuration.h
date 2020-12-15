@@ -79,7 +79,7 @@ extern "C" {
 // Section: System Service Configuration
 // *****************************************************************************
 // *****************************************************************************
-
+ 
 #define SYS_CMD_ENABLE
 #define SYS_CMD_DEVICE_MAX_INSTANCES       SYS_CONSOLE_DEVICE_MAX_INSTANCES
 #define SYS_CMD_PRINT_BUFFER_SIZE          1024
@@ -193,6 +193,9 @@ extern "C" {
 #define DRV_GMAC_INTERRUPT_MODE        				true
 #define DRV_GMAC_RMII_MODE					0
 
+
+
+#define TCPIP_IF_GMAC
 
 
 #define TCPIP_INTMAC_PHY_CONFIG_FLAGS              	( 0 \

@@ -57,4 +57,4 @@ children:
         children:
         - {type: Value, value: ATECC608_DEP_PLIB_I2C}
 - type: ElementPosition
-  attributes: {x: '810', y: '80', id: twihs0}
+  attributes: {x: '810', y: '78', id: twihs0}

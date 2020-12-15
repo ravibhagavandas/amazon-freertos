@@ -1234,6 +1234,13 @@ children:
         attributes: {id: enabled}
         children:
         - {type: Value, value: 'false'}
+  - type: String
+    attributes: {id: AWS_CLOUD_MAC}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: AmazonHWInterface, value: ETHMAC}
   - type: File
     attributes: {id: AWS_SYS_DEF_HEADER}
     children:

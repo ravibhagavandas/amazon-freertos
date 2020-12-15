@@ -55,4 +55,4 @@ children:
         children:
         - {type: Value, value: ATECC608_DEP_PLIB_I2C}
 - type: ElementPosition
-  attributes: {x: '881', y: '56', id: i2c1}
+  attributes: {x: '883', y: '58', id: i2c1}

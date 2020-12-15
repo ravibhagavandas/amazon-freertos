@@ -34,7 +34,6 @@
                     <itemPath>../src/config/aws_demos/driver/winc/include/drv/driver/nmasic.h</itemPath>
                     <itemPath>../src/config/aws_demos/driver/winc/include/drv/driver/nmbus.h</itemPath>
                     <itemPath>../src/config/aws_demos/driver/winc/include/drv/driver/nmdrv.h</itemPath>
-                    <itemPath>../src/config/aws_demos/driver/winc/include/drv/driver/nmflash.h</itemPath>
                     <itemPath>../src/config/aws_demos/driver/winc/include/drv/driver/nmspi.h</itemPath>
                     <itemPath>../src/config/aws_demos/driver/winc/include/drv/driver/m2m_ota.h</itemPath>
                     <itemPath>../src/config/aws_demos/driver/winc/include/drv/driver/m2m_ssl.h</itemPath>
@@ -103,6 +102,11 @@
               <itemPath>../src/config/aws_demos/library/cryptoauthlib/atca_config.h</itemPath>
             </logicalFolder>
           </logicalFolder>
+          <logicalFolder name="f5" displayName="osal" projectFiles="true">
+            <itemPath>../src/config/aws_demos/osal/osal.h</itemPath>
+            <itemPath>../src/config/aws_demos/osal/osal_definitions.h</itemPath>
+            <itemPath>../src/config/aws_demos/osal/osal_freertos.h</itemPath>
+          </logicalFolder>
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f7" displayName="clock" projectFiles="true">
               <itemPath>../src/config/aws_demos/peripheral/clock/plib_clock.h</itemPath>
@@ -130,9 +134,9 @@
                 <itemPath>../src/config/aws_demos/peripheral/sercom/i2c_master/plib_sercom_i2c_master_common.h</itemPath>
                 <itemPath>../src/config/aws_demos/peripheral/sercom/i2c_master/plib_sercom7_i2c_master.h</itemPath>
               </logicalFolder>
-              <logicalFolder name="f3" displayName="spim" projectFiles="true">
-                <itemPath>../src/config/aws_demos/peripheral/sercom/spim/plib_sercom4_spi.h</itemPath>
-                <itemPath>../src/config/aws_demos/peripheral/sercom/spim/plib_sercom_spi_common.h</itemPath>
+              <logicalFolder name="f3" displayName="spi_master" projectFiles="true">
+                <itemPath>../src/config/aws_demos/peripheral/sercom/spi_master/plib_sercom4_spi_master.h</itemPath>
+                <itemPath>../src/config/aws_demos/peripheral/sercom/spi_master/plib_sercom_spi_master_common.h</itemPath>
               </logicalFolder>
               <logicalFolder name="f1" displayName="usart" projectFiles="true">
                 <itemPath>../src/config/aws_demos/peripheral/sercom/usart/plib_sercom2_usart.h</itemPath>
@@ -147,8 +151,14 @@
             <logicalFolder name="f3" displayName="trng" projectFiles="true">
               <itemPath>../src/config/aws_demos/peripheral/trng/plib_trng.h</itemPath>
             </logicalFolder>
+            <logicalFolder name="f11" displayName="wdt" projectFiles="true">
+              <itemPath>../src/config/aws_demos/peripheral/wdt/plib_wdt.h</itemPath>
+            </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f2" displayName="system" projectFiles="true">
+            <logicalFolder name="f8" displayName="cache" projectFiles="true">
+              <itemPath>../src/config/aws_demos/system/cache/sys_cache.h</itemPath>
+            </logicalFolder>
             <logicalFolder name="f6" displayName="command" projectFiles="true">
               <itemPath>../src/config/aws_demos/system/command/sys_command.h</itemPath>
             </logicalFolder>
@@ -184,12 +194,8 @@
           <itemPath>../src/config/aws_demos/device_cache.h</itemPath>
           <itemPath>../src/config/aws_demos/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/aws_demos/definitions.h</itemPath>
+          <itemPath>../src/config/aws_demos/device.h</itemPath>
         </logicalFolder>
-      </logicalFolder>
-      <logicalFolder name="f3" displayName="osal" projectFiles="true">
-        <itemPath>../src/config/aws_demos/osal/osal.h</itemPath>
-        <itemPath>../src/config/aws_demos/osal/osal_definitions.h</itemPath>
-        <itemPath>../src/config/aws_demos/osal/osal_freertos.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="packs" projectFiles="true">
         <logicalFolder name="f1" displayName="ATSAME54P20A_DFP" projectFiles="true">
@@ -237,8 +243,6 @@
           <logicalFolder name="f2" displayName="pio" projectFiles="true">
             <itemPath>../src/packs/ATSAME54P20A_DFP/pio/same54p20a.h</itemPath>
           </logicalFolder>
-          <itemPath>../src/packs/ATSAME54P20A_DFP/device.h</itemPath>
-          <itemPath>../src/packs/ATSAME54P20A_DFP/atsame54p20a_compat.h</itemPath>
           <itemPath>../src/packs/ATSAME54P20A_DFP/atsame54p20a.h</itemPath>
         </logicalFolder>
         <logicalFolder name="f2" displayName="CMSIS" projectFiles="true">
@@ -254,6 +258,7 @@
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang_ltm.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/core_cm4.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/mpu_armv7.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cachel1_armv7.h</itemPath>
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
@@ -264,6 +269,11 @@
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
                    projectFiles="true">
+      <logicalFolder name="f1" displayName="config" projectFiles="true">
+        <logicalFolder name="f1" displayName="aws_demos" projectFiles="true">
+          <itemPath>../src/config/aws_demos/ATSAME54P20A.ld</itemPath>
+        </logicalFolder>
+      </logicalFolder>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
@@ -1032,7 +1042,6 @@
                   <itemPath>../src/config/aws_demos/driver/winc/drv/driver/nmasic.c</itemPath>
                   <itemPath>../src/config/aws_demos/driver/winc/drv/driver/nmbus.c</itemPath>
                   <itemPath>../src/config/aws_demos/driver/winc/drv/driver/nmdrv.c</itemPath>
-                  <itemPath>../src/config/aws_demos/driver/winc/drv/driver/nmflash.c</itemPath>
                   <itemPath>../src/config/aws_demos/driver/winc/drv/driver/nmspi.c</itemPath>
                   <itemPath>../src/config/aws_demos/driver/winc/drv/driver/m2m_ota.c</itemPath>
                   <itemPath>../src/config/aws_demos/driver/winc/drv/driver/m2m_ssl.c</itemPath>
@@ -1143,6 +1152,8 @@
                 <itemPath>../src/config/aws_demos/library/cryptoauthlib/crypto/atca_crypto_sw_sha1.h</itemPath>
                 <itemPath>../src/config/aws_demos/library/cryptoauthlib/crypto/atca_crypto_sw_sha2.c</itemPath>
                 <itemPath>../src/config/aws_demos/library/cryptoauthlib/crypto/atca_crypto_sw_sha2.h</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/crypto/atca_crypto_hw_aes_cbcmac.c</itemPath>
+                <itemPath>../src/config/aws_demos/library/cryptoauthlib/crypto/atca_crypto_hw_aes_ccm.c</itemPath>
               </logicalFolder>
               <logicalFolder name="f1" displayName="hal" projectFiles="true">
                 <itemPath>../src/config/aws_demos/library/cryptoauthlib/hal/ATECC608_0.c</itemPath>
@@ -1203,7 +1214,11 @@
               <itemPath>../src/config/aws_demos/library/cryptoauthlib/atca_status.h</itemPath>
               <itemPath>../src/config/aws_demos/library/cryptoauthlib/atca_version.h</itemPath>
               <itemPath>../src/config/aws_demos/library/cryptoauthlib/cryptoauthlib.h</itemPath>
+              <itemPath>../src/config/aws_demos/library/cryptoauthlib/atca_utils_sizes.c</itemPath>
             </logicalFolder>
+          </logicalFolder>
+          <logicalFolder name="f6" displayName="osal" projectFiles="true">
+            <itemPath>../src/config/aws_demos/osal/osal_freertos.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f7" displayName="clock" projectFiles="true">
@@ -1231,8 +1246,8 @@
               <logicalFolder name="f2" displayName="i2c_master" projectFiles="true">
                 <itemPath>../src/config/aws_demos/peripheral/sercom/i2c_master/plib_sercom7_i2c_master.c</itemPath>
               </logicalFolder>
-              <logicalFolder name="f3" displayName="spim" projectFiles="true">
-                <itemPath>../src/config/aws_demos/peripheral/sercom/spim/plib_sercom4_spi.c</itemPath>
+              <logicalFolder name="f3" displayName="spi_master" projectFiles="true">
+                <itemPath>../src/config/aws_demos/peripheral/sercom/spi_master/plib_sercom4_spi_master.c</itemPath>
               </logicalFolder>
               <logicalFolder name="f1" displayName="usart" projectFiles="true">
                 <itemPath>../src/config/aws_demos/peripheral/sercom/usart/plib_sercom2_usart.c</itemPath>
@@ -1245,11 +1260,17 @@
             <logicalFolder name="f3" displayName="trng" projectFiles="true">
               <itemPath>../src/config/aws_demos/peripheral/trng/plib_trng.c</itemPath>
             </logicalFolder>
+            <logicalFolder name="f11" displayName="wdt" projectFiles="true">
+              <itemPath>../src/config/aws_demos/peripheral/wdt/plib_wdt.c</itemPath>
+            </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f5" displayName="stdio" projectFiles="true">
             <itemPath>../src/config/aws_demos/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f2" displayName="system" projectFiles="true">
+            <logicalFolder name="f7" displayName="cache" projectFiles="true">
+              <itemPath>../src/config/aws_demos/system/cache/sys_cache.c</itemPath>
+            </logicalFolder>
             <logicalFolder name="f5" displayName="command" projectFiles="true">
               <itemPath>../src/config/aws_demos/system/command/src/sys_command.c</itemPath>
             </logicalFolder>
@@ -1282,18 +1303,44 @@
           <itemPath>../src/config/aws_demos/libc_syscalls.c</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder name="f3" displayName="osal" projectFiles="true">
-        <itemPath>../src/config/aws_demos/osal/osal_freertos.c</itemPath>
-      </logicalFolder>
       <itemPath>../src/app.c</itemPath>
       <itemPath>../src/main.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
                    projectFiles="false">
+      <logicalFolder name="f1" displayName="aws_demos.mhc" projectFiles="true">
+        <itemPath>../src/config/aws_demos/aws_demos.mhc/AmazonFreeRTOS.yml</itemPath>
+        <itemPath>../src/config/aws_demos/aws_demos.mhc/AmazonHWInterface.yml</itemPath>
+        <itemPath>../src/config/aws_demos/aws_demos.mhc/atecc608.yml</itemPath>
+        <itemPath>../src/config/aws_demos/aws_demos.mhc/cmsis.yml</itemPath>
+        <itemPath>../src/config/aws_demos/aws_demos.mhc/core.yml</itemPath>
+        <itemPath>../src/config/aws_demos/aws_demos.mhc/cryptoauthlib.yml</itemPath>
+        <itemPath>../src/config/aws_demos/aws_demos.mhc/cryptoauthlib_pkcs11.yml</itemPath>
+        <itemPath>../src/config/aws_demos/aws_demos.mhc/dfp.yml</itemPath>
+        <itemPath>../src/config/aws_demos/aws_demos.mhc/drvWifiWinc.yml</itemPath>
+        <itemPath>../src/config/aws_demos/aws_demos.mhc/drv_spi.yml</itemPath>
+        <itemPath>../src/config/aws_demos/aws_demos.mhc/eic.yml</itemPath>
+        <itemPath>../src/config/aws_demos/aws_demos.mhc/evsys.yml</itemPath>
+        <itemPath>../src/config/aws_demos/aws_demos.mhc/GraphSettings.yml</itemPath>
+        <itemPath>../src/config/aws_demos/aws_demos.mhc/HarmonyCore.yml</itemPath>
+        <itemPath>../src/config/aws_demos/aws_demos.mhc/nvmctrl.yml</itemPath>
+        <itemPath>../src/config/aws_demos/aws_demos.mhc/project.yml</itemPath>
+        <itemPath>../src/config/aws_demos/aws_demos.mhc/sercom2.yml</itemPath>
+        <itemPath>../src/config/aws_demos/aws_demos.mhc/sercom4.yml</itemPath>
+        <itemPath>../src/config/aws_demos/aws_demos.mhc/sercom6.yml</itemPath>
+        <itemPath>../src/config/aws_demos/aws_demos.mhc/sercom7.yml</itemPath>
+        <itemPath>../src/config/aws_demos/aws_demos.mhc/settings.yml</itemPath>
+        <itemPath>../src/config/aws_demos/aws_demos.mhc/stdio.yml</itemPath>
+        <itemPath>../src/config/aws_demos/aws_demos.mhc/sys_command.yml</itemPath>
+        <itemPath>../src/config/aws_demos/aws_demos.mhc/sys_console.yml</itemPath>
+        <itemPath>../src/config/aws_demos/aws_demos.mhc/sys_debug.yml</itemPath>
+        <itemPath>../src/config/aws_demos/aws_demos.mhc/sys_time.yml</itemPath>
+        <itemPath>../src/config/aws_demos/aws_demos.mhc/tc3.yml</itemPath>
+        <itemPath>../src/config/aws_demos/aws_demos.mhc/trng.yml</itemPath>
+      </logicalFolder>
       <itemPath>Makefile</itemPath>
-      <itemPath>../src/config/aws_demos/harmony.prj</itemPath>
-      <itemPath>../src/config/aws_demos/aws_demos.xml</itemPath>
+      <itemPath>../src/config/aws_demos/harmony-manifest-success.yml</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
@@ -1311,12 +1358,12 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>EdbgTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.41</languageToolchainVersion>
+        <languageToolchainVersion>2.50</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
         <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
-        <pack name="SAME54_DFP" vendor="Microchip" version="3.1.43"/>
+        <pack name="SAME54_DFP" vendor="Microchip" version="3.4.70"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>
@@ -1328,9 +1375,24 @@
         <archiverTool>
         </archiverTool>
         <loading>
-          <useAlternateLoadableFile>false</useAlternateLoadableFile>
+          <makeArtifact PL="../../../../../same54_xpro/mplab/bootloader/firmware/bootloader.X"
+                        CT="1"
+                        CN="same54_xpro"
+                        AC="true"
+                        BL="true"
+                        WD="../../../../../same54_xpro/mplab/bootloader/firmware/bootloader.X"
+                        BC="${MAKE}  -f Makefile CONF=same54_xpro"
+                        DBC="${MAKE}  -f Makefile CONF=same54_xpro TYPE_IMAGE=DEBUG_RUN"
+                        CC="rm -rf &quot;build/same54_xpro&quot; &quot;dist/same54_xpro&quot;"
+                        OP="dist/same54_xpro/production/bootloader.X.production.hex"
+                        DOP="dist/same54_xpro/debug/bootloader.X.debug.elf"
+                        FL="dist/same54_xpro/production/bootloader.X.production.hex"
+                        PD="dist/same54_xpro/production/bootloader.X.production.elf"
+                        DD="dist/same54_xpro/debug/bootloader.X.debug.elf">
+          </makeArtifact>
+          <useAlternateLoadableFile>true</useAlternateLoadableFile>
           <parseOnProdLoad>false</parseOnProdLoad>
-          <alternateLoadableFile></alternateLoadableFile>
+          <alternateLoadableFile>dist/aws_demos/production/aws_demos.X.production.factory.unified.hex</alternateLoadableFile>
         </loading>
         <subordinates>
         </subordinates>
@@ -1340,7 +1402,7 @@
         <makeUseCleanTarget>false</makeUseCleanTarget>
         <makeCustomizationPreStep></makeCustomizationPreStep>
         <makeCustomizationPostStepEnabled>true</makeCustomizationPostStepEnabled>
-        <makeCustomizationPostStep>${MP_CC_DIR}\xc32-objcopy -O ihex "${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.elf" "${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.hex" &amp;&amp; ${MP_CC_DIR}\xc32-objcopy -p -I ihex -O binary "${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.hex" "${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.bin"</makeCustomizationPostStep>
+        <makeCustomizationPostStep>${MP_CC_DIR}\xc32-objcopy -O ihex "${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.elf" "${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.hex" &amp;&amp; ${MP_CC_DIR}\xc32-objcopy -p -I ihex -O binary "${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.hex" "${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.bin" &amp;&amp; python ../../../../../../../vendors/microchip/boards/same54_xpro/bootloader/bootloader/utility/factory_image_generator.py -b "${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.bin" -p MCHP-Curiosity-PIC32MZEF -k ../../../../../../../vendors/microchip/boards/same54_xpro/bootloader/bootloader/utility/codesigner_cert_utility/ecdsasigner.key -x  ../../../../../../../vendors/microchip/boards/same54_xpro/bootloader/bootloader/utility/bootloader.X.production.hex</makeCustomizationPostStep>
         <makeCustomizationPutChecksumInUserID>false</makeCustomizationPutChecksumInUserID>
         <makeCustomizationEnableLongLines>false</makeCustomizationEnableLongLines>
         <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>
@@ -1378,7 +1440,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../../../../../../../demos/include;../../../../../../../freertos_kernel/include;../../../../../../../libraries/abstractions/platform/freertos/include;../../../../../../../libraries/abstractions/secure_sockets/include;../../../../../../../libraries/abstractions/pkcs11/include;../../../../../../../libraries/c_sdk/aws/defender/include;../../../../../../../libraries/c_sdk/aws/shadow/include;../../../../../../../libraries/c_sdk/standard/common/include;../../../../../../../libraries/c_sdk/standard/https/include;../../../../../../../libraries/c_sdk/standard/mqtt/include;../../../../../../../libraries/c_sdk/standard/serializer/include;../../../../../../../libraries/freertos_plus/aws/greengrass/include;../../../../../../../libraries/freertos_plus/aws/ota/include;../../../../../../../libraries/freertos_plus/standard/crypto/include;../../../../../../../libraries/freertos_plus/standard/utils/include;../../../../../../../libraries/freertos_plus/standard/tls/include;../../../../../../../libraries/freertos_plus/standard/pkcs11/include;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include;../../../../../../../libraries/abstractions/platform/include;../../../../../../../libraries/c_sdk/standard/common/include/private;../../../../../../../libraries/c_sdk/standard/common/include/types;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/portable/Compiler/GCC;../../../../../../../demos/network_manager;../../../../../../../demos/https;../../../../../../../demos/tcp;../../../../../../../libraries/3rdparty/jsmn;../../../../../../../libraries/3rdparty/mbedtls/include;../../../../../../../libraries/3rdparty/tinycbor;../../../../../../../libraries/3rdparty/pkcs11;../../../../../../../libraries/3rdparty/tinycrypt/asn1;../../../../../../../libraries/3rdparty/tinycrypt/lib/include;../../../../../../../demos/dev_mode_key_provisioning/include;../../../../../../../libraries/abstractions/pkcs11/mbedtls;../../../../../../../libraries/3rdparty/http_parser;../../../../../../../libraries/freertos_plus/aws/ota/src;../../../../../../../vendors/microchip/boards/same54_xpro/ports/pkcs11;../../../../../../../libraries/abstractions/wifi/include;../../../../../../../vendors/microchip/boards/same54/ports/wifi;../../../../../../../vendors/microchip/harmony3/afr;../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/config_files;../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/application_code;../../../../../../../vendors/microchip/boards/same54_xpro/ports/posix;../../../../../../../freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../../vendors/microchip/harmony3/afr/tcpip/src/common;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/portable/NetworkInterface/same54;../src/config/aws_demos/driver/winc/include/;../src/config/aws_demos/driver/winc/include/dev;../src/config/aws_demos/driver/winc/include/drv/bsp;../src/config/aws_demos/driver/winc/include/drv/bsp/include;../src/config/aws_demos/driver/winc/include/drv/common;../src/config/aws_demos/driver/winc/include/drv/driver;../src/config/aws_demos/driver/winc/include/drv/socket;../src/config/aws_demos/driver/winc/include/drv/spi_flash;../src;../src/config/aws_demos;../src/packs/ATSAME54P20A_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/config/aws_demos/library/cryptoauthlib;../src/config/aws_demos/library/cryptoauthlib/crypto;../src/config/aws_demos/library/cryptoauthlib/pkcs11"/>
+                  value="../src/config/aws_demos/library/cryptoauthlib;../src/config/aws_demos/library/cryptoauthlib/crypto;../src/config/aws_demos/library/cryptoauthlib/pkcs11;../src;../src/config/aws_demos;../src/packs/ATSAME54P20A_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/config/aws_demos/driver/winc/include/drv/spi_flash;../src/config/aws_demos/driver/winc/include/drv/socket;../src/config/aws_demos/driver/winc/include/drv/driver;../src/config/aws_demos/driver/winc/include/drv/common;../src/config/aws_demos/driver/winc/include/drv/bsp/include;../src/config/aws_demos/driver/winc/include/drv/bsp;../src/config/aws_demos/driver/winc/include/dev;../src/config/aws_demos/driver/winc/include/;../../../../../../../demos/include;../../../../../../../freertos_kernel/include;../../../../../../../libraries/abstractions/platform/freertos/include;../../../../../../../libraries/abstractions/secure_sockets/include;../../../../../../../libraries/abstractions/pkcs11/include;../../../../../../../libraries/c_sdk/aws/defender/include;../../../../../../../libraries/c_sdk/aws/shadow/include;../../../../../../../libraries/c_sdk/standard/common/include;../../../../../../../libraries/c_sdk/standard/https/include;../../../../../../../libraries/c_sdk/standard/mqtt/include;../../../../../../../libraries/c_sdk/standard/serializer/include;../../../../../../../libraries/freertos_plus/aws/greengrass/include;../../../../../../../libraries/freertos_plus/aws/ota/include;../../../../../../../libraries/freertos_plus/standard/crypto/include;../../../../../../../libraries/freertos_plus/standard/utils/include;../../../../../../../libraries/freertos_plus/standard/tls/include;../../../../../../../libraries/freertos_plus/standard/pkcs11/include;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/include;../../../../../../../libraries/abstractions/platform/include;../../../../../../../libraries/c_sdk/standard/common/include/private;../../../../../../../libraries/c_sdk/standard/common/include/types;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/portable/Compiler/GCC;../../../../../../../demos/network_manager;../../../../../../../demos/https;../../../../../../../demos/tcp;../../../../../../../libraries/3rdparty/jsmn;../../../../../../../libraries/3rdparty/mbedtls/include;../../../../../../../libraries/3rdparty/tinycbor;../../../../../../../libraries/3rdparty/pkcs11;../../../../../../../libraries/3rdparty/tinycrypt/asn1;../../../../../../../libraries/3rdparty/tinycrypt/lib/include;../../../../../../../demos/dev_mode_key_provisioning/include;../../../../../../../libraries/abstractions/pkcs11/mbedtls;../../../../../../../libraries/3rdparty/http_parser;../../../../../../../libraries/freertos_plus/aws/ota/src;../../../../../../../vendors/microchip/boards/same54_xpro/ports/pkcs11;../../../../../../../libraries/abstractions/wifi/include;../../../../../../../vendors/microchip/boards/same54_xpro/ports/wifi;../../../../../../../vendors/microchip/harmony3/afr;../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/config_files;../../../../../../../vendors/microchip/boards/same54_xpro/aws_demos/application_code;../../../../../../../vendors/microchip/boards/same54_xpro/ports/posix;../../../../../../../freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../../vendors/microchip/harmony3/afr/tcpip/src/common;../../../../../../../libraries/freertos_plus/standard/freertos_plus_tcp/source/portable/NetworkInterface/same54"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="false"/>
@@ -1387,7 +1449,7 @@
         <property key="place-data-into-section" value="false"/>
         <property key="post-instruction-scheduling" value="default"/>
         <property key="pre-instruction-scheduling" value="default"/>
-        <property key="preprocessor-macros" value=";PIC32_USE_ECC;__free_rtos__"/>
+        <property key="preprocessor-macros" value="PIC32_USE_ECC;__free_rtos__"/>
         <property key="strict-ansi" value="false"/>
         <property key="support-ansi" value="false"/>
         <property key="toplevel-reordering" value=""/>
@@ -1442,7 +1504,7 @@
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-cross-reference-file" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
-        <property key="heap-size" value="512"/>
+        <property key="heap-size" value="1024"/>
         <property key="input-libraries" value=""/>
         <property key="kseg-length" value=""/>
         <property key="kseg-origin" value=""/>
@@ -1450,9 +1512,10 @@
         <property key="map-file" value="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map"/>
         <property key="no-device-startup-code" value="true"/>
         <property key="no-startup-files" value="false"/>
-        <property key="oXC32ld-extra-opts" value=""/>
+        <property key="oXC32ld-extra-opts" value="-mno-newlib-nano"/>
         <property key="optimization-level" value=""/>
-        <property key="preprocessor-macros" value=""/>
+        <property key="preprocessor-macros"
+                  value="ROM_LENGTH=0xf0000;ROM_ORIGIN=0x10000"/>
         <property key="remove-unused-sections" value="true"/>
         <property key="report-memory-usage" value="false"/>
         <property key="serial-length" value=""/>
@@ -1461,7 +1524,6 @@
         <property key="symbol-stripping" value=""/>
         <property key="trace-symbols" value=""/>
         <property key="warn-section-align" value="false"/>
-        <appendMe value="-DRAM_ORIGIN=0x20000100, -DRAM_LENGTH=0x3fe00"/>
       </C32-LD>
       <C32CPP>
         <property key="additional-warnings" value="false"/>
@@ -1474,7 +1536,8 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exceptions" value="true"/>
         <property key="exclude-floating-point" value="false"/>
-        <property key="extra-include-directories" value=""/>
+        <property key="extra-include-directories"
+                  value="../src;../src/config/aws_demos;../src/packs/ATSAME54P20A_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -1506,6 +1569,8 @@
       </C32Global>
       <EdbgTool>
         <property key="AutoSelectMemRanges" value="auto"/>
+        <property key="arm.use_vtor" value="false"/>
+        <property key="arm.vtor_adr" value="exception_table"/>
         <property key="communication.activationmode" value="nohv"/>
         <property key="communication.interface" value="swd"/>
         <property key="communication.speed" value="2.000"/>
@@ -1515,6 +1580,8 @@
         <property key="firmware.toolpack"
                   value="Press to select which tool pack to use"/>
         <property key="firmware.update.action" value="firmware.update.use.latest"/>
+        <property key="freeze.timers" value="false"/>
+        <property key="lastid" value=""/>
         <property key="memories.aux" value="false"/>
         <property key="memories.bootflash" value="true"/>
         <property key="memories.configurationmemory" value="true"/>
@@ -1528,6 +1595,7 @@
                   value="${memories.instruction.ram.ranges}"/>
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="0-fffff"/>
+        <property key="memories.rww" value="true"/>
         <property key="poweroptions.powerenable" value="false"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
@@ -1539,6 +1607,10 @@
         <property key="programoptions.preserveprogramrange" value="false"/>
         <property key="programoptions.preserveuserid" value="false"/>
         <property key="programoptions.programuserotp" value="false"/>
+        <property key="restore.bootprot.nvmctrlregionlocks" value="true"/>
+        <property key="script.log_level" value="0"/>
+        <property key="script.reset_delay" value="0"/>
+        <property key="script.show_output" value="false"/>
         <property key="toolpack.updateoptions"
                   value="toolpack.updateoptions.uselatestoolpack"/>
         <property key="toolpack.updateoptions.packversion"

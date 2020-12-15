@@ -32,7 +32,7 @@ extern "C" {
 // Section: User Configuration macros
 // *****************************************************************************
 // *****************************************************************************
-
+#define TCPIP_IF_GMAC
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus

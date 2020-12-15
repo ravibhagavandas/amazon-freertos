@@ -19,7 +19,7 @@ files:
   physicalPath: library\cryptoauthlib\hal
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 79EAF3F845CC749FD5F585B6D1FCBCFC
+  userChecksum: A7567707A3E8B24EA78D43B3B0B3BD34
 - generatedChecksum: 7D9AA9EB4682A95C090B6D701D845A58
   logicalPath: \amazon-freertos\libraries\3rdparty\http_parser
   name: AUTHORS
@@ -761,7 +761,7 @@ files:
   physicalPath: ..\..\..\..\..\..\..\..\..\..\amazon-freertos\demos\include
   security: NON_SECURE
   type: SOURCE
-  userChecksum: D60F91BDEF95A87037F97F75C8165F5F
+  userChecksum: 21BF058546AD35F6DEA2FE97E4AF1292
 - generatedChecksum: null
   logicalPath: \amazon-freertos\demos\include
   name: aws_clientcredential_keys.h
@@ -4598,13 +4598,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: null
-- generatedChecksum: 09C01161DF8191E21B29776B9716EB04
+- generatedChecksum: B0F9BF3C0DFE1893C96966FD0E54A865
   logicalPath: config\aws_demos\library\cryptoauthlib
   name: atca_config.h
   physicalPath: library\cryptoauthlib
   security: NON_SECURE
   type: HEADER
-  userChecksum: 09C01161DF8191E21B29776B9716EB04
+  userChecksum: B0F9BF3C0DFE1893C96966FD0E54A865
 - generatedChecksum: EFEDD586248DACAD8B9A0236F399147F
   logicalPath: packs\ATSAME70Q21B_DFP
   name: atsame70q21b.h
@@ -4675,13 +4675,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 52F91AC0727F2311EDA0E3BAA7719A9F
-- generatedChecksum: D08176BA755F410539EB7C5F75B0B204
+- generatedChecksum: F0BCF2EAE8F0EB0E646BB022BF094DC1
   logicalPath: config\aws_demos
   name: configuration.h
   physicalPath: ''
   security: NON_SECURE
   type: HEADER
-  userChecksum: D08176BA755F410539EB7C5F75B0B204
+  userChecksum: F0BCF2EAE8F0EB0E646BB022BF094DC1
 - generatedChecksum: 8DA90CDFAED934C14DB1E81B104CEE2F
   logicalPath: packs\CMSIS\CMSIS\Core\Include
   name: core_cm7.h
@@ -4990,13 +4990,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 082D6E0482876E79197B355B4766AF76
-- generatedChecksum: 691F9D683018005C88E3E6311BE7EEF6
+- generatedChecksum: B7DB515699C619FA65CFF2BDDD7505A7
   logicalPath: config\aws_demos\library\cryptoauthlib\pkcs11
   name: pkcs11_config.h
   physicalPath: library\cryptoauthlib\pkcs11
   security: NON_SECURE
   type: HEADER
-  userChecksum: 691F9D683018005C88E3E6311BE7EEF6
+  userChecksum: B7DB515699C619FA65CFF2BDDD7505A7
 - generatedChecksum: 6BC55CC11FE9527B4A359D1DB26F907D
   logicalPath: config\aws_demos\library\cryptoauthlib\pkcs11
   name: pkcs11_config.h.in
@@ -5790,6 +5790,12 @@ settings:
   key: no-device-startup-code
   security: NON_SECURE
   value: 'true'
+- append: false
+  category: C32-LD
+  delimiter: ''
+  key: oXC32ld-extra-opts
+  security: NON_SECURE
+  value: -mno-newlib-nano
 - append: true
   category: C32-LD
   delimiter: ;=

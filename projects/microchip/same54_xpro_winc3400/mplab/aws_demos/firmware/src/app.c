@@ -28,7 +28,8 @@
 // *****************************************************************************
 
 #include "app.h"
-
+#include "configuration.h"
+#include "definitions.h"
 // *****************************************************************************
 // *****************************************************************************
 // Section: Global Data Definitions
@@ -121,9 +122,8 @@ void APP_Tasks ( void )
 
             if (appInitialized)
             {
-			            prvWifiConnect();
-
-
+                vTaskDelay(1000);
+			    prvWifiConnect();
                 appData.state = APP_STATE_SERVICE_TASKS;
             }
             break;
@@ -131,7 +131,9 @@ void APP_Tasks ( void )
 
         case APP_STATE_SERVICE_TASKS:
         {
-
+              if(WIFI_IsConnected())
+                WDT_Clear(); 
+            
             break;
         }
 

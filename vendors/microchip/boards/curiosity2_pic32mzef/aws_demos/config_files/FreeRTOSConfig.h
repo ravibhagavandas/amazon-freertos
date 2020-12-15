@@ -52,7 +52,11 @@
 #define configISR_STACK_SIZE                       (512)
 #define configSUPPORT_DYNAMIC_ALLOCATION           1
 #define configSUPPORT_STATIC_ALLOCATION            1
+#ifdef PIC32_USE_ETHERNET
+#define configTOTAL_HEAP_SIZE                      ( ( size_t ) 256000)
+#else
 #define configTOTAL_HEAP_SIZE                      ( ( size_t ) 170000)
+#endif
 #define configMAX_TASK_NAME_LEN                    (16 )
 #define configUSE_16_BIT_TICKS                     0 
 #define configIDLE_SHOULD_YIELD                    1 

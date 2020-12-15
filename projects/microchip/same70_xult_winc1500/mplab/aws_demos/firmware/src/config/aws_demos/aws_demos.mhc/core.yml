@@ -1978,4 +1978,4 @@ children:
         children:
         - {type: Value}
 - type: ElementPosition
-  attributes: {x: '1473', y: '37', id: core}
+  attributes: {x: '1419', y: '31', id: core}

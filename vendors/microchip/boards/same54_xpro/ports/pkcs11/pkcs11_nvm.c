@@ -142,12 +142,13 @@ bool AWS_FlashPagesWrite(const uint32_t* ptrFlash, const uint32_t* pageData, int
     enumNvmErr eState;
     do 
     {
-        addr = (uint32_t)(addr + (NVMCTRL_FLASH_PAGESIZE*i));
+
+        addr = (uint32_t)(ptrFlash + (NVMCTRL_FLASH_PAGESIZE*i)/sizeof(uint32_t));
         _Bool int_status = SYS_INT_Disable();
         while(NVMCTRL_IsBusy());
         eState = AWS_NVM_Error(); // dummy read
         while(!(NVMCTRL_StatusGet() & 0x01));
-        bResult = NVMCTRL_PageWrite(pageData + (NVMCTRL_FLASH_PAGESIZE*i)/sizeof(int), addr );
+        bResult = NVMCTRL_PageWrite(pageData + (NVMCTRL_FLASH_PAGESIZE*i)/sizeof(uint32_t), addr );
         while(NVMCTRL_IsBusy());
         eState = AWS_NVM_Error();
         SYS_INT_Restore(int_status);
@@ -185,17 +186,28 @@ bool AWS_FlashProgramBlock(const uint8_t* ptrFlash, const uint8_t* pData, uint32
     if(size >= AWS_NVM_PAGE_SIZE)
     {
         bResult = AWS_FlashPagesWrite(ptrFlash,pData,nBlocks);
-        size2 = size2 % AWS_NVM_PAGE_SIZE;
+      
+        if(memcmp(ptrFlash, pData, nBlocks * AWS_NVM_PAGE_SIZE))
+        {
+            configPRINTF(("Page write Error = 0x%x, Rem Size = %d\r\n",bResult,size2));
+            return false;
+        }
+         size2 = size2 % AWS_NVM_PAGE_SIZE;
     }
     
     if(size2 > 0 && bResult)
     {
         memcpy(bMem, (const uint8_t *) (pData + (nBlocks * AWS_NVM_PAGE_SIZE)), size2);
         bResult = AWS_FlashPagesWrite(pAddr + (nBlocks * AWS_NVM_PAGE_SIZE),bMem,1);
-        
+        if(memcmp((pAddr + (nBlocks * AWS_NVM_PAGE_SIZE)), bMem, size2))
+        {
+            configPRINTF(("Last page write Result #3= %d, Rem Size = %d\r\n",bResult,size2));
+            //return false;
+        }
     }
   
-  
+   if(memcmp(ptrFlash, pData, size ))
+       return false;
 
     return bResult;
 }

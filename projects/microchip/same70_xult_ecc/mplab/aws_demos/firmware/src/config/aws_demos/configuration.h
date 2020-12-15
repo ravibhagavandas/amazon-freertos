@@ -147,6 +147,9 @@ extern "C" {
 // Section: Middleware & Other Library Configuration
 // *****************************************************************************
 // *****************************************************************************
+
+#define TCPIP_IF_GMAC
+
 /*** TCPIP MAC Configuration ***/
 #define TCPIP_GMAC_TX_DESCRIPTORS_COUNT_DUMMY				1
 #define TCPIP_GMAC_RX_DESCRIPTORS_COUNT_DUMMY				1

@@ -321,9 +321,6 @@ int16_t prvPAL_WriteBlock( OTA_FileContext_t * const C,
         }
 
         const uint8_t * pucFlashAddr = &pcProgImageBankStart[ ulOffset ]; /* Image descriptor is not part of the image. */
-        //OTA_LOG_L1("[%s] pucFlashAddr[0x%x], High Offset[%d], Offset[%d], ulWriteBlockSzie[%d]\r\n", OTA_METHOD_NAME, pucFlashAddr, pxCurOTADesc->ulHighImageOffset, ulOffset,ulWriteBlockSzie);
-        //if(ulOffset % 8192 == 0)
-        //    AWS_FlashBlockErase(pucFlashAddr,1); // SHAN: Added now!!!.
         if (AWS_FlashProgramBlock(pucFlashAddr, pucWriteData, ulWriteBlockSzie) == (bool_t) pdFALSE) { /* Failed to program block to flash. */
             sReturnVal = MCHP_ERR_FLASH_WRITE_FAIL;
         } else { /* Success. */

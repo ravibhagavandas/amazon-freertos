@@ -4,10 +4,10 @@
 
 
 project: aws_demos
-creation_date: 2020-12-10T11:56:54.614+05:30[Asia/Calcutta]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
+creation_date: 2020-12-14T17:07:49.961+05:30[Asia/Calcutta]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
 operating_system: Windows 10
 mhc_mode: IDE            # [IDE|Standalone|Headless]
-mhc_version: v3.6.2
+mhc_version: v3.6.4
 mplabx_version: v5.45        # if MPLAB X plugin only
 plugin_version: v3.6.2        # if MPLAB X plugin only
 compiler: XC32 (2.50)

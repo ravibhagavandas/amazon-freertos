@@ -26,12 +26,6 @@ children:
       - type: KeyValueSet
         attributes: {id: INTERFACE}
         children:
-        - type: Attributes
-          children:
-          - type: Boolean
-            attributes: {id: readOnly}
-            children:
-            - {type: Value, value: 'true'}
         - type: Values
           children:
           - type: Dynamic
@@ -46,4 +40,4 @@ children:
           - type: TargetAttachment
             attributes: {targetComponentID: twihs0, targetAttachmentID: TWIHS0_I2C}
 - type: ElementPosition
-  attributes: {x: '980', y: '20', id: atecc608}
+  attributes: {x: '961', y: '20', id: atecc608}

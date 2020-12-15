@@ -27,12 +27,14 @@
 #include <stddef.h>                     // Defines NULL
 #include <stdbool.h>                    // Defines true
 #include <stdlib.h>                     // Defines EXIT_FAILURE
+#include "iot_pkcs11_config.h"
+
 #include "definitions.h"                // SYS function prototypes
 
 #include "iot_network_types.h"
 /* Standard includes. */
 #include <time.h>
-#include "atca_config.h"
+
 /* FreeRTOS includes. */
 #include "FreeRTOS.h"
 #include "task.h"

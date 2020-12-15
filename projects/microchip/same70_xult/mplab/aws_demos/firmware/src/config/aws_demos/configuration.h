@@ -241,6 +241,9 @@ extern "C" {
 #define DRV_GMAC_RMII_MODE					0
 
 
+
+#define TCPIP_IF_GMAC
+                                                  
                                                   
 #define TCPIP_INTMAC_PHY_CONFIG_FLAGS              	( 0 \
                                                     | DRV_ETHPHY_CFG_RMII \

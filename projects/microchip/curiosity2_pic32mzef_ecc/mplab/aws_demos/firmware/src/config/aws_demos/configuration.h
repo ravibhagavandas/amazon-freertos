@@ -196,6 +196,9 @@ extern "C" {
 
 
 
+#define TCPIP_IF_ETHMAC
+
+                                                  
 #define TCPIP_INTMAC_PHY_CONFIG_FLAGS              	( 0 \
                                                     | DRV_ETHPHY_CFG_AUTO \
                                                     )
