@@ -1238,68 +1238,130 @@ typedef struct{
 
 
 /*!
- @struct	\	
- 	tstrM2MP2PConnect
+@struct \
+    tstrM2MAPConfig
 
- @brief		
- 	Set the device to operate in the Wi-Fi Direct (P2P) mode.
+@brief  AP Configuration
+
+    This structure holds the configuration parameters for the M2M AP mode. It should be set by the application when
+    it requests to enable the M2M AP operation mode. The M2M AP mode currently supports only WEP security (with
+    the NO Security option available of course).
 */
 typedef struct {
-	uint8 	u8ListenChannel; 
-	/*!< P2P Listen Channel (1, 6 or 11)
-	*/
-	uint8	__PAD24__[3];
-	/*!< Padding bytes for forcing 4-byte alignment
-	*/
-}tstrM2MP2PConnect;
+    /*!<
+        Configuration parameters for the WiFi AP.
+    */
+    uint8_t     au8SSID[M2M_MAX_SSID_LEN];
+    /*!< AP SSID
+    */
+    uint8_t     u8ListenChannel;
+    /*!< Wi-Fi RF Channel which the AP will operate on
+    */
+    uint8_t u8KeyIndx;
+    /*!< Wep key Index
+    */
+    uint8_t u8KeySz;
+    /*!< Wep/WPA key Size
+    */
+    uint8_t au8WepKey[WEP_104_KEY_STRING_SIZE + 1];
+    /*!< Wep key
+    */
+    uint8_t     u8SecType;
+    /*!< Security type: Open or WEP or WPA in the current implementation
+    */
+    uint8_t     u8SsidHide;
+    /*!< SSID Status "Hidden(1)/Visible(0)"
+    */
+    uint8_t au8DHCPServerIP[4];
+    /*!< Ap IP server address
+    */
+    uint8_t au8Key[M2M_MAX_PSK_LEN];
+    /*!< WPA key
+    */
+    uint8_t __PAD24__[2];
+    /*!< Padding bytes for forcing alignment
+    */
+} tstrM2MAPConfig;
 
 /*!
-@struct	\
-	tstrM2MAPConfig
+@struct \
+    tstrM2MAPConfigExt
 
-@brief	AP Configuration
+@brief  AP Configuration Extension
 
-	This structure holds the configuration parameters for the M2M AP mode. It should be set by the application when
-	it requests to enable the M2M AP operation mode. The M2M AP mode currently supports only WEP security (with
-	the NO Security option availabe of course).
+    This structure holds additional configuration parameters for the M2M AP mode. If modification of the extended parameters
+    in AP mode is desired then @ref tstrM2MAPModeConfig should be set by the application, which contains the main AP configuration
+    structure as well as this extended parameters structure.
+    When configuring provisioning mode then @ref tstrM2MProvisionModeConfig should be used, which also contains the main AP configuration
+    structure, this extended parameters structure and additional provisioning parameters.
 */
 typedef struct {
-	/*!<
-		Configuration parameters for the WiFi AP.
-	*/
-	uint8 	au8SSID[M2M_MAX_SSID_LEN]; 
-	/*!< AP SSID
-	*/
-	uint16 	u16BeaconInterval; 
-	/*!< Time between two consecutive beacons in TUs (1024 usec).
-		A value of 0 would use the FW default
-	*/
-	uint8 	u8ListenChannel; 
-	/*!< Wi-Fi RF Channel which the AP will operate on
-	*/
-	uint8	u8IsPMKUsed;
-	/*!< set to true if the PMK is calculated on the host .
-	*/
-	uint8 	u8SecType; 
-	/*!< Security type: Open, WEP and WPA2 modes supported as defined in 
-		tenuM2mSecType
-	*/
-	uint8 	u8SsidHide;
-	/*!< SSID Status "Hidden(1)/Visible(0)"
-	*/
-	uint8 	u8MaxSupportedSta;
-	/*!< Max supported stations for AP. Val 0 considered as default 8 stations
-	 * 							  Val > 8 are considered upto 8 stations
-	*/
-	tuniM2MWifiAuth 	uniAuth;
-	/*!< Union holding all possible authentication parameters corresponding the current security types.
-	*/
+    uint8_t   au8DefRouterIP[4];
+    /*!< Ap Default Router address
+    */
+    uint8_t   au8DNSServerIP[4];
+    /*!< Ap DNS server address
+    */
+    uint8_t   au8SubnetMask[4];
+    /*!< Network Subnet Mask
+    */
+} tstrM2MAPConfigExt;
 
-	#define __AP_CONFIG_PAD_SIZE__		(4 - ((sizeof(tuniM2MWifiAuth) + 2) % 4))
-	uint8				__PAD__[__AP_CONFIG_PAD_SIZE__];
-	/*!< Padding bytes for forcing alignment
-	*/
-}tstrM2MAPConfig;
+
+/*!
+@struct \
+    tstrM2MAPModeConfig
+
+@brief  AP Configuration
+
+    This structure holds the AP configuration parameters plus the extended AP configuration parameters for the M2M AP mode.
+    It should be set by the application when it requests to enable the M2M AP operation mode. The M2M AP mode currently
+    supports only WEP security (with the NO Security option available of course).
+*/
+typedef struct {
+    tstrM2MAPConfig     strApConfig;
+    /*!<
+        Configuration parameters for the WiFi AP.
+    */
+    tstrM2MAPConfigExt      strApConfigExt;
+    /*!<
+        Additional configuration parameters for the WiFi AP.
+    */
+} tstrM2MAPModeConfig;
+
+
+
+/*!
+@struct \
+    tstrM2MProvisionModeConfig
+
+@brief
+    M2M Provisioning Mode Configuration
+ */
+
+typedef struct {
+    tstrM2MAPConfig     strApConfig;
+    /*!<
+        Configuration parameters for the WiFi AP.
+    */
+    char                acHttpServerDomainName[64];
+    /*!<
+        The device domain name for HTTP provisioning.
+    */
+    uint8_t             u8EnableRedirect;
+    /*!<
+        A flag to enable/disable HTTP redirect feature for the HTTP Provisioning server. If the Redirect is enabled,
+        all HTTP traffic (http://URL) from the device associated with WINC AP will be redirected to the HTTP Provisioning Web page.
+        - 0 : Disable HTTP Redirect.
+        - 1 : Enable HTTP Redirect.
+    */
+    tstrM2MAPConfigExt      strApConfigExt;
+    /*!<
+        Additional configuration parameters for the WiFi AP.
+    */
+    uint8_t         __PAD24__[3];
+} tstrM2MProvisionModeConfig;
+
 
 /*!
 @struct	\

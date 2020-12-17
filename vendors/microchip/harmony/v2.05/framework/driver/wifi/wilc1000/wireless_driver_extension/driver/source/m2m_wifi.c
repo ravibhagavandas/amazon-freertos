@@ -175,6 +175,92 @@ static void m2m_wifi_cb(uint8 u8OpCode, uint16 u16DataSize, uint8* pu8Buffer)
 	}
 }
 
+static int8_t m2m_validate_ap_parameters(const tstrM2MAPModeConfig* pstrM2MAPModeConfig)
+{
+    int8_t s8Ret = M2M_SUCCESS;
+    /* Check for incoming pointer */
+    if(pstrM2MAPModeConfig == NULL)
+    {
+        M2M_ERR("INVALID POINTER\r\n");
+        s8Ret = M2M_ERR_FAIL;
+        goto ERR1;
+    }
+    /* Check for SSID */
+    if((strlen((const char*)pstrM2MAPModeConfig->strApConfig.au8SSID) <= 0) || (strlen((const char*)pstrM2MAPModeConfig->strApConfig.au8SSID) >= M2M_MAX_SSID_LEN))
+    {
+        M2M_ERR("INVALID SSID\r\n");
+        s8Ret = M2M_ERR_FAIL;
+        goto ERR1;
+    }
+    /* Check for Channel */
+    if(pstrM2MAPModeConfig->strApConfig.u8ListenChannel > M2M_WIFI_CH_14 || pstrM2MAPModeConfig->strApConfig.u8ListenChannel < M2M_WIFI_CH_1)
+    {
+        M2M_ERR("INVALID CH\r\n");
+        s8Ret = M2M_ERR_FAIL;
+        goto ERR1;
+    }
+    /* Check for DHCP Server IP address */
+    if(!(pstrM2MAPModeConfig->strApConfig.au8DHCPServerIP[0] || pstrM2MAPModeConfig->strApConfig.au8DHCPServerIP[1]))
+    {
+        if(!(pstrM2MAPModeConfig->strApConfig.au8DHCPServerIP[2]))
+        {
+            M2M_ERR("INVALID DHCP SERVER IP\r\n");
+            s8Ret = M2M_ERR_FAIL;
+            goto ERR1;
+        }
+    }
+    /* Check for Security */
+    if(pstrM2MAPModeConfig->strApConfig.u8SecType == M2M_WIFI_SEC_OPEN)
+    {
+        goto ERR1;
+    }
+    else if(pstrM2MAPModeConfig->strApConfig.u8SecType == M2M_WIFI_SEC_WEP)
+    {
+        /* Check for WEP Key index */
+        if((pstrM2MAPModeConfig->strApConfig.u8KeyIndx == 0) || (pstrM2MAPModeConfig->strApConfig.u8KeyIndx > WEP_KEY_MAX_INDEX))
+        {
+            M2M_ERR("INVALID KEY INDEX\r\n");
+            s8Ret = M2M_ERR_FAIL;
+            goto ERR1;
+        }
+        /* Check for WEP Key size */
+        if( (pstrM2MAPModeConfig->strApConfig.u8KeySz != WEP_40_KEY_STRING_SIZE) &&
+            (pstrM2MAPModeConfig->strApConfig.u8KeySz != WEP_104_KEY_STRING_SIZE)
+        )
+        {
+            M2M_ERR("INVALID KEY STRING SIZE\r\n");
+            s8Ret = M2M_ERR_FAIL;
+            goto ERR1;
+        }
+
+        if((strlen((const char*)pstrM2MAPModeConfig->strApConfig.au8WepKey) <= 0) || (strlen((const char*)pstrM2MAPModeConfig->strApConfig.au8WepKey) > WEP_104_KEY_STRING_SIZE))
+        {
+            M2M_ERR("INVALID KEY SIZE\r\n");
+            s8Ret = M2M_ERR_FAIL;
+            goto ERR1;
+        }
+    }
+    else if(pstrM2MAPModeConfig->strApConfig.u8SecType == M2M_WIFI_SEC_WPA_PSK)
+    {
+        /* Check for WPA Key size */
+        if( ((pstrM2MAPModeConfig->strApConfig.u8KeySz + 1) < M2M_MIN_PSK_LEN) || ((pstrM2MAPModeConfig->strApConfig.u8KeySz + 1) > M2M_MAX_PSK_LEN))
+        {
+            M2M_ERR("INVALID WPA KEY SIZE\r\n");
+            s8Ret = M2M_ERR_FAIL;
+            goto ERR1;
+        }
+    }
+    else
+    {
+        M2M_ERR("INVALID AUTHENTICATION MODE\r\n");
+        s8Ret = M2M_ERR_FAIL;
+        goto ERR1;
+    }
+
+ERR1:
+    return s8Ret;
+}
+
 sint8 m2m_wifi_init(tstrWifiInitParam * param)
 {
 	sint8 ret = M2M_SUCCESS;
@@ -1026,4 +1112,56 @@ sint8 m2m_wifi_download_mode()
 
 _EXIT0:
 	return ret;
+}
+
+int8_t m2m_wifi_start_provision_mode(tstrM2MAPConfig *pstrM2MAPConfig, char *pcHttpServerDomainName, uint8_t bEnableHttpRedirect)
+{
+	tstrM2MAPModeConfig strM2MAPModeConfig;
+
+	memcpy((uint8_t*)&strM2MAPModeConfig.strApConfig, (uint8_t*)pstrM2MAPConfig, sizeof(tstrM2MAPConfig));
+	
+	memcpy(strM2MAPModeConfig.strApConfigExt.au8DefRouterIP, pstrM2MAPConfig->au8DHCPServerIP, 4);
+	memcpy(strM2MAPModeConfig.strApConfigExt.au8DNSServerIP, pstrM2MAPConfig->au8DHCPServerIP, 4);
+	strM2MAPModeConfig.strApConfigExt.au8SubnetMask[0] = 0;
+
+	return m2m_wifi_start_provision_mode_ext(&strM2MAPModeConfig, pcHttpServerDomainName, bEnableHttpRedirect);
+}
+
+int8_t m2m_wifi_start_provision_mode_ext(tstrM2MAPModeConfig *pstrAPModeConfig, char *pcHttpServerDomainName, uint8_t bEnableHttpRedirect)
+{
+    int8_t  s8Ret = M2M_ERR_FAIL;
+
+    if(pstrAPModeConfig != NULL)
+    {
+        tstrM2MProvisionModeConfig  strProvConfig;
+        if(M2M_SUCCESS == m2m_validate_ap_parameters(pstrAPModeConfig))
+        {
+            memcpy((uint8_t*)&strProvConfig.strApConfig, (uint8_t*)pstrAPModeConfig, sizeof(tstrM2MAPConfig));
+			memcpy((uint8_t*)&strProvConfig.strApConfigExt, (uint8_t*)&pstrAPModeConfig->strApConfigExt, sizeof(tstrM2MAPConfigExt));
+            if((strlen((const char*)pcHttpServerDomainName) <= 0) || (NULL == pcHttpServerDomainName))
+            {
+                M2M_ERR("INVALID DOMAIN NAME\r\n");
+                goto ERR1;
+            }
+            memcpy((uint8_t*)strProvConfig.acHttpServerDomainName, (uint8_t*)pcHttpServerDomainName, 64);
+            strProvConfig.u8EnableRedirect = bEnableHttpRedirect;
+
+            /* Stop Scan if it is ongoing.
+            */
+            gu8scanInProgress = 0;
+            s8Ret = hif_send(M2M_REQ_GRP_WIFI, M2M_WIFI_REQ_START_PROVISION_MODE | M2M_REQ_DATA_PKT,
+                        (uint8_t*)&strProvConfig, sizeof(tstrM2MProvisionModeConfig), NULL, 0, 0);
+        }
+        else
+        {
+            /*goto ERR1;*/
+        }
+    }
+ERR1:
+    return s8Ret;
+}
+
+int8_t m2m_wifi_stop_provision_mode(void)
+{
+    return hif_send(M2M_REQ_GRP_WIFI, M2M_WIFI_REQ_STOP_PROVISION_MODE, NULL, 0, NULL, 0, 0);
 }
