@@ -96,7 +96,6 @@ static IotUARTConfig_t xSampleConfig2 =
     .ucWordlength  = testIotUART_8BIT_WORD_LENGTH,
 };
 
-
 /**
  * @brief Application/POSIX defined callback for asynchronous write operation on
  * UART for testing the loopback function.
@@ -167,6 +166,26 @@ TEST_GROUP_RUNNER( TEST_IOT_UART )
     RUN_TEST_CASE( TEST_IOT_UART, AFQP_IotUARTOpenCloseCancelFuzzing );
 }
 /*-----------------------------------------------------------*/
+
+COMMON_IO_ASSISTED_TEST_GROUP_RUNNER( TEST_IOT_UART, TEST_UART_NUM )
+{
+    switch( _TEST_UART_NUM )
+    {
+        case 1:
+            RUN_TEST_CASE( TEST_IOT_UART, AFQP_AssistedIotUARTWriteReadSync );
+            break;
+        case 2:
+            RUN_TEST_CASE( TEST_IOT_UART, AFQP_AssistedIotUARTBaudChange );
+            break;
+        case 3:
+            RUN_TEST_CASE( TEST_IOT_UART, AFQP_AssistedIotUARTWriteAsync );
+            break;
+        default:
+            configASSERT( _TEST_UART_NUM <= 3 );
+            break;
+    }
+}
+
 /*-----------------------------------------------------------*/
 
 /**
@@ -193,6 +212,9 @@ TEST( TEST_IOT_UART, AFQP_AssistedIotUARTWriteReadSync )
 
         lRead = iot_uart_read_sync( xUartHandle, cpBufferRead, testIotUART_BUFFER_LENGTH );
         TEST_ASSERT_EQUAL( IOT_UART_SUCCESS, lRead );
+
+        configPRINTF(("String received %.*s\r\n", lRead, cpBufferRead ));
+
 
         TEST_ASSERT_EQUAL( 0, strncmp( ( char * ) cpBuffer, ( char * ) cpBufferRead, testIotUART_BUFFER_LENGTH ) );
     }

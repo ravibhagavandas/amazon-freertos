@@ -22,7 +22,7 @@
 #define ESP_GPIO_PORT1 ( 1 )
 #define ESP_GPIO_PORT2 ( 2 )
 
-#define ESP_MAX_UART_PORTS 3
+#define ESP_MAX_UART_PORTS 2
 #define ESP_MAX_I2C_PORTS 2
 #define ESP_MAX_LED_NUM 3
 #define ESP_MAX_PWM_CHANNELS 3 /*Should be less then LEDC_CHANNEL_MAX(0-7)*/
@@ -58,8 +58,6 @@ struct esp_spi_pin_config {
     /* UART 0 */                  \
     { GPIO_NUM_1, GPIO_NUM_3 },   \
     /* UART 1: this ACK team's preference */  \
-    { GPIO_NUM_19, GPIO_NUM_20 }, \
-    /* UART 2 */                  \
     { GPIO_NUM_17, GPIO_NUM_16 }, \
 }
 
@@ -68,7 +66,7 @@ struct esp_spi_pin_config {
     /* I2C 0 */                  \
     { GPIO_NUM_26, GPIO_NUM_27 },   \
     /* I2C 1 */                  \
-    { GPIO_NUM_19, GPIO_NUM_21 }, \
+    { GPIO_NUM_22, GPIO_NUM_21 }, \
 }
 
 /* Configuration to be assigned internally for LED to pin mappings */

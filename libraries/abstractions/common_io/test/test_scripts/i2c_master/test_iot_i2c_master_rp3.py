@@ -51,6 +51,8 @@ def i2c(id, tick):
 
 if __name__ == "__main__":
 
+    global pi, wr_bytes, rd_bytes
+
     pi = pigpio.pi()
 
     if not pi.connected:
@@ -60,7 +62,7 @@ if __name__ == "__main__":
     pi.set_pull_up_down(SDA, pigpio.PUD_UP)
     pi.set_pull_up_down(SCL, pigpio.PUD_UP)
 
-    socket.setdefaulttimeout(10)
+    socket.setdefaulttimeout(1000)
     # Create socket server.
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -79,10 +81,11 @@ if __name__ == "__main__":
     time_out = 30
     while time_out > 0:
         try:
-            req = conn.recv(1024)
+            req = str(conn.recv(1024), encoding="utf-8")
         except:
             print("No request from host.")
             break
+
 
         if len(req) > 0 and req[0] == 's':
             if wr_bytes != []:
@@ -90,6 +93,7 @@ if __name__ == "__main__":
             elif rd_bytes != []:
                 conn.sendall(bytearray(rd_bytes))
         else:
+            print("Invalid request:" + str(req))
             break
 
     e.cancel()

@@ -120,7 +120,7 @@ int32_t iot_i2c_ioctl( IotI2CHandle_t const pxI2CPeripheral, IotI2CIoctlRequest_
             .sda_io_num = (gpio_num_t)esp_i2c_pin_map[i2c_port_num].sda_pin,
             .sda_pullup_en = GPIO_PULLUP_ENABLE,
             .scl_io_num = esp_i2c_pin_map[i2c_port_num].scl_pin,
-            .scl_pullup_en = GPIO_PULLUP_ENABLE,
+            .scl_pullup_en = GPIO_PULLUP_DISABLE, //GPIO_PULLUP_ENABLE,
             .master.clk_speed = i2c_ctx->iot_i2c_config.ulBusFreq,
         };
         ret = i2c_param_config(i2c_port_num, &i2c_conf);
@@ -273,7 +273,7 @@ int32_t iot_i2c_read_async( IotI2CHandle_t const pxI2CPeripheral, uint8_t *const
 int32_t iot_i2c_write_async( IotI2CHandle_t const pxI2CPeripheral, uint8_t *const pvBuffer, size_t xBytes)
 {
     esp_err_t ret = ESP_OK;
-    if (pxI2CPeripheral == NULL || pvBuffer == NULL) {
+    if (pxI2CPeripheral == NULL) {
         ESP_LOGE(TAG, "Invalid arguments");
         return IOT_I2C_INVALID_VALUE;
     }
@@ -297,7 +297,9 @@ int32_t iot_i2c_write_async( IotI2CHandle_t const pxI2CPeripheral, uint8_t *cons
     iot_i2c_handler->cmd = i2c_cmd_link_create();
     ret  = i2c_master_start(iot_i2c_handler->cmd);
     ret |= i2c_master_write_byte(iot_i2c_handler->cmd, iot_i2c_handler->slave_addr << 1 | I2C_MASTER_WRITE, ACK_CHECK_EN);
-    ret = i2c_master_write(iot_i2c_handler->cmd, src_buf, xBytes, ACK_CHECK_EN);
+    if( src_buf != NULL && xBytes > 0 ) {
+        ret = i2c_master_write(iot_i2c_handler->cmd, src_buf, xBytes, ACK_CHECK_EN);
+    }
     if (iot_i2c_handler->is_send_no_stop_flag_set == false) {
         ret |= i2c_master_stop(iot_i2c_handler->cmd);
     }
@@ -343,7 +345,7 @@ int32_t iot_i2c_read_sync( IotI2CHandle_t const pxI2CPeripheral, uint8_t *const 
     }
     ret |= i2c_master_cmd_begin(i2c_port_num, iot_i2c_handler->cmd, 1000 / portTICK_RATE_MS);
     if (ret != ESP_OK) {
-        ESP_LOGE(TAG, "i2c master read failed");
+        ESP_LOGE(TAG, "i2c master read failed, error = %d", ret );
         xSemaphoreGive(iot_i2c_handler->i2c_semph);
         return IOT_I2C_READ_FAILED;
     }
@@ -357,7 +359,7 @@ int32_t iot_i2c_read_sync( IotI2CHandle_t const pxI2CPeripheral, uint8_t *const 
 int32_t iot_i2c_write_sync( IotI2CHandle_t const pxI2CPeripheral, uint8_t *const pvBuffer, size_t xBytes)
 {
     esp_err_t ret = ESP_OK;
-    if (pxI2CPeripheral == NULL || pvBuffer == NULL) {
+    if (pxI2CPeripheral == NULL ) {
         ESP_LOGE(TAG, "Invalid arguments");
         return IOT_I2C_INVALID_VALUE;
     }
@@ -376,7 +378,9 @@ int32_t iot_i2c_write_sync( IotI2CHandle_t const pxI2CPeripheral, uint8_t *const
     iot_i2c_handler->cmd = i2c_cmd_link_create();
     ret  = i2c_master_start(iot_i2c_handler->cmd);
     ret |= i2c_master_write_byte(iot_i2c_handler->cmd, iot_i2c_handler->slave_addr << 1 | I2C_MASTER_WRITE, ACK_CHECK_EN);
-    ret = i2c_master_write(iot_i2c_handler->cmd, src_buf, xBytes, ACK_CHECK_EN);
+    if( src_buf != NULL && xBytes > 0 ) {
+        ret = i2c_master_write(iot_i2c_handler->cmd, src_buf, xBytes, ACK_CHECK_EN);
+    }
     if (iot_i2c_handler->is_send_no_stop_flag_set == false) {
         ret |= i2c_master_stop(iot_i2c_handler->cmd);
     }
@@ -399,9 +403,11 @@ int32_t iot_i2c_close(IotI2CHandle_t const pxI2CPeripheral)
         ESP_LOGE(TAG, "Invalid I2C Handler");
         return IOT_I2C_INVALID_VALUE;
     }
+    
     i2c_ctx_t *iot_i2c_handler = (i2c_ctx_t *) pxI2CPeripheral;
+
     if (!(0x01 & (i2c_bit_mask >> iot_i2c_handler->i2c_port_num))) {
-        ESP_LOGE(TAG, "I2C Handler is not initialised");
+        ESP_LOGE(TAG, "I2C Handler for port %d is not initialised", iot_i2c_handler->i2c_port_num );
         return IOT_I2C_INVALID_VALUE;
     }
     if (iot_i2c_handler->i2c_semph) {

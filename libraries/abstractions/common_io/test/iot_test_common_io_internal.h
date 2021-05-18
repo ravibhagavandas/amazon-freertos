@@ -366,3 +366,13 @@
 #else
     #define IOT_TEST_COMMON_IO_USB_DEVICE_SUPPORTED    0
 #endif
+
+/* Macro to define an assisted test group. */
+#define COMMON_IO_ASSISTED_TEST_GROUP_RUNNER(group, test)\
+    void COMMON_IO_ASSISTED_##group##_GROUP_RUNNER(int _##test);\
+    void COMMON_IO_ASSISTED_##group##_GROUP_RUNNER(int _##test)
+
+/* Call this from main */
+#define RUN_COMMON_IO_ASSISTED_TEST_GROUP(group, test)\
+    { void COMMON_IO_ASSISTED_##group##_GROUP_RUNNER(int testNum);\
+      COMMON_IO_ASSISTED_##group##_GROUP_RUNNER(test); }

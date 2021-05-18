@@ -102,13 +102,15 @@ class TestUartAssisted(test_template):
         self._serial.write(cmd.encode("utf-8"))
         self._serial.write("\r\n".encode("utf-8"))
 
-        dut_res = str(self._serial.read_until(terminator=serial.to_bytes([ord(c) for c in 'Ignored '])))
+        dut_res = str(self._serial.read_until(expected=serial.to_bytes([ord(c) for c in 'Ignored '])))
         dut_result = dut_res_pattern.search(dut_res)
+        print("DUT Result:")
         print(dut_res)
         t_shell.join()
 
         with open(self.rpi_output_file, "r") as f:
             rpi_output = str(f.read())
+            print("RPI Result:")
             print(rpi_output)
             pi_result = pi_regex.search(rpi_output)
 
@@ -156,9 +158,9 @@ class TestUartAssisted(test_template):
         self._serial.write(cmd.encode("utf-8"))
         self._serial.write("\r\n".encode("utf-8"))
 
-        dut_res = str(self._serial.read_until(terminator=serial.to_bytes([ord(c) for c in 'Ignored '])))
+        dut_res = str(self._serial.read_until(expected=serial.to_bytes([ord(c) for c in 'Ignored '])))
         dut_result = dut_res_pattern.search(dut_res)
-
+        print("DUT Result:")
         print(dut_res)
         t_shell.join()
 
@@ -210,10 +212,14 @@ class TestUartAssisted(test_template):
         self._serial.write(cmd.encode("utf-8"))
         self._serial.write("\r\n".encode("utf-8"))
 
-        dut_res = str(self._serial.read_until(terminator=serial.to_bytes([ord(c) for c in 'Ignored '])))
+        dut_res = str(self._serial.read_until(expected=serial.to_bytes([ord(c) for c in 'Ignored '])))
         dut_result = dut_res_pattern.search(dut_res)
+        print("DUT Result:")
         print(dut_res)
         t_shell.join()
+
+
+        print("RPI Result:")
 
         with open(self.rpi_output_file, "r") as f:
             rpi_output = str(f.read())

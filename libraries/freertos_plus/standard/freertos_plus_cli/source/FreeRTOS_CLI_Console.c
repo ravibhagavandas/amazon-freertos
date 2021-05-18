@@ -45,7 +45,7 @@
 /* Const messages output by the command console. */
 static const char * const pcStartMessage = "\r\n[Input a command or type help then press ENTER to get started]\r\n>";
 static const char * const pcEndOfOutputMessage = "\r\n[Press Enter to run the previous command]\r\n>";
-static const char * const pcNewLine = "\r\n";
+static const char * const pcNewLine = "\r\n>";
 
 static char cInputBuffer[ cmdMAX_INPUT_BUFFER_SIZE ] = "";
 static char cErrorString[ cmdMAX_ERROR_SIZE ] = "";
@@ -144,16 +144,16 @@ void FreeRTOS_CLI_ProcessInputBuffer( xConsoleIO_t consoleIO,
         /* Was it the end of the line? */
         else if( ( cRxedChar == '\n' ) || ( cRxedChar == '\r' ) )
         {
-            /* Skip subsequent '\n', '\r' or '\n' of CRLF. */
-            if( ( i > 0 ) &&
-                ( ( cInputBuffer[ i - 1 ] == '\r' ) || ( cInputBuffer[ i - 1 ] == '\n' ) ) )
-            {
-                continue;
-            }
-
             /* Just to space the output from the input. */
             consoleIO.write( pcNewLine, strlen( pcNewLine ) );
 
+            /* Skip subsequent '\n', '\r' or '\n' of CRLF. */
+            /* No extra characters in command. */
+            if( *pCommandBufferIndex == 0 )
+            {
+                continue;
+            }
+          
             /* Pass the received command to the command interpreter.  The
              * command interpreter is called repeatedly until it returns
              * pdFALSE	(indicating there is no more output) as it might

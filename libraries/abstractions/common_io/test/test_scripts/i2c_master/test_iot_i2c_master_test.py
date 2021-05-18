@@ -51,8 +51,8 @@ class TestI2cMasterAssisted(test_template):
     def __init__(self, serial, ip, login, pwd, csv_handler):
         self._func_list = [self.test_IotI2CWriteSyncAssisted,
                            self.test_IotI2CWriteAsyncAssisted,
-                           self.test_IotI2CReadSyncAssisted,
-                           self.test_IotI2CReadAsyncAssisted
+                           self.test_IotI2CReadSyncAssisted
+                           #self.test_IotI2CReadAsyncAssisted
                            ]
 
         self._serial = serial
@@ -74,27 +74,31 @@ class TestI2cMasterAssisted(test_template):
                                    args=(" ".join([self.shell_script, self._ip, self._login, self._pwd, '-s']),))
         t_shell.start()
 
-        socket.setdefaulttimeout(10)
+        sleep(5)
+
+        socket.setdefaulttimeout(1000)
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        time_out = 10
+
+        time_out = 50
         # Wait until connection with the process on rpi is established.
         while s.connect_ex((self._ip, self.port)) != 0 and time_out > 0:
             time_out -= 1
-            sleep(1)
+            sleep(5)
+            print("Connection attempt failed reconnecting")
         if time_out == 0:
             print("Socket connection cannot be established")
             s.close()
             return "Fail"
 
+        print("Connected to " + str(self._ip) + " port " + str(self.port))
+
         self._serial.reset_input_buffer()
-        self._serial.write('\r\n'.encode('utf-8'))
+        self._serial.write("\r\n".encode("utf-8"))
+        self._serial.write(cmd.encode("utf-8"))
+        self._serial.write('\r\n'.encode("utf-8"))        
 
-        self._serial.write(cmd.encode('utf-8'))
-
-        self._serial.write('\r\n'.encode('utf-8'))
-
-        res = self._serial.read_until(terminator=serial.to_bytes([ord(c) for c in 'Ignored '])).decode('utf-8')
-
+        res = str(self._serial.read_until(expected=serial.to_bytes([ord(c) for c in 'Ignored '])), encoding='utf-8')
+     
         w_bytes = []
         for x in re.sub(r'\r', '', res).split('\n'):
             if x.find('IGNORE') != -1:
@@ -102,7 +106,7 @@ class TestI2cMasterAssisted(test_template):
                 break
 
         # Retrieve bytes read by rpi.
-        s.sendall(b's')
+        s.sendall('s'.encode('utf-8'))
         try:
             r_bytes = s.recv(1024)
         except:
@@ -146,9 +150,11 @@ class TestI2cMasterAssisted(test_template):
                                    args=(" ".join([self.shell_script, self._ip, self._login, self._pwd, '-s']),))
         t_shell.start()
 
+        sleep(5)
+
         socket.setdefaulttimeout(10)
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        time_out = 10
+        time_out = 50
         # Wait until connection with the process on rpi is established.
         while s.connect_ex((self._ip, self.port)) != 0 and time_out > 0:
             time_out -= 1
@@ -158,15 +164,15 @@ class TestI2cMasterAssisted(test_template):
             s.close()
             return "Fail"
 
+        print("Connected to " + str(self._ip) + " port " + str(self.port))
+
         for i in range(2):
             self._serial.reset_input_buffer()
             self._serial.write('\r\n'.encode('utf-8'))
-
             self._serial.write(cmd.encode('utf-8'))
-
             self._serial.write('\r\n'.encode('utf-8'))
 
-            res = self._serial.read_until(terminator=serial.to_bytes([ord(c) for c in 'Ignored '])).decode('utf-8')
+            res = str(self._serial.read_until(expected=serial.to_bytes([ord(c) for c in 'Ignored '])), encoding='utf-8')
 
             for x in re.sub(r'\r', '', res).split('\n'):
                 if x.find('IGNORE') != -1:
@@ -174,7 +180,7 @@ class TestI2cMasterAssisted(test_template):
                     break
 
             # Retrieve bytes sent by rpi
-            s.sendall(b's')
+            s.sendall('s'.encode('utf-8'))
             try:
                 data = s.recv(1024)
             except:
@@ -188,7 +194,7 @@ class TestI2cMasterAssisted(test_template):
                 print("No data read by DUT.\n", repr(res))
                 break
         # End process on the rpi.
-        s.sendall(b'E')
+        s.sendall('E'.encode('utf-8'))
 
         t_shell.join()
         s.close()
@@ -223,7 +229,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     try:
-        serial_port = serial.Serial(port=args.port[0], timeout=5)
+        serial_port = serial.Serial(port=args.port[0], baudrate=115200, timeout=20)
     except Exception as e:
         print(e)
         exit()

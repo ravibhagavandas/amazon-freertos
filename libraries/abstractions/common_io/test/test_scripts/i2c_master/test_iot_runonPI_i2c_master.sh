@@ -41,7 +41,7 @@ elif [ "$1" == "-s" ]; then
     sshpass -p ${PASSWD} ssh ${LOGINID}@${IP} 'sudo pigpiod -s 1 -b 200'
     sleep .1
     #Run rpi script
-    sshpass -p "$PASSWD" ssh "$LOGINID"@"$IP" "python /home/pi/Tests/test_iot_i2c_master_rp3.py"
+    sshpass -p "$PASSWD" ssh "$LOGINID"@"$IP" "python3 /home/pi/Tests/test_iot_i2c_master_rp3.py > /home/pi/Tests/i2c_master_res.txt"
     #Kill demon
     sshpass -p ${PASSWD} ssh ${LOGINID}@${IP} "sudo killall pigpiod"
 elif [ "$1" == "-c" ]; then

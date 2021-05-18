@@ -31,13 +31,13 @@ afr_module_sources(
 
 afr_module_include_dirs(
     ${AFR_CURRENT_MODULE}
-    PUBLIC 
+    PUBLIC
         "${inc_dir}"
 )
 
 afr_module_dependencies(
     ${AFR_CURRENT_MODULE}
-    PUBLIC 
+    PUBLIC
         AFR::common_io::mcu_port
 )
 
@@ -48,6 +48,7 @@ afr_module_sources(
     INTERFACE
         "${test_dir}/iot_test_common_io_internal.h"
         "${test_dir}/iot_test_common_io.c"
+        "${test_dir}/iot_test_common_io_cli.c"
         "${test_dir}/test_iot_adc.c"
         "${test_dir}/test_iot_battery.c"
         "${test_dir}/test_iot_efuse.c"
@@ -76,4 +77,5 @@ afr_module_include_dirs(
 afr_module_dependencies(
     ${AFR_CURRENT_MODULE}
     INTERFACE AFR::common_io
+    AFR::freertos_plus_cli
 )

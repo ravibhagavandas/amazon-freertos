@@ -192,7 +192,7 @@ endif()
 
 target_sources(
     AFR::wifi::mcu_port
-    INTERFACE 
+    INTERFACE
         "${afr_ports_dir}/wifi/iot_wifi.c"
 )
 
@@ -300,7 +300,8 @@ if(ECC608_IN_USE)
         ecc608a_hal_src
             "${ecc608a_dir}/lib/hal/atca_hal.c"
             "${ecc608a_dir}/lib/hal/hal_freertos.c"
-            "${ecc608a_dir}/lib/hal/hal_esp32_i2c.c"
+            "${ecc608a_dir}/lib/hal/hal_common_io_i2c.c"
+            #"${ecc608a_dir}/lib/hal/hal_esp32_i2c.c"
             "${ecc608a_dir}/lib/hal/hal_esp32_timer.c"
             "${ecc608a_dir}/lib/hal/atca_hal.h"
             "${ecc608a_dir}/lib/hal/atca_start_config.h"
@@ -309,6 +310,7 @@ if(ECC608_IN_USE)
     target_include_directories(
         AFR::pkcs11_implementation::mcu_port
         INTERFACE
+            "${AFR_ROOT_DIR}/libraries/abstractions/common_io/include"
             "${board_dir}/config_files/ecc608a_pkcs11_config"
     )
     target_sources(
@@ -316,6 +318,10 @@ if(ECC608_IN_USE)
         INTERFACE
             "${ecc608a_hal_src}"
     )
+    afr_module_dependencies(
+         AFR::pkcs11_implementation::mcu_port
+         PUBLIC
+         AFR::common_io )
 else()
     afr_mcu_port(pkcs11_implementation DEPENDS AFR::pkcs11_mbedtls)
     target_include_directories(
