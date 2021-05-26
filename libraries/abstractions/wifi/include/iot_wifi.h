@@ -214,6 +214,7 @@ typedef struct
     char cPassword[ wificonfigMAX_PASSPHRASE_LEN ]; /**< Password needed to join the AP. */
     uint8_t ucPasswordLength;                       /**< Password length not including null termination. */
     WIFISecurity_t xSecurity;                       /**< Wi-Fi Security. @see WIFISecurity_t. */
+    uint8_t        ucPriority;                      /**< Priority of the network to be stored. */
 } WIFINetworkProfile_t;
 
 /**
