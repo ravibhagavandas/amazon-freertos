@@ -40,17 +40,12 @@
 
 #define I2C_TEST_GROUP_NUM       ( 11 )
 
-
-#define TEST_GROUP_ASSISTED_TEST_RU
-
-
-static BaseType_t prvTestRunner( char * pcWriteBuffer,
+static BaseType_t prvCommonIOTestRunnerCommandImpl( char * pcWriteBuffer,
                                 size_t xWriteBufferLen,
                                 const char * pcTestCommand );
 
 
-void xCommonIOTestCLITask( void *pvParam );
-
+void vTestRunnerCommonIOAssisted( void );
 /**
  * Static array into which the commands will be placed from the console.
  */
@@ -68,12 +63,12 @@ static const CLI_Command_Definition_t xCommonIOTestRunnerCommand =
 {
     "iot_tests",
     "\r\nUsage: iot_tests test <test group num> <test number>\r\n",
-    prvTestRunner, /* The function to run. */
+    prvCommonIOTestRunnerCommandImpl, /* The function to run. */
     3              /* Three parameters are expected. */
 };
 
 
-static BaseType_t prvTestRunner( char * pcWriteBuffer,
+static BaseType_t prvCommonIOTestRunnerCommandImpl( char * pcWriteBuffer,
                                 size_t xWriteBufferLen,
                                 const char * pcCommandString )
 {
@@ -126,14 +121,14 @@ static BaseType_t prvTestRunner( char * pcWriteBuffer,
 
 }
 
+extern xConsoleIO_t uartConsoleIO;
 
-void vCommonIOTestCLITask( void *pvParam )
+
+void vTestRunnerCommonIOAssisted( void )
 {
-    xConsoleIO_t * pConsole = (  xConsoleIO_t * ) pvParam;
-    configASSERT( pConsole != NULL );
 
     FreeRTOS_CLIRegisterCommand( &xCommonIOTestRunnerCommand );
 
-    FreeRTOS_CLIEnterConsoleLoop( *pConsole, cCommandBuffer, cmdMAX_INPUT_SIZE, cOutputBuffer, cmdMAX_OUTPUT_SIZE );
+    FreeRTOS_CLIEnterConsoleLoop( uartConsoleIO, cCommandBuffer, cmdMAX_INPUT_SIZE, cOutputBuffer, cmdMAX_OUTPUT_SIZE );
 
 }

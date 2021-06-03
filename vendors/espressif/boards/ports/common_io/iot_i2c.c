@@ -386,7 +386,7 @@ int32_t iot_i2c_write_sync( IotI2CHandle_t const pxI2CPeripheral, uint8_t *const
     }
     ret |= i2c_master_cmd_begin(i2c_port_num, iot_i2c_handler->cmd, 1000 / portTICK_RATE_MS );
     if (ret != ESP_OK) {
-        ESP_LOGE(TAG, "i2c master write failed");
+        //ESP_LOGE(TAG, "i2c master write failed");
         xSemaphoreGive(iot_i2c_handler->i2c_semph);
         return IOT_I2C_WRITE_FAILED;
     }

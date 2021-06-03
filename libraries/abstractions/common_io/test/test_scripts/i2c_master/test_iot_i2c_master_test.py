@@ -51,8 +51,8 @@ class TestI2cMasterAssisted(test_template):
     def __init__(self, serial, ip, login, pwd, csv_handler):
         self._func_list = [self.test_IotI2CWriteSyncAssisted,
                            self.test_IotI2CWriteAsyncAssisted,
-                           self.test_IotI2CReadSyncAssisted
-                           #self.test_IotI2CReadAsyncAssisted
+                           self.test_IotI2CReadSyncAssisted,
+                           self.test_IotI2CReadAsyncAssisted
                            ]
 
         self._serial = serial

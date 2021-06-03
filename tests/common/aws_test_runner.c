@@ -58,6 +58,9 @@
     #define AWS_TEST_RUNNER_DELAY_MS    5000
 #endif
 
+
+void vTestRunnerCommonIOAssisted( void );
+
 const AppVersion32_t xAppFirmwareVersion =
 {
     .u.x.ucMajor = APP_VERSION_MAJOR,
@@ -247,6 +250,10 @@ static void RunTestSuites( void )
 
     #if ( testrunnerFULL_COMMON_IO_ENABLED == 1 )
         RUN_TEST_GROUP( Common_IO );
+    #endif
+
+    #if ( testrunnerFULL_COMMON_IO_ASSISTED_ENABLED == 1 )
+        vTestRunnerCommonIOAssisted();
     #endif
 
     #if ( testrunnerFULL_CORE_MQTT_ENABLED == 1 )
