@@ -85,7 +85,6 @@
  */
 typedef struct IotNMNetwork
 {
-    IotLink_t link;
     uint32_t type;
     AwsIotNetworkState_t state;
     const IotNetworkInterface_t * pNetworkInterface;
@@ -98,11 +97,31 @@ typedef struct IotNMNetwork
  */
 typedef struct IotNMSubscription
 {
-    IotLink_t link;
     uint32_t networkTypes;
     AwsIotNetworkStateChangeCb_t callback;
     void * pContext;
 } IotNMSubscription_t;
+
+
+static IotNMNetwork_t networks[] = {
+#if BLE_ENABLED
+      {
+
+      },
+#endif
+
+#if WIFI_ENABLED
+     {
+
+     },
+#endif
+
+#if ETH_ENABLED
+    {
+
+    },
+   
+};
 
 /**
  * @brief Network manager object, holds the list of supported networks and the list of network state change subscriptions.
