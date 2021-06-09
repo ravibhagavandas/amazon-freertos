@@ -35,10 +35,10 @@
 /**
  * @brief Network types supported by FreeRTOS.
  */
-#define AWSIOT_NETWORK_TYPE_NONE      0x00000000
-#define AWSIOT_NETWORK_TYPE_WIFI      0x00000001
-#define AWSIOT_NETWORK_TYPE_BLE       0x00000002
-#define AWSIOT_NETWORK_TYPE_ETH       0x00000004
+#define AWSIOT_NETWORK_TYPE_NONE      0x00000000UL
+#define AWSIOT_NETWORK_TYPE_WIFI      0x00000001UL
+#define AWSIOT_NETWORK_TYPE_BLE       0x00000002UL
+#define AWSIOT_NETWORK_TYPE_ETH       0x00000004UL
 #define AWSIOT_NETWORK_TYPE_ALL       ( AWSIOT_NETWORK_TYPE_WIFI | AWSIOT_NETWORK_TYPE_BLE | AWSIOT_NETWORK_TYPE_ETH )
 #define AWSIOT_NETWORK_TYPE_TCP_IP    ( AWSIOT_NETWORK_TYPE_WIFI | AWSIOT_NETWORK_TYPE_ETH )
 
@@ -47,11 +47,10 @@
  */
 typedef enum AwsIotNetworkState
 {
-    eNetworkStateUnknown = 0, /*!< eNetworkStateUnknown State of the network is unknown */
-    eNetworkStateDisabled,    /*!< eNetworkStateDisabled State of the network is disabled/disconnected */
-    eNetworkStateEnabled      /*!< eNetworkStateEnabled  State of the network is enabled and connected. */
+    eNetworkStateUnknown   = 0x00000000UL,   /*!< eNetworkStateUnknown State of the network is unknown */
+    eNetworkStateDisabled  = 0x00000001UL,   /*!< eNetworkStateDisabled State of the network is disabled/disconnected */
+    eNetworkStateEnabled   = 0x00000002UL    /*!< eNetworkStateEnabled  State of the network is enabled and connected. */
 } AwsIotNetworkState_t;
-
 
 /**
  * @brief Callback invoked by a driver to post network state change events.
