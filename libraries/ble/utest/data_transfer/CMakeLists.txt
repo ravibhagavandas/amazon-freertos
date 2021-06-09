@@ -9,7 +9,7 @@ cmake_minimum_required (VERSION 3.13)
 # list the files to mock here
     list(APPEND mock_list
                 ${kernel_dir}/include/portable.h
-                ${c_sdk_dir}/standard/ble/include/iot_ble.h
+                ${AFR_ROOT_DIR}/libraries/ble/include/iot_ble.h
                 ${common_dir}/include/private/iot_logging.h
                 ${abstraction_dir}/platform/include/platform/iot_threads.h
             )
@@ -20,7 +20,6 @@ cmake_minimum_required (VERSION 3.13)
                 ${abstraction_dir}/platform/freertos/include
                 ${abstraction_dir}/platform/include
                 ${abstraction_dir}/platform/include/types
-                ${c_sdk_dir}/standard/common/include
             )
 
 #list the definitions of your mocks to control what to be included
@@ -44,7 +43,6 @@ cmake_minimum_required (VERSION 3.13)
             ${abstraction_dir}/ble_hal/include
             ${abstraction_dir}/platform/include
             ${abstraction_dir}/platform/freertos/include
-            ${AFR_ROOT_DIR}/libraries/c_sdk/standard/common/include
             ${AFR_ROOT_DIR}/freertos_kernel/include/
             ${CMAKE_CURRENT_BINARY_DIR}/mocks
         )
@@ -55,7 +53,6 @@ cmake_minimum_required (VERSION 3.13)
     list(APPEND test_include_directories
                 ../../include
                 ${CMAKE_CURRENT_BINARY_DIR}/mocks
-                ${AFR_ROOT_DIR}/libraries/c_sdk/standard/common/include
                 ${abstraction_dir}/ble_hal/include
                 ${abstraction_dir}/platform/freertos/include
                 ${abstraction_dir}/platform/include

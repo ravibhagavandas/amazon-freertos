@@ -23,7 +23,6 @@
         ${abstraction_dir}/platform/include
         ${abstraction_dir}/platform/freertos/include
         ${abstraction_dir}/platform/include
-        "${AFR_ROOT_DIR}/libraries/c_sdk/standard/common/include"
     )
 #list the definitions of your mocks to control what to be included
     list(APPEND mock_define_list
@@ -36,14 +35,13 @@
 
 # list the files you would like to test here
     list(APPEND real_source_files
-            "${AFR_ROOT_DIR}/libraries/c_sdk/standard/ble/src/iot_ble_gap.c"
-            "${AFR_ROOT_DIR}/libraries/c_sdk/standard/ble/src/iot_ble_gatt.c"
+            "${AFR_ROOT_DIR}/libraries/ble/src/iot_ble_gap.c"
+            "${AFR_ROOT_DIR}/libraries/ble/src/iot_ble_gatt.c"
         )
 # list the directories the module under test includes
     list(APPEND real_include_directories
-        "${AFR_ROOT_DIR}/libraries/c_sdk/standard/ble/include"
+        "${AFR_ROOT_DIR}/libraries/ble/include"
         "${AFR_ROOT_DIR}/freertos_kernel/include/"
-        "${AFR_ROOT_DIR}/libraries/c_sdk/standard/common/include"
         "${AFR_ROOT_DIR}/libraries/logging/include"
         "${CMAKE_CURRENT_BINARY_DIR}/mocks"
         ${abstraction_dir}/ble_hal/include
@@ -57,9 +55,8 @@
 # list the directories your test needs to include
     list(APPEND test_include_directories
             "${CMAKE_CURRENT_LIST_DIR}"
-            "${AFR_ROOT_DIR}/libraries/c_sdk/standard/ble/include"
+            "${AFR_ROOT_DIR}/libraries/ble/include"
             "${AFR_ROOT_DIR}/freertos_kernel/include/"
-            "${AFR_ROOT_DIR}/libraries/c_sdk/standard/common/include"
             "${AFR_ROOT_DIR}/tests/unit_test/linux/logging-stack"
             "${CMAKE_CURRENT_BINARY_DIR}/mocks"
             ${abstraction_dir}/ble_hal/include

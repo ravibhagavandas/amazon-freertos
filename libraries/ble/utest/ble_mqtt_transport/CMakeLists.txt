@@ -10,8 +10,8 @@
     list(APPEND mock_list
         ${AFR_ROOT_DIR}/freertos_kernel/include/portable.h
         ${AFR_ROOT_DIR}/freertos_kernel/include/stream_buffer.h
-        ${AFR_ROOT_DIR}/libraries/c_sdk/standard/ble/include/iot_ble_data_transfer.h
-        ${AFR_ROOT_DIR}/libraries/c_sdk/standard/ble/include/iot_ble_mqtt_serialize.h
+        ${AFR_ROOT_DIR}/libraries/ble/include/iot_ble_data_transfer.h
+        ${AFR_ROOT_DIR}/libraries/ble/include/iot_ble_mqtt_serialize.h
         ${AFR_ROOT_DIR}/libraries/coreMQTT/source/include/core_mqtt_serializer.h
     )
 # list the directories your mocks need
@@ -42,9 +42,8 @@
 # list the directories the module under test includes
     list(APPEND real_include_directories
         .
-        "${AFR_ROOT_DIR}/libraries/c_sdk/standard/ble/include"
+        "${AFR_ROOT_DIR}/libraries/ble/include"
         "${AFR_ROOT_DIR}/freertos_kernel/include/"
-        "${AFR_ROOT_DIR}/libraries/c_sdk/standard/common/include"
         "${AFR_ROOT_DIR}/libraries/logging/include"
         "${AFR_ROOT_DIR}/libraries/coreMQTT/source/include"
         "${CMAKE_CURRENT_BINARY_DIR}/mocks"
@@ -61,9 +60,8 @@
 # list the directories your test needs to include
     list(APPEND test_include_directories
             .
-            "${AFR_ROOT_DIR}/libraries/c_sdk/standard/ble/include"
+            "${AFR_ROOT_DIR}/libraries/ble/include"
             "${AFR_ROOT_DIR}/freertos_kernel/include/"
-            "${AFR_ROOT_DIR}/libraries/c_sdk/standard/common/include"
             "${AFR_ROOT_DIR}/libraries/coreMQTT/source/include"
             "${AFR_ROOT_DIR}/tests/unit_test/linux/logging-stack"
             "${CMAKE_CURRENT_BINARY_DIR}/mocks"
@@ -82,7 +80,7 @@ set(real_name "${project_name}_real")
 
 create_mock_list(${mock_name}
             "${mock_list}"
-            "${AFR_ROOT_DIR}/libraries/c_sdk/standard/ble/utest/ble_mqtt_transport/project.yml"
+            "${AFR_ROOT_DIR}/libraries/ble/utest/ble_mqtt_transport/project.yml"
             "${mock_include_list}"
             "${mock_define_list}"
         )
