@@ -526,20 +526,26 @@ static QueueHandle_t eventQueue;
                                         bool isConnected,
                                         BTBdaddr_t * pRemoteAddress )
     {
-        AwsIotNetworkState_t newState;
-
+        IotNetworkEvent_t event = {
+            .networkType   = AWSIOT_NETWORK_TYPE_BLE,
+            .pTaskToNotify = NULL
+         };
+       
         if( isConnected == true )
         {
             IotLogInfo( "BLE Connected to remote device, connId = %d\n", connectionID );
-            newState = eNetworkStateEnabled;
+            event.nextState = eNetworkStateEnabled;
         }
         else
         {
             IotLogInfo( "BLE disconnected with remote device, connId = %d \n", connectionID );
-            newState = eNetworkStateDisabled;
+            event.nextState = eNetworkStateDisabled;
         }
 
-        prvProcessNetworkStateChange( AWSIOT_NETWORK_TYPE_BLE, newState );
+        if( xQueueSend( eventQueue, &event, ( TickType_t ) 1U ) != pdTRUE )
+        {
+            IotLogError( "Failed to send a network event to the queue." );
+        }
     }
 
 
@@ -736,27 +742,31 @@ static QueueHandle_t eventQueue;
     static void _wifiEventHandler( WIFIEvent_t * pxEvent )
     {
         uint8_t * pucIpAddr;
+         IotNetworkEvent_t event = {
+            .networkType   = AWSIOT_NETWORK_TYPE_WIFI,
+            .pTaskToNotify = NULL
+         };
 
         if( pxEvent->xEventType == eWiFiEventIPReady )
         {
             pucIpAddr = ( uint8_t * ) ( &pxEvent->xInfo.xIPReady.xIPAddress.ulAddress[ 0 ] );
             IotLogInfo( "Connected to WiFi access point, ip address: %d.%d.%d.%d.", pucIpAddr[ 0 ], pucIpAddr[ 1 ], pucIpAddr[ 2 ], pucIpAddr[ 3 ] );
-            prvProcessNetworkStateChange( AWSIOT_NETWORK_TYPE_WIFI, eNetworkStateEnabled );
+            event.nextState = eNetworkStateEnabled;
         }
         else if( pxEvent->xEventType == eWiFiEventDisconnected )
         {
             IotLogInfo( "Disconnected from WiFi access point, reason code: %d.", pxEvent->xInfo.xDisconnected.xReason );
-            prvProcessNetworkStateChange( AWSIOT_NETWORK_TYPE_WIFI, eNetworkStateDisabled );
+            event.nextState = eNetworkStateDisabled;
         }
     }
 
 #endif /* if WIFI_ENABLED */
 
 /*-----------------------------------------------------------*/
-static bool processRules( uint32_t networkType, AwsIotNetworkState_t currentState, AwsIotNetworkState_t nextState )
+static BaseType_t processRules( uint32_t networkType, AwsIotNetworkState_t currentState, AwsIotNetworkState_t nextState )
 {
     size_t index = 0;
-    bool status = false;
+    BaseType_t status = pdFALSE;
 
     for( index = 0; index < NUM_RULES; index++ )
     {
@@ -767,7 +777,7 @@ static bool processRules( uint32_t networkType, AwsIotNetworkState_t currentStat
         {
             if( rules[index].pCallback() )
             {
-                status = true;
+                status = pdTRUE;
             }
             break;
         }
@@ -798,6 +808,7 @@ static void prvNetworkManagerTask( void *pvParams )
     BaseType_t status = pdFALSE;
     IotNetwork_t *pNetwork = NULL;
     IotNetworkEvent_t networkEvent = { 0 };
+    AwsIotNetworkState_t desiredState;
 
     for( ;; )
     {
@@ -806,8 +817,20 @@ static void prvNetworkManagerTask( void *pvParams )
         if( status == pdTRUE )
         {
             pNetwork = prvGetNetwork( networkEvent.networkType );
-            processRules( networkEvent.networkType, pNetwork->state, networkEvent.nextState );
-            prvDispatchEvent( networkEvent.networkType, networkEvent.nextState );
+            desiredState = networkEvent.nextState;
+            do 
+            {
+                status = processRules( networkEvent.networkType, pNetwork->state, networkEvent.nextState );
+                if( status == pdTRUE  )
+                {
+                    pNetwork->state = networkEvent.nextState;
+                    prvDispatchEvent( networkEvent.networkType, networkEvent.nextState );
+                }
+
+            } while( status == pdTRUE);
+           
+            
+            
         }
     }
 
