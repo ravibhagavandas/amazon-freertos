@@ -1033,7 +1033,7 @@ int RunCoreHttpS3DownloadMultithreadedDemo( bool awsIotMqttMode,
             }
             else
             {
-                LogInfo( ( "Successfully created connection." ) );
+                LogInfo( ( "Successfully created connection, heap size = %u, minimum = %u.", xPortGetFreeHeapSize(), xPortGetMinimumEverFreeHeapSize() ) );
             }
         }
 
@@ -1057,16 +1057,21 @@ int RunCoreHttpS3DownloadMultithreadedDemo( bool awsIotMqttMode,
 
             xDemoStatus = ( ( xRequestQueue != NULL ) && ( xResponseQueue != NULL ) ) ? pdPASS : pdFAIL;
 
-            if( xDemoStatus == pdTRUE )
+            if( xDemoStatus != pdTRUE )
             {
-                LogInfo( ( "Successfully created queue." ) );
+                LogInfo( ( "Failed to created queue size = %d.", democonfigQUEUE_SIZE  ) );
             }
         }
 
         /* Start HTTP task. */
         if( xDemoStatus == pdPASS )
         {
+            LogInfo(("Successfully created queue. creating task." ));
             xDemoStatus = xTaskCreate( prvStartHTTPTask, "HTTPTask", httpexampleTASK_STACK_SIZE, NULL, tskIDLE_PRIORITY, &xHTTPTask );
+            if( xDemoStatus != pdTRUE )
+            {
+                LogError(("Failed to create HTTP task."));
+            }
         }
 
         /******************** Download S3 Object File. **********************/
