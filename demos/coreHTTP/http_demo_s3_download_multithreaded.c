@@ -965,7 +965,7 @@ int RunCoreHttpS3DownloadMultithreadedDemo( bool awsIotMqttMode,
 
     xMainTask = xTaskGetCurrentTaskHandle();
 
-    LogInfo( ( "HTTP Client multi-threaded S3 download demo using pre-signed URL:\n%s", democonfigS3_PRESIGNED_GET_URL ) );
+    LogInfo( ( "HTTP Client multi-threaded S3 download demo using pre-signed URL" ) );
 
     do
     {
@@ -1031,6 +1031,10 @@ int RunCoreHttpS3DownloadMultithreadedDemo( bool awsIotMqttMode,
                 LogError( ( "Failed to connect to HTTP server %s.",
                             cServerHost ) );
             }
+            else
+            {
+                LogInfo( ( "Successfully created connection." ) );
+            }
         }
 
         /* Define the transport interface. */
@@ -1052,6 +1056,11 @@ int RunCoreHttpS3DownloadMultithreadedDemo( bool awsIotMqttMode,
                                            sizeof( ResponseItem_t ) );
 
             xDemoStatus = ( ( xRequestQueue != NULL ) && ( xResponseQueue != NULL ) ) ? pdPASS : pdFAIL;
+
+            if( xDemoStatus == pdTRUE )
+            {
+                LogInfo( ( "Successfully created queue." ) );
+            }
         }
 
         /* Start HTTP task. */
@@ -1064,6 +1073,7 @@ int RunCoreHttpS3DownloadMultithreadedDemo( bool awsIotMqttMode,
 
         if( xDemoStatus == pdPASS )
         {
+            LogInfo( ( "Successfully created HTTP task... doenloading object" ) );
             xDemoStatus = prvDownloadS3ObjectFile( cServerHost,
                                                    xServerHostLength,
                                                    pcPath,
