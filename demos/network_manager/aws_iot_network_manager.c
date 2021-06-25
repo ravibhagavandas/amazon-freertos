@@ -95,8 +95,10 @@
 
 /**
  * @brief Stack size for network manager task.
+ * Network manager task executes other application callbacks within its task stack, so the stack size should
+ * be tuned acording to application callback stack requirements.
  */
-#define NETWORK_MANAGER_TASK_STACK_SIZE          ( configMINIMAL_STACK_SIZE * 4 )
+#define NETWORK_MANAGER_TASK_STACK_SIZE          ( configMINIMAL_STACK_SIZE * 2 )
 
 /**
  * @brief Structure holds information for each network and the runtime state of it.
