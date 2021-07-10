@@ -1,5 +1,5 @@
 /*
- * FreeRTOS V202012.00
+ * FreeRTOS V202104.00
  * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -19,18 +19,25 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
- * http://aws.amazon.com/freertos
  * http://www.FreeRTOS.org
+ * http://aws.amazon.com/freertos
+ *
+ * 1 tab == 4 spaces!
  */
 
-/**
- * @file  iot_demo.c
- * @brief Demo
+#ifndef CRHOOK_H
+#define CRHOOK_H
+
+/*
+ * Create the co-routines used to communicate wit the tick hook.
  */
-/* The config header is always included first. */
-#include "iot_config.h"
+void vStartHookCoRoutines( void );
 
-#include "FreeRTOS.h"
-#include "aws_clientcredential.h"
+/*
+ * Return pdPASS or pdFAIL depending on whether an error has been detected
+ * or not.
+ */
+BaseType_t xAreHookCoRoutinesStillRunning( void );
 
+#endif
 

@@ -1,5 +1,5 @@
 /*
- * FreeRTOS V202012.00
+ * FreeRTOS V202104.00
  * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -19,18 +19,23 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
- * http://aws.amazon.com/freertos
  * http://www.FreeRTOS.org
+ * http://aws.amazon.com/freertos
+ *
+ * 1 tab == 4 spaces!
  */
 
-/**
- * @file  iot_demo.c
- * @brief Demo
+#ifndef FLASH_TIMER_H
+#define FLASH_TIMER_H
+
+/*
+ * Creates the LED flashing timers.  xNumberOfLEDs specifies how many timers to
+ * create, with each timer toggling a different LED.  The first LED to be 
+ * toggled is LED 0, with subsequent LEDs following on in numerical order.  Each
+ * timer uses the exact same callback function, with the timer ID being used
+ * within the callback function to determine which timer has actually expired
+ * (and therefore which LED to toggle).
  */
-/* The config header is always included first. */
-#include "iot_config.h"
+void vStartLEDFlashTimers( UBaseType_t uxNumberOfLEDs );
 
-#include "FreeRTOS.h"
-#include "aws_clientcredential.h"
-
-
+#endif /* FLASH_TIMER_H */

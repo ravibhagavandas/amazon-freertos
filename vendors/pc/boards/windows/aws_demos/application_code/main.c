@@ -1,5 +1,5 @@
 /*
- * FreeRTOS V1.4.7
+ * FreeRTOS V202104.00
  * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -19,294 +19,397 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
- * http://aws.amazon.com/freertos
  * http://www.FreeRTOS.org
+ * http://aws.amazon.com/freertos
+ *
+ * 1 tab == 4 spaces!
  */
 
+ /******************************************************************************
+  * This project provides two demo applications.  A simple blinky style project,
+  * and a more comprehensive test and demo application.  The
+  * mainCREATE_SIMPLE_BLINKY_DEMO_ONLY setting is used to select between the two.
+  * The simply blinky demo is implemented and described in main_blinky.c.  The
+  * more comprehensive test and demo application is implemented and described in
+  * main_full.c.
+  *
+  * This file implements the code that is not demo specific, including the
+  * hardware setup and FreeRTOS hook functions.
+  *
+  *******************************************************************************
+  * NOTE: Windows will not be running the FreeRTOS demo threads continuously, so
+  * do not expect to get real time behaviour from the FreeRTOS Windows port, or
+  * this demo application.  Also, the timing information in the FreeRTOS+Trace
+  * logs have no meaningful units.  See the documentation page for the Windows
+  * port for further information:
+  * http://www.freertos.org/FreeRTOS-Windows-Simulator-Emulator-for-Visual-Studio-and-Eclipse-MingW.html
+  *
+  *
+  *******************************************************************************
+  */
 
-/*
- * Setup information:
- *
- * See the following URL for information on using FreeRTOS and FreeRTOS+TCP in
- * a Windows environment.  **NOTE**  The project described on the link is not
- * the project that is implemented in this file, but the setup is the same.  It
- * may also be necessary to have WinPCap installed (https://www.winpcap.org/):
- * http://www.freertos.org/FreeRTOS-Plus/FreeRTOS_Plus_TCP/examples_FreeRTOS_simulator.html.
- *
- * It is necessary to use a wired Ethernet port.  Wireless ports are unlikely
- * to work.
- */
-
-/* Standard includes. */
+  /* Standard includes. */
 #include <stdio.h>
-#include <time.h>
+#include <stdlib.h>
 #include <conio.h>
 
-/* FreeRTOS includes. */
-#include <FreeRTOS.h>
+/* Visual studio intrinsics used so the __debugbreak() function is available
+should an assert get hit. */
+#include <intrin.h>
+
+/* FreeRTOS kernel includes. */
+#include "FreeRTOS.h"
 #include "task.h"
-
-/* Demo application includes. */
 #include "FreeRTOS_IP.h"
-#include "FreeRTOS_Sockets.h"
-#include "FreeRTOS_DHCP.h"
-#include "aws_demo_logging.h"
-#include "iot_system_init.h"
-#include "aws_demo.h"
-#include "aws_dev_mode_key_provisioning.h"
-#include "iot_network_manager_private.h"
-#include "aws_iot_network_config.h"
 
-/* Define a name that will be used for LLMNR and NBNS searches. Once running,
- * you can "ping RTOSDemo" instead of pinging the IP address, which is useful when
- * using DHCP. */
-#define mainHOST_NAME           "RTOSDemo"
-#define mainDEVICE_NICK_NAME    "windows_demo"
+/* This project provides two demo applications.  A simple blinky style demo
+application, and a more comprehensive test and demo application.  The
+mainCREATE_SIMPLE_BLINKY_DEMO_ONLY setting is used to select between the two.
+
+If mainCREATE_SIMPLE_BLINKY_DEMO_ONLY is 1 then the blinky demo will be built.
+The blinky demo is implemented and described in main_blinky.c.
+
+If mainCREATE_SIMPLE_BLINKY_DEMO_ONLY is not 1 then the comprehensive test and
+demo application will be built.  The comprehensive test and demo application is
+implemented and described in main_full.c. */
+#define mainCREATE_SIMPLE_BLINKY_DEMO_ONLY	0
+
+/* This demo uses heap_5.c, and these constants define the sizes of the regions
+that make up the total heap.  heap_5 is only used for test and example purposes
+as this demo could easily create one large heap region instead of multiple
+smaller heap regions - in which case heap_4.c would be the more appropriate
+choice.  See http://www.freertos.org/a00111.html for an explanation. */
+#define mainREGION_1_SIZE	8201
+#define mainREGION_2_SIZE	29905
+#define mainREGION_3_SIZE	7807
 
 /*-----------------------------------------------------------*/
 
 /*
- * Miscellaneous initialization including preparing the logging and seeding the
- * random number generator.
+ * main_blinky() is used when mainCREATE_SIMPLE_BLINKY_DEMO_ONLY is set to 1.
+ * main_full() is used when mainCREATE_SIMPLE_BLINKY_DEMO_ONLY is set to 0.
  */
-static void prvMiscInitialisation( void );
+extern void main_blinky(void);
+extern void main_full(void);
+
+/*
+ * Only the comprehensive demo uses application hook (callback) functions.  See
+ * http://www.freertos.org/a00016.html for more information.
+ */
+void vFullDemoTickHookFunction(void);
+void vFullDemoIdleFunction(void);
+
+/*
+ * This demo uses heap_5.c, so start by defining some heap regions.  It is not
+ * necessary for this demo to use heap_5, as it could define one large heap
+ * region.  Heap_5 is only used for test and example purposes.  See
+ * http://www.freertos.org/a00111.html for an explanation.
+ */
+static void  prvInitialiseHeap(void);
+
+/*
+ * Prototypes for the standard FreeRTOS application hook (callback) functions
+ * implemented within this file.  See http://www.freertos.org/a00016.html .
+ */
+void vApplicationMallocFailedHook(void);
+void vApplicationIdleHook(void);
+void vApplicationStackOverflowHook(TaskHandle_t pxTask, char* pcTaskName);
+void vApplicationTickHook(void);
+void vApplicationGetIdleTaskMemory(StaticTask_t** ppxIdleTaskTCBBuffer, StackType_t** ppxIdleTaskStackBuffer, uint32_t* pulIdleTaskStackSize);
+void vApplicationGetTimerTaskMemory(StaticTask_t** ppxTimerTaskTCBBuffer, StackType_t** ppxTimerTaskStackBuffer, uint32_t* pulTimerTaskStackSize);
 
 /*
  * Writes trace data to a disk file when the trace recording is stopped.
  * This function will simply overwrite any trace files that already exist.
  */
-static void prvSaveTraceFile( void );
+static void prvSaveTraceFile(void);
 
-/* Set the following constant to pdTRUE to log using the method indicated by the
- * name of the constant, or pdFALSE to not log using the method indicated by the
- * name of the constant.  Options include to standard out (xLogToStdout), to a disk
- * file (xLogToFile), and to a UDP port (xLogToUDP).  If xLogToUDP is set to pdTRUE
- * then UDP messages are sent to the IP address configured as the echo server
- * address (see the configECHO_SERVER_ADDR0 definitions in FreeRTOSConfig.h) and
- * the port number set by configPRINT_PORT in FreeRTOSConfig.h. */
-const BaseType_t xLogToStdout = pdTRUE, xLogToFile = pdFALSE, xLogToUDP = pdFALSE;
+/*-----------------------------------------------------------*/
 
-
-/* Use by the pseudo random number generator. */
-static UBaseType_t ulNextRand;
+/* When configSUPPORT_STATIC_ALLOCATION is set to 1 the application writer can
+use a callback function to optionally provide the memory required by the idle
+and timer tasks.  This is the stack that will be used by the timer task.  It is
+declared here, as a global, so it can be checked by a test that is implemented
+in a different file. */
+StackType_t uxTimerTaskStack[configTIMER_TASK_STACK_DEPTH];
 
 /* Notes if the trace is running or not. */
 static BaseType_t xTraceRunning = pdTRUE;
 
 /*-----------------------------------------------------------*/
-extern void vApplicationIPInit( void );
-int main( void )
+
+int main(void)
 {
-    const uint32_t ulLongTime_ms = pdMS_TO_TICKS( 1000UL );
+	/* This demo uses heap_5.c, so start by defining some heap regions.  heap_5
+	is only used for test and example reasons.  Heap_4 is more appropriate.  See
+	http://www.freertos.org/a00111.html for an explanation. */
+	prvInitialiseHeap();
 
-    /*
-     * Instructions for setting up the network to use this project are the same
-     * as those provided on the following link for the full demo:
-     * http://www.freertos.org/FreeRTOS-Plus/FreeRTOS_Plus_TCP/examples_FreeRTOS_simulator.html.
-     */
+	/* Initialise the trace recorder.  Use of the trace recorder is optional.
+	See http://www.FreeRTOS.org/trace for more information. */
+	vTraceEnable(TRC_START);
 
-    /* Miscellaneous initialization including preparing the logging and seeding
-     * the random number generator. */
-    prvMiscInitialisation();
+	/* The mainCREATE_SIMPLE_BLINKY_DEMO_ONLY setting is described at the top
+	of this file. */
+#if ( mainCREATE_SIMPLE_BLINKY_DEMO_ONLY == 1 )
+	{
+		main_blinky();
+	}
+#else
+	{
+		/* Start the trace recording - the recording is written to a file if
+		configASSERT() is called. */
+		printf("\r\nTrace started.\r\nThe trace will be dumped to disk if a call to configASSERT() fails.\r\n");
+		printf("Uncomment the call to kbhit() in this file to also dump trace with a key press.\r\n");
+		uiTraceStart();
 
-    /* Initialize the network interface.
-     *
-     ***NOTE*** Tasks that use the network are created in the network event hook
-     * when the network is connected and ready for use (see the definition of
-     * vApplicationIPNetworkEventHook() below).  The address values passed in here
-     * are used if ipconfigUSE_DHCP is set to 0, or if ipconfigUSE_DHCP is set to 1
-     * but a DHCP server cannot be contacted. */
-	FreeRTOS_printf(("FreeRTOS_IPInit\n"));
-	vApplicationIPInit();
+		main_full();
+	}
+#endif
 
-    /* Start the RTOS scheduler. */
-    FreeRTOS_printf( ( "vTaskStartScheduler\n" ) );
-    vTaskStartScheduler();
-
-    /* If all is well, the scheduler will now be running, and the following
-     * line will never be reached.  If the following line does execute, then
-     * there was insufficient FreeRTOS heap memory available for the idle and/or
-     * timer tasks to be created.  See the memory management section on the
-     * FreeRTOS web site for more details (this is standard text that is not
-     * really applicable to the Win32 simulator port). */
-    for( ; ;)
-    {
-        Sleep( ulLongTime_ms );
-    }
+	return 0;
 }
 /*-----------------------------------------------------------*/
 
-/* Called by FreeRTOS+TCP when the network connects or disconnects.  Disconnect
- * events are only received if implemented in the MAC driver. */
-void vApplicationIPNetworkEventHook( eIPCallbackEvent_t eNetworkEvent )
+void vApplicationMallocFailedHook(void)
 {
-    uint32_t ulIPAddress, ulNetMask, ulGatewayAddress, ulDNSServerAddress;
-    char cBuffer[ 16 ];
-    static BaseType_t xTasksAlreadyCreated = pdFALSE;
-
-    /* If the network has just come up...*/
-    if( eNetworkEvent == eNetworkUp )
-    {
-        /* Create the tasks that use the IP stack if they have not already been
-         * created. */
-        if( xTasksAlreadyCreated == pdFALSE )
-        {
-            /* A simple example to demonstrate key and certificate provisioning in
-             * microcontroller flash using PKCS#11 interface. This should be replaced
-             * by production ready key provisioning mechanism. */
-            vDevModeKeyProvisioning( );
-
-            /* Initialize AWS system libraries */
-            SYSTEM_Init();
-
-            /* Start the demo tasks. */
-            DEMO_RUNNER_RunDemos();
-
-            xTasksAlreadyCreated = pdTRUE;
-        }
-
-        /* Print out the network configuration, which may have come from a DHCP
-         * server. */
-        FreeRTOS_GetAddressConfiguration(
-            &ulIPAddress,
-            &ulNetMask,
-            &ulGatewayAddress,
-            &ulDNSServerAddress );
-        FreeRTOS_inet_ntoa( ulIPAddress, cBuffer );
-        FreeRTOS_printf( ( "\r\n\r\nIP Address: %s\r\n", cBuffer ) );
-
-        FreeRTOS_inet_ntoa( ulNetMask, cBuffer );
-        FreeRTOS_printf( ( "Subnet Mask: %s\r\n", cBuffer ) );
-
-        FreeRTOS_inet_ntoa( ulGatewayAddress, cBuffer );
-        FreeRTOS_printf( ( "Gateway Address: %s\r\n", cBuffer ) );
-
-        FreeRTOS_inet_ntoa( ulDNSServerAddress, cBuffer );
-        FreeRTOS_printf( ( "DNS Server Address: %s\r\n\r\n\r\n", cBuffer ) );
-    }
+	/* vApplicationMallocFailedHook() will only be called if
+	configUSE_MALLOC_FAILED_HOOK is set to 1 in FreeRTOSConfig.h.  It is a hook
+	function that will get called if a call to pvPortMalloc() fails.
+	pvPortMalloc() is called internally by the kernel whenever a task, queue,
+	timer or semaphore is created.  It is also called by various parts of the
+	demo application.  If heap_1.c, heap_2.c or heap_4.c is being used, then the
+	size of the	heap available to pvPortMalloc() is defined by
+	configTOTAL_HEAP_SIZE in FreeRTOSConfig.h, and the xPortGetFreeHeapSize()
+	API function can be used to query the size of free heap space that remains
+	(although it does not provide information on how the remaining heap might be
+	fragmented).  See http://www.freertos.org/a00111.html for more
+	information. */
+	vAssertCalled(__LINE__, __FILE__);
 }
 /*-----------------------------------------------------------*/
 
-static void prvMiscInitialisation( void )
+void vApplicationIdleHook(void)
 {
-    uint32_t ulLoggingIPAddress;
+	/* vApplicationIdleHook() will only be called if configUSE_IDLE_HOOK is set
+	to 1 in FreeRTOSConfig.h.  It will be called on each iteration of the idle
+	task.  It is essential that code added to this hook function never attempts
+	to block in any way (for example, call xQueueReceive() with a block time
+	specified, or call vTaskDelay()).  If application tasks make use of the
+	vTaskDelete() API function to delete themselves then it is also important
+	that vApplicationIdleHook() is permitted to return to its calling function,
+	because it is the responsibility of the idle task to clean up memory
+	allocated by the kernel to any task that has since deleted itself. */
 
-    /* Initialise the trace recorder and create the label used to post user
-     * events to the trace recording on each tick interrupt. */
-    vTraceEnable( TRC_START );
+	/* Uncomment the following code to allow the trace to be stopped with any
+	key press.  The code is commented out by default as the kbhit() function
+	interferes with the run time behaviour. */
+	/*
+		if( _kbhit() != pdFALSE )
+		{
+			if( xTraceRunning == pdTRUE )
+			{
+				vTraceStop();
+				prvSaveTraceFile();
+				xTraceRunning = pdFALSE;
+			}
+		}
+	*/
 
-    /* Initialise the logging library. */
-    ulLoggingIPAddress = FreeRTOS_inet_addr_quick(
-        configECHO_SERVER_ADDR0,
-        configECHO_SERVER_ADDR1,
-        configECHO_SERVER_ADDR2,
-        configECHO_SERVER_ADDR3 );
-    vLoggingInit(
-        xLogToStdout,
-        xLogToFile,
-        xLogToUDP,
-        ulLoggingIPAddress,
-        configPRINT_PORT );
-}
-
-
-void vApplicationIdleHook( void )
-{
-    const uint32_t ulMSToSleep = 1;
-    const TickType_t xKitHitCheckPeriod = pdMS_TO_TICKS( 1000UL );
-    static TickType_t xTimeNow, xLastTimeCheck = 0;
-
-    /* vApplicationIdleHook() will only be called if configUSE_IDLE_HOOK is set
-     * to 1 in FreeRTOSConfig.h.  It will be called on each iteration of the idle
-     * task.  It is essential that code added to this hook function never attempts
-     * to block in any way (for example, call xQueueReceive() with a block time
-     * specified, or call vTaskDelay()).  If application tasks make use of the
-     * vTaskDelete() API function to delete themselves then it is also important
-     * that vApplicationIdleHook() is permitted to return to its calling function,
-     * because it is the responsibility of the idle task to clean up memory
-     * allocated by the kernel to any task that has since deleted itself. */
-
-    /* _kbhit() is a Windows system function, and system functions can cause
-     * crashes if they somehow block the FreeRTOS thread.  The call to _kbhit()
-     * can be removed if it causes problems.  Limiting the frequency of calls to
-     * _kbhit() should minimize the potential for issues. */
-    xTimeNow = xTaskGetTickCount();
-
-    if( ( xTimeNow - xLastTimeCheck ) > xKitHitCheckPeriod )
-    {
-        if( _kbhit() != pdFALSE )
-        {
-            if( xTraceRunning == pdTRUE )
-            {
-                xTraceRunning = pdFALSE;
-                vTraceStop();
-                prvSaveTraceFile();
-            }
-        }
-
-        xLastTimeCheck = xTimeNow;
-    }
-
-    /* This is just a trivial example of an idle hook.  It is called on each
-     * cycle of the idle task if configUSE_IDLE_HOOK is set to 1 in
-     * FreeRTOSConfig.h.  It must *NOT* attempt to block.  In this case the
-     * idle task just sleeps to lower the CPU usage. */
-    Sleep( ulMSToSleep );
-}
-
-/*-----------------------------------------------------------*/
-
-void vAssertCalled( const char * pcFile,
-                    uint32_t ulLine )
-{
-    const uint32_t ulLongSleep = 1000UL;
-    volatile uint32_t ulBlockVariable = 0UL;
-    volatile char * pcFileName = ( volatile char * ) pcFile;
-    volatile uint32_t ulLineNumber = ulLine;
-
-    ( void ) pcFileName;
-    ( void ) ulLineNumber;
-
-    printf( "vAssertCalled %s, %ld\n", pcFile, ( long ) ulLine );
-    fflush( stdout );
-
-    /* Setting ulBlockVariable to a non-zero value in the debugger will allow
-     * this function to be exited. */
-    taskDISABLE_INTERRUPTS();
-    {
-        while( ulBlockVariable == 0UL )
-        {
-            Sleep( ulLongSleep );
-        }
-    }
-    taskENABLE_INTERRUPTS();
-}
-
-/*-----------------------------------------------------------*/
-
-static void prvSaveTraceFile( void )
-{
-    FILE * pxOutputFile;
-
-    fopen_s( &pxOutputFile, "Trace.dump", "wb" );
-
-    if( pxOutputFile != NULL )
-    {
-        fwrite( RecorderDataPtr, sizeof( RecorderDataType ), 1, pxOutputFile );
-        fclose( pxOutputFile );
-        printf( "\r\nTrace output saved to Trace.dump\r\n" );
-    }
-    else
-    {
-        printf( "\r\nFailed to create trace dump file\r\n" );
-    }
+#if ( mainCREATE_SIMPLE_BLINKY_DEMO_ONLY != 1 )
+	{
+		/* Call the idle task processing used by the full demo.  The simple
+		blinky demo does not use the idle task hook. */
+		vFullDemoIdleFunction();
+	}
+#endif
 }
 /*-----------------------------------------------------------*/
 
-void getUserCmd( char * pucUserCmd )
+void vApplicationStackOverflowHook(TaskHandle_t pxTask, char* pcTaskName)
 {
-    char cTmp;
+	(void)pcTaskName;
+	(void)pxTask;
 
-    scanf( "%c%c", pucUserCmd, &cTmp );
+	/* Run time stack overflow checking is performed if
+	configCHECK_FOR_STACK_OVERFLOW is defined to 1 or 2.  This hook
+	function is called if a stack overflow is detected.  This function is
+	provided as an example only as stack overflow checking does not function
+	when running the FreeRTOS Windows port. */
+	vAssertCalled(__LINE__, __FILE__);
 }
 /*-----------------------------------------------------------*/
+
+void vApplicationTickHook(void)
+{
+	/* This function will be called by each tick interrupt if
+	configUSE_TICK_HOOK is set to 1 in FreeRTOSConfig.h.  User code can be
+	added here, but the tick hook is called from an interrupt context, so
+	code must not attempt to block, and only the interrupt safe FreeRTOS API
+	functions can be used (those that end in FromISR()). */
+
+#if ( mainCREATE_SIMPLE_BLINKY_DEMO_ONLY != 1 )
+	{
+		vFullDemoTickHookFunction();
+	}
+#endif /* mainCREATE_SIMPLE_BLINKY_DEMO_ONLY */
+}
+/*-----------------------------------------------------------*/
+
+void vApplicationDaemonTaskStartupHook(void)
+{
+	/* This function will be called once only, when the daemon task starts to
+	execute	(sometimes called the timer task).  This is useful if the
+	application includes initialisation code that would benefit from executing
+	after the scheduler has been started. */
+}
+/*-----------------------------------------------------------*/
+
+void vAssertCalled(unsigned long ulLine, const char* const pcFileName)
+{
+	static BaseType_t xPrinted = pdFALSE;
+	volatile uint32_t ulSetToNonZeroInDebuggerToContinue = 0;
+
+	/* Called if an assertion passed to configASSERT() fails.  See
+	http://www.freertos.org/a00110.html#configASSERT for more information. */
+
+	/* Parameters are not used. */
+	(void)ulLine;
+	(void)pcFileName;
+
+	printf("ASSERT! Line %ld, file %s, GetLastError() %ld\r\n", ulLine, pcFileName, GetLastError());
+
+	taskENTER_CRITICAL();
+	{
+		/* Stop the trace recording. */
+		if (xPrinted == pdFALSE)
+		{
+			xPrinted = pdTRUE;
+			if (xTraceRunning == pdTRUE)
+			{
+				vTraceStop();
+				prvSaveTraceFile();
+			}
+		}
+
+		/* Cause debugger break point if being debugged. */
+		__debugbreak();
+
+		/* You can step out of this function to debug the assertion by using
+		the debugger to set ulSetToNonZeroInDebuggerToContinue to a non-zero
+		value. */
+		while (ulSetToNonZeroInDebuggerToContinue == 0)
+		{
+			__asm { NOP };
+			__asm { NOP };
+		}
+	}
+	taskEXIT_CRITICAL();
+}
+/*-----------------------------------------------------------*/
+
+static void prvSaveTraceFile(void)
+{
+	FILE* pxOutputFile;
+
+	fopen_s(&pxOutputFile, "Trace.dump", "wb");
+
+	if (pxOutputFile != NULL)
+	{
+		fwrite(RecorderDataPtr, sizeof(RecorderDataType), 1, pxOutputFile);
+		fclose(pxOutputFile);
+		printf("\r\nTrace output saved to Trace.dump\r\n");
+	}
+	else
+	{
+		printf("\r\nFailed to create trace dump file\r\n");
+	}
+}
+/*-----------------------------------------------------------*/
+
+static void  prvInitialiseHeap(void)
+{
+	/* The Windows demo could create one large heap region, in which case it would
+	be appropriate to use heap_4.  However, purely for demonstration purposes,
+	heap_5 is used instead, so start by defining some heap regions.  No
+	initialisation is required when any other heap implementation is used.  See
+	http://www.freertos.org/a00111.html for more information.
+
+	The xHeapRegions structure requires the regions to be defined in start address
+	order, so this just creates one big array, then populates the structure with
+	offsets into the array - with gaps in between and messy alignment just for test
+	purposes. */
+	static uint8_t ucHeap[configTOTAL_HEAP_SIZE];
+	volatile uint32_t ulAdditionalOffset = 19; /* Just to prevent 'condition is always true' warnings in configASSERT(). */
+	const HeapRegion_t xHeapRegions[] =
+	{
+		/* Start address with dummy offsets						Size */
+		{ ucHeap + 1,											mainREGION_1_SIZE },
+		{ ucHeap + 15 + mainREGION_1_SIZE,						mainREGION_2_SIZE },
+		{ ucHeap + 19 + mainREGION_1_SIZE + mainREGION_2_SIZE,	mainREGION_3_SIZE },
+		{ NULL, 0 }
+	};
+
+	/* Sanity check that the sizes and offsets defined actually fit into the
+	array. */
+	configASSERT((ulAdditionalOffset + mainREGION_1_SIZE + mainREGION_2_SIZE + mainREGION_3_SIZE) < configTOTAL_HEAP_SIZE);
+
+	/* Prevent compiler warnings when configASSERT() is not defined. */
+	(void)ulAdditionalOffset;
+
+	vPortDefineHeapRegions(xHeapRegions);
+}
+/*-----------------------------------------------------------*/
+
+/* configUSE_STATIC_ALLOCATION is set to 1, so the application must provide an
+implementation of vApplicationGetIdleTaskMemory() to provide the memory that is
+used by the Idle task. */
+void vApplicationGetIdleTaskMemory(StaticTask_t** ppxIdleTaskTCBBuffer, StackType_t** ppxIdleTaskStackBuffer, uint32_t* pulIdleTaskStackSize)
+{
+	/* If the buffers to be provided to the Idle task are declared inside this
+	function then they must be declared static - otherwise they will be allocated on
+	the stack and so not exists after this function exits. */
+	static StaticTask_t xIdleTaskTCB;
+	static StackType_t uxIdleTaskStack[configMINIMAL_STACK_SIZE];
+
+	/* Pass out a pointer to the StaticTask_t structure in which the Idle task's
+	state will be stored. */
+	*ppxIdleTaskTCBBuffer = &xIdleTaskTCB;
+
+	/* Pass out the array that will be used as the Idle task's stack. */
+	*ppxIdleTaskStackBuffer = uxIdleTaskStack;
+
+	/* Pass out the size of the array pointed to by *ppxIdleTaskStackBuffer.
+	Note that, as the array is necessarily of type StackType_t,
+	configMINIMAL_STACK_SIZE is specified in words, not bytes. */
+	*pulIdleTaskStackSize = configMINIMAL_STACK_SIZE;
+}
+/*-----------------------------------------------------------*/
+
+/* configUSE_STATIC_ALLOCATION and configUSE_TIMERS are both set to 1, so the
+application must provide an implementation of vApplicationGetTimerTaskMemory()
+to provide the memory that is used by the Timer service task. */
+void vApplicationGetTimerTaskMemory(StaticTask_t** ppxTimerTaskTCBBuffer, StackType_t** ppxTimerTaskStackBuffer, uint32_t* pulTimerTaskStackSize)
+{
+	/* If the buffers to be provided to the Timer task are declared inside this
+	function then they must be declared static - otherwise they will be allocated on
+	the stack and so not exists after this function exits. */
+	static StaticTask_t xTimerTaskTCB;
+
+	/* Pass out a pointer to the StaticTask_t structure in which the Timer
+	task's state will be stored. */
+	*ppxTimerTaskTCBBuffer = &xTimerTaskTCB;
+
+	/* Pass out the array that will be used as the Timer task's stack. */
+	*ppxTimerTaskStackBuffer = uxTimerTaskStack;
+
+	/* Pass out the size of the array pointed to by *ppxTimerTaskStackBuffer.
+	Note that, as the array is necessarily of type StackType_t,
+	configMINIMAL_STACK_SIZE is specified in words, not bytes. */
+	*pulTimerTaskStackSize = configTIMER_TASK_STACK_DEPTH;
+}
+
+void vApplicationIPNetworkEventHook(eIPCallbackEvent_t eNetworkEvent)
+{
+	(void)eNetworkEvent;
+}

@@ -54,6 +54,8 @@
 #define IOT_THREAD_DEFAULT_STACK_SIZE           2048
 #define IOT_THREAD_DEFAULT_PRIORITY             5
 
+#define iotconfigUSE_PORT_SPECIFIC_HOOKS   ( 1 )
+
 /* Include the common configuration file for FreeRTOS. */
 #include "iot_config_common.h"
 
